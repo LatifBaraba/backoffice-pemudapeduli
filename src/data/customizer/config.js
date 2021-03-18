@@ -10,11 +10,11 @@ export class ConfigDB {
 			sidebar_background: 'dark-sidebar' 
 				   },
 			color: {
-			layout_version: 'light',
-			color: 'color-2',
-			primary_color: '#0288d1',
-			secondary_color: '#26c6da',
-			mix_layout: 'dark-only',
+				layout_version: 'dark-only',
+				color: 'color-1',
+				primary_color: '#4466f2', 
+				secondary_color: '#00ffb7', 
+				mix_layout: 'dark-only'
 				},
 			router_animation: 'fadeIn'
 		
