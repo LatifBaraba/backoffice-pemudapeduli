@@ -43,7 +43,7 @@ function Root() {
                         <Switch>
                             {/* <Fragment> */}
                                     <Route path={`${process.env.PUBLIC_URL}/login`} component={Login} />
-                                    {authenticated !== null ?
+                                    {/* {authenticated !== null ? */}
                                         <App>
                                             <Route exact path={`${process.env.PUBLIC_URL}/dashboard`} component={Default} />
                                             <Route path={`${process.env.PUBLIC_URL}/user`} component={User} />
@@ -56,9 +56,9 @@ function Root() {
                                             {/* Pricing */}
                                             {/* <Route path={`${process.env.PUBLIC_URL}/support-ticket/supportTicket`} component={SupportTicket} /> */}
                                         </App>
-                                    :
+                                    {/* :
                                         <Redirect to={`${process.env.PUBLIC_URL}/login`} />
-                                    } 
+                                    }  */}
                             {/* </Fragment> */}
                         </Switch>
                     </ScrollContext>
