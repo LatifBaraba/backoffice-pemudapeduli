@@ -119,10 +119,10 @@ const User = (props) => {
                 <div className="card">
                 <div className="card-header">
                     <div className="row justify-content-between">
-                        <div className="col-3">
+                        <div className="col-md-3 col-sm-12">
                             <h5>User</h5>
                         </div>
-                        <div className="col-3">
+                        <div className="col-md-3 col-sm-12">
                             <button className="btn btn-success float-right" onClick={toggle2}>
                                 Add User
                             </button>

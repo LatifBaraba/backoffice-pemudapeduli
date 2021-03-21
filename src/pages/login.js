@@ -42,7 +42,7 @@ const Logins = ({history}) => {
                                                     <div className="form-group form-row mt-3 mb-0">
                                                         <button className="btn btn-primary btn-block" type="button" onClick={() => loginAuth()}>{Login}</button>
                                                     </div>
-                                                    <div className="login-divider"></div>
+                                                    {/* <div className="login-divider"></div>
                                                     <div className="social mt-3">
                                                         <div className="form-group btn-showcase d-flex">
                                                             <button className="btn social-btn btn-fb d-inline-block"> <i className="fa fa-facebook"></i></button>
@@ -50,7 +50,7 @@ const Logins = ({history}) => {
                                                             <button className="btn social-btn btn-google d-inline-block"><i className="fa fa-twitter"></i></button>
                                                             <button className="btn social-btn btn-github d-inline-block"><i className="fa fa-github"></i></button>
                                                         </div>
-                                                    </div>
+                                                    </div> */}
                                                 </form>
                                             </div>
                                         </div>
