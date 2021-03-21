@@ -20,6 +20,8 @@ import Default from './components/dashboard/defaultCompo/default';
 // import Project from './components/dashboard/project/project';
 import Login from './pages/login';
 import User from './pages/user';
+import AddUser from './pages/add_user';
+import EditUser from './pages/edit_user';
 
 // sample page
 // import SupportTicket from './components/support-ticket/supportTicket';
@@ -47,6 +49,8 @@ function Root() {
                                         <App>
                                             <Route exact path={`${process.env.PUBLIC_URL}/dashboard`} component={Default} />
                                             <Route path={`${process.env.PUBLIC_URL}/user`} component={User} />
+                                            <Route path={`${process.env.PUBLIC_URL}/add-user`} component={AddUser} />
+                                            <Route path={`${process.env.PUBLIC_URL}/edit-user`} component={EditUser} />
                                             {/* <Route exact path={`${process.env.PUBLIC_URL}/dashboard/default`} component={Default} />
                                             <Route path={`${process.env.PUBLIC_URL}/dashboard/ecommerce`} component={Ecommerce} />
                                             <Route path={`${process.env.PUBLIC_URL}/dashboard/university`} component={University} />

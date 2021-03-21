@@ -2,7 +2,17 @@ import {
     Home,
     // Anchor,
     // Headphones,
-    Users
+    Users,
+    Image,
+    DollarSign,
+    AtSign,
+    Award,
+    BookOpen,
+    Columns,
+    FileText,
+    Bookmark,
+    ExternalLink,
+    Hash
 } from 'react-feather';
 
 export const MENUITEMS = [
@@ -26,6 +36,33 @@ export const MENUITEMS = [
     },
     {
         title: 'User', icon: Users, type: 'link', path: '/user', active: false
+    },
+    {
+        title: 'Banner', icon: Image, type: 'link', path: '/user', active: false
+    },
+    {
+        title: 'Donasi', icon: DollarSign, type: 'link', path: '/user', active: false
+    },
+    {
+        title: 'Tentang Kami', icon: AtSign, type: 'link', path: '/user', active: false
+    },
+    {
+        title: 'Program', icon: Bookmark, type: 'link', path: '/user', active: false
+    },
+    {
+        title: 'Achivement', icon: Award, type: 'link', path: '/user', active: false
+    },
+    {
+        title: 'Berita', icon: FileText, type: 'link', path: '/user', active: false
+    },
+    {
+        title: 'Album', icon: Columns, type: 'link', path: '/user', active: false
+    },
+    {
+        title: 'Partner', icon: ExternalLink, type: 'link', path: '/user', active: false
+    },
+    {
+        title: 'Kontak', icon: Hash, type: 'link', path: '/user', active: false
     },
 ]
 
