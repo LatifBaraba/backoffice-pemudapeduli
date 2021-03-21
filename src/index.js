@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
-import { Redirect } from "react-router-dom";
+// import { Redirect } from "react-router-dom";
 import './index.scss';
 
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
@@ -22,6 +22,9 @@ import Login from './pages/login';
 import User from './pages/user';
 import AddUser from './pages/add_user';
 import EditUser from './pages/edit_user';
+import Banner from './pages/banner';
+import AddBanner from './pages/add_banner';
+import EditBanner from './pages/edit_banner';
 
 // sample page
 // import SupportTicket from './components/support-ticket/supportTicket';
@@ -51,6 +54,9 @@ function Root() {
                                             <Route path={`${process.env.PUBLIC_URL}/user`} component={User} />
                                             <Route path={`${process.env.PUBLIC_URL}/add-user`} component={AddUser} />
                                             <Route path={`${process.env.PUBLIC_URL}/edit-user`} component={EditUser} />
+                                            <Route path={`${process.env.PUBLIC_URL}/banner`} component={Banner} />
+                                            <Route path={`${process.env.PUBLIC_URL}/add-banner`} component={AddBanner} />
+                                            <Route path={`${process.env.PUBLIC_URL}/edit-banner`} component={EditBanner} />
                                             {/* <Route exact path={`${process.env.PUBLIC_URL}/dashboard/default`} component={Default} />
                                             <Route path={`${process.env.PUBLIC_URL}/dashboard/ecommerce`} component={Ecommerce} />
                                             <Route path={`${process.env.PUBLIC_URL}/dashboard/university`} component={University} />
