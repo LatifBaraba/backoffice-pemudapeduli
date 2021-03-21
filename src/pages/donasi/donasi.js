@@ -1,26 +1,26 @@
 import React, { Fragment, useState } from 'react';
-import Breadcrumb from '../components/common/breadcrumb';
+import Breadcrumb from '../../components/common/breadcrumb';
 import PropTypes from "prop-types";
 import { Edit, Trash} from 'react-feather';
 import { Link } from 'react-router-dom';
 
-const Banner = (props) => {
+const Donasi = (props) => {
 
-    const bannerDatas = props.bannerData.map((banner, index) => {
+    const donasiDatas = props.donasiData.map((donasi, index) => {
         return (
             <tr key={index}>
                 <th scope="row">{index+1}</th>
                 {/* <td>{user.id}</td> */}
-                <td>{banner.title}</td>
-                <td>{banner.sub_title}</td>
-                <td>{banner.title_content}</td>
-                <td>{banner.thumbnail_image_url}</td>
+                <td>{donasi.title}</td>
+                <td>{donasi.sub_title}</td>
+                <td>{donasi.title_content}</td>
+                <td>{donasi.thumbnail_image_url}</td>
                 <td>
-                    <Link to="/edit-banner" className="mr-2">
-                        <Edit className="edit-banner" style={{cursor:"pointer"}}/>
+                    <Link to="/edit-donasi" className="mr-2">
+                        <Edit className="edit-donasi" style={{cursor:"pointer"}}/>
                     </Link>
                     {/* <button className="btn btn-danger" onClick={() => alert("delete")}> */}
-                        <Trash className="delete-user" style={{cursor:"pointer"}} onClick={() => alert("delete")}/>
+                        <Trash className="delete-donasi" style={{cursor:"pointer"}} onClick={() => alert("delete")}/>
                     {/* </button> */}
                 </td>
             </tr>
@@ -29,7 +29,7 @@ const Banner = (props) => {
 
     return (
         <Fragment>
-            <Breadcrumb title="User Page" parent="Dashboard" />
+            <Breadcrumb title="Donasi Page" parent="Dashboard" />
             <div className="container-fluid">
             <div className="row">
             <div className="col-sm-12">
@@ -37,12 +37,12 @@ const Banner = (props) => {
                 <div className="card-header">
                     <div className="row justify-content-between">
                         <div className="col-md-3 col-sm-12">
-                            <h5>User</h5>
+                            <h5>Donasi</h5>
                         </div>
                         <div className="col-md-3 col-sm-12">
-                            <button className="btn btn-success float-right">
-                                Add User
-                            </button>
+                            <Link to="/add-donasi" className="btn btn-success float-right">
+                                Add Donasi
+                            </Link>
                         </div>
                     </div>
                 </div>
@@ -60,7 +60,7 @@ const Banner = (props) => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {bannerDatas}
+                                {donasiDatas}
                             </tbody>
                         </table>
                     </div>
@@ -73,12 +73,12 @@ const Banner = (props) => {
     );
 }
 
-Banner.propTypes = {
-    bannerData: PropTypes.array
+Donasi.propTypes = {
+    donasiData: PropTypes.array
 };
   
-Banner.defaultProps = {
-    bannerData: [
+Donasi.defaultProps = {
+    donasiData: [
         {
             title:"banner1",
             sub_title:"coba banner1",
@@ -109,4 +109,4 @@ Banner.defaultProps = {
     ]
 };
 
-export default Banner
+export default Donasi

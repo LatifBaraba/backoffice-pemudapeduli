@@ -1,25 +1,23 @@
 import React, { Fragment, useState } from 'react';
-import Breadcrumb from '../components/common/breadcrumb';
+import Breadcrumb from '../../components/common/breadcrumb';
 import PropTypes from "prop-types";
 import { Edit, Trash} from 'react-feather';
 import { Link } from 'react-router-dom';
 
-const User = (props) => {
+const AboutUs = (props) => {
 
-    const userDatas = props.userData.map((user, index) => {
+    const aboutUsDatas = props.aboutusData.map((about, index) => {
         return (
             <tr key={index}>
                 <th scope="row">{index+1}</th>
                 {/* <td>{user.id}</td> */}
-                <td>{user.username}</td>
-                <td>{user.fullname}</td>
-                <td>{user.email}</td>
+                <td>{about.thumbnail_image_url}</td>
                 <td>
-                    <Link to="/edit-user" className="mr-2">
-                        <Edit className="edit-user" style={{cursor:"pointer"}} id={user.id}/>
+                    <Link to="/edit-aboutus" className="mr-2">
+                        <Edit className="edit-aboutus" style={{cursor:"pointer"}}/>
                     </Link>
                     {/* <button className="btn btn-danger" onClick={() => alert("delete")}> */}
-                        <Trash className="delete-user" style={{cursor:"pointer"}} onClick={() => alert("delete")}/>
+                        <Trash className="delete-aboutus" style={{cursor:"pointer"}} onClick={() => alert("delete")}/>
                     {/* </button> */}
                 </td>
             </tr>
@@ -28,7 +26,7 @@ const User = (props) => {
 
     return (
         <Fragment>
-            <Breadcrumb title="User Page" parent="Dashboard" />
+            <Breadcrumb title="AboutUs Page" parent="Dashboard" />
             <div className="container-fluid">
             <div className="row">
             <div className="col-sm-12">
@@ -36,12 +34,12 @@ const User = (props) => {
                 <div className="card-header">
                     <div className="row justify-content-between">
                         <div className="col-md-3 col-sm-12">
-                            <h5>User</h5>
+                            <h5>AboutUs</h5>
                         </div>
                         <div className="col-md-3 col-sm-12">
-                            <button className="btn btn-success float-right">
-                                Add User
-                            </button>
+                            <Link to="/add-aboutus" className="btn btn-success float-right">
+                                Add AboutUs
+                            </Link>
                         </div>
                     </div>
                 </div>
@@ -51,14 +49,12 @@ const User = (props) => {
                             <thead>
                                 <tr>
                                     <th scope="col">{"#"}</th>
-                                    <th scope="col">{"Userame"}</th>
-                                    <th scope="col">{"Fullname"}</th>
-                                    <th scope="col">{"Email"}</th>
+                                    <th scope="col">{"Thumbnail-image"}</th>
                                     <th scope="col">{"Action"}</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {userDatas}
+                                {aboutUsDatas}
                             </tbody>
                         </table>
                     </div>
@@ -70,43 +66,26 @@ const User = (props) => {
     </Fragment>
     );
 }
-  
 
-User.propTypes = {
-    userData: PropTypes.array
+AboutUs.propTypes = {
+    aboutusData: PropTypes.array
 };
   
-User.defaultProps = {
-    userData: [
+AboutUs.defaultProps = {
+    aboutusData: [
         {
-            id: "1",
-            username: "alpa",
-            fullname: "alpa",
-            email: "alpa",
-            role: "superrrr"
+            thumbnail_image_url:"http://gambar1",
+            description:""
         },
         {
-            id: "2",
-            username: "alpa",
-            fullname: "alpa",
-            email: "alpa",
-            role: "superrrr"
+            thumbnail_image_url:"http://gambar2",
+            description:""
         },
         {
-            id: "3",
-            username: "alpa",
-            fullname: "alpa",
-            email: "alpa",
-            role: "superrrr"
+            thumbnail_image_url:"http://gambar3",
+            description:""
         },
-        {
-            id: "4",
-            username: "alpa",
-            fullname: "alpa",
-            email: "alpa",
-            role: "superrrr"
-        }
     ]
 };
 
-export default User
+export default AboutUs

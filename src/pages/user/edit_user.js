@@ -1,8 +1,10 @@
-import React, { Fragment } from 'react';
-import Breadcrumb from '../components/common/breadcrumb';
+import React, { Fragment, useState, useEffect } from 'react';
+import Breadcrumb from '../../components/common/breadcrumb';
 import useForm from "react-hook-form";
 
-const AddUser = () => {
+const EditUser = (props) => {
+    console.log(props.id)
+
     const { register, handleSubmit, watch, errors } = useForm();
     const onSubmit = data => console.log(data);
 
@@ -14,7 +16,7 @@ const AddUser = () => {
                 <div className="col-sm-12">
                     <div className="card">
                         <div className="card-header">
-                            <h5>Add User</h5>    
+                            <h5>Edit User</h5>    
                         </div>
                         <div className="card-body">
                             {/* content form */}
@@ -81,4 +83,4 @@ const AddUser = () => {
     );
 }
 
-export default AddUser
+export default EditUser

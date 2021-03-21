@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import Breadcrumb from '../components/common/breadcrumb';
+import Breadcrumb from '../../components/common/breadcrumb';
 import useForm from "react-hook-form";
 
 const EditBanner = (props) => {

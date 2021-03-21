@@ -1,30 +1,23 @@
 import React, { Fragment } from 'react';
-import Breadcrumb from '../components/common/breadcrumb';
+import Breadcrumb from '../../components/common/breadcrumb';
 import useForm from "react-hook-form";
 
-const AddBanner = () => {
+const AddAlbum = () => {
     const { register, handleSubmit, watch, errors } = useForm();
     const onSubmit = data => console.log(data);
 
     return (
         <Fragment>
-            <Breadcrumb title="Banner Page" parent="Dashboard" />
+            <Breadcrumb title="Album Page" parent="Dashboard" />
             <div className="container-fluid">
             <div className="row">
                 <div className="col-sm-12">
                     <div className="card">
                         <div className="card-header">
-                            <h5>Add Banner</h5>    
+                            <h5>Add Album</h5>    
                         </div>
                         <div className="card-body">
                             {/* content form */}
-                            "title":"",
-                            "sub_title":"",
-                            "title_content":"",
-                            "thumbnail_image_url":"",
-                            "deeplink_right":"",
-                            "deeplink_left":"",
-                            "description":""
                             <form className="needs-validation" noValidate="" onSubmit={handleSubmit(onSubmit)}>
                                 <div className="row justify-content-center">
                                     <div className="col-md-6 col-sm-12">
@@ -42,21 +35,9 @@ const AddBanner = () => {
                                                 <div className="valid-feedback">{"Looks good!"}</div>
                                             </div>
                                             <div className="col-md-12 mb-3">
-                                                <label>{"Title-content"}</label>
-                                                <input className="form-control" name="title_content" type="text" placeholder="Title-content" ref={register({ required: true, maxLength: 6 })} />
-                                                <span>{errors.title_content && 'Password is required & Min 6 Character'}</span>
-                                                <div className="valid-feedback">{"Looks good!"}</div>
-                                            </div>
-                                            <div className="col-md-12 mb-3">
-                                                <label>{"Deeplink-right"}</label>
-                                                <input className="form-control" name="deeplink_right" type="text" placeholder="Deeplink-right" ref={register({ required: true, maxLength: 6 })} />
-                                                <span>{errors.deeplink_right && 'Deeplink-right is required & Min 6 Character'}</span>
-                                                <div className="valid-feedback">{"Looks good!"}</div>
-                                            </div>
-                                            <div className="col-md-12 mb-3">
-                                                <label>{"Deeplink-left"}</label>
-                                                <input className="form-control" name="deeplink_left" type="text" placeholder="Deeplink-left" ref={register({ required: true })} />
-                                                <span>{errors.deeplink_left && 'Deeplink-left is required'}</span>
+                                                <label>{"Tag"}</label>
+                                                <input className="form-control" name="tag" type="text" placeholder="Tag" ref={register({ required: true })} />
+                                                <span>{errors.tag && 'Tag is required & Min 6 Character'}</span>
                                                 <div className="valid-feedback">{"Looks good!"}</div>
                                             </div>
                                             <div className="col-md-12 mb-3">
@@ -77,4 +58,4 @@ const AddBanner = () => {
     );
 }
 
-export default AddBanner
+export default AddAlbum

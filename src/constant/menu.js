@@ -38,25 +38,25 @@ export const MENUITEMS = [
         title: 'User', icon: Users, type: 'link', path: '/user', active: false
     },
     {
-        title: 'Banner', icon: Image, type: 'link', path: '/user', active: false
+        title: 'Banner', icon: Image, type: 'link', path: '/banner', active: false
     },
     {
-        title: 'Donasi', icon: DollarSign, type: 'link', path: '/user', active: false
+        title: 'Donasi', icon: DollarSign, type: 'link', path: '/donasi', active: false
     },
     {
-        title: 'Tentang Kami', icon: AtSign, type: 'link', path: '/user', active: false
+        title: 'Tentang Kami', icon: AtSign, type: 'link', path: '/aboutus', active: false
     },
     {
-        title: 'Program', icon: Bookmark, type: 'link', path: '/user', active: false
+        title: 'Program', icon: Bookmark, type: 'link', path: '/program', active: false
     },
     {
         title: 'Achivement', icon: Award, type: 'link', path: '/user', active: false
     },
     {
-        title: 'Berita', icon: FileText, type: 'link', path: '/user', active: false
+        title: 'News', icon: FileText, type: 'link', path: '/news', active: false
     },
     {
-        title: 'Album', icon: Columns, type: 'link', path: '/user', active: false
+        title: 'Album', icon: Columns, type: 'link', path: '/album', active: false
     },
     {
         title: 'Partner', icon: ExternalLink, type: 'link', path: '/user', active: false
