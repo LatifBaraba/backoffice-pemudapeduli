@@ -11,16 +11,15 @@ const AddAlbum = () => {
     const dispatch = useDispatch();
 
     let token = localStorage.getItem('token');
-    
+
+    const [ titles, setTitles] = useState("");
+    const [ sub, setSub] = useState("");
+    const [ tag, setTag] = useState("");
+    const [ thumb, setThumb] = useState("");
+
     const SubmitAdd = () => {
-        console.log("masuk")
         dispatch(fetchAddAlbum(token, titles, sub, tag, thumb))
     }
-
-    const [ titles, setTitles] = useState();
-    const [ sub, setSub] = useState();
-    const [ tag, setTag] = useState();
-    const [ thumb, setThumb] = useState("");
 
     return (
         <Fragment>
@@ -34,7 +33,7 @@ const AddAlbum = () => {
                         </div>
                         <div className="card-body">
                             {/* content form */}
-                            <form className="needs-validation" noValidate="">
+                            {/* <form className="needs-validation"> */}
                                 <div className="row justify-content-center">
                                     <div className="col-md-6 col-sm-12">
                                         <div className="form-row">
@@ -61,10 +60,12 @@ const AddAlbum = () => {
                                                 <input className="form-control" type="file" accept="image/*" />
                                             </div>
                                         </div>
-                                        <button className="btn btn-pill btn-primary btn-block mt-3 mb-3" onClick={() => SubmitAdd()}>{"Submit"}</button>   
+                                        <button className="btn btn-pill btn-primary btn-block mt-3 mb-3" onClick={() => {
+                            SubmitAdd()
+                        }}>{"Submit"}</button>   
                                     </div>
                                 </div>
-                            </form>
+                            {/* </form> */}
                         </div>
                     </div>
                 </div>

@@ -7,7 +7,9 @@ import {
     EDIT_ALBUM_FAILURE,
     ADD_ALBUM,
     ADD_ALBUM_SUCCESS,
-    ADD_ALBUM_FAILURE
+    ADD_ALBUM_FAILURE,
+    DELETE_ALBUM_SUCCESS,
+    DELETE_ALBUM_FAILURE
     
 } from '../actionTypes';
 
@@ -64,6 +66,17 @@ export default function albumReducer(state = initialState, action) {
                 error: null
             };
         case ADD_ALBUM_FAILURE:
+            return {
+                ...state,
+                loading: false,
+            };
+        case DELETE_ALBUM_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                error: null
+            };
+        case DELETE_ALBUM_FAILURE:
             return {
                 ...state,
                 loading: false,

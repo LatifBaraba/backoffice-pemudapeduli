@@ -6,10 +6,15 @@ import { GET_ALBUM,
         EDIT_ALBUM_FAILURE,
         ADD_ALBUM,
         ADD_ALBUM_SUCCESS,
-        ADD_ALBUM_FAILURE
+        ADD_ALBUM_FAILURE,
+        DELETE_ALBUM_FAILURE,
+        DELETE_ALBUM_SUCCESS
         } from '../actionTypes';
 import axios from 'axios';
-import { fetchToken } from "../token/action";
+import { fetchToken, fetchRefreshToken } from "../token/action";
+import history from "../../history";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const URL = `${process.env.REACT_APP_BASE_URL}/album/list`;
 const EditURL = `${process.env.REACT_APP_BASE_URL}/album/`;
@@ -21,7 +26,7 @@ export function fetchAlbum(token) {
             method: 'POST',
             data: {
                 limit: "10",
-                offset: "1",
+                offset: "0",
                 filters: [
                     {
                         field: "is_deleted",
@@ -30,8 +35,8 @@ export function fetchAlbum(token) {
                 ],
                 order: "created_at",
                 sort: "ASC",
-                created_at_from: "2021-03-13",
-                created_at_to: "2021-03-19",
+                created_at_from: "",
+                created_at_to: "",
                 publish_at_from: "",
                 publish_at_to: ""
             },
@@ -46,7 +51,7 @@ export function fetchAlbum(token) {
         })
         .catch(err => {
             console.log(err)
-            if(err.status == 401){
+            if(err.response.status == 401){
                 dispatch(fetchToken())
             }
             dispatch(getAlbumFailure(err));
@@ -80,15 +85,16 @@ export function fetchEditAlbum(token, id, titles, sub, tag, thumb) {
     };
 };
 
-export function fetchAddAlbum(token, title, sub, tag, thumb) {
+export function fetchAddAlbum(token, titles, sub, tag, thumb) {
+    
     return (dispatch) => {
         axios(AddURL, {
             method: 'POST',
             data: {
-                title: title,
+                title: titles,
                 sub_title: sub,
                 tag: tag,
-                thumbnail_image_url:""
+                thumbnail_image_url: ""
             },
             headers: {
                 "pp-token": `${token}`,
@@ -96,12 +102,42 @@ export function fetchAddAlbum(token, title, sub, tag, thumb) {
             }
         })
         .then(res => {
+            history.push("/album");
+            toast.success("Add Success !");
             dispatch(addAlbumSuccess(res));
             console.log(res)
         })
         .catch(err => {
             console.log(err)
+            if(err.response.status == 401){
+                dispatch(fetchRefreshToken(token))
+            }
             dispatch(addAlbumFailure(err));
+        });
+    };
+};
+
+export function fetchDeleteAlbum(token, id) {
+    return (dispatch) => {
+        axios(EditURL+`${id}`, {
+            method: 'DELETE',
+            headers: {
+                "pp-token": `${token}`,
+                "Content-type": "application/json"
+            }
+        })
+        .then(res => {
+            toast.success("Delete Success !")
+            history.push("/album");
+            dispatch(deleteAlbumSuccess(res));
+            console.log(res)
+        })
+        .catch(err => {
+            if(err.response.status == 401){
+                history.push('/album')
+                dispatch(fetchRefreshToken(token))
+            }
+            dispatch(deleteAlbumFailure(err));
         });
     };
 };
@@ -138,4 +174,14 @@ const addAlbumSuccess = (payload) => ({
 
 const addAlbumFailure = () => ({
     type: ADD_ALBUM_FAILURE
+});
+
+// Delete Album
+const deleteAlbumSuccess = (payload) => ({
+    type: DELETE_ALBUM_SUCCESS,
+    payload
+});
+
+const deleteAlbumFailure = () => ({
+    type: DELETE_ALBUM_FAILURE
 });

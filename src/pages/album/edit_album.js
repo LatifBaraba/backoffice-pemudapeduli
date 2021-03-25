@@ -38,7 +38,7 @@ const EditAlbum = (props) => {
                         </div>
                         <div className="card-body">
                             {/* content form */}
-                            <form className="needs-validation" noValidate="">
+                            {/* <form className="needs-validation" noValidate=""> */}
                                 <div className="row justify-content-center">
                                     <div className="col-md-6 col-sm-12">
                                         <div className="form-row">
@@ -68,7 +68,7 @@ const EditAlbum = (props) => {
                                         <button className="btn btn-pill btn-primary btn-block mt-3 mb-3" onClick={() => SubmitEdit()}>{"Submit"}</button>   
                                     </div>
                                 </div>
-                            </form>
+                            {/* </form> */}
                         </div>
                     </div>
                 </div>

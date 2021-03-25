@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import { Edit, Trash} from 'react-feather';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchAlbum } from "../../redux/album/action";
+import { fetchAlbum, fetchDeleteAlbum } from "../../redux/album/action";
 
 const Album = (props) => {
 
@@ -33,9 +33,7 @@ const Album = (props) => {
                         }} className="mr-2">
                         <Edit className="edit-album" style={{cursor:"pointer"}}/>
                     </Link>
-                    {/* <button className="btn btn-danger" onClick={() => alert("delete")}> */}
-                        <Trash className="delete-album" style={{cursor:"pointer"}} onClick={() => alert("delete")}/>
-                    {/* </button> */}
+                    <Trash className="delete-album" style={{cursor:"pointer"}} onClick={() => dispatch(fetchDeleteAlbum(token, album.id))}/>
                 </td>
             </tr>
         )

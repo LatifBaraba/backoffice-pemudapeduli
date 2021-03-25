@@ -3,9 +3,11 @@ import ReactDOM from 'react-dom';
 // import { Redirect } from "react-router-dom";
 import './index.scss';
 
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { ScrollContext } from 'react-router-scroll-4';
 import * as serviceWorker from './serviceWorker';
+
+import history from './history';
 
 // ** Import custom components for redux**
 import { Provider } from 'react-redux';
@@ -58,7 +60,7 @@ function Root() {
     return (
         <div className="App">
             <Provider store={store}>
-                <BrowserRouter basename={'/'}>
+                <Router history={history}>
                     <ScrollContext>
                         <Switch>
                             {/* <Fragment> */}
@@ -92,7 +94,7 @@ function Root() {
                                             <Route path={`${process.env.PUBLIC_URL}/dashboard/university`} component={University} />
                                             <Route path={`${process.env.PUBLIC_URL}/dashboard/crypto`} component={CryptoComponent} />
                                             <Route path={`${process.env.PUBLIC_URL}/dashboard/project`} component={Project} />
-                                             */}
+                                            */}
                                             {/* Pricing */}
                                             {/* <Route path={`${process.env.PUBLIC_URL}/support-ticket/supportTicket`} component={SupportTicket} /> */}
                                         </App>
@@ -102,7 +104,7 @@ function Root() {
                             {/* </Fragment> */}
                         </Switch>
                     </ScrollContext>
-                </BrowserRouter>
+                </Router>
             </Provider>
         </div>
     );
