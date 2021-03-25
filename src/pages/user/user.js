@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment } from 'react';
 import Breadcrumb from '../../components/common/breadcrumb';
 import PropTypes from "prop-types";
 import { Edit, Trash} from 'react-feather';
@@ -17,8 +17,11 @@ const User = (props) => {
                 <td>{user.fullname}</td>
                 <td>{user.email}</td>
                 <td>
-                    <Link to="/edit-user" className="mr-2">
-                        <Edit className="edit-user" style={{cursor:"pointer"}} id={user.id}/>
+                    <Link to={{
+                            pathname: "/edit-user",
+                            state: { id: user.id }
+                        }} className="mr-2">
+                        <Edit className="edit-user" style={{cursor:"pointer"}}/>
                     </Link>
                     {/* <button className="btn btn-danger" onClick={() => alert("delete")}> */}
                         <Trash className="delete-user" style={{cursor:"pointer"}} onClick={() => alert("delete")}/>
@@ -70,27 +73,27 @@ const User = (props) => {
                         <div className="col-md-4 col-sm-12">
                             <Pagination aria-label="Page navigation" className="pagination-primary">
                                 <PaginationItem>
-                                    <PaginationLink href="#javascript">
+                                    <PaginationLink>
                                         {"Previous"}
                                     </PaginationLink>
                                     </PaginationItem>
                                 <PaginationItem>
-                                    <PaginationLink href="#javascript">
+                                    <PaginationLink>
                                         {"1"}
                                     </PaginationLink>
                                 </PaginationItem>
                                 <PaginationItem>
-                                    <PaginationLink href="#javascript">
+                                    <PaginationLink>
                                         {"2"}
                                         </PaginationLink>
                                 </PaginationItem>
                                 <PaginationItem>
-                                    <PaginationLink href="#javascript">
+                                    <PaginationLink>
                                         {"3"}
                                     </PaginationLink>
                                 </PaginationItem>
                                 <PaginationItem>
-                                    <PaginationLink href="#javascript">
+                                    <PaginationLink>
                                         {"Next"}
                                     </PaginationLink>
                                 </PaginationItem>
@@ -114,7 +117,7 @@ User.propTypes = {
 User.defaultProps = {
     userData: [
         {
-            id: "1",
+            id: "",
             username: "alpa",
             fullname: "alpa",
             email: "alpa",

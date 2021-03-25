@@ -21,7 +21,7 @@ const UserMenu = () => {
                     <li><a href="#javascript"><Mail />Inbox</a></li>
                     <li><a href="#javascript"><Lock />Lock Screen</a></li>
                     <li><a href="#javascript"><Settings />Settings</a></li> */}
-                    <li><a href="#javascript"><LogOut /> Log out</a></li>
+                    <li><a><LogOut /> Log out</a></li>
                 </ul>
             </li>
         </Fragment>

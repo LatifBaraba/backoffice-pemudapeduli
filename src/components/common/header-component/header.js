@@ -72,7 +72,7 @@ const Header = () => {
           <div className="mobile-sidebar d-block">
             <div className="media-body text-right switch-sm">
               <label className="switch">
-                <a href="#javascript" onClick={() => openCloseSidebar()}>
+                <a onClick={() => openCloseSidebar()}>
                   <AlignLeft />
                 </a>
               </label>

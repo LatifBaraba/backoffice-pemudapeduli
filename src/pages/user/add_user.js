@@ -25,37 +25,37 @@ const AddUser = () => {
                                             <div className="col-md-12 mb-3">
                                                 <label htmlFor="validationCustom01">{"Username"}</label>
                                                 <input className="form-control" name="username" type="text" placeholder="Username" ref={register({ required: true })} />
-                                                <span>{errors.firstName && 'Name is required'}</span>
+                                                <span>{errors.username && 'Name is required'}</span>
                                                 <div className="valid-feedback">{"Looks good!"}</div>
                                             </div>
                                             <div className="col-md-12 mb-3">
                                                 <label htmlFor="validationCustom01">{"Fullname"}</label>
                                                 <input className="form-control" name="fullname" type="text" placeholder="Fullname" ref={register({ required: true })} />
-                                                <span>{errors.firstName && 'Fullname is required'}</span>
+                                                <span>{errors.fullname && 'Fullname is required'}</span>
                                                 <div className="valid-feedback">{"Looks good!"}</div>
                                             </div>
                                             <div className="col-md-12 mb-3">
                                                 <label htmlFor="validationCustom01">{"Password"}</label>
-                                                <input className="form-control" name="password" type="password" placeholder="Password" ref={register({ required: true, maxLength: 6 })} />
+                                                <input className="form-control" name="password" type="password" placeholder="Password" ref={register({ required: true, minLength: 6 })} />
                                                 <span>{errors.password && 'Password is required & Min 6 Character'}</span>
                                                 <div className="valid-feedback">{"Looks good!"}</div>
                                             </div>
                                             <div className="col-md-12 mb-3">
                                                 <label htmlFor="validationCustom01">{"Confirm Password"}</label>
-                                                <input className="form-control" name="confirmPassword" type="password" placeholder="Confirm Password" ref={register({ required: true, maxLength: 6 })} />
+                                                <input className="form-control" name="confirmPassword" type="password" placeholder="Confirm Password" ref={register({ required: true, minLength: 6 })} />
                                                 <span>{errors.confirmPassword && 'Password is required & Min 6 Character'}</span>
                                                 <div className="valid-feedback">{"Looks good!"}</div>
                                             </div>
                                             <div className="col-md-12 mb-3">
                                                 <label htmlFor="validationCustom01">{"Email"}</label>
                                                 <input className="form-control" name="email" type="email" placeholder="Email" ref={register({ required: true })} />
-                                                <span>{errors.firstName && 'Email is required'}</span>
+                                                <span>{errors.email && 'Email is required'}</span>
                                                 <div className="valid-feedback">{"Looks good!"}</div>
                                             </div>
                                             <div className="col-md-12 mb-3">
                                                 <label htmlFor="validationCustom01">{"Address"}</label>
                                                 <input className="form-control" name="alamat" type="text" placeholder="Address" ref={register({ required: true })} />
-                                                <span>{errors.firstName && 'Email is required'}</span>
+                                                <span>{errors.alamat && 'Address is required'}</span>
                                                 <div className="valid-feedback">{"Looks good!"}</div>
                                             </div>
                                             <div className="col-md-12 mb-3">

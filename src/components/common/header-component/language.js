@@ -24,22 +24,22 @@ const Language = () => {
             <div>
                 <ul className="language-dropdown onhover-show-div p-20">
                     <li onClick={() => handleSetLanguage('en')}>
-                        <a href="#javascript" data-lng="en">
+                        <a data-lng="en">
                             <i className="flag-icon flag-icon-is"></i> English
                         </a>
                     </li>
                     <li onClick={() => handleSetLanguage('es')}>
-                        <a href="#javascript" data-lng="es">
+                        <a data-lng="es">
                             <i className="flag-icon flag-icon-um"></i> Spanish
                         </a>
                     </li>
                     <li onClick={() => handleSetLanguage('pt')}>
-                        <a href="#javascript" data-lng="pt">
+                        <a data-lng="pt">
                             <i className="flag-icon flag-icon-uy"></i> Portuguese
                         </a>
                     </li>
                     <li onClick={() => handleSetLanguage('fr')}>
-                        <a href="#javascript" data-lng="fr">
+                        <a data-lng="fr">
                             <i className="flag-icon flag-icon-nz"></i> French
                         </a>
                     </li>

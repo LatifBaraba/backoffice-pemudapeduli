@@ -1,22 +1,36 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useState, useEffect } from 'react';
 import Breadcrumb from '../../components/common/breadcrumb';
 import PropTypes from "prop-types";
 import { Edit, Trash} from 'react-feather';
 import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchAlbum } from "../../redux/album/action";
 
 const Album = (props) => {
 
-    const albumDatas = props.albumData.map((album, index) => {
+    const dispatch = useDispatch();
+
+    let token = localStorage.getItem('token');
+    useEffect(() => {
+        dispatch(fetchAlbum(token))
+    },[])
+
+    const albumData = useSelector((state) => state.albumReducer.album);
+
+    const albumDatas = albumData.map((album, index) => {
         return (
             <tr key={index}>
                 <th scope="row">{index+1}</th>
-                {/* <td>{user.id}</td> */}
                 <td>{album.title}</td>
                 <td>{album.sub_title}</td>
                 <td>{album.title_content}</td>
                 <td>{album.thumbnail_image_url}</td>
                 <td>
-                    <Link to="/edit-album" className="mr-2">
+                    {/* <Link to="/edit-album" className="mr-2"> */}
+                    <Link to={{
+                            pathname: "/edit-album",
+                            state: { data: album }
+                        }} className="mr-2">
                         <Edit className="edit-album" style={{cursor:"pointer"}}/>
                     </Link>
                     {/* <button className="btn btn-danger" onClick={() => alert("delete")}> */}
@@ -37,7 +51,7 @@ const Album = (props) => {
                 <div className="card-header">
                     <div className="row justify-content-between">
                         <div className="col-md-3 col-sm-12">
-                            <h5>Album</h5>
+                        <h5>Album</h5>
                         </div>
                         <div className="col-md-3 col-sm-12">
                             <Link to="/add-album" className="btn btn-success float-right">
@@ -108,5 +122,14 @@ Album.defaultProps = {
         },
     ]
 };
+
+// const mapStateToProps = state => {
+//     return {
+//         // fetchToken: () => dispatch(fetchToken()) 
+//         tokens: state.tokenReducer.token
+//     }
+// }
+  
+// export default connect(mapStateToProps, null)(Album)
 
 export default Album
