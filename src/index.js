@@ -3,9 +3,10 @@ import ReactDOM from 'react-dom';
 // import { Redirect } from "react-router-dom";
 import './index.scss';
 
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { ScrollContext } from 'react-router-scroll-4';
 import * as serviceWorker from './serviceWorker';
+import { Router } from 'react-router'
 
 import history from './history';
 

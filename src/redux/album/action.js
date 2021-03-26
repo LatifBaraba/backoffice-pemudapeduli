@@ -109,7 +109,7 @@ export function fetchAddAlbum(token, titles, sub, tag, thumb) {
         })
         .catch(err => {
             console.log(err)
-            if(err.response.status == 401){
+            if(err.status == 401){
                 dispatch(fetchRefreshToken(token))
             }
             dispatch(addAlbumFailure(err));
@@ -133,8 +133,9 @@ export function fetchDeleteAlbum(token, id) {
             console.log(res)
         })
         .catch(err => {
-            if(err.response.status == 401){
-                history.push('/album')
+            if(err.status == 401){
+                toast.danger(err.message)
+                history.push('/login')
                 dispatch(fetchRefreshToken(token))
             }
             dispatch(deleteAlbumFailure(err));
