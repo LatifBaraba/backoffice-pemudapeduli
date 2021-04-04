@@ -35,14 +35,18 @@ const EditBerita = (props) => {
     const [editorState, setEditorState] = useState(contentState ? existing : initialState)
     const desc = draftToHtml(convertToRaw(editorState.getCurrentContent()))
 
-    const SubmitEdit = () => {
-        uploadImage(img).then(message => {
-            const newThumb = message.response.data.url;
-            dispatch(fetchEditBerita(token, id, titles, sub, tag, newThumb, desc))
-        })
-        .catch(error => {
-            toast.error("Upload Image Failed !");
-        })
+    const onSubmit = data => {
+        if (data !== '') {
+            uploadImage(img).then(message => {
+                const newThumb = message.response.data.url;
+                dispatch(fetchEditBerita(token, id, titles, sub, tag, newThumb, desc))
+            })
+            .catch(error => {
+                toast.error("Upload Image Failed !");
+            })
+        } else {
+            errors.showMessages();
+        }
     }
 
     return (
@@ -57,7 +61,7 @@ const EditBerita = (props) => {
                         </div>
                         <div className="card-body">
                             {/* content form */}
-                            {/* <form className="needs-validation" noValidate="" onSubmit={handleSubmit(onSubmit)}> */}
+                            <form className="needs-validation" noValidate="" onSubmit={handleSubmit(onSubmit)}>
                                 <div className="row justify-content-center">
                                     <div className="col-md-6 col-sm-12">
                                         <div className="form-row">
@@ -93,10 +97,10 @@ const EditBerita = (props) => {
                                                 />
                                             </div>
                                         </div>
-                                        <button className="btn btn-pill btn-primary btn-block mt-3 mb-3" onClick={() => {SubmitEdit()}}>{"Submit"}</button>
+                                        <button className="btn btn-pill btn-primary btn-block mt-3 mb-3" type="submit">{"Submit"}</button>
                                     </div>
                                 </div>
-                            {/* </form> */}
+                            </form>
                         </div>
                     </div>
                 </div>

@@ -16,15 +16,19 @@ const AddPartner = () => {
     const [ name, setName] = useState("");
 
     const [ img, setImg] = useState();
-
-    const SubmitAdd = () => {
-        uploadImage(img).then(message => {
-            const newThumb = message.response.data.url;
-            dispatch(fetchAddPartner(token, name, newThumb))
-        })
-        .catch(error => {
-            toast.error("Upload Image Failed !");
-        })
+    
+    const onSubmit = data => {
+        if (data !== '') {
+            uploadImage(img).then(message => {
+                const newThumb = message.response.data.url;
+                dispatch(fetchAddPartner(token, name, newThumb))
+            })
+            .catch(error => {
+                toast.error("Upload Image Failed !");
+            })
+        } else {
+            errors.showMessages();
+        }
     }
 
     return (
@@ -39,7 +43,7 @@ const AddPartner = () => {
                         </div>
                         <div className="card-body">
                             {/* content form */}
-                            {/* <form className="needs-validation"> */}
+                            <form className="needs-validation" noValidate="" onSubmit={handleSubmit(onSubmit)}>
                                 <div className="row justify-content-center">
                                     <div className="col-md-6 col-sm-12">
                                         <div className="form-row">
@@ -54,10 +58,10 @@ const AddPartner = () => {
                                                 <input className="form-control" type="file" accept="image/*" onChange={(e) => setImg(e.target.files[0])}/>
                                             </div>
                                         </div>
-                                        <button className="btn btn-pill btn-primary btn-block mt-3 mb-3" onClick={() => {SubmitAdd()}}>{"Submit"}</button>   
+                                        <button className="btn btn-pill btn-primary btn-block mt-3 mb-3" type="submit">{"Submit"}</button>   
                                     </div>
                                 </div>
-                            {/* </form> */}
+                            </form>
                         </div>
                     </div>
                 </div>

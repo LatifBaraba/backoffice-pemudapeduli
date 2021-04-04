@@ -1,31 +1,37 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useEffect } from 'react';
 import Breadcrumb from '../../components/common/breadcrumb';
-import PropTypes from "prop-types";
 import { Edit, Trash} from 'react-feather';
 import { Link } from 'react-router-dom';
-import { Pagination, PaginationItem, PaginationLink } from 'reactstrap';
-
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchUser, fetchDeleteUser } from "../../redux/user/action";
 
 const User = (props) => {
 
-    const userDatas = props.userData.map((user, index) => {
+    const dispatch = useDispatch();
+
+    let token = localStorage.getItem('token');
+    useEffect(() => {
+        dispatch(fetchUser(token))
+    },[])
+
+    const userData = useSelector((state) => state.userReducer.user);
+    // console.log(userData, "data")
+    const userDatas = userData.map((user, index) => {
+        console.log(user, "data user")
         return (
             <tr key={index}>
                 <th scope="row">{index+1}</th>
-                {/* <td>{user.id}</td> */}
                 <td>{user.username}</td>
-                <td>{user.fullname}</td>
+                <td>{user.nama_lengkap}</td>
                 <td>{user.email}</td>
                 <td>
                     <Link to={{
                             pathname: "/edit-user",
-                            state: { id: user.id }
+                            state: { data: user }
                         }} className="mr-2">
                         <Edit className="edit-user" style={{cursor:"pointer"}}/>
                     </Link>
-                    {/* <button className="btn btn-danger" onClick={() => alert("delete")}> */}
-                        <Trash className="delete-user" style={{cursor:"pointer"}} onClick={() => alert("delete")}/>
-                    {/* </button> */}
+                    <Trash className="delete-user" style={{cursor:"pointer"}} onClick={() => dispatch(fetchDeleteUser(token, user.id))}/>
                 </td>
             </tr>
         )
@@ -41,7 +47,7 @@ const User = (props) => {
                 <div className="card-header">
                     <div className="row justify-content-between">
                         <div className="col-md-3 col-sm-12">
-                            <h5>User</h5>
+                        <h5>User</h5>
                         </div>
                         <div className="col-md-3 col-sm-12">
                             <Link to="/add-user" className="btn btn-success float-right">
@@ -56,7 +62,7 @@ const User = (props) => {
                             <thead>
                                 <tr>
                                     <th scope="col">{"#"}</th>
-                                    <th scope="col">{"Userame"}</th>
+                                    <th scope="col">{"Username"}</th>
                                     <th scope="col">{"Fullname"}</th>
                                     <th scope="col">{"Email"}</th>
                                     <th scope="col">{"Action"}</th>
@@ -68,39 +74,6 @@ const User = (props) => {
                         </table>
                     </div>
                 </div>
-                <div className="card-footer">
-                    <div className="row justify-content-center">
-                        <div className="col-md-4 col-sm-12">
-                            <Pagination aria-label="Page navigation" className="pagination-primary">
-                                <PaginationItem>
-                                    <PaginationLink>
-                                        {"Previous"}
-                                    </PaginationLink>
-                                    </PaginationItem>
-                                <PaginationItem>
-                                    <PaginationLink>
-                                        {"1"}
-                                    </PaginationLink>
-                                </PaginationItem>
-                                <PaginationItem>
-                                    <PaginationLink>
-                                        {"2"}
-                                        </PaginationLink>
-                                </PaginationItem>
-                                <PaginationItem>
-                                    <PaginationLink>
-                                        {"3"}
-                                    </PaginationLink>
-                                </PaginationItem>
-                                <PaginationItem>
-                                    <PaginationLink>
-                                        {"Next"}
-                                    </PaginationLink>
-                                </PaginationItem>
-                            </Pagination>
-                        </div>
-                    </div>
-                </div>
                 </div>
             </div>
             </div>
@@ -108,43 +81,5 @@ const User = (props) => {
     </Fragment>
     );
 }
-  
-
-User.propTypes = {
-    userData: PropTypes.array
-};
-  
-User.defaultProps = {
-    userData: [
-        {
-            id: "",
-            username: "alpa",
-            fullname: "alpa",
-            email: "alpa",
-            role: "superrrr"
-        },
-        {
-            id: "2",
-            username: "alpa",
-            fullname: "alpa",
-            email: "alpa",
-            role: "superrrr"
-        },
-        {
-            id: "3",
-            username: "alpa",
-            fullname: "alpa",
-            email: "alpa",
-            role: "superrrr"
-        },
-        {
-            id: "4",
-            username: "alpa",
-            fullname: "alpa",
-            email: "alpa",
-            role: "superrrr"
-        }
-    ]
-};
 
 export default User

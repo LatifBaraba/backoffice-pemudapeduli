@@ -10,6 +10,7 @@ import tentangReducer from '../redux/tentang/reducer';
 import programReducer from '../redux/program/reducer';
 import teamReducer from '../redux/team/reducer';
 import testimoniReducer from '../redux/testimoni/reducer';
+import userReducer from '../redux/user/reducer';
 
 const reducers = combineReducers({
     Customizer,
@@ -22,7 +23,8 @@ const reducers = combineReducers({
     tentangReducer,
     programReducer,
     teamReducer,
-    testimoniReducer
+    testimoniReducer,
+    userReducer
 
 });
 

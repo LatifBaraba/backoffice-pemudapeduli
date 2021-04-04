@@ -27,14 +27,18 @@ const AddBanner = () => {
     const [editorState, setEditorState] = useState(_contentState)
     const desc = draftToHtml(convertToRaw(editorState.getCurrentContent()))
 
-    const SubmitAdd = () => {
-        uploadImage(img).then(message => {
-            const newThumb = message.response.data.url;
-            dispatch(fetchAddBanner(token, titles, sub, titContent, newThumb, desc))
-        })
-        .catch(error => {
-            toast.error("Upload Image Failed !");
-        })
+    const onSubmit = data => {
+        if (data !== '') {
+            uploadImage(img).then(message => {
+                const newThumb = message.response.data.url;
+                dispatch(fetchAddBanner(token, titles, sub, titContent, newThumb, desc))
+            })
+            .catch(error => {
+                toast.error("Upload Image Failed !");
+            })
+        } else {
+            errors.showMessages();
+        }
     }
 
     return (
@@ -49,7 +53,7 @@ const AddBanner = () => {
                         </div>
                         <div className="card-body">
                             {/* content form */}
-                            {/* <form className="needs-validation" noValidate="" onSubmit={handleSubmit(onSubmit)}> */}
+                            <form className="needs-validation" noValidate="" onSubmit={handleSubmit(onSubmit)}>
                                 <div className="row justify-content-center">
                                     <div className="col-md-6 col-sm-12">
                                         <div className="form-row">
@@ -97,10 +101,10 @@ const AddBanner = () => {
                                                 />
                                             </div>
                                         </div>
-                                        <button className="btn btn-pill btn-primary btn-block mt-3 mb-3" onClick={() => {SubmitAdd()}}>{"Submit"}</button>
+                                        <button className="btn btn-pill btn-primary btn-block mt-3 mb-3" type="submit">{"Submit"}</button>
                                     </div>
                                 </div>
-                            {/* </form> */}
+                            </form>
                         </div>
                     </div>
                 </div>

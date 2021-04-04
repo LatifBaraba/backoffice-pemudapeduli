@@ -46,7 +46,7 @@ const Sidebar = (props) => {
 
         setTimeout(() => {
             const elmnt = document.getElementById("myDIV");
-            const menuWidth = elmnt.offsetWidth ?? 255;
+            const menuWidth = elmnt.offsetWidth;
             // console.log(menuWidth, 'ini ada')
             // setMenuWidth(menuWidth)
             if (menuWidth > window.innerWidth) {
