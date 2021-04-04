@@ -46,7 +46,8 @@ const Sidebar = (props) => {
 
         setTimeout(() => {
             const elmnt = document.getElementById("myDIV");
-            const menuWidth = elmnt.offsetWidth;
+            const menuWidth = elmnt.offsetWidth ?? 255;
+            // console.log(menuWidth, 'ini ada')
             // setMenuWidth(menuWidth)
             if (menuWidth > window.innerWidth) {
                 setHideRightArrow(false);

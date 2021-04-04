@@ -52,7 +52,7 @@ export function fetchAlbum(token) {
         .catch(err => {
             console.log(err)
             if(err.response.status === 401){
-                toast.danger("Unauthorized")
+                toast.error("Unauthorized")
                 dispatch(fetchRefreshToken(token))
                 history.push('/login')
             }
@@ -86,7 +86,7 @@ export function fetchEditAlbum(token, id, titles, sub, tag, newThumb) {
         .catch(err => {
             console.log(err)
             if(err.response.status === 401){
-                toast.danger("Unauthorized")
+                toast.error("Unauthorized")
                 dispatch(fetchRefreshToken(token))
                 history.push('/login')
             }
@@ -120,7 +120,7 @@ export function fetchAddAlbum(token, titles, sub, tag, newThumb) {
         .catch(err => {
             console.log(err)
             if(err.response.status === 401){
-                toast.danger("Unauthorized")
+                toast.error("Unauthorized")
                 dispatch(fetchRefreshToken(token))
                 history.push('/login')
             }
@@ -148,7 +148,7 @@ export function fetchDeleteAlbum(token, id) {
         })
         .catch(err => {
             if(err.response.status === 401){
-                toast.danger("Unauthorized")
+                toast.error("Unauthorized")
                 dispatch(fetchRefreshToken(token))
                 history.push('/login')
             }

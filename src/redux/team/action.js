@@ -52,7 +52,7 @@ export function fetchTeam(token) {
         .catch(err => {
             console.log(err)
             if(err.response.status === 401){
-                toast.danger("Unauthorized")
+                toast.error("Unauthorized")
                 dispatch(fetchRefreshToken(token))
                 history.push('/login')
             }
@@ -89,7 +89,7 @@ export function fetchEditTeam(token, id, name, role, facebook, google, instagram
         .catch(err => {
             console.log(err)
             if(err.response.status === 401){
-                toast.danger("Unauthorized")
+                toast.error("Unauthorized")
                 dispatch(fetchRefreshToken(token))
                 history.push('/login')
             }
@@ -126,7 +126,7 @@ export function fetchAddTeam(token, name, role, facebook, google, instagram, lin
         .catch(err => {
             console.log(err)
             if(err.response.status === 401){
-                toast.danger("Unauthorized")
+                toast.error("Unauthorized")
                 dispatch(fetchRefreshToken(token))
                 history.push('/login')
             }
@@ -154,7 +154,7 @@ export function fetchDeleteTeam(token, id) {
         })
         .catch(err => {
             if(err.response.status === 401){
-                toast.danger("Unauthorized")
+                toast.error("Unauthorized")
                 dispatch(fetchRefreshToken(token))
                 history.push('/login')
             }

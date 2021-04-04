@@ -52,7 +52,7 @@ export function fetchDonasi(token) {
         .catch(err => {
             console.log(err)
             if(err.response.status === 401){
-                toast.danger("Unauthorized")
+                toast.error("Unauthorized")
                 dispatch(fetchRefreshToken(token))
                 history.push('/login')
             }
@@ -87,7 +87,7 @@ export function fetchEditDonasi(token, id, titles, sub, tag, newThumb, desc) {
         .catch(err => {
             console.log(err)
             if(err.response.status === 401){
-                toast.danger("Unauthorized")
+                toast.error("Unauthorized")
                 dispatch(fetchRefreshToken(token))
                 history.push('/login')
             }
@@ -122,7 +122,7 @@ export function fetchAddDonasi(token, titles, sub, tag, newThumb, desc) {
         .catch(err => {
             console.log(err)
             if(err.response.status === 401){
-                toast.danger("Unauthorized")
+                toast.error("Unauthorized")
                 dispatch(fetchRefreshToken(token))
                 history.push('/login')
             }
@@ -150,7 +150,7 @@ export function fetchDeleteDonasi(token, id) {
         })
         .catch(err => {
             if(err.response.status === 401){
-                toast.danger("Unauthorized")
+                toast.error("Unauthorized")
                 dispatch(fetchRefreshToken(token))
                 history.push('/login')
             }

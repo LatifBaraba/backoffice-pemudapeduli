@@ -52,13 +52,18 @@ import EditTeam from './pages/team/edit_team';
 import Testimoni from './pages/testimoni/testimoni';
 import AddTestimoni from './pages/testimoni/add_testimoni';
 import EditTestimoni from './pages/testimoni/edit_testimoni';
-
+import { Redirect } from 'react-router-dom';
 // sample page
 // import SupportTicket from './components/support-ticket/supportTicket';
 
 //firebase Auth
 function Root() {
     const [authenticated,setAuthenticated] = useState(false)
+
+    let isToken = localStorage.getItem('token');
+    if(isToken){
+        setAuthenticated(true)
+    }
 
     useEffect(() => {
         const layout = localStorage.getItem('layout_version')
@@ -75,7 +80,7 @@ function Root() {
                         <Switch>
                             {/* <Fragment> */}
                                     <Route path={`${process.env.PUBLIC_URL}/login`} component={Login} />
-                                    {/* {authenticated !== null ? */}
+                                    {authenticated !== null ?
                                         <App>
                                             <Route exact path={`${process.env.PUBLIC_URL}/dashboard`} component={Default} />
                                             <Route path={`${process.env.PUBLIC_URL}/user`} component={User} />
@@ -117,9 +122,9 @@ function Root() {
                                             {/* Pricing */}
                                             {/* <Route path={`${process.env.PUBLIC_URL}/support-ticket/supportTicket`} component={SupportTicket} /> */}
                                         </App>
-                                    {/* :
+                                     :
                                         <Redirect to={`${process.env.PUBLIC_URL}/login`} />
-                                    }  */}
+                                    } 
                             {/* </Fragment> */}
                         </Switch>
                     </ScrollContext>

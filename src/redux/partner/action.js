@@ -52,7 +52,7 @@ export function fetchPartner(token) {
         .catch(err => {
             console.log(err)
             if(err.response.status === 401){
-                toast.danger("Unauthorized")
+                toast.error("Unauthorized")
                 dispatch(fetchRefreshToken(token))
                 history.push('/login')
             }
@@ -84,7 +84,7 @@ export function fetchEditPartner(token, id, name, newThumb) {
         .catch(err => {
             console.log(err)
             if(err.response.status === 401){
-                toast.danger("Unauthorized")
+                toast.error("Unauthorized")
                 dispatch(fetchRefreshToken(token))
                 history.push('/login')
             }
@@ -116,7 +116,7 @@ export function fetchAddPartner(token, name, newThumb) {
         .catch(err => {
             console.log(err)
             if(err.response.status === 401){
-                toast.danger("Unauthorized")
+                toast.error("Unauthorized")
                 dispatch(fetchRefreshToken(token))
                 history.push('/login')
             }
@@ -144,7 +144,7 @@ export function fetchDeletePartner(token, id) {
         })
         .catch(err => {
             if(err.response.status === 401){
-                toast.danger("Unauthorized")
+                toast.error("Unauthorized")
                 dispatch(fetchRefreshToken(token))
                 history.push('/login')
             }
