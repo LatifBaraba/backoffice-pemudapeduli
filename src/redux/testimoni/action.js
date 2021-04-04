@@ -51,8 +51,8 @@ export function fetchTestimoni(token) {
         })
         .catch(err => {
             console.log(err)
-            if(err.status == 401){
-                toast.danger(err.message)
+            if(err.response.status === 401){
+                toast.danger("Unauthorized")
                 dispatch(fetchRefreshToken(token))
                 history.push('/login')
             }
@@ -85,8 +85,8 @@ export function fetchEditTestimoni(token, id, name, role, messages, newThumb) {
         })
         .catch(err => {
             console.log(err)
-            if(err.status == 401){
-                toast.danger(err.message)
+            if(err.response.status === 401){
+                toast.danger("Unauthorized")
                 dispatch(fetchRefreshToken(token))
                 history.push('/login')
             }
@@ -119,8 +119,8 @@ export function fetchAddTestimoni(token, name, role, messages, newThumb) {
         })
         .catch(err => {
             console.log(err)
-            if(err.status == 401){
-                toast.danger(err.message)
+            if(err.response.status === 401){
+                toast.danger("Unauthorized")
                 dispatch(fetchRefreshToken(token))
                 history.push('/login')
             }
@@ -147,8 +147,8 @@ export function fetchDeleteTestimoni(token, id) {
             }, 2000);
         })
         .catch(err => {
-            if(err.status == 401){
-                toast.danger(err.message)
+            if(err.response.status === 401){
+                toast.danger("Unauthorized")
                 dispatch(fetchRefreshToken(token))
                 history.push('/login')
             }
