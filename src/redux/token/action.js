@@ -6,6 +6,11 @@ const URLREF = `${process.env.REACT_APP_BASE_URL}/refresh-token`;
 const SERVICENAME = `${process.env.REACT_APP_SERVICE_NAME}`;
 const SECRETKEY = `${process.env.REACT_APP_SECRET_KEY}`;
 
+let min = 1;
+let max = 100;
+const randomId = Math.floor(Math.random() * (max - min));
+const randomType = Math.floor(Math.random() * (max - min));
+
 export function fetchToken() {
     return (dispatch) => {
         axios(URL, {
@@ -13,8 +18,9 @@ export function fetchToken() {
             data: {
                 name:`${SERVICENAME}`,
                 secret_key:`${SECRETKEY}`,
-                device_id:"1",
-                device_type:"1"
+                // device_id:"1",
+                device_id: `${randomId}`,
+                device_type: `${randomType}`
             },
             headers: {
                 "Content-type": "application/json"

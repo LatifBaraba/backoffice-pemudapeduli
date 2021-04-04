@@ -54,6 +54,7 @@ export function fetchProgram(token) {
             if(err.response.status === 401){
                 toast.error("Unauthorized")
                 dispatch(fetchRefreshToken(token))
+                localStorage.removeItem("token");
                 history.push('/login')
             }
             dispatch(getProgramFailure(err));
@@ -89,6 +90,7 @@ export function fetchEditProgram(token, id, titles, sub, tag, newThumb, desc) {
             if(err.response.status === 401){
                 toast.error("Unauthorized")
                 dispatch(fetchRefreshToken(token))
+                localStorage.removeItem("token");
                 history.push('/login')
             }
             dispatch(editProgramFailure(err));
@@ -124,6 +126,7 @@ export function fetchAddProgram(token, titles, sub, tag, newThumb, desc) {
             if(err.response.status === 401){
                 toast.error("Unauthorized")
                 dispatch(fetchRefreshToken(token))
+                localStorage.removeItem("token");
                 history.push('/login')
             }
             dispatch(addProgramFailure(err));
@@ -152,6 +155,7 @@ export function fetchDeleteProgram(token, id) {
             if(err.response.status === 401){
                 toast.error("Unauthorized")
                 dispatch(fetchRefreshToken(token))
+                localStorage.removeItem("token");
                 history.push('/login')
             }
             dispatch(deleteProgramFailure(err));

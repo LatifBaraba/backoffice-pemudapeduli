@@ -54,6 +54,7 @@ export function fetchTestimoni(token) {
             if(err.response.status === 401){
                 toast.error("Unauthorized")
                 dispatch(fetchRefreshToken(token))
+                localStorage.removeItem("token");
                 history.push('/login')
             }
             dispatch(getTestimoniFailure(err));
@@ -88,6 +89,7 @@ export function fetchEditTestimoni(token, id, name, role, messages, newThumb) {
             if(err.response.status === 401){
                 toast.error("Unauthorized")
                 dispatch(fetchRefreshToken(token))
+                localStorage.removeItem("token");
                 history.push('/login')
             }
             dispatch(editTestimoniFailure(err));
@@ -122,6 +124,7 @@ export function fetchAddTestimoni(token, name, role, messages, newThumb) {
             if(err.response.status === 401){
                 toast.error("Unauthorized")
                 dispatch(fetchRefreshToken(token))
+                localStorage.removeItem("token");
                 history.push('/login')
             }
             dispatch(addTestimoniFailure(err));
@@ -150,6 +153,7 @@ export function fetchDeleteTestimoni(token, id) {
             if(err.response.status === 401){
                 toast.error("Unauthorized")
                 dispatch(fetchRefreshToken(token))
+                localStorage.removeItem("token");
                 history.push('/login')
             }
             dispatch(deleteTestimoniFailure(err));

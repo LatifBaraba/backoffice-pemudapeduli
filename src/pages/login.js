@@ -28,7 +28,6 @@ const Logins = ({history}) => {
     const SubmitLogin = () => {
         dispatch(fetchLogin(token, username, password))
     }
-    
     return (
         <React.Fragment>
             { isToken ? (

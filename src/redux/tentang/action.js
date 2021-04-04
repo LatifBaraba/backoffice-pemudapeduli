@@ -54,6 +54,7 @@ export function fetchTentang(token) {
             if(err.response.status === 401){
                 toast.error("Unauthorized")
                 dispatch(fetchRefreshToken(token))
+                localStorage.removeItem("token");
                 history.push('/login')
             }
             dispatch(getTentangFailure(err));
@@ -86,6 +87,7 @@ export function fetchEditTentang(token, id, newThumb, desc) {
             if(err.response.status === 401){
                 toast.error("Unauthorized")
                 dispatch(fetchRefreshToken(token))
+                localStorage.removeItem("token");
                 history.push('/login')
             }
             dispatch(editTentangFailure(err));
@@ -118,6 +120,7 @@ export function fetchAddTentang(token, newThumb, desc) {
             if(err.response.status === 401){
                 toast.error("Unauthorized")
                 dispatch(fetchRefreshToken(token))
+                localStorage.removeItem("token");
                 history.push('/login')
             }
             dispatch(addTentangFailure(err));
@@ -146,6 +149,7 @@ export function fetchDeleteTentang(token, id) {
             if(err.status == 401){
                 toast.error(err.message)
                 dispatch(fetchRefreshToken(token))
+                localStorage.removeItem("token");
                 history.push('/login')
             }
             dispatch(deleteTentangFailure(err));

@@ -53,6 +53,7 @@ export function fetchBanner(token) {
             if(err.response.status === 401){
                 toast.error("Unauthorized")
                 dispatch(fetchRefreshToken(token))
+                localStorage.removeItem("token");
                 history.push('/login')
             }
             dispatch(getBannerFailure(err));
@@ -90,6 +91,7 @@ export function fetchEditBanner(token, id, titles, sub, titContent, newThumb, de
             if(err.response.status === 401){
                 toast.error("Unauthorized")
                 dispatch(fetchRefreshToken(token))
+                localStorage.removeItem("token");
                 history.push('/login')
             }
             dispatch(editBannerFailure(err));
@@ -127,6 +129,7 @@ export function fetchAddBanner(token, titles, sub, titContent, newThumb, desc) {
             if(err.response.status === 401){
                 toast.error("Unauthorized")
                 dispatch(fetchRefreshToken(token))
+                localStorage.removeItem("token");
                 history.push('/login')
             }
             dispatch(addBannerFailure(err));
@@ -155,6 +158,7 @@ export function fetchDeleteBanner(token, id) {
             if(err.response.status === 401){
                 toast.error("Unauthorized")
                 dispatch(fetchRefreshToken(token))
+                localStorage.removeItem("token");
                 history.push('/login')
             }
             dispatch(deleteBannerFailure(err));

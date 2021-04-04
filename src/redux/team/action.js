@@ -54,6 +54,7 @@ export function fetchTeam(token) {
             if(err.response.status === 401){
                 toast.error("Unauthorized")
                 dispatch(fetchRefreshToken(token))
+                localStorage.removeItem("token");
                 history.push('/login')
             }
             dispatch(getTeamFailure(err));
@@ -91,6 +92,7 @@ export function fetchEditTeam(token, id, name, role, facebook, google, instagram
             if(err.response.status === 401){
                 toast.error("Unauthorized")
                 dispatch(fetchRefreshToken(token))
+                localStorage.removeItem("token");
                 history.push('/login')
             }
             dispatch(editTeamFailure(err));
@@ -128,6 +130,7 @@ export function fetchAddTeam(token, name, role, facebook, google, instagram, lin
             if(err.response.status === 401){
                 toast.error("Unauthorized")
                 dispatch(fetchRefreshToken(token))
+                localStorage.removeItem("token");
                 history.push('/login')
             }
             dispatch(addTeamFailure(err));
@@ -156,6 +159,7 @@ export function fetchDeleteTeam(token, id) {
             if(err.response.status === 401){
                 toast.error("Unauthorized")
                 dispatch(fetchRefreshToken(token))
+                localStorage.removeItem("token");
                 history.push('/login')
             }
             dispatch(deleteTeamFailure(err));

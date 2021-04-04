@@ -54,6 +54,7 @@ export function fetchBerita(token) {
             if(err.response.status === 401){
                 toast.error("Unauthorized")
                 dispatch(fetchRefreshToken(token))
+                localStorage.removeItem("token");
                 history.push('/login')
             }
             dispatch(getBeritaFailure(err));
@@ -89,6 +90,7 @@ export function fetchEditBerita(token, id, titles, sub, tag, newThumb, desc) {
             if(err.response.status === 401){
                 toast.error("Unauthorized")
                 dispatch(fetchRefreshToken(token))
+                localStorage.removeItem("token");
                 history.push('/login')
             }
             dispatch(editBeritaFailure(err));
@@ -124,6 +126,7 @@ export function fetchAddBerita(token, titles, sub, tag, newThumb, desc) {
             if(err.response.status === 401){
                 toast.error("Unauthorized")
                 dispatch(fetchRefreshToken(token))
+                localStorage.removeItem("token");
                 history.push('/login')
             }
             dispatch(addBeritaFailure(err));
@@ -152,6 +155,7 @@ export function fetchDeleteBerita(token, id) {
             if(err.response.status === 401){
                 toast.error("Unauthorized")
                 dispatch(fetchRefreshToken(token))
+                localStorage.removeItem("token");
                 history.push('/login')
             }
             dispatch(deleteBeritaFailure(err));
