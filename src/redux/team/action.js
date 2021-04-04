@@ -52,7 +52,9 @@ export function fetchTeam(token) {
         .catch(err => {
             console.log(err)
             if(err.status == 401){
-                dispatch(fetchToken())
+                toast.danger(err.message)
+                dispatch(fetchRefreshToken(token))
+                history.push('/login')
             }
             dispatch(getTeamFailure(err));
         });
@@ -87,7 +89,9 @@ export function fetchEditTeam(token, id, name, role, facebook, google, instagram
         .catch(err => {
             console.log(err)
             if(err.status == 401){
+                toast.danger(err.message)
                 dispatch(fetchRefreshToken(token))
+                history.push('/login')
             }
             dispatch(editTeamFailure(err));
         });
@@ -122,7 +126,9 @@ export function fetchAddTeam(token, name, role, facebook, google, instagram, lin
         .catch(err => {
             console.log(err)
             if(err.status == 401){
+                toast.danger(err.message)
                 dispatch(fetchRefreshToken(token))
+                history.push('/login')
             }
             dispatch(addTeamFailure(err));
         });

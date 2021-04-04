@@ -52,7 +52,9 @@ export function fetchBerita(token) {
         .catch(err => {
             console.log(err)
             if(err.status == 401){
-                dispatch(fetchToken())
+                toast.danger(err.message)
+                dispatch(fetchRefreshToken(token))
+                history.push('/login')
             }
             dispatch(getBeritaFailure(err));
         });
@@ -84,6 +86,11 @@ export function fetchEditBerita(token, id, titles, sub, tag, newThumb, desc) {
         })
         .catch(err => {
             console.log(err)
+            if(err.status == 401){
+                toast.danger(err.message)
+                dispatch(fetchRefreshToken(token))
+                history.push('/login')
+            }
             dispatch(editBeritaFailure(err));
         });
     };
@@ -115,7 +122,9 @@ export function fetchAddBerita(token, titles, sub, tag, newThumb, desc) {
         .catch(err => {
             console.log(err)
             if(err.status == 401){
+                toast.danger(err.message)
                 dispatch(fetchRefreshToken(token))
+                history.push('/login')
             }
             dispatch(addBeritaFailure(err));
         });
@@ -145,6 +154,7 @@ export function fetchDeleteBerita(token, id) {
                 dispatch(fetchRefreshToken(token))
                 history.push('/login')
             }
+            dispatch(deleteBeritaFailure(err));
         });
     };
 };

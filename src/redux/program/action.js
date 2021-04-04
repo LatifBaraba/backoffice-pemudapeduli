@@ -52,7 +52,9 @@ export function fetchProgram(token) {
         .catch(err => {
             console.log(err)
             if(err.status == 401){
-                dispatch(fetchToken())
+                toast.danger(err.message)
+                dispatch(fetchRefreshToken(token))
+                history.push('/login')
             }
             dispatch(getProgramFailure(err));
         });
@@ -84,6 +86,11 @@ export function fetchEditProgram(token, id, titles, sub, tag, newThumb, desc) {
         })
         .catch(err => {
             console.log(err)
+            if(err.status == 401){
+                toast.danger(err.message)
+                dispatch(fetchRefreshToken(token))
+                history.push('/login')
+            }
             dispatch(editProgramFailure(err));
         });
     };
@@ -115,7 +122,9 @@ export function fetchAddProgram(token, titles, sub, tag, newThumb, desc) {
         .catch(err => {
             console.log(err)
             if(err.status == 401){
+                toast.danger(err.message)
                 dispatch(fetchRefreshToken(token))
+                history.push('/login')
             }
             dispatch(addProgramFailure(err));
         });

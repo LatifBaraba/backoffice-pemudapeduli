@@ -52,7 +52,9 @@ export function fetchBanner(token) {
         .catch(err => {
             console.log(err)
             if(err.status == 401){
-                dispatch(fetchToken())
+                toast.danger(err.message)
+                dispatch(fetchRefreshToken(token))
+                history.push('/login')
             }
             dispatch(getBannerFailure(err));
         });
@@ -86,6 +88,11 @@ export function fetchEditBanner(token, id, titles, sub, titContent, newThumb, de
         })
         .catch(err => {
             console.log(err)
+            if(err.status == 401){
+                toast.danger(err.message)
+                dispatch(fetchRefreshToken(token))
+                history.push('/login')
+            }
             dispatch(editBannerFailure(err));
         });
     };
@@ -119,7 +126,9 @@ export function fetchAddBanner(token, titles, sub, titContent, newThumb, desc) {
         .catch(err => {
             console.log(err)
             if(err.status == 401){
+                toast.danger(err.message)
                 dispatch(fetchRefreshToken(token))
+                history.push('/login')
             }
             dispatch(addBannerFailure(err));
         });

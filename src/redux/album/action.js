@@ -52,7 +52,9 @@ export function fetchAlbum(token) {
         .catch(err => {
             console.log(err)
             if(err.status == 401){
-                dispatch(fetchToken())
+                toast.danger(err.message)
+                dispatch(fetchRefreshToken(token))
+                history.push('/login')
             }
             dispatch(getAlbumFailure(err));
         });
@@ -84,7 +86,9 @@ export function fetchEditAlbum(token, id, titles, sub, tag, newThumb) {
         .catch(err => {
             console.log(err)
             if(err.status == 401){
+                toast.danger(err.message)
                 dispatch(fetchRefreshToken(token))
+                history.push('/login')
             }
             dispatch(editAlbumFailure(err));
         });
@@ -116,7 +120,9 @@ export function fetchAddAlbum(token, titles, sub, tag, newThumb) {
         .catch(err => {
             console.log(err)
             if(err.status == 401){
+                toast.danger(err.message)
                 dispatch(fetchRefreshToken(token))
+                history.push('/login')
             }
             dispatch(addAlbumFailure(err));
         });

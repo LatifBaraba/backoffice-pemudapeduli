@@ -52,7 +52,9 @@ export function fetchDonasi(token) {
         .catch(err => {
             console.log(err)
             if(err.status == 401){
-                dispatch(fetchToken())
+                toast.danger(err.message)
+                dispatch(fetchRefreshToken(token))
+                history.push('/login')
             }
             dispatch(getDonasiFailure(err));
         });
@@ -84,6 +86,11 @@ export function fetchEditDonasi(token, id, titles, sub, tag, newThumb, desc) {
         })
         .catch(err => {
             console.log(err)
+            if(err.status == 401){
+                toast.danger(err.message)
+                dispatch(fetchRefreshToken(token))
+                history.push('/login')
+            }
             dispatch(editDonasiFailure(err));
         });
     };
@@ -115,7 +122,9 @@ export function fetchAddDonasi(token, titles, sub, tag, newThumb, desc) {
         .catch(err => {
             console.log(err)
             if(err.status == 401){
+                toast.danger(err.message)
                 dispatch(fetchRefreshToken(token))
+                history.push('/login')
             }
             dispatch(addDonasiFailure(err));
         });

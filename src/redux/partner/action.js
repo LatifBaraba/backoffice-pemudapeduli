@@ -52,7 +52,9 @@ export function fetchPartner(token) {
         .catch(err => {
             console.log(err)
             if(err.status == 401){
-                dispatch(fetchToken())
+                toast.danger(err.message)
+                dispatch(fetchRefreshToken(token))
+                history.push('/login')
             }
             dispatch(getPartnerFailure(err));
         });
@@ -81,6 +83,11 @@ export function fetchEditPartner(token, id, name, newThumb) {
         })
         .catch(err => {
             console.log(err)
+            if(err.status == 401){
+                toast.danger(err.message)
+                dispatch(fetchRefreshToken(token))
+                history.push('/login')
+            }
             dispatch(editPartnerFailure(err));
         });
     };
@@ -109,7 +116,9 @@ export function fetchAddPartner(token, name, newThumb) {
         .catch(err => {
             console.log(err)
             if(err.status == 401){
+                toast.danger(err.message)
                 dispatch(fetchRefreshToken(token))
+                history.push('/login')
             }
             dispatch(addPartnerFailure(err));
         });

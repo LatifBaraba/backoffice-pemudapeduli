@@ -52,7 +52,9 @@ export function fetchTestimoni(token) {
         .catch(err => {
             console.log(err)
             if(err.status == 401){
-                dispatch(fetchToken())
+                toast.danger(err.message)
+                dispatch(fetchRefreshToken(token))
+                history.push('/login')
             }
             dispatch(getTestimoniFailure(err));
         });
@@ -84,7 +86,9 @@ export function fetchEditTestimoni(token, id, name, role, messages, newThumb) {
         .catch(err => {
             console.log(err)
             if(err.status == 401){
+                toast.danger(err.message)
                 dispatch(fetchRefreshToken(token))
+                history.push('/login')
             }
             dispatch(editTestimoniFailure(err));
         });
@@ -116,7 +120,9 @@ export function fetchAddTestimoni(token, name, role, messages, newThumb) {
         .catch(err => {
             console.log(err)
             if(err.status == 401){
+                toast.danger(err.message)
                 dispatch(fetchRefreshToken(token))
+                history.push('/login')
             }
             dispatch(addTestimoniFailure(err));
         });

@@ -52,7 +52,9 @@ export function fetchTentang(token) {
         .catch(err => {
             console.log(err)
             if(err.status == 401){
-                dispatch(fetchToken())
+                toast.danger(err.message)
+                dispatch(fetchRefreshToken(token))
+                history.push('/login')
             }
             dispatch(getTentangFailure(err));
         });
@@ -81,6 +83,11 @@ export function fetchEditTentang(token, id, newThumb, desc) {
         })
         .catch(err => {
             console.log(err)
+            if(err.status == 401){
+                toast.danger(err.message)
+                dispatch(fetchRefreshToken(token))
+                history.push('/login')
+            }
             dispatch(editTentangFailure(err));
         });
     };
@@ -109,7 +116,9 @@ export function fetchAddTentang(token, newThumb, desc) {
         .catch(err => {
             console.log(err)
             if(err.status == 401){
+                toast.danger(err.message)
                 dispatch(fetchRefreshToken(token))
+                history.push('/login')
             }
             dispatch(addTentangFailure(err));
         });
