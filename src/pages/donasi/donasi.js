@@ -1,27 +1,40 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useEffect } from 'react';
 import Breadcrumb from '../../components/common/breadcrumb';
 import PropTypes from "prop-types";
 import { Edit, Trash} from 'react-feather';
 import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchDonasi, fetchDeleteDonasi } from "../../redux/donasi/action";
 
 const Donasi = (props) => {
 
-    const donasiDatas = props.donasiData.map((donasi, index) => {
+    const dispatch = useDispatch();
+
+    let token = localStorage.getItem('token');
+    
+    useEffect(() => {
+        dispatch(fetchDonasi(token))
+    },[])
+
+    const donasiData = useSelector((state) => state.donasiReducer.donasi);
+
+    const donasiDatas = donasiData.map((donasi, index) => {
         return (
             <tr key={index}>
                 <th scope="row">{index+1}</th>
                 {/* <td>{user.id}</td> */}
                 <td>{donasi.title}</td>
                 <td>{donasi.sub_title}</td>
-                <td>{donasi.title_content}</td>
-                <td>{donasi.thumbnail_image_url}</td>
+                <td>{donasi.tag}</td>
+                <td className="text-center"><img src={donasi.thumbnail_image_url} alt={donasi.thumbnail_image_url} style={{width: 100}}/></td>
                 <td>
-                    <Link to="/edit-donasi" className="mr-2">
+                    <Link to={{
+                            pathname: "/edit-donasi",
+                            state: { data: donasi }
+                        }} className="mr-2">
                         <Edit className="edit-donasi" style={{cursor:"pointer"}}/>
                     </Link>
-                    {/* <button className="btn btn-danger" onClick={() => alert("delete")}> */}
-                        <Trash className="delete-donasi" style={{cursor:"pointer"}} onClick={() => alert("delete")}/>
-                    {/* </button> */}
+                    <Trash className="delete-donasi" style={{cursor:"pointer"}} onClick={() => dispatch(fetchDeleteDonasi(token, donasi.id))}/>
                 </td>
             </tr>
         )
@@ -54,7 +67,7 @@ const Donasi = (props) => {
                                     <th scope="col">{"#"}</th>
                                     <th scope="col">{"Tittle"}</th>
                                     <th scope="col">{"Sub-title"}</th>
-                                    <th scope="col">{"Title-content"}</th>
+                                    <th scope="col">{"Tag"}</th>
                                     <th scope="col">{"Thumbnail-image"}</th>
                                     <th scope="col">{"Action"}</th>
                                 </tr>
@@ -74,11 +87,11 @@ const Donasi = (props) => {
 }
 
 Donasi.propTypes = {
-    donasiData: PropTypes.array
+    bannerData: PropTypes.array
 };
   
 Donasi.defaultProps = {
-    donasiData: [
+    bannerData: [
         {
             title:"banner1",
             sub_title:"coba banner1",

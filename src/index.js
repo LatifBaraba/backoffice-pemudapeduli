@@ -28,21 +28,30 @@ import EditUser from './pages/user/edit_user';
 import Banner from './pages/banner/banner';
 import AddBanner from './pages/banner/add_banner';
 import EditBanner from './pages/banner/edit_banner';
-import AboutUs from './pages/aboutus/aboutus';
-import AddAboutUs from './pages/aboutus/add_aboutus';
-import EditAboutUs from './pages/aboutus/edit_aboutus';
+import Tentang from './pages/tentang/tentang';
+import AddTentangKami from './pages/tentang/add_tentang';
+import EditTentangKami from './pages/tentang/edit_tentang';
 import Album from './pages/album/album';
 import AddAlbum from './pages/album/add_album';
 import EditAlbum from './pages/album/edit_album';
-import News from './pages/news/news';
-import AddNews from './pages/news/add_news';
-import EditNews from './pages/news/edit_news';
+import Berita from './pages/berita/berita';
+import AddBerita from './pages/berita/add_berita';
+import EditBerita from './pages/berita/edit_berita';
 import Donasi from './pages/donasi/donasi';
 import AddDonasi from './pages/donasi/add_donasi';
 import EditDonasi from './pages/donasi/edit_donasi';
 import Program from './pages/program/program';
 import AddProgram from './pages/program/add_program';
 import EditProgram from './pages/program/edit_program';
+import Partner from './pages/partner/partner';
+import AddPartner from './pages/partner/add_partner';
+import EditPartner from './pages/partner/edit_partner';
+import Team from './pages/team/team';
+import AddTeam from './pages/team/add_team';
+import EditTeam from './pages/team/edit_team';
+import Testimoni from './pages/testimoni/testimoni';
+import AddTestimoni from './pages/testimoni/add_testimoni';
+import EditTestimoni from './pages/testimoni/edit_testimoni';
 
 // sample page
 // import SupportTicket from './components/support-ticket/supportTicket';
@@ -61,7 +70,7 @@ function Root() {
     return (
         <div className="App">
             <Provider store={store}>
-                <Router history={history}>
+                <Router history={history} forceRefresh={true}>
                     <ScrollContext>
                         <Switch>
                             {/* <Fragment> */}
@@ -75,21 +84,30 @@ function Root() {
                                             <Route path={`${process.env.PUBLIC_URL}/banner`} component={Banner} />
                                             <Route path={`${process.env.PUBLIC_URL}/add-banner`} component={AddBanner} />
                                             <Route path={`${process.env.PUBLIC_URL}/edit-banner`} component={EditBanner} />
-                                            <Route path={`${process.env.PUBLIC_URL}/aboutus`} component={AboutUs} />
-                                            <Route path={`${process.env.PUBLIC_URL}/add-aboutus`} component={AddAboutUs} />
-                                            <Route path={`${process.env.PUBLIC_URL}/edit-aboutus`} component={EditAboutUs} />
+                                            <Route path={`${process.env.PUBLIC_URL}/tentang-kami`} component={Tentang} />
+                                            <Route path={`${process.env.PUBLIC_URL}/add-tentangkami`} component={AddTentangKami} />
+                                            <Route path={`${process.env.PUBLIC_URL}/edit-tentangkami`} component={EditTentangKami} />
                                             <Route path={`${process.env.PUBLIC_URL}/album`} component={Album} />
                                             <Route path={`${process.env.PUBLIC_URL}/add-album`} component={AddAlbum} />
                                             <Route path={`${process.env.PUBLIC_URL}/edit-album`} component={EditAlbum} />
-                                            <Route path={`${process.env.PUBLIC_URL}/news`} component={News} />
-                                            <Route path={`${process.env.PUBLIC_URL}/add-news`} component={AddNews} />
-                                            <Route path={`${process.env.PUBLIC_URL}/edit-news`} component={EditNews} />
+                                            <Route path={`${process.env.PUBLIC_URL}/berita`} component={Berita} />
+                                            <Route path={`${process.env.PUBLIC_URL}/add-berita`} component={AddBerita} />
+                                            <Route path={`${process.env.PUBLIC_URL}/edit-berita`} component={EditBerita} />
                                             <Route path={`${process.env.PUBLIC_URL}/donasi`} component={Donasi} />
                                             <Route path={`${process.env.PUBLIC_URL}/add-donasi`} component={AddDonasi} />
                                             <Route path={`${process.env.PUBLIC_URL}/edit-donasi`} component={EditDonasi} />
                                             <Route path={`${process.env.PUBLIC_URL}/program`} component={Program} />
                                             <Route path={`${process.env.PUBLIC_URL}/add-program`} component={AddProgram} />
                                             <Route path={`${process.env.PUBLIC_URL}/edit-program`} component={EditProgram} />
+                                            <Route path={`${process.env.PUBLIC_URL}/partner`} component={Partner} />
+                                            <Route path={`${process.env.PUBLIC_URL}/add-partner`} component={AddPartner} />
+                                            <Route path={`${process.env.PUBLIC_URL}/edit-partner`} component={EditPartner} />
+                                            <Route path={`${process.env.PUBLIC_URL}/team`} component={Team} />
+                                            <Route path={`${process.env.PUBLIC_URL}/add-team`} component={AddTeam} />
+                                            <Route path={`${process.env.PUBLIC_URL}/edit-team`} component={EditTeam} />
+                                            <Route path={`${process.env.PUBLIC_URL}/testimoni`} component={Testimoni} />
+                                            <Route path={`${process.env.PUBLIC_URL}/add-testimoni`} component={AddTestimoni} />
+                                            <Route path={`${process.env.PUBLIC_URL}/edit-testimoni`} component={EditTestimoni} />
                                             {/* <Route exact path={`${process.env.PUBLIC_URL}/dashboard/default`} component={Default} />
                                             <Route path={`${process.env.PUBLIC_URL}/dashboard/ecommerce`} component={Ecommerce} />
                                             <Route path={`${process.env.PUBLIC_URL}/dashboard/university`} component={University} />

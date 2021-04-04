@@ -3,28 +3,33 @@ import Breadcrumb from '../../components/common/breadcrumb';
 import useForm from "react-hook-form";
 import { useDispatch } from 'react-redux';
 import { fetchEditAlbum } from "../../redux/album/action";
+import uploadImage from "../../helper/index";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const EditAlbum = (props) => {
     const { data } = props.location.state;
-    console.log(props)
-
-    const dispatch = useDispatch();
-
-    let token = localStorage.getItem('token');
-    
-    const SubmitEdit = () => {
-        console.log("masuk")
-        dispatch(fetchEditAlbum(token, id, titles, sub, tag, thumb))
-    }
 
     const [ id, setId] = useState(data.id);
     const [ titles, setTitles] = useState(data.title);
     const [ sub, setSub] = useState(data.sub_title);
     const [ tag, setTag] = useState(data.tag);
     const [ thumb, setThumb] = useState(data.thumbnail_image_url);
+    const [ img, setImg] = useState();
 
+    const dispatch = useDispatch();
+    let token = localStorage.getItem('token');
     const { register, handleSubmit, errors } = useForm();
-    // const onSubmit = data => console.log(data);
+    
+    const SubmitEdit = () => {
+        uploadImage(img).then(message => {
+            const newThumb = message.response.data.url;
+            dispatch(fetchEditAlbum(token, id, titles, sub, tag, newThumb))
+        })
+        .catch(error => {
+            toast.error("Upload Image Failed !");
+        })
+    }
 
     return (
         <Fragment>
@@ -62,7 +67,7 @@ const EditAlbum = (props) => {
                                             </div>
                                             <div className="col-md-12 mb-3">
                                                 <label>{"UploadFile"}</label>
-                                                <input className="form-control" type="file" accept="image/*" />
+                                                <input className="form-control" type="file" accept="image/*" onChange={(e) => setImg(e.target.files[0])}/>
                                             </div>
                                         </div>
                                         <button className="btn btn-pill btn-primary btn-block mt-3 mb-3" onClick={() => SubmitEdit()}>{"Submit"}</button>   

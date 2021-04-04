@@ -3,22 +3,30 @@ import Breadcrumb from '../../components/common/breadcrumb';
 import useForm from "react-hook-form";
 import { useDispatch } from 'react-redux';
 import { fetchAddAlbum } from "../../redux/album/action";
+import uploadImage from "../../helper/index";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const AddAlbum = () => {
     const { register, handleSubmit, errors } = useForm();
-    // const onSubmit = data => console.log(data);
-
     const dispatch = useDispatch();
-
+    
     let token = localStorage.getItem('token');
 
     const [ titles, setTitles] = useState("");
     const [ sub, setSub] = useState("");
     const [ tag, setTag] = useState("");
-    const [ thumb, setThumb] = useState("");
+
+    const [ img, setImg] = useState();
 
     const SubmitAdd = () => {
-        dispatch(fetchAddAlbum(token, titles, sub, tag, thumb))
+        uploadImage(img).then(message => {
+            const newThumb = message.response.data.url;
+            dispatch(fetchAddAlbum(token, titles, sub, tag, newThumb))
+        })
+        .catch(error => {
+            toast.error("Upload Image Failed !");
+        })
     }
 
     return (
@@ -57,12 +65,10 @@ const AddAlbum = () => {
                                             </div>
                                             <div className="col-md-12 mb-3">
                                                 <label>{"UploadFile"}</label>
-                                                <input className="form-control" type="file" accept="image/*" />
+                                                <input className="form-control" type="file" accept="image/*" onChange={(e) => setImg(e.target.files[0])}/>
                                             </div>
                                         </div>
-                                        <button className="btn btn-pill btn-primary btn-block mt-3 mb-3" onClick={() => {
-                            SubmitAdd()
-                        }}>{"Submit"}</button>   
+                                        <button className="btn btn-pill btn-primary btn-block mt-3 mb-3" onClick={() => {SubmitAdd()}}>{"Submit"}</button>   
                                     </div>
                                 </div>
                             {/* </form> */}

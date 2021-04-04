@@ -12,7 +12,9 @@ import {
     FileText,
     Bookmark,
     ExternalLink,
-    Hash
+    Hash,
+    CheckCircle,
+    UserCheck
 } from 'react-feather';
 
 export const MENUITEMS = [
@@ -44,7 +46,7 @@ export const MENUITEMS = [
         title: 'Donasi', icon: DollarSign, type: 'link', path: '/donasi', active: false
     },
     {
-        title: 'Tentang Kami', icon: AtSign, type: 'link', path: '/aboutus', active: false
+        title: 'Tentang Kami', icon: AtSign, type: 'link', path: '/tentang-kami', active: false
     },
     {
         title: 'Program', icon: Bookmark, type: 'link', path: '/program', active: false
@@ -53,13 +55,19 @@ export const MENUITEMS = [
         title: 'Achivement', icon: Award, type: 'link', path: '/user', active: false
     },
     {
-        title: 'News', icon: FileText, type: 'link', path: '/news', active: false
+        title: 'Berita', icon: FileText, type: 'link', path: '/berita', active: false
     },
     {
         title: 'Album', icon: Columns, type: 'link', path: '/album', active: false
     },
     {
-        title: 'Partner', icon: ExternalLink, type: 'link', path: '/user', active: false
+        title: 'Partner', icon: ExternalLink, type: 'link', path: '/partner', active: false
+    },
+    {
+        title: 'Team', icon: UserCheck, type: 'link', path: '/team', active: false
+    },
+    {
+        title: 'Testimoni', icon: CheckCircle, type: 'link', path: '/testimoni', active: false
     },
     {
         title: 'Kontak', icon: Hash, type: 'link', path: '/user', active: false

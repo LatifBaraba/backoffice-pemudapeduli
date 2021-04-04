@@ -64,7 +64,7 @@ const Header = () => {
         <div className="main-header-right row">
           <div className="main-header-left d-lg-none">
             <div className="logo-wrapper">
-              <Link to="/dashboard/default">
+              <Link to="/dashboard">
                 <img className="img-fluid" src={logo} alt="" />
               </Link>
             </div>

@@ -3,9 +3,18 @@ import man from '../../../assets/images/dashboard/user.png';
 import { 
     // User, Mail, Lock, Settings, 
     LogOut } from 'react-feather';
-
+import { fetchLogout } from "../../../redux/auth/action";
+import { useDispatch } from 'react-redux';
 
 const UserMenu = () => {
+    const dispatch = useDispatch();
+    const token = localStorage.getItem('token')
+    const logout = () => {
+        // history.push(`${process.env.PUBLIC_URL}/dashboard`);
+        console.log(token)
+        dispatch(fetchLogout(token))
+    }
+
     return (
         <Fragment>
             <li className="onhover-dropdown">
@@ -21,7 +30,7 @@ const UserMenu = () => {
                     <li><a href="#javascript"><Mail />Inbox</a></li>
                     <li><a href="#javascript"><Lock />Lock Screen</a></li>
                     <li><a href="#javascript"><Settings />Settings</a></li> */}
-                    <li><a><LogOut /> Log out</a></li>
+                    <li><a onClick={() => {logout()}}><LogOut /> Log out</a></li>
                 </ul>
             </li>
         </Fragment>

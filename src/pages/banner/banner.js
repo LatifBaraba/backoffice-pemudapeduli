@@ -1,12 +1,24 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useEffect } from 'react';
 import Breadcrumb from '../../components/common/breadcrumb';
 import PropTypes from "prop-types";
 import { Edit, Trash} from 'react-feather';
 import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchBanner, fetchDeleteBanner } from "../../redux/banner/action";
 
 const Banner = (props) => {
 
-    const bannerDatas = props.bannerData.map((banner, index) => {
+    const dispatch = useDispatch();
+
+    let token = localStorage.getItem('token');
+    
+    useEffect(() => {
+        dispatch(fetchBanner(token))
+    },[])
+
+    const bannerData = useSelector((state) => state.bannerReducer.banner);
+
+    const bannerDatas = bannerData.map((banner, index) => {
         return (
             <tr key={index}>
                 <th scope="row">{index+1}</th>
@@ -14,14 +26,15 @@ const Banner = (props) => {
                 <td>{banner.title}</td>
                 <td>{banner.sub_title}</td>
                 <td>{banner.title_content}</td>
-                <td>{banner.thumbnail_image_url}</td>
+                <td className="text-center"><img src={banner.thumbnail_image_url} alt={banner.thumbnail_image_url} style={{width: 100}}/></td>
                 <td>
-                    <Link to="/edit-banner" className="mr-2">
+                    <Link to={{
+                            pathname: "/edit-banner",
+                            state: { data: banner }
+                        }} className="mr-2">
                         <Edit className="edit-banner" style={{cursor:"pointer"}}/>
                     </Link>
-                    {/* <button className="btn btn-danger" onClick={() => alert("delete")}> */}
-                        <Trash className="delete-user" style={{cursor:"pointer"}} onClick={() => alert("delete")}/>
-                    {/* </button> */}
+                    <Trash className="delete-banner" style={{cursor:"pointer"}} onClick={() => dispatch(fetchDeleteBanner(token, banner.id))}/>
                 </td>
             </tr>
         )

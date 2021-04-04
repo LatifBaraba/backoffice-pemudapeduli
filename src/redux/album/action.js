@@ -25,7 +25,7 @@ export function fetchAlbum(token) {
         axios(URL, {
             method: 'POST',
             data: {
-                limit: "10",
+                limit: "100",
                 offset: "0",
                 filters: [
                     {
@@ -51,7 +51,7 @@ export function fetchAlbum(token) {
         })
         .catch(err => {
             console.log(err)
-            if(err.response.status == 401){
+            if(err.status == 401){
                 dispatch(fetchToken())
             }
             dispatch(getAlbumFailure(err));
@@ -59,7 +59,7 @@ export function fetchAlbum(token) {
     };
 };
 
-export function fetchEditAlbum(token, id, titles, sub, tag, thumb) {
+export function fetchEditAlbum(token, id, titles, sub, tag, newThumb) {
     return (dispatch) => {
         axios(EditURL+`${id}`, {
             method: 'PUT',
@@ -67,7 +67,7 @@ export function fetchEditAlbum(token, id, titles, sub, tag, thumb) {
                 title: titles,
                 sub_title: sub,
                 tag: tag,
-                thumbnail_image_url: ""
+                thumbnail_image_url: newThumb
             },
             headers: {
                 "pp-token": `${token}`,
@@ -75,18 +75,23 @@ export function fetchEditAlbum(token, id, titles, sub, tag, thumb) {
             }
         })
         .then(res => {
-            dispatch(editAlbumSuccess(res));
-            console.log(res)
+            setTimeout(() => {
+                toast.success("Add Success !");
+                dispatch(editAlbumSuccess(res));
+                history.push("/album");
+            }, 2000);
         })
         .catch(err => {
             console.log(err)
+            if(err.status == 401){
+                dispatch(fetchRefreshToken(token))
+            }
             dispatch(editAlbumFailure(err));
         });
     };
 };
 
-export function fetchAddAlbum(token, titles, sub, tag, thumb) {
-    
+export function fetchAddAlbum(token, titles, sub, tag, newThumb) {
     return (dispatch) => {
         axios(AddURL, {
             method: 'POST',
@@ -94,7 +99,7 @@ export function fetchAddAlbum(token, titles, sub, tag, thumb) {
                 title: titles,
                 sub_title: sub,
                 tag: tag,
-                thumbnail_image_url: ""
+                thumbnail_image_url: newThumb
             },
             headers: {
                 "pp-token": `${token}`,
@@ -102,10 +107,11 @@ export function fetchAddAlbum(token, titles, sub, tag, thumb) {
             }
         })
         .then(res => {
-            history.push("/album");
-            toast.success("Add Success !");
-            dispatch(addAlbumSuccess(res));
-            console.log(res)
+            setTimeout(() => {
+                toast.success("Add Success !");
+                dispatch(addAlbumSuccess(res));
+                history.push("/album");
+            }, 2000);
         })
         .catch(err => {
             console.log(err)
@@ -127,16 +133,18 @@ export function fetchDeleteAlbum(token, id) {
             }
         })
         .then(res => {
-            toast.success("Delete Success !")
-            history.push("/album");
-            dispatch(deleteAlbumSuccess(res));
-            console.log(res)
+            setTimeout(() => {
+                toast.success("Delete Success !")
+                dispatch(deleteAlbumSuccess(res));
+                history.push("/album");
+                window.location.reload();
+            }, 2000);
         })
         .catch(err => {
             if(err.status == 401){
                 toast.danger(err.message)
-                history.push('/login')
                 dispatch(fetchRefreshToken(token))
+                history.push('/login')
             }
             dispatch(deleteAlbumFailure(err));
         });

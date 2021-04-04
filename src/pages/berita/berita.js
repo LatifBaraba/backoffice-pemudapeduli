@@ -1,27 +1,40 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useEffect } from 'react';
 import Breadcrumb from '../../components/common/breadcrumb';
 import PropTypes from "prop-types";
 import { Edit, Trash} from 'react-feather';
 import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchBerita, fetchDeleteBerita } from "../../redux/berita/action";
 
-const News = (props) => {
+const Berita = (props) => {
 
-    const newsDatas = props.newsData.map((news, index) => {
+    const dispatch = useDispatch();
+
+    let token = localStorage.getItem('token');
+    
+    useEffect(() => {
+        dispatch(fetchBerita(token))
+    },[])
+
+    const beritaData = useSelector((state) => state.beritaReducer.berita);
+
+    const beritaDatas = beritaData.map((berita, index) => {
         return (
             <tr key={index}>
                 <th scope="row">{index+1}</th>
                 {/* <td>{user.id}</td> */}
-                <td>{news.title}</td>
-                <td>{news.sub_title}</td>
-                <td>{news.title_content}</td>
-                <td>{news.thumbnail_image_url}</td>
+                <td>{berita.title}</td>
+                <td>{berita.sub_title}</td>
+                <td>{berita.tag}</td>
+                <td className="text-center"><img src={berita.thumbnail_image_url} alt={berita.thumbnail_image_url} style={{width: 100}}/></td>
                 <td>
-                    <Link to="/edit-news" className="mr-2">
-                        <Edit className="edit-news" style={{cursor:"pointer"}}/>
+                    <Link to={{
+                            pathname: "/edit-berita",
+                            state: { data: berita }
+                        }} className="mr-2">
+                        <Edit className="edit-berita" style={{cursor:"pointer"}}/>
                     </Link>
-                    {/* <button className="btn btn-danger" onClick={() => alert("delete")}> */}
-                        <Trash className="delete-news" style={{cursor:"pointer"}} onClick={() => alert("delete")}/>
-                    {/* </button> */}
+                    <Trash className="delete-berita" style={{cursor:"pointer"}} onClick={() => dispatch(fetchDeleteBerita(token, berita.id))}/>
                 </td>
             </tr>
         )
@@ -29,7 +42,7 @@ const News = (props) => {
 
     return (
         <Fragment>
-            <Breadcrumb title="News Page" parent="Dashboard" />
+            <Breadcrumb title="Berita Page" parent="Dashboard" />
             <div className="container-fluid">
             <div className="row">
             <div className="col-sm-12">
@@ -37,11 +50,11 @@ const News = (props) => {
                 <div className="card-header">
                     <div className="row justify-content-between">
                         <div className="col-md-3 col-sm-12">
-                            <h5>News</h5>
+                            <h5>Berita</h5>
                         </div>
                         <div className="col-md-3 col-sm-12">
-                            <Link to="/add-news" className="btn btn-success float-right">
-                                Add News
+                            <Link to="/add-berita" className="btn btn-success float-right">
+                                Add Berita
                             </Link>
                         </div>
                     </div>
@@ -54,13 +67,13 @@ const News = (props) => {
                                     <th scope="col">{"#"}</th>
                                     <th scope="col">{"Tittle"}</th>
                                     <th scope="col">{"Sub-title"}</th>
-                                    <th scope="col">{"Title-content"}</th>
+                                    <th scope="col">{"Tag"}</th>
                                     <th scope="col">{"Thumbnail-image"}</th>
                                     <th scope="col">{"Action"}</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {newsDatas}
+                                {beritaDatas}
                             </tbody>
                         </table>
                     </div>
@@ -73,11 +86,11 @@ const News = (props) => {
     );
 }
 
-News.propTypes = {
+Berita.propTypes = {
     newsData: PropTypes.array
 };
   
-News.defaultProps = {
+Berita.defaultProps = {
     newsData: [
         {
             title:"banner1",
@@ -109,4 +122,4 @@ News.defaultProps = {
     ]
 };
 
-export default News
+export default Berita

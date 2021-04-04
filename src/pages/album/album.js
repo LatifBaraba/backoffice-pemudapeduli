@@ -23,8 +23,8 @@ const Album = (props) => {
                 <th scope="row">{index+1}</th>
                 <td>{album.title}</td>
                 <td>{album.sub_title}</td>
-                <td>{album.title_content}</td>
-                <td>{album.thumbnail_image_url}</td>
+                <td>{album.tag}</td>
+                <td className="text-center"><img src={album.thumbnail_image_url} alt={album.thumbnail_image_url} style={{width: 100}}/></td>
                 <td>
                     {/* <Link to="/edit-album" className="mr-2"> */}
                     <Link to={{
@@ -66,7 +66,7 @@ const Album = (props) => {
                                     <th scope="col">{"#"}</th>
                                     <th scope="col">{"Tittle"}</th>
                                     <th scope="col">{"Sub-title"}</th>
-                                    <th scope="col">{"Title-content"}</th>
+                                    <th scope="col">{"Tag"}</th>
                                     <th scope="col">{"Thumbnail-image"}</th>
                                     <th scope="col">{"Action"}</th>
                                 </tr>

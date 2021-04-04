@@ -1,27 +1,39 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useEffect } from 'react';
 import Breadcrumb from '../../components/common/breadcrumb';
-import PropTypes from "prop-types";
 import { Edit, Trash} from 'react-feather';
 import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchProgram, fetchDeleteProgram } from "../../redux/program/action";
 
 const Program = (props) => {
 
-    const programDatas = props.programData.map((program, index) => {
+    const dispatch = useDispatch();
+
+    let token = localStorage.getItem('token');
+    
+    useEffect(() => {
+        dispatch(fetchProgram(token))
+    },[])
+
+    const programData = useSelector((state) => state.programReducer.program);
+
+    const programDatas = programData.map((program, index) => {
         return (
             <tr key={index}>
                 <th scope="row">{index+1}</th>
                 {/* <td>{user.id}</td> */}
                 <td>{program.title}</td>
                 <td>{program.sub_title}</td>
-                <td>{program.title_content}</td>
-                <td>{program.thumbnail_image_url}</td>
+                <td>{program.tag}</td>
+                <td className="text-center"><img src={program.thumbnail_image_url} alt={program.thumbnail_image_url} style={{width: 100}}/></td>
                 <td>
-                    <Link to="/edit-program" className="mr-2">
+                    <Link to={{
+                            pathname: "/edit-program",
+                            state: { data: program }
+                        }} className="mr-2">
                         <Edit className="edit-program" style={{cursor:"pointer"}}/>
                     </Link>
-                    {/* <button className="btn btn-danger" onClick={() => alert("delete")}> */}
-                        <Trash className="delete-program" style={{cursor:"pointer"}} onClick={() => alert("delete")}/>
-                    {/* </button> */}
+                    <Trash className="delete-program" style={{cursor:"pointer"}} onClick={() => dispatch(fetchDeleteProgram(token, program.id))}/>
                 </td>
             </tr>
         )
@@ -54,7 +66,7 @@ const Program = (props) => {
                                     <th scope="col">{"#"}</th>
                                     <th scope="col">{"Tittle"}</th>
                                     <th scope="col">{"Sub-title"}</th>
-                                    <th scope="col">{"Title-content"}</th>
+                                    <th scope="col">{"Tag"}</th>
                                     <th scope="col">{"Thumbnail-image"}</th>
                                     <th scope="col">{"Action"}</th>
                                 </tr>
@@ -72,41 +84,5 @@ const Program = (props) => {
     </Fragment>
     );
 }
-
-Program.propTypes = {
-    programData: PropTypes.array
-};
-  
-Program.defaultProps = {
-    programData: [
-        {
-            title:"banner1",
-            sub_title:"coba banner1",
-            title_content:"title1",
-            thumbnail_image_url:"http://gambar,png",
-            deeplink_right:"view",
-            deeplink_left:"button",
-            description:"Lorem ipsum dolor sit amet consectetur, adipisicing elit. Tempora, iure!"
-        },
-        {
-            title:"banner2",
-            sub_title:"coba banner2",
-            title_content:"title1",
-            thumbnail_image_url:"http://gambar,png",
-            deeplink_right:"view",
-            deeplink_left:"button",
-            description:"Lorem ipsum dolor sit amet consectetur, adipisicing elit. Tempora, iure!"
-        },
-        {
-            title:"banner3",
-            sub_title:"coba banner3",
-            title_content:"title3",
-            thumbnail_image_url:"http://gambar,png",
-            deeplink_right:"view",
-            deeplink_left:"button",
-            description:"Lorem ipsum dolor sit amet consectetur, adipisicing elit. Tempora, iure!"
-        },
-    ]
-};
 
 export default Program
