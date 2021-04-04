@@ -14,12 +14,6 @@ import 'react-toastify/dist/ReactToastify.css';
 const LOGINURL = `${process.env.REACT_APP_BASE_URL}/auth/admin/login`;
 const LOGOUTURL = `${process.env.REACT_APP_BASE_URL}/auth/admin/logout`;
 
-let min = 1;
-let max = 100;
-const randomId = Math.floor(Math.random() * (max - min));
-const deviceType = Math.floor(Math.random() * (max - min));
-console.log(randomId, deviceType, 'random id, type');
-
 export function fetchLogin(token, username, password) {
     return (dispatch) => {
         axios(LOGINURL, {
@@ -60,6 +54,8 @@ export function fetchLogout(token) {
         })
         .then(res => {
             dispatch(logoutSuccess(res));
+            localStorage.removeItem("token");
+            history.push("/login")
             console.log(res)
         })
         .catch(err => {
