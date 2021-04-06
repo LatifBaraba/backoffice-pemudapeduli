@@ -135,15 +135,18 @@ export function fetchEditUser(token, id, name, role, messages, newThumb) {
     };
 };
 
-export function fetchAddUser(token, name, role, messages, newThumb) {
+export function fetchAddUser(token, username, fullname, email, address, password, cpassword, role) {
     return (dispatch) => {
         axios(AddURL, {
             method: 'POST',
             data: {
-                name: name,
-                role: role,
-                message: messages,
-                thumbnail_photo_url: newThumb,
+                username: username,
+                password: password,
+                confirm_password: cpassword,
+                email: email,
+                nama_lengkap: fullname,
+                alamat: address,
+                role: role
             },
             headers: {
                 "pp-token": `${token}`,
@@ -154,11 +157,13 @@ export function fetchAddUser(token, name, role, messages, newThumb) {
             setTimeout(() => {
                 toast.success("Add Success !");
                 dispatch(addUserSuccess(res));
-                history.push("/testimoni");
+                history.push("/user");
             }, 2000);
         })
         .catch(err => {
-            console.log(err)
+            console.log(err.response.data.message)
+            // toast.error(err.response.data.message)
+            toast.error("Username, Email or Password not match !")
             if(err.response.status === 401){
                 toast.error("Unauthorized")
                 dispatch(fetchRefreshToken(token))

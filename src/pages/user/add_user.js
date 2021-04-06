@@ -24,14 +24,18 @@ const AddUser = () => {
     const [ cpassword, setCpassword] = useState()
     const [ role, setRole] = useState()
 
-    const SubmitAdd = () => {
-        // dispatch(fetchAddUser(token, username, fullname, email, address, password, cpassword, role))
-        console.log(token, username, fullname, email, address, password, cpassword, role)
-    }
-
     useEffect(() => {
         dispatch(fetchRole(token))
     }, [])
+
+    const onSubmit = data => {
+        if (data !== '') {
+            dispatch(fetchAddUser(token, username, fullname, email, address, password, cpassword, role))
+            // console.log(token, username, fullname, email, address, password, cpassword, role)
+        } else {
+            errors.showMessages();
+        }
+    }
 
     return (
         <Fragment>
@@ -45,8 +49,7 @@ const AddUser = () => {
                         </div>
                         <div className="card-body">
                             {/* content form */}
-                            <form className="needs-validation">
-                            
+                            <form className="needs-validation" noValidate="" onSubmit={handleSubmit(onSubmit)}>
                                 <div className="row justify-content-center">
                                     <div className="col-md-6 col-sm-12">
                                         <div className="form-row">
@@ -70,20 +73,20 @@ const AddUser = () => {
                                             </div>
                                             <div className="col-md-12 mb-3">
                                                 <label>{"Address"}</label>
-                                                <input className="form-control" name="address" type="email" placeholder="Address" ref={register({ required: true })} onChange={(e) => setAddress(e.target.value)}/>
-                                                <span>{errors.address && 'Email is required'}</span>
+                                                <input className="form-control" name="address" type="text" placeholder="Address" ref={register({ required: true })} onChange={(e) => setAddress(e.target.value)}/>
+                                                <span>{errors.address && 'Address is required'}</span>
                                                 <div className="valid-feedback">{"Looks good!"}</div>
                                             </div>
                                             <div className="col-md-12 mb-3">
                                                 <label>{"Password"}</label>
-                                                <input className="form-control" name="password" type="password" placeholder="Password" ref={register({ required: true, minLength: 6 })} onChange={(e) => setPassword(e.target.value)}/>
-                                                <span>{errors.password && 'Password is required & min 6'}</span>
+                                                <input className="form-control" name="password" type="password" placeholder="Password" ref={register({ required: true, minLength: 8 })} onChange={(e) => setPassword(e.target.value)}/>
+                                                <span>{errors.password && 'Password is required & min 8'}</span>
                                                 <div className="valid-feedback">{"Looks good!"}</div>
                                             </div>
                                             <div className="col-md-12 mb-3">
                                                 <label>{"Confirm Password"}</label>
-                                                <input className="form-control" name="cpassword" type="password" placeholder="Confirm Password" ref={register({ required: true, minLength: 6 })} onChange={(e) => setCpassword(e.target.value)}/>
-                                                <span>{errors.cpassword && 'Password is required & min 6'}</span>
+                                                <input className="form-control" name="cpassword" type="password" placeholder="Confirm Password" ref={register({ required: true, minLength: 8 })} onChange={(e) => setCpassword(e.target.value)}/>
+                                                <span>{errors.cpassword && 'Confrim Password is required & min 8'}</span>
                                                 <div className="valid-feedback">{"Looks good!"}</div>
                                             </div>
                                             <div className="col-md-12 mb-3">
@@ -97,7 +100,7 @@ const AddUser = () => {
                                                 </select>
                                             </div>
                                         </div>
-                                        <button className="btn btn-pill btn-primary btn-block mt-3 mb-3" onClick={() => {SubmitAdd()}}>{"Submit"}</button>   
+                                        <button className="btn btn-pill btn-primary btn-block mt-3 mb-3" type="submit">{"Submit"}</button>   
                                     </div>
                                 </div>
                             </form>
