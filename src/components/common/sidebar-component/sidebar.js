@@ -175,8 +175,9 @@ const Sidebar = (props) => {
                 <div className="main-header-left d-none d-lg-block">
                     <div className="logo-wrapper compactLogo">
                         <Link to="/dashboard/default">
-                            <img className="blur-up lazyloaded" src={logo_compact} alt="" />
-                            <img className="blur-up lazyloaded" src={logo} alt="" />
+                            {/* <img className="blur-up lazyloaded" src={logo_compact} alt="" />
+                            <img className="blur-up lazyloaded" src={logo} alt="" /> */}
+                            <span style={{fontWeight:"800", fontSize:"22px", marginRight: "20px"}}>PemudaPeduli</span>
                         </Link>
                     </div>
                 </div>

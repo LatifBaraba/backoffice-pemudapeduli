@@ -119,7 +119,7 @@ export function fetchEditUser(token, id, name, role, messages, newThumb) {
             setTimeout(() => {
                 toast.success("Add Success !");
                 dispatch(editUserSuccess(res));
-                history.push("/testimoni");
+                history.push("/user");
             }, 2000);
         })
         .catch(err => {
@@ -188,7 +188,7 @@ export function fetchDeleteUser(token, id) {
             setTimeout(() => {
                 toast.success("Delete Success !")
                 dispatch(deleteUserSuccess(res));
-                history.push("/testimoni");
+                history.push("/user");
                 window.location.reload();
             }, 2000);
         })

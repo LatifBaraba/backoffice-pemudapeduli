@@ -65,7 +65,8 @@ const Header = () => {
           <div className="main-header-left d-lg-none">
             <div className="logo-wrapper">
               <Link to="/dashboard">
-                <img className="img-fluid" src={logo} alt="" />
+                {/* <img className="img-fluid" src={logo} alt="" /> */}
+                <span style={{fontWeight:"800", fontSize:"22px", marginRight: "20px"}}>PemudaPeduli</span>
               </Link>
             </div>
           </div>
