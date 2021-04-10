@@ -64,6 +64,7 @@ export function fetchTestimoni(token) {
 
 export function fetchEditTestimoni(token, id, name, role, messages, newThumb) {
     return (dispatch) => {
+        dispatch(editTestimoni())
         axios(EditURL+`${id}`, {
             method: 'PUT',
             data: {
@@ -99,6 +100,7 @@ export function fetchEditTestimoni(token, id, name, role, messages, newThumb) {
 
 export function fetchAddTestimoni(token, name, role, messages, newThumb) {
     return (dispatch) => {
+        dispatch(addTestimoni())
         axios(AddURL, {
             method: 'POST',
             data: {
@@ -176,6 +178,10 @@ const getTestimoni = () => ({
 });
 
 // Edit Testimoni
+const editTestimoni = () => ({
+    type: EDIT_TESTIMONI,
+});
+
 const editTestimoniSuccess = (payload) => ({
     type: EDIT_TESTIMONI_SUCCESS,
     payload
@@ -186,6 +192,10 @@ const editTestimoniFailure = () => ({
 });
 
 // Add Testimoni
+const addTestimoni = () => ({
+    type: ADD_TESTIMONI
+});
+
 const addTestimoniSuccess = (payload) => ({
     type: ADD_TESTIMONI_SUCCESS,
     payload

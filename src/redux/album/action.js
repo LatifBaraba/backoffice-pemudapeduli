@@ -63,6 +63,7 @@ export function fetchAlbum(token) {
 
 export function fetchEditAlbum(token, id, titles, sub, tag, newThumb) {
     return (dispatch) => {
+        dispatch(editAlbum())
         axios(EditURL+`${id}`, {
             method: 'PUT',
             data: {
@@ -97,6 +98,7 @@ export function fetchEditAlbum(token, id, titles, sub, tag, newThumb) {
 
 export function fetchAddAlbum(token, titles, sub, tag, newThumb) {
     return (dispatch) => {
+        dispatch(addAlbum())
         axios(AddURL, {
             method: 'POST',
             data: {
@@ -172,6 +174,10 @@ const getAlbum = () => ({
 });
 
 // Edit Album
+const editAlbum = () => ({
+    type: EDIT_ALBUM
+});
+
 const editAlbumSuccess = (payload) => ({
     type: EDIT_ALBUM_SUCCESS,
     payload
@@ -182,6 +188,10 @@ const editAlbumFailure = () => ({
 });
 
 // Add Album
+const addAlbum = () => ({
+    type: ADD_ALBUM
+});
+
 const addAlbumSuccess = (payload) => ({
     type: ADD_ALBUM_SUCCESS,
     payload

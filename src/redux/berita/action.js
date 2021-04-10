@@ -64,6 +64,7 @@ export function fetchBerita(token) {
 
 export function fetchEditBerita(token, id, titles, sub, tag, newThumb, desc) {
     return (dispatch) => {
+        dispatch(editBerita())
         axios(EditURL+`${id}`, {
             method: 'PUT',
             data: {
@@ -100,6 +101,7 @@ export function fetchEditBerita(token, id, titles, sub, tag, newThumb, desc) {
 
 export function fetchAddBerita(token, titles, sub, tag, newThumb, desc) {
     return (dispatch) => {
+        dispatch(addBerita())
         axios(AddURL, {
             method: 'POST',
             data: {
@@ -178,6 +180,10 @@ const getBerita = () => ({
 });
 
 // Edit Berita
+const editBerita = () => ({
+    type: EDIT_BERITA
+});
+
 const editBeritaSuccess = (payload) => ({
     type: EDIT_BERITA_SUCCESS,
     payload
@@ -188,6 +194,10 @@ const editBeritaFailure = () => ({
 });
 
 // Add Berita
+const addBerita = () => ({
+    type: ADD_BERITA
+});
+
 const addBeritaSuccess = (payload) => ({
     type: ADD_BERITA_SUCCESS,
     payload

@@ -64,6 +64,7 @@ export function fetchTentang(token) {
 
 export function fetchEditTentang(token, id, newThumb, desc) {
     return (dispatch) => {
+        dispatch(editTentang())
         axios(EditURL+`${id}`, {
             method: 'PUT',
             data: {
@@ -97,6 +98,7 @@ export function fetchEditTentang(token, id, newThumb, desc) {
 
 export function fetchAddTentang(token, newThumb, desc) {
     return (dispatch) => {
+        dispatch(addTentang())
         axios(AddURL, {
             method: 'POST',
             data: {
@@ -172,6 +174,10 @@ const getTentang = () => ({
 });
 
 // Edit Tentang
+const editTentang = () => ({
+    type: EDIT_TENTANG,
+});
+
 const editTentangSuccess = (payload) => ({
     type: EDIT_TENTANG_SUCCESS,
     payload
@@ -182,6 +188,9 @@ const editTentangFailure = () => ({
 });
 
 // Add Tentang
+const addTentang = () => ({
+    type: ADD_TENTANG
+});
 const addTentangSuccess = (payload) => ({
     type: ADD_TENTANG_SUCCESS,
     payload

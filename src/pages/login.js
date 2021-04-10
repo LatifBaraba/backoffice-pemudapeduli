@@ -6,10 +6,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchLogin } from "../redux/auth/action";
 import { fetchToken } from '../redux/token/action';
 import { Redirect } from 'react-router-dom';
+import useForm from "react-hook-form";
 
 const Logins = ({history}) => {
     const dispatch = useDispatch();
     const isToken = localStorage.getItem('token')
+    const { register, handleSubmit, errors } = useForm();
 
     // const loginAuth = () => {
     //     history.push(`${process.env.PUBLIC_URL}/dashboard`);
@@ -25,7 +27,7 @@ const Logins = ({history}) => {
     const tokenData = useSelector((state) => state.tokenReducer.token);
     // console.log(tokenData.token)
     const token = tokenData.token;
-    const SubmitLogin = () => {
+    const onSubmit = () => {
         dispatch(fetchLogin(token, username, password))
     }
     return (
@@ -49,7 +51,7 @@ const Logins = ({history}) => {
                                                             <h4>{LOGIN}</h4>
                                                             <h6>{"Enter your Username and Password"} </h6>
                                                         </div>
-                                                        <form className="theme-form">
+                                                        <form className="theme-form" onSubmit={handleSubmit(onSubmit)}>
                                                             <div className="form-group">
                                                                 <label className="col-form-label pt-0">{YourName}</label>
                                                                 <input className="form-control" type="text" required onChange={(e) => setUsername(e.target.value)}/>
@@ -64,7 +66,7 @@ const Logins = ({history}) => {
                                                             </div>
                                                             <div className="form-group form-row mt-3 mb-0">
                                                                 {/* <button className="btn btn-primary btn-block" type="button" onClick={() => loginAuth()}>{Login}</button> */}
-                                                                <button className="btn btn-primary btn-block" type="button" onClick={() => {SubmitLogin()}}>{Login}</button>
+                                                                <button className="btn btn-primary btn-block" type="submit">{Login}</button>
                                                             </div>
                                                             {/* <div className="login-divider"></div>
                                                             <div className="social mt-3">

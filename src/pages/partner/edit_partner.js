@@ -1,7 +1,7 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import Breadcrumb from '../../components/common/breadcrumb';
 import useForm from "react-hook-form";
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { fetchEditPartner } from "../../redux/partner/action";
 import uploadImage from "../../helper/index";
 import { toast } from 'react-toastify';
@@ -15,21 +15,39 @@ const EditPartner = (props) => {
     const [ thumb, setThumb] = useState(data.thumbnail_image_url);
     const [ img, setImg] = useState();
 
+    const loadingStatus = useSelector((state) => state.partnerReducer.loading);
+
     const dispatch = useDispatch();
     let token = localStorage.getItem('token');
     const { register, handleSubmit, errors } = useForm();
 
     const onSubmit = data => {
         if (data !== '') {
-            uploadImage(img).then(message => {
-                const newThumb = message.response.data.url;
-                dispatch(fetchEditPartner(token, id, name, newThumb))
-            })
-            .catch(error => {
-                toast.error("Upload Image Failed !");
-            })
+            if (img == 'undefined') {
+                uploadImage(img).then(message => {
+                    const newThumb = message.response.data.url;
+                    dispatch(fetchEditPartner(token, id, name, newThumb))
+                })
+                .catch(error => {
+                    toast.error("Upload Image Failed !");
+                })
+            } else {
+                dispatch(fetchEditPartner(token, id, name, thumb))
+            }
         } else {
             errors.showMessages();
+        }
+    }
+
+    const submitButton = () => {
+        if(loadingStatus == false) {
+          return (
+            <button className="btn btn-pill btn-primary btn-block mt-3 mb-3" type="submit">{"Submit"}</button>
+          )
+        } else {
+          return (
+            <button className="btn btn-pill btn-block mt-3 mb-3" type="submit" disabled>{"Loading"}</button>
+          )
         }
     }
 
@@ -60,7 +78,8 @@ const EditPartner = (props) => {
                                                 <input className="form-control" type="file" accept="image/*" onChange={(e) => setImg(e.target.files[0])}/>
                                             </div>
                                         </div>
-                                        <button className="btn btn-pill btn-primary btn-block mt-3 mb-3" type="submit">{"Submit"}</button>   
+                                        {/* <button className="btn btn-pill btn-primary btn-block mt-3 mb-3" type="submit">{"Submit"}</button>    */}
+                                        {submitButton()}
                                     </div>
                                 </div>
                             </form>

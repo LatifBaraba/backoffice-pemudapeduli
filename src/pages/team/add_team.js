@@ -1,7 +1,7 @@
 import React, { Fragment, useState } from 'react';
 import Breadcrumb from '../../components/common/breadcrumb';
 import useForm from "react-hook-form";
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { fetchAddTeam } from "../../redux/team/action";
 import uploadImage from "../../helper/index";
 import { toast } from 'react-toastify';
@@ -12,6 +12,8 @@ const AddTeam = () => {
     const dispatch = useDispatch();
     
     let token = localStorage.getItem('token');
+
+    const loadingStatus = useSelector((state) => state.teamReducer.loading);
 
     const [ name, setName] = useState()
     const [ role, setRole] = useState()
@@ -33,6 +35,18 @@ const AddTeam = () => {
             })
         } else {
             errors.showMessages();
+        }
+    }
+
+    const submitButton = () => {
+        if(loadingStatus == false) {
+          return (
+            <button className="btn btn-pill btn-primary btn-block mt-3 mb-3" type="submit">{"Submit"}</button>
+          )
+        } else {
+          return (
+            <button className="btn btn-pill btn-block mt-3 mb-3" type="submit" disabled>{"Loading"}</button>
+          )
         }
     }
 
@@ -93,7 +107,8 @@ const AddTeam = () => {
                                                 <input className="form-control" type="file" accept="image/*" onChange={(e) => setImg(e.target.files[0])}/>
                                             </div>
                                         </div>
-                                        <button className="btn btn-pill btn-primary btn-block mt-3 mb-3" type="submit">{"Submit"}</button>   
+                                        {/* <button className="btn btn-pill btn-primary btn-block mt-3 mb-3" type="submit">{"Submit"}</button> */}
+                                        {submitButton()}
                                     </div>
                                 </div>
                             </form>

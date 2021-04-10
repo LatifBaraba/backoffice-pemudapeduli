@@ -102,6 +102,7 @@ export function fetchRole(token) {
 
 export function fetchEditUser(token, id, name, role, messages, newThumb) {
     return (dispatch) => {
+        dispatch(editUser())
         axios(EditURL+`${id}`, {
             method: 'PUT',
             data: {
@@ -137,6 +138,7 @@ export function fetchEditUser(token, id, name, role, messages, newThumb) {
 
 export function fetchAddUser(token, username, fullname, email, address, password, cpassword, role) {
     return (dispatch) => {
+        dispatch(addUser())
         axios(AddURL, {
             method: 'POST',
             data: {
@@ -233,6 +235,10 @@ const getRole = () => ({
 });
 
 // Edit User
+const editUser = () => ({
+    type: EDIT_USER
+});
+
 const editUserSuccess = (payload) => ({
     type: EDIT_USER_SUCCESS,
     payload
@@ -243,6 +249,10 @@ const editUserFailure = () => ({
 });
 
 // Add User
+const addUser = () => ({
+    type: ADD_USER
+});
+
 const addUserSuccess = (payload) => ({
     type: ADD_USER_SUCCESS,
     payload

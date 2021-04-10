@@ -64,6 +64,7 @@ export function fetchDonasi(token) {
 
 export function fetchEditDonasi(token, id, titles, sub, tag, newThumb, desc) {
     return (dispatch) => {
+        dispatch(editDonasi())
         axios(EditURL+`${id}`, {
             method: 'PUT',
             data: {
@@ -100,6 +101,7 @@ export function fetchEditDonasi(token, id, titles, sub, tag, newThumb, desc) {
 
 export function fetchAddDonasi(token, titles, sub, tag, newThumb, desc) {
     return (dispatch) => {
+        dispatch(addDonasi())
         axios(AddURL, {
             method: 'POST',
             data: {
@@ -178,6 +180,10 @@ const getDonasi = () => ({
 });
 
 // Edit Donasi
+const editDonasi = () => ({
+    type: EDIT_DONASI
+});
+
 const editDonasiSuccess = (payload) => ({
     type: EDIT_DONASI_SUCCESS,
     payload
@@ -188,6 +194,10 @@ const editDonasiFailure = () => ({
 });
 
 // Add Donasi
+const addDonasi = () => ({
+    type: ADD_DONASI
+});
+
 const addDonasiSuccess = (payload) => ({
     type: ADD_DONASI_SUCCESS,
     payload

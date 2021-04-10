@@ -1,7 +1,7 @@
 import React, { Fragment, useState } from 'react';
 import Breadcrumb from '../../components/common/breadcrumb';
 import useForm from "react-hook-form";
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { fetchEditBanner } from "../../redux/banner/action";
 import uploadImage from "../../helper/index";
 import { toast } from 'react-toastify';
@@ -27,6 +27,8 @@ const EditBanner = (props) => {
     const [ thumb, setThumb] = useState(data.thumbnail_image_url);
     const [ img, setImg] = useState();
 
+    const loadingStatus = useSelector((state) => state.bannerReducer.loading);
+
     const dispatch = useDispatch();
     let token = localStorage.getItem('token');
     const { register, handleSubmit, errors } = useForm();
@@ -42,15 +44,31 @@ const EditBanner = (props) => {
 
     const onSubmit = data => {
         if (data !== '') {
-            uploadImage(img).then(message => {
-                const newThumb = message.response.data.url;
-                dispatch(fetchEditBanner(token, id, titles, sub, titContent, newThumb, desc))
-            })
-            .catch(error => {
-                toast.error("Upload Image Failed !");
-            })
+            if (img == 'undefined') {
+                uploadImage(img).then(message => {
+                    const newThumb = message.response.data.url;
+                    dispatch(fetchEditBanner(token, id, titles, sub, titContent, newThumb, desc))
+                })
+                .catch(error => {
+                    toast.error("Upload Image Failed !");
+                })
+            } else {
+                dispatch(fetchEditBanner(token, id, titles, sub, titContent, thumb, desc))
+            }
         } else {
             errors.showMessages();
+        }
+    }
+
+    const submitButton = () => {
+        if(loadingStatus == false) {
+          return (
+            <button className="btn btn-pill btn-primary btn-block mt-3 mb-3" type="submit">{"Submit"}</button>
+          )
+        } else {
+          return (
+            <button className="btn btn-pill btn-block mt-3 mb-3" type="submit" disabled>{"Loading"}</button>
+          )
         }
     }
 
@@ -114,7 +132,8 @@ const EditBanner = (props) => {
                                                 />
                                             </div>
                                         </div>
-                                        <button className="btn btn-pill btn-primary btn-block mt-3 mb-3" type="submit">{"Submit"}</button>
+                                        {/* <button className="btn btn-pill btn-primary btn-block mt-3 mb-3" type="submit">{"Submit"}</button> */}
+                                        {submitButton()}
                                     </div>
                                 </div>
                             </form>

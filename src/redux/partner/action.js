@@ -63,6 +63,7 @@ export function fetchPartner(token) {
 
 export function fetchEditPartner(token, id, name, newThumb) {
     return (dispatch) => {
+        dispatch(editPartner())
         axios(EditURL+`${id}`, {
             method: 'PUT',
             data: {
@@ -95,6 +96,7 @@ export function fetchEditPartner(token, id, name, newThumb) {
 
 export function fetchAddPartner(token, name, newThumb) {
     return (dispatch) => {
+        dispatch(addPartner())
         axios(AddURL, {
             method: 'POST',
             data: {
@@ -168,6 +170,10 @@ const getPartner = () => ({
 });
 
 // Edit PARTNER
+const editPartner = () => ({
+    type: EDIT_PARTNER
+});
+
 const editPartnerSuccess = (payload) => ({
     type: EDIT_PARTNER_SUCCESS,
     payload
@@ -178,6 +184,10 @@ const editPartnerFailure = () => ({
 });
 
 // Add PARTNER
+const addPartner = () => ({
+    type: ADD_PARTNER
+});
+
 const addPartnerSuccess = (payload) => ({
     type: ADD_PARTNER_SUCCESS,
     payload

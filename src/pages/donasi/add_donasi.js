@@ -1,7 +1,7 @@
 import React, { Fragment, useState } from 'react';
 import Breadcrumb from '../../components/common/breadcrumb';
 import useForm from "react-hook-form";
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { fetchAddDonasi } from "../../redux/donasi/action";
 import uploadImage from "../../helper/index";
 import { toast } from 'react-toastify';
@@ -23,6 +23,8 @@ const AddDonasi = () => {
     const [ tag, setTag] = useState("");
     const [ img, setImg] = useState();
 
+    const loadingStatus = useSelector((state) => state.donasiReducer.loading);
+
     let _contentState = EditorState.createEmpty("");
     const [editorState, setEditorState] = useState(_contentState)
     const desc = draftToHtml(convertToRaw(editorState.getCurrentContent()))
@@ -38,6 +40,18 @@ const AddDonasi = () => {
             })
         } else {
             errors.showMessages();
+        }
+    }
+
+    const submitButton = () => {
+        if(loadingStatus == false) {
+          return (
+            <button className="btn btn-pill btn-primary btn-block mt-3 mb-3" type="submit">{"Submit"}</button>
+          )
+        } else {
+          return (
+            <button className="btn btn-pill btn-block mt-3 mb-3" type="submit" disabled>{"Loading"}</button>
+          )
         }
     }
 
@@ -89,7 +103,8 @@ const AddDonasi = () => {
                                                 />
                                             </div>
                                         </div>
-                                        <button className="btn btn-pill btn-primary btn-block mt-3 mb-3" type="submit">{"Submit"}</button>
+                                        {/* <button className="btn btn-pill btn-primary btn-block mt-3 mb-3" type="submit">{"Submit"}</button> */}
+                                        {submitButton()}
                                     </div>
                                 </div>
                             </form>

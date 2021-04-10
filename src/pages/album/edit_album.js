@@ -1,11 +1,12 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import Breadcrumb from '../../components/common/breadcrumb';
 import useForm from "react-hook-form";
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { fetchEditAlbum } from "../../redux/album/action";
 import uploadImage from "../../helper/index";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { SubmitButton } from 'react-dropzone-uploader';
 
 const EditAlbum = (props) => {
     const { data } = props.location.state;
@@ -15,7 +16,9 @@ const EditAlbum = (props) => {
     const [ sub, setSub] = useState(data.sub_title);
     const [ tag, setTag] = useState(data.tag);
     const [ thumb, setThumb] = useState(data.thumbnail_image_url);
-    const [ img, setImg] = useState();
+    const [ img, setImg] = useState('');
+
+    const loadingStatus = useSelector((state) => state.albumReducer.loading);
 
     const dispatch = useDispatch();
     let token = localStorage.getItem('token');
@@ -23,15 +26,31 @@ const EditAlbum = (props) => {
     
     const onSubmit = data => {
         if (data !== '') {
-            uploadImage(img).then(message => {
-                const newThumb = message.response.data.url;
-                dispatch(fetchEditAlbum(token, id, titles, sub, tag, newThumb))
-            })
-            .catch(error => {
-                toast.error("Upload Image Failed !");
-            })
+            if (img == 'undefined') {
+                uploadImage(img).then(message => {
+                    const newThumb = message.response.data.url;
+                    dispatch(fetchEditAlbum(token, id, titles, sub, tag, newThumb))
+                })
+                .catch(error => {
+                    toast.error("Upload Image Failed !");
+                })
+            } else {
+                dispatch(fetchEditAlbum(token, id, titles, sub, tag, thumb))
+            }
         } else {
             errors.showMessages();
+        }
+    }
+
+    const submitButton = () => {
+        if(loadingStatus == false) {
+          return (
+            <button className="btn btn-pill btn-primary btn-block mt-3 mb-3" type="submit">{"Submit"}</button>
+          )
+        } else {
+          return (
+            <button className="btn btn-pill btn-block mt-3 mb-3" type="submit" disabled>{"Loading"}</button>
+          )
         }
     }
 
@@ -74,7 +93,8 @@ const EditAlbum = (props) => {
                                                 <input className="form-control" type="file" accept="image/*" onChange={(e) => setImg(e.target.files[0])}/>
                                             </div>
                                         </div>
-                                        <button className="btn btn-pill btn-primary btn-block mt-3 mb-3" type="submit">{"Submit"}</button>   
+                                        {/* <button className="btn btn-pill btn-primary btn-block mt-3 mb-3" type="submit">{"Submit"}</button>    */}
+                                        {submitButton()}
                                     </div>
                                 </div>
                             </form>

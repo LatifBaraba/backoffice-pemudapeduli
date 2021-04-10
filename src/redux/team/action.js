@@ -64,6 +64,7 @@ export function fetchTeam(token) {
 
 export function fetchEditTeam(token, id, name, role, facebook, google, instagram, linkedin, newThumb) {
     return (dispatch) => {
+        dispatch(editTeam())
         axios(EditURL+`${id}`, {
             method: 'PUT',
             data: {
@@ -102,6 +103,7 @@ export function fetchEditTeam(token, id, name, role, facebook, google, instagram
 
 export function fetchAddTeam(token, name, role, facebook, google, instagram, linkedin, newThumb) {
     return (dispatch) => {
+        dispatch(addTeam())
         axios(AddURL, {
             method: 'POST',
             data: {
@@ -182,6 +184,10 @@ const getTeam = () => ({
 });
 
 // Edit Team
+const editTeam = () => ({
+    type: EDIT_TEAM
+});
+
 const editTeamSuccess = (payload) => ({
     type: EDIT_TEAM_SUCCESS,
     payload
@@ -192,6 +198,10 @@ const editTeamFailure = () => ({
 });
 
 // Add Team
+const addTeam = () => ({
+    type: ADD_TEAM
+});
+
 const addTeamSuccess = (payload) => ({
     type: ADD_TEAM_SUCCESS,
     payload

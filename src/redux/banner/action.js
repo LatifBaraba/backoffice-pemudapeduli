@@ -63,6 +63,7 @@ export function fetchBanner(token) {
 
 export function fetchEditBanner(token, id, titles, sub, titContent, newThumb, desc) {
     return (dispatch) => {
+        dispatch(editBanner())
         axios(EditURL+`${id}`, {
             method: 'PUT',
             data: {
@@ -101,6 +102,7 @@ export function fetchEditBanner(token, id, titles, sub, titContent, newThumb, de
 
 export function fetchAddBanner(token, titles, sub, titContent, newThumb, desc) {
     return (dispatch) => {
+        dispatch(addBanner())
         axios(AddURL, {
             method: 'POST',
             data: {
@@ -181,6 +183,10 @@ const getBanner = () => ({
 });
 
 // Edit Banner
+const editBanner = () => ({
+    type: EDIT_BANNER
+});
+
 const editBannerSuccess = (payload) => ({
     type: EDIT_BANNER_SUCCESS,
     payload
@@ -191,6 +197,10 @@ const editBannerFailure = () => ({
 });
 
 // Add Banner
+const addBanner = () => ({
+    type: ADD_BANNER
+});
+
 const addBannerSuccess = (payload) => ({
     type: ADD_BANNER_SUCCESS,
     payload

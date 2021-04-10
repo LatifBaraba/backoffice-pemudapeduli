@@ -1,7 +1,7 @@
 import React, { Fragment, useState } from 'react';
 import Breadcrumb from '../../components/common/breadcrumb';
 import useForm from "react-hook-form";
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { fetchEditDonasi } from "../../redux/donasi/action";
 import uploadImage from "../../helper/index";
 import { toast } from 'react-toastify';
@@ -27,6 +27,8 @@ const EditDonasi = (props) => {
     const [ thumb, setThumb] = useState(data.thumbnail_image_url);
     const [ img, setImg] = useState();
 
+    const loadingStatus = useSelector((state) => state.donasiReducer.loading);
+
     const dispatch = useDispatch();
     let token = localStorage.getItem('token');
     const { register, handleSubmit, errors } = useForm();
@@ -42,15 +44,31 @@ const EditDonasi = (props) => {
     
     const onSubmit = data => {
         if (data !== '') {
-            uploadImage(img).then(message => {
-                const newThumb = message.response.data.url;
-                dispatch(fetchEditDonasi(token, id, titles, sub, tag, newThumb, desc))
-            })
-            .catch(error => {
-                toast.error("Upload Image Failed !");
-            })
+            if (img == 'undefined') {
+                uploadImage(img).then(message => {
+                    const newThumb = message.response.data.url;
+                    dispatch(fetchEditDonasi(token, id, titles, sub, tag, newThumb, desc))
+                })
+                .catch(error => {
+                    toast.error("Upload Image Failed !");
+                })
+            } else {
+                dispatch(fetchEditDonasi(token, id, titles, sub, tag, thumb, desc))
+            }
         } else {
             errors.showMessages();
+        }
+    }
+
+    const submitButton = () => {
+        if(loadingStatus == false) {
+          return (
+            <button className="btn btn-pill btn-primary btn-block mt-3 mb-3" type="submit">{"Submit"}</button>
+          )
+        } else {
+          return (
+            <button className="btn btn-pill btn-block mt-3 mb-3" type="submit" disabled>{"Loading"}</button>
+          )
         }
     }
 
@@ -102,7 +120,8 @@ const EditDonasi = (props) => {
                                                 />
                                             </div>
                                         </div>
-                                        <button className="btn btn-pill btn-primary btn-block mt-3 mb-3" type="submit">{"Submit"}</button>
+                                        {/* <button className="btn btn-pill btn-primary btn-block mt-3 mb-3" type="submit">{"Submit"}</button> */}
+                                        {submitButton()}
                                     </div>
                                 </div>
                             </form>

@@ -64,6 +64,7 @@ export function fetchProgram(token) {
 
 export function fetchEditProgram(token, id, titles, sub, tag, newThumb, desc) {
     return (dispatch) => {
+        dispatch(editProgram())
         axios(EditURL+`${id}`, {
             method: 'PUT',
             data: {
@@ -100,6 +101,7 @@ export function fetchEditProgram(token, id, titles, sub, tag, newThumb, desc) {
 
 export function fetchAddProgram(token, titles, sub, tag, newThumb, desc) {
     return (dispatch) => {
+        dispatch(addProgram())
         axios(AddURL, {
             method: 'POST',
             data: {
@@ -178,6 +180,10 @@ const getProgram = () => ({
 });
 
 // Edit Program
+const editProgram = () => ({
+    type: EDIT_PROGRAM
+});
+
 const editProgramSuccess = (payload) => ({
     type: EDIT_PROGRAM_SUCCESS,
     payload
@@ -188,6 +194,10 @@ const editProgramFailure = () => ({
 });
 
 // Add Program
+const addProgram = () => ({
+    type: ADD_PROGRAM
+});
+
 const addProgramSuccess = (payload) => ({
     type: ADD_PROGRAM_SUCCESS,
     payload
