@@ -1,5 +1,6 @@
 import { GET_TOKEN, GET_TOKEN_SUCCESS, GET_TOKEN_FAILURE } from '../actionTypes';
 import axios from 'axios';
+import Bowser from "bowser";
 
 const URL = `${process.env.REACT_APP_BASE_URL}/token`;
 const URLREF = `${process.env.REACT_APP_BASE_URL}/refresh-token`;
@@ -8,8 +9,10 @@ const SECRETKEY = `${process.env.REACT_APP_SECRET_KEY}`;
 
 let min = 1;
 let max = 100;
-const randomId = Math.floor(Math.random() * (max - min));
 const randomType = Math.floor(Math.random() * (max - min));
+
+const browser = Bowser.getParser(window.navigator.userAgent);
+// console.log(`The current browser name is "${browser.getBrowserName()}"`);
 
 export function fetchToken() {
     return (dispatch) => {
@@ -18,8 +21,7 @@ export function fetchToken() {
             data: {
                 name:`${SERVICENAME}`,
                 secret_key:`${SECRETKEY}`,
-                // device_id:"1",
-                device_id: `${randomId}`,
+                device_id: `${browser.getBrowserName()}`,
                 device_type: `${randomType}`
             },
             headers: {

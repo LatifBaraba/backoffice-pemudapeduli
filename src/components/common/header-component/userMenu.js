@@ -11,7 +11,7 @@ const UserMenu = () => {
     const token = localStorage.getItem('token')
     const logout = () => {
         // history.push(`${process.env.PUBLIC_URL}/dashboard`);
-        console.log(token)
+        // console.log(token)
         dispatch(fetchLogout(token))
     }
 
