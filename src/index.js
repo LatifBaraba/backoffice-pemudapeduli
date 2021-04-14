@@ -52,6 +52,9 @@ import EditTeam from './pages/team/edit_team';
 import Testimoni from './pages/testimoni/testimoni';
 import AddTestimoni from './pages/testimoni/add_testimoni';
 import EditTestimoni from './pages/testimoni/edit_testimoni';
+import Beneficaries from './pages/beneficaries/beneficaries';
+import AddBeneficaries from './pages/beneficaries/add_beneficaries';
+import EditBeneficaries from './pages/beneficaries/edit_beneries';
 import { Redirect } from 'react-router-dom';
 // sample page
 // import SupportTicket from './components/support-ticket/supportTicket';
@@ -116,6 +119,9 @@ function Root() {
                                             <Route path={`${process.env.PUBLIC_URL}/testimoni`} component={Testimoni} />
                                             <Route path={`${process.env.PUBLIC_URL}/add-testimoni`} component={AddTestimoni} />
                                             <Route path={`${process.env.PUBLIC_URL}/edit-testimoni`} component={EditTestimoni} />
+                                            <Route path={`${process.env.PUBLIC_URL}/beneficaries`} component={Beneficaries} />
+                                            <Route path={`${process.env.PUBLIC_URL}/add-beneficaries`} component={AddBeneficaries} />
+                                            <Route path={`${process.env.PUBLIC_URL}/edit-beneficaries`} component={EditBeneficaries} />
                                             {/* <Route exact path={`${process.env.PUBLIC_URL}/dashboard/default`} component={Default} />
                                             <Route path={`${process.env.PUBLIC_URL}/dashboard/ecommerce`} component={Ecommerce} />
                                             <Route path={`${process.env.PUBLIC_URL}/dashboard/university`} component={University} />

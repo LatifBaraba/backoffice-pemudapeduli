@@ -21,8 +21,8 @@ export function fetchToken() {
             data: {
                 name:`${SERVICENAME}`,
                 secret_key:`${SECRETKEY}`,
-                device_id: `${browser.getBrowserName()}`,
-                device_type: `${randomType}`
+                device_type: `${browser.getBrowserName()}`,
+                device_id: `${randomType}`
             },
             headers: {
                 "Content-type": "application/json"

@@ -14,7 +14,8 @@ import {
     ExternalLink,
     Hash,
     CheckCircle,
-    UserCheck
+    UserCheck,
+    CreditCard
 } from 'react-feather';
 
 export const MENUITEMS = [
@@ -59,6 +60,9 @@ export const MENUITEMS = [
     },
     {
         title: 'Album', icon: Columns, type: 'link', path: '/album', active: false
+    },
+    {
+        title: 'Beneficaries', icon: CreditCard, type: 'link', path: '/beneficaries', active: false
     },
     {
         title: 'Partner', icon: ExternalLink, type: 'link', path: '/partner', active: false

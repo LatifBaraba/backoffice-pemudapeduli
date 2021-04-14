@@ -11,6 +11,7 @@ import programReducer from '../redux/program/reducer';
 import teamReducer from '../redux/team/reducer';
 import testimoniReducer from '../redux/testimoni/reducer';
 import userReducer from '../redux/user/reducer';
+import beneficariesReducer from '../redux/beneficaries/reducer';
 
 const reducers = combineReducers({
     Customizer,
@@ -24,7 +25,8 @@ const reducers = combineReducers({
     programReducer,
     teamReducer,
     testimoniReducer,
-    userReducer
+    userReducer,
+    beneficariesReducer
 
 });
 

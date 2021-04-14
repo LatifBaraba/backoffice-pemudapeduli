@@ -11,7 +11,7 @@ const uploadImage = (files) => {
         const formData = new FormData();
         formData.append("file", files);
         formData.append("upload_preset", PRESET);
-        if(SIZE > files.size) {
+        if(files.size < SIZE) {
             axios.post(URL, formData)
             .then((res) => {
                 console.log(res)
