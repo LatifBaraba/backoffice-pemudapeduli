@@ -15,8 +15,7 @@ const EditTestimoni = (props) => {
     const [ role, setRole] = useState(data.role);
     const [ thumb ] = useState(data.thumbnail_photo_url);
     const [ messages, setMessages] = useState(data.message);
-    const [ img, setImg] = useState();
-    const [ loading, setLoading] = useState(false);
+    const [ img, setImg] = useState('');
 
     const dispatch = useDispatch();
     let token = localStorage.getItem('token');
@@ -26,7 +25,7 @@ const EditTestimoni = (props) => {
 
     const onSubmit = data => {
         if (data !== '') {
-            if (img == 'undefined') {
+            if (img !== '') {
                 uploadImage(img).then(message => {
                     const newThumb = message.response.data.url;
                     dispatch(fetchEditTestimoni(token, id, name, role, messages, newThumb))
@@ -35,7 +34,8 @@ const EditTestimoni = (props) => {
                     toast.error("Upload Image Failed !");
                 })
             } else {
-                dispatch(fetchEditTestimoni(token, id, name, role, messages, thumb))
+                const newThumb = thumb;
+                dispatch(fetchEditTestimoni(token, id, name, role, messages, newThumb))
             }
         } else {
             errors.showMessages();

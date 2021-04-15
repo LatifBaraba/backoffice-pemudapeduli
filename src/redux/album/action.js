@@ -61,40 +61,39 @@ export function fetchAlbum(token) {
     };
 };
 
-export function fetchEditAlbum(token, id, titles, sub, tag, thumb, newThumb) {
-    console.log(thumb, newThumb)
-    // return (dispatch) => {
-    //     dispatch(editAlbum())
-    //     axios(EditURL+`${id}`, {
-    //         method: 'PUT',
-    //         data: {
-    //             title: titles,
-    //             sub_title: sub,
-    //             tag: tag,
-    //             thumbnail_image_url: newThumb
-    //         },
-    //         headers: {
-    //             "pp-token": `${token}`,
-    //             "Content-type": "application/json"
-    //         }
-    //     })
-    //     .then(res => {
-    //         setTimeout(() => {
-    //             toast.success("Add Success !");
-    //             dispatch(editAlbumSuccess(res));
-    //             history.push("/album");
-    //         }, 2000);
-    //     })
-    //     .catch(err => {
-    //         console.log(err)
-    //         if(err.response.status === 401){
-    //             toast.error("Unauthorized")
-    //             dispatch(fetchRefreshToken(token))
-    //             history.push('/login')
-    //         }
-    //         dispatch(editAlbumFailure(err));
-    //     });
-    // };
+export function fetchEditAlbum(token, id, titles, sub, tag, newThumb) {
+    return (dispatch) => {
+        dispatch(editAlbum())
+        axios(EditURL+`${id}`, {
+            method: 'PUT',
+            data: {
+                title: titles,
+                sub_title: sub,
+                tag: tag,
+                thumbnail_image_url: newThumb
+            },
+            headers: {
+                "pp-token": `${token}`,
+                "Content-type": "application/json"
+            }
+        })
+        .then(res => {
+            setTimeout(() => {
+                toast.success("Add Success !");
+                dispatch(editAlbumSuccess(res));
+                history.push("/album");
+            }, 2000);
+        })
+        .catch(err => {
+            console.log(err)
+            if(err.response.status === 401){
+                toast.error("Unauthorized")
+                dispatch(fetchRefreshToken(token))
+                history.push('/login')
+            }
+            dispatch(editAlbumFailure(err));
+        });
+    };
 };
 
 export function fetchAddAlbum(token, titles, sub, tag, newThumb) {

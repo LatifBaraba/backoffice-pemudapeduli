@@ -61,19 +61,17 @@ export function fetchBeneficaries(token) {
     };
 };
 
-export function fetchEditBeneficaries(token, id, titles, sub, titContent, newThumb, desc) {
+export function fetchEditBeneficaries(token, id, newThumb) {
     return (dispatch) => {
         dispatch(editBeneficaries())
         axios(EditURL+`${id}`, {
             method: 'PUT',
             data: {
-                title: titles,
-                sub_title: sub,
-                title_content: titContent,
-                deeplink_right:"",
-                deeplink_left:"",
-                description: desc,
-                thumbnail_image_url: newThumb
+                title: " ",
+                thumbnail_image_url: newThumb,
+                deeplink_right: "",
+                deeplink_left: "",
+                description: ""
             },
             headers: {
                 "pp-token": `${token}`,
@@ -100,19 +98,17 @@ export function fetchEditBeneficaries(token, id, titles, sub, titContent, newThu
     };
 };
 
-export function fetchAddBeneficaries(token, titles, sub, titContent, newThumb, desc) {
+export function fetchAddBeneficaries(token, newThumb) {
     return (dispatch) => {
         dispatch(addBeneficaries())
         axios(AddURL, {
             method: 'POST',
             data: {
-                title: titles,
-                sub_title: sub,
-                title_content: titContent,
-                deeplink_right:"",
-                deeplink_left:"",
-                description: desc,
-                thumbnail_image_url: newThumb
+                title: " ",
+                thumbnail_image_url: newThumb,
+                deeplink_right: "",
+                deeplink_left: "",
+                description: ""
             },
             headers: {
                 "pp-token": `${token}`,

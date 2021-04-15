@@ -25,7 +25,7 @@ const EditBanner = (props) => {
     const [ sub, setSub] = useState(data.sub_title);
     const [ titContent, setTitContent] = useState(data.title_content);
     const [ thumb, setThumb] = useState(data.thumbnail_image_url);
-    const [ img, setImg] = useState();
+    const [ img, setImg] = useState('');
 
     const loadingStatus = useSelector((state) => state.bannerReducer.loading);
 
@@ -44,7 +44,7 @@ const EditBanner = (props) => {
 
     const onSubmit = data => {
         if (data !== '') {
-            if (img == 'undefined') {
+            if (img !== '') {
                 uploadImage(img).then(message => {
                     const newThumb = message.response.data.url;
                     dispatch(fetchEditBanner(token, id, titles, sub, titContent, newThumb, desc))
@@ -53,7 +53,8 @@ const EditBanner = (props) => {
                     toast.error("Upload Image Failed !");
                 })
             } else {
-                dispatch(fetchEditBanner(token, id, titles, sub, titContent, thumb, desc))
+                const newThumb = thumb;
+                dispatch(fetchEditBanner(token, id, titles, sub, titContent, newThumb, desc))
             }
         } else {
             errors.showMessages();

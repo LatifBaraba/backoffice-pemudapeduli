@@ -13,7 +13,7 @@ const EditPartner = (props) => {
     const [ id, setId] = useState(data.id);
     const [ name, setName] = useState(data.name);
     const [ thumb, setThumb] = useState(data.thumbnail_image_url);
-    const [ img, setImg] = useState();
+    const [ img, setImg] = useState('');
 
     const loadingStatus = useSelector((state) => state.partnerReducer.loading);
 
@@ -23,7 +23,7 @@ const EditPartner = (props) => {
 
     const onSubmit = data => {
         if (data !== '') {
-            if (img == 'undefined') {
+            if (img !== '') {
                 uploadImage(img).then(message => {
                     const newThumb = message.response.data.url;
                     dispatch(fetchEditPartner(token, id, name, newThumb))
@@ -32,6 +32,7 @@ const EditPartner = (props) => {
                     toast.error("Upload Image Failed !");
                 })
             } else {
+                const newThumb = thumb;
                 dispatch(fetchEditPartner(token, id, name, thumb))
             }
         } else {

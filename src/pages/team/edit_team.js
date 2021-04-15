@@ -18,7 +18,7 @@ const EditTeam = (props) => {
     const [ instagram, setInstagram] = useState(data.instagram_link);
     const [ linkedin, setLinkedin] = useState(data.linkedin_link);
     const [ thumb, setThumb] = useState(data.thumbnail_image_url);
-    const [ img, setImg] = useState();
+    const [ img, setImg] = useState('');
 
     const loadingStatus = useSelector((state) => state.teamReducer.loading);
 
@@ -28,7 +28,7 @@ const EditTeam = (props) => {
 
     const onSubmit = data => {
         if (data !== '') {
-            if (img == 'undefined') {
+            if (img !== '') {
                 uploadImage(img).then(message => {
                     const newThumb = message.response.data.url;
                     dispatch(fetchEditTeam(token, id, name, role, facebook, google, instagram, linkedin, newThumb))
@@ -37,7 +37,8 @@ const EditTeam = (props) => {
                     toast.error("Upload Image Failed !");
                 })
             } else {
-                dispatch(fetchEditTeam(token, id, name, role, facebook, google, instagram, linkedin, thumb))
+                const newThumb = thumb;
+                dispatch(fetchEditTeam(token, id, name, role, facebook, google, instagram, linkedin, newThumb))
             }
         } else {
             errors.showMessages();

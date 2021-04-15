@@ -25,7 +25,7 @@ const EditProgram = (props) => {
     const [ sub, setSub] = useState(data.sub_title);
     const [ tag, setTag] = useState(data.tag);
     const [ thumb, setThumb] = useState(data.thumbnail_image_url);
-    const [ img, setImg] = useState();
+    const [ img, setImg] = useState('');
 
     const loadingStatus = useSelector((state) => state.programReducer.loading);
 
@@ -53,7 +53,8 @@ const EditProgram = (props) => {
                     toast.error("Upload Image Failed !");
                 })
             } else {
-                dispatch(fetchEditProgram(token, id, titles, sub, tag, thumb, desc))
+                const newThumb = thumb;
+                dispatch(fetchEditProgram(token, id, titles, sub, tag, newThumb, desc))
             }
         } else {
             errors.showMessages();

@@ -54,7 +54,7 @@ import AddTestimoni from './pages/testimoni/add_testimoni';
 import EditTestimoni from './pages/testimoni/edit_testimoni';
 import Beneficaries from './pages/beneficaries/beneficaries';
 import AddBeneficaries from './pages/beneficaries/add_beneficaries';
-import EditBeneficaries from './pages/beneficaries/edit_beneries';
+import EditBeneficaries from './pages/beneficaries/edit_beneficaries';
 import { Redirect } from 'react-router-dom';
 // sample page
 // import SupportTicket from './components/support-ticket/supportTicket';

@@ -26,16 +26,18 @@ const EditAlbum = (props) => {
     
     const onSubmit = data => {
         if (data !== '') {
-            if (img == 'undefined') {
+            if (img !== '') {
                 uploadImage(img).then(message => {
                     const newThumb = message.response.data.url;
                     dispatch(fetchEditAlbum(token, id, titles, sub, tag, newThumb))
                 })
                 .catch(error => {
+                    console.log(error)
                     toast.error("Upload Image Failed !");
                 })
             } else {
-                dispatch(fetchEditAlbum(token, id, titles, sub, tag, thumb))
+                const newThumb = thumb;
+                dispatch(fetchEditAlbum(token, id, titles, sub, tag, newThumb))
             }
         } else {
             errors.showMessages();

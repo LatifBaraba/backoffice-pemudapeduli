@@ -25,7 +25,7 @@ const EditDonasi = (props) => {
     const [ sub, setSub] = useState(data.sub_title);
     const [ tag, setTag] = useState(data.tag);
     const [ thumb, setThumb] = useState(data.thumbnail_image_url);
-    const [ img, setImg] = useState();
+    const [ img, setImg] = useState('');
 
     const loadingStatus = useSelector((state) => state.donasiReducer.loading);
 
@@ -44,7 +44,7 @@ const EditDonasi = (props) => {
     
     const onSubmit = data => {
         if (data !== '') {
-            if (img == 'undefined') {
+            if (img !== '') {
                 uploadImage(img).then(message => {
                     const newThumb = message.response.data.url;
                     dispatch(fetchEditDonasi(token, id, titles, sub, tag, newThumb, desc))
@@ -53,7 +53,8 @@ const EditDonasi = (props) => {
                     toast.error("Upload Image Failed !");
                 })
             } else {
-                dispatch(fetchEditDonasi(token, id, titles, sub, tag, thumb, desc))
+                const newThumb = thumb;
+                dispatch(fetchEditDonasi(token, id, titles, sub, tag, newThumb, desc))
             }
         } else {
             errors.showMessages();

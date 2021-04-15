@@ -100,16 +100,16 @@ export function fetchRole(token) {
     };
 };
 
-export function fetchEditUser(token, id, name, role, messages, newThumb) {
+export function fetchEditUser(token, id, username, fullname, email, address) {
     return (dispatch) => {
         dispatch(editUser())
         axios(EditURL+`${id}`, {
             method: 'PUT',
             data: {
-                name: name,
-                role: role,
-                message: messages,
-                thumbnail_photo_url: newThumb,
+                username: username,
+                email: email,
+                nama_lengkap: fullname,
+                alamat: address
             },
             headers: {
                 "pp-token": `${token}`,

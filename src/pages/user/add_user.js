@@ -14,7 +14,6 @@ const AddUser = () => {
     let token = localStorage.getItem('token');
 
     const roleData = useSelector((state) => state.userReducer.role);
-    console.log(roleData, "data")
 
     const [ username, setUsername] = useState()
     const [ fullname, setFullname] = useState()

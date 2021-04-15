@@ -17,7 +17,7 @@ const EditTentang = (props) => {
     const { data } = props.location.state;
     const [ id, setId] = useState(data.id);
     const [ thumb, setThumb] = useState(data.thumbnail_image_url);
-    const [ img, setImg] = useState();
+    const [ img, setImg] = useState('');
 
     const loadingStatus = useSelector((state) => state.tentangReducer.loading);
 
@@ -36,7 +36,7 @@ const EditTentang = (props) => {
 
     const onSubmit = data => {
         if (data !== '') {
-            if (img == 'undefined') {
+            if (img !== '') {
                 uploadImage(img).then(message => {
                     const newThumb = message.response.data.url;
                     dispatch(fetchEditTentang(token, id, newThumb, desc))
@@ -45,7 +45,8 @@ const EditTentang = (props) => {
                     toast.error("Upload Image Failed !");
                 })
             } else {
-                dispatch(fetchEditTentang(token, id, thumb, desc))
+                const newThumb = thumb;
+                dispatch(fetchEditTentang(token, id, newThumb, desc))
             }
         } else {
             errors.showMessages();
