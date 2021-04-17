@@ -55,6 +55,7 @@ import EditTestimoni from './pages/testimoni/edit_testimoni';
 import Beneficaries from './pages/beneficaries/beneficaries';
 import AddBeneficaries from './pages/beneficaries/add_beneficaries';
 import EditBeneficaries from './pages/beneficaries/edit_beneficaries';
+import Profile from './pages/user/profile';
 import { Redirect } from 'react-router-dom';
 // sample page
 // import SupportTicket from './components/support-ticket/supportTicket';
@@ -92,6 +93,7 @@ function Root() {
                                             <Route path={`${process.env.PUBLIC_URL}/user`} component={User} />
                                             <Route path={`${process.env.PUBLIC_URL}/add-user`} component={AddUser} />
                                             <Route path={`${process.env.PUBLIC_URL}/edit-user`} component={EditUser} />
+                                            <Route path={`${process.env.PUBLIC_URL}/profile`} component={Profile} />
                                             <Route path={`${process.env.PUBLIC_URL}/banner`} component={Banner} />
                                             <Route path={`${process.env.PUBLIC_URL}/add-banner`} component={AddBanner} />
                                             <Route path={`${process.env.PUBLIC_URL}/edit-banner`} component={EditBanner} />

@@ -2,9 +2,10 @@ import React, { Fragment } from 'react';
 import man from '../../../assets/images/dashboard/user.png';
 import { 
     // User, Mail, Lock, Settings, 
-    LogOut, User } from 'react-feather';
+    LogOut, User, Lock } from 'react-feather';
 import { fetchLogout } from "../../../redux/auth/action";
 import { useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom'
 
 const UserMenu = () => {
     const dispatch = useDispatch();
@@ -31,6 +32,8 @@ const UserMenu = () => {
                     <li><a href="#javascript"><Mail />Inbox</a></li>
                     <li><a href="#javascript"><Lock />Lock Screen</a></li>
                     <li><a href="#javascript"><Settings />Settings</a></li> */}
+                    <li><Link to="/profile"><User/>Update Profile</Link></li>
+                    <li><Link to="/change-password"><Lock/>Change Password</Link></li>
                     <li><a onClick={() => {logout()}}><LogOut /> Log out</a></li>
                 </ul>
             </li>

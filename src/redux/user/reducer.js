@@ -12,7 +12,13 @@ import {
     DELETE_USER_FAILURE,
     GET_ROLE,
     GET_ROLE_SUCCESS,
-    GET_ROLE_FAILURE
+    GET_ROLE_FAILURE,
+    GET_PROFILE,
+    GET_PROFILE_FAILURE,
+    GET_PROFILE_SUCCESS,
+    EDIT_PROFILE,
+    EDIT_PROFILE_FAILURE,
+    EDIT_PROFILE_SUCCESS
     
 } from '../actionTypes';
 
@@ -20,6 +26,7 @@ const initialState = {
     loading: false,
     user: [],
     role: [],
+    profile: [],
     error: null
 };
 
@@ -98,6 +105,39 @@ export default function userReducer(state = initialState, action) {
                 error: null
             };
         case DELETE_USER_FAILURE:
+            return {
+                ...state,
+                loading: false,
+            };
+        case GET_PROFILE:
+            return {
+                ...state,
+                loading: true
+            };
+        case GET_PROFILE_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                error: null,
+                profile: action.payload
+            };
+        case GET_PROFILE_FAILURE:
+            return {
+                ...state,
+                loading: false,
+            };
+        case EDIT_PROFILE:
+            return {
+                ...state,
+                loading: true
+            };
+        case EDIT_PROFILE_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                error: null
+            };
+        case EDIT_PROFILE_FAILURE:
             return {
                 ...state,
                 loading: false,

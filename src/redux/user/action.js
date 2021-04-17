@@ -11,7 +11,13 @@ import { GET_USER,
         DELETE_USER_SUCCESS,
         GET_ROLE,
         GET_ROLE_SUCCESS,
-        GET_ROLE_FAILURE
+        GET_ROLE_FAILURE,
+        GET_PROFILE,
+        GET_PROFILE_SUCCESS,
+        GET_PROFILE_FAILURE,
+        EDIT_PROFILE,
+        EDIT_PROFILE_SUCCESS,
+        EDIT_PROFILE_FAILURE
         } from '../actionTypes';
 import axios from 'axios';
 import { fetchToken, fetchRefreshToken } from "../token/action";
@@ -23,6 +29,7 @@ const URL = `${process.env.REACT_APP_BASE_URL}/admin/list`;
 const EditURL = `${process.env.REACT_APP_BASE_URL}/admin/`;
 const AddURL = `${process.env.REACT_APP_BASE_URL}/admin/create`;
 const RoleURL = `${process.env.REACT_APP_BASE_URL}/role/list`;
+const ProfileURL = `${process.env.REACT_APP_BASE_URL}/admin`;
 
 export function fetchUser(token) {
     return (dispatch) => {
@@ -96,6 +103,62 @@ export function fetchRole(token) {
         .catch(err => {
             console.log(err)
             dispatch(getRoleFailure(err));
+        });
+    };
+};
+
+export function fetchProfile(token) {
+    return (dispatch) => {
+        axios(ProfileURL, {
+            method: 'GET',
+            headers: {
+                "pp-token": `${token}`,
+                "Content-type": "application/json"
+            }
+        })
+        .then(res => {
+            dispatch(getProfileSuccess(res.data.data));
+            console.log(res.data.data)
+        })
+        .catch(err => {
+            console.log(err)
+            dispatch(getProfileFailure(err));
+        });
+    };
+};
+
+export function fetchEditProfile(token, username, fullname, email, address) {
+    return (dispatch) => {
+        dispatch(editUser())
+        axios(ProfileURL, {
+            method: 'PUT',
+            data: {
+                username: username,
+                email: email,
+                nama_lengkap: fullname,
+                alamat: address
+            },
+            headers: {
+                "pp-token": `${token}`,
+                "Content-type": "application/json"
+            }
+        })
+        .then(res => {
+            setTimeout(() => {
+                toast.success("Edit Success !");
+                dispatch(editUserSuccess(res));
+                history.push("/user");
+            }, 2000);
+        })
+        .catch(err => {
+            console.log(err)
+            if(err.response.status === 401){
+                toast.error("Unauthorized")
+                dispatch(fetchRefreshToken(token))
+                localStorage.removeItem("token");
+                history.push('/login')
+            }
+            dispatch(editUserFailure(err));
         });
     };
 };
@@ -270,4 +333,32 @@ const deleteUserSuccess = (payload) => ({
 
 const deleteUserFailure = () => ({
     type: DELETE_USER_FAILURE
+});
+
+// Get Profile
+const getProfileSuccess = (payload) => ({
+    type: GET_PROFILE_SUCCESS,
+    payload
+});
+
+const getProfileFailure = () => ({
+    type: GET_PROFILE_FAILURE
+});
+
+const getProfile = () => ({
+    type: GET_PROFILE
+});
+
+// Edit Profile
+const editProfileSuccess = (payload) => ({
+    type: EDIT_PROFILE_SUCCESS,
+    payload
+});
+
+const editProfileFailure = () => ({
+    type: EDIT_PROFILE_FAILURE
+});
+
+const editProfile = () => ({
+    type: EDIT_PROFILE
 });

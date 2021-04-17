@@ -25,12 +25,12 @@ const User = (props) => {
                 <td>{user.nama_lengkap}</td>
                 <td>{user.email}</td>
                 <td>
-                    <Link to={{
+                    {/* <Link to={{
                             pathname: "/edit-user",
                             state: { data: user }
                         }} className="mr-2">
                         <Edit className="edit-user" style={{cursor:"pointer"}}/>
-                    </Link>
+                    </Link> */}
                     <Trash className="delete-user" style={{cursor:"pointer"}} onClick={() => dispatch(fetchDeleteUser(token, user.id))}/>
                 </td>
             </tr>
