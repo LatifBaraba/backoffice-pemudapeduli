@@ -18,8 +18,10 @@ import {
     GET_PROFILE_SUCCESS,
     EDIT_PROFILE,
     EDIT_PROFILE_FAILURE,
-    EDIT_PROFILE_SUCCESS
-    
+    EDIT_PROFILE_SUCCESS,
+    CHANGE_PASSWORD,
+    CHANGE_PASSWORD_SUCCESS,
+    CHANGE_PASSWORD_FAILURE
 } from '../actionTypes';
 
 const initialState = {
@@ -138,6 +140,22 @@ export default function userReducer(state = initialState, action) {
                 error: null
             };
         case EDIT_PROFILE_FAILURE:
+            return {
+                ...state,
+                loading: false,
+            };
+        case CHANGE_PASSWORD:
+            return {
+                ...state,
+                loading: true
+            };
+        case CHANGE_PASSWORD_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                error: null
+            };
+        case CHANGE_PASSWORD_FAILURE:
             return {
                 ...state,
                 loading: false,

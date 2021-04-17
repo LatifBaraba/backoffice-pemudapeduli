@@ -37,6 +37,8 @@ export function fetchLogin(token, username, password) {
         .catch(err => {
             if (err.response.status === 400) {
                 alert("incorrect username or password !")
+            } else if (err.response.status === 401) {
+                alert("password not match !")
             }
             dispatch(loginFailure(err));
         });

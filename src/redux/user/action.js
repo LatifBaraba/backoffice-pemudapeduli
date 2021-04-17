@@ -17,7 +17,10 @@ import { GET_USER,
         GET_PROFILE_FAILURE,
         EDIT_PROFILE,
         EDIT_PROFILE_SUCCESS,
-        EDIT_PROFILE_FAILURE
+        EDIT_PROFILE_FAILURE,
+        CHANGE_PASSWORD,
+        CHANGE_PASSWORD_FAILURE,
+        CHANGE_PASSWORD_SUCCESS
         } from '../actionTypes';
 import axios from 'axios';
 import { fetchToken, fetchRefreshToken } from "../token/action";
@@ -30,6 +33,7 @@ const EditURL = `${process.env.REACT_APP_BASE_URL}/admin/`;
 const AddURL = `${process.env.REACT_APP_BASE_URL}/admin/create`;
 const RoleURL = `${process.env.REACT_APP_BASE_URL}/role/list`;
 const ProfileURL = `${process.env.REACT_APP_BASE_URL}/admin`;
+const PasswordURL = `${process.env.REACT_APP_BASE_URL}/admin/change-password`;
 
 export function fetchUser(token) {
     return (dispatch) => {
@@ -159,6 +163,41 @@ export function fetchEditProfile(token, username, fullname, email, address) {
                 history.push('/login')
             }
             dispatch(editUserFailure(err));
+        });
+    };
+};
+
+export function fetchChangePassword(token, oldPass, newPass, confirmPass) {
+    return (dispatch) => {
+        dispatch(changePassword())
+        axios(PasswordURL, {
+            method: 'PUT',
+            data: {
+                old_password: oldPass,
+                new_password: newPass,
+                confirm_new_password: confirmPass
+            },
+            headers: {
+                "pp-token": `${token}`,
+                "Content-type": "application/json"
+            }
+        })
+        .then(res => {
+            setTimeout(() => {
+                toast.success("Change Success !");
+                dispatch(changePasswordSuccess(res.data.data));
+                history.push("/dashboard");
+            }, 2000);
+        })
+        .catch(err => {
+            console.log(err)
+            if(err.response.status === 401){
+                toast.error("Unauthorized")
+                dispatch(fetchRefreshToken(token))
+                localStorage.removeItem("token");
+                history.push('/login')
+            }
+            dispatch(changePasswordFailure(err));
         });
     };
 };
@@ -361,4 +400,18 @@ const editProfileFailure = () => ({
 
 const editProfile = () => ({
     type: EDIT_PROFILE
+});
+
+// Change Password
+const changePasswordSuccess = (payload) => ({
+    type: CHANGE_PASSWORD_SUCCESS,
+    payload
+});
+
+const changePasswordFailure = () => ({
+    type: CHANGE_PASSWORD_FAILURE
+});
+
+const changePassword = () => ({
+    type: CHANGE_PASSWORD
 });
