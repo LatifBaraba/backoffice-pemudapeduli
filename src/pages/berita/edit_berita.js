@@ -6,11 +6,11 @@ import { fetchEditBerita } from "../../redux/berita/action";
 import uploadImage from "../../helper/index";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { Editor } from 'react-draft-wysiwyg';
-import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
-import draftToHtml from 'draftjs-to-html';
-import htmlToDraft from 'html-to-draftjs';
-import { EditorState, ContentState, convertToRaw, convertFromRaw } from 'draft-js';
+// import { Editor } from 'react-draft-wysiwyg';
+// import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
+// import draftToHtml from 'draftjs-to-html';
+// import htmlToDraft from 'html-to-draftjs';
+// import { EditorState, ContentState, convertToRaw, convertFromRaw } from 'draft-js';
 
 const EditBerita = (props) => {
 
@@ -20,6 +20,7 @@ const EditBerita = (props) => {
     const [ sub, setSub] = useState(data.sub_title);
     const [ tag, setTag] = useState(data.tag);
     const [ thumb, setThumb] = useState(data.thumbnail_image_url);
+    const [ desc, setDesc] = useState(data.description);
     const [ img, setImg] = useState("");
 
     const loadingStatus = useSelector((state) => state.beritaReducer.loading);
@@ -28,14 +29,14 @@ const EditBerita = (props) => {
     let token = localStorage.getItem('token');
     const { register, handleSubmit, errors } = useForm();
 
-    const blocksFromHtml = htmlToDraft(data.description);
-    const { contentBlocks, entityMap } = blocksFromHtml;
-    const contentState = ContentState.createFromBlockArray(contentBlocks, entityMap);
-    const existing = EditorState.createWithContent(contentState);
+    // const blocksFromHtml = htmlToDraft(data.description);
+    // const { contentBlocks, entityMap } = blocksFromHtml;
+    // const contentState = ContentState.createFromBlockArray(contentBlocks, entityMap);
+    // const existing = EditorState.createWithContent(contentState);
 
-    let initialState = EditorState.createEmpty();
-    const [editorState, setEditorState] = useState(contentState ? existing : initialState)
-    const desc = draftToHtml(convertToRaw(editorState.getCurrentContent()))
+    // let initialState = EditorState.createEmpty();
+    // const [editorState, setEditorState] = useState(contentState ? existing : initialState)
+    // const desc = draftToHtml(convertToRaw(editorState.getCurrentContent()))
 
     const onSubmit = data => {
         if (data !== '') {
@@ -103,10 +104,16 @@ const EditBerita = (props) => {
                                                 <div className="valid-feedback">{"Looks good!"}</div>
                                             </div>
                                             <div className="col-md-12 mb-3">
+                                                <label>{"Description"}</label>
+                                                <input className="form-control" name="description" type="text" placeholder="Description" value={desc} ref={register({ required: true })} onChange={(e) => setDesc(e.target.value)} />
+                                                <span>{errors.description && 'Description is required'}</span>
+                                                <div className="valid-feedback">{"Looks good!"}</div>
+                                            </div>
+                                            <div className="col-md-12 mb-3">
                                                 <label>{"UploadFile"}</label>
                                                 <input className="form-control" type="file" accept="image/*" onChange={(e) => setImg(e.target.files[0])}/>
                                             </div>
-                                            <div className="col-md-12 mb-3">
+                                            {/* <div className="col-md-12 mb-3">
                                                 <Editor
                                                     editorState={editorState}
                                                     toolbarClassName="toolbarClassName"
@@ -114,7 +121,7 @@ const EditBerita = (props) => {
                                                     editorClassName="editorClassName"
                                                     onEditorStateChange={setEditorState}
                                                 />
-                                            </div>
+                                            </div> */}
                                         </div>
                                         {/* <button className="btn btn-pill btn-primary btn-block mt-3 mb-3" type="submit">{"Submit"}</button> */}
                                         {submitButton()}

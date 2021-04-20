@@ -21,7 +21,11 @@ import {
     EDIT_PROFILE_SUCCESS,
     CHANGE_PASSWORD,
     CHANGE_PASSWORD_SUCCESS,
-    CHANGE_PASSWORD_FAILURE
+    CHANGE_PASSWORD_FAILURE,
+    RESET_PASSWORD,
+    RESET_PASSWORD_SUCCESS,
+    RESET_PASSWORD_FAILURE,
+    ROLE_TYPE
 } from '../actionTypes';
 
 const initialState = {
@@ -29,6 +33,7 @@ const initialState = {
     user: [],
     role: [],
     profile: [],
+    roleType: {},
     error: null
 };
 
@@ -159,6 +164,28 @@ export default function userReducer(state = initialState, action) {
             return {
                 ...state,
                 loading: false,
+            };
+        case RESET_PASSWORD:
+            return {
+                ...state,
+                loading: true
+            };
+        case RESET_PASSWORD_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                error: null
+            };
+        case RESET_PASSWORD_FAILURE:
+            return {
+                ...state,
+                loading: false,
+            };
+        case ROLE_TYPE:
+            return {
+                ...state,
+                loading: false,
+                roleType: action.payload
             };
         default:
             return state;

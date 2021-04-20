@@ -3,8 +3,8 @@ import Breadcrumb from '../../components/common/breadcrumb';
 import useForm from "react-hook-form";
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchAddUser, fetchRole } from "../../redux/user/action";
-import uploadImage from "../../helper/index";
-import { toast } from 'react-toastify';
+// import uploadImage from "../../helper/index";
+// import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const AddUser = () => {
@@ -30,7 +30,6 @@ const AddUser = () => {
     const onSubmit = data => {
         if (data !== '') {
             dispatch(fetchAddUser(token, username, fullname, email, address, password, cpassword, role))
-            // console.log(token, username, fullname, email, address, password, cpassword, role)
         } else {
             errors.showMessages();
         }

@@ -20,7 +20,11 @@ import { GET_USER,
         EDIT_PROFILE_FAILURE,
         CHANGE_PASSWORD,
         CHANGE_PASSWORD_FAILURE,
-        CHANGE_PASSWORD_SUCCESS
+        CHANGE_PASSWORD_SUCCESS,
+        RESET_PASSWORD,
+        RESET_PASSWORD_SUCCESS,
+        RESET_PASSWORD_FAILURE,
+        ROLE_TYPE
         } from '../actionTypes';
 import axios from 'axios';
 import { fetchToken, fetchRefreshToken } from "../token/action";
@@ -34,6 +38,7 @@ const AddURL = `${process.env.REACT_APP_BASE_URL}/admin/create`;
 const RoleURL = `${process.env.REACT_APP_BASE_URL}/role/list`;
 const ProfileURL = `${process.env.REACT_APP_BASE_URL}/admin`;
 const PasswordURL = `${process.env.REACT_APP_BASE_URL}/admin/change-password`;
+const ResetPasswordURL = `${process.env.REACT_APP_BASE_URL}/admin/reset-password`;
 
 export function fetchUser(token) {
     return (dispatch) => {
@@ -122,6 +127,7 @@ export function fetchProfile(token) {
         })
         .then(res => {
             dispatch(getProfileSuccess(res.data.data));
+            dispatch(getRoleType(res.data.data.role.role_type));
             console.log(res.data.data)
         })
         .catch(err => {
@@ -198,6 +204,48 @@ export function fetchChangePassword(token, oldPass, newPass, confirmPass) {
                 history.push('/login')
             }
             dispatch(changePasswordFailure(err));
+        });
+    };
+};
+
+export function fetchResetPassword(token, id) {
+    return (dispatch) => {
+        dispatch(resetPassword())
+        axios(ResetPasswordURL, {
+            method: 'PUT',
+            data: {
+                id: id
+            },
+            headers: {
+                "pp-token": `${token}`,
+                "Content-type": "application/json"
+            }
+        })
+        .then(res => {
+            // console.log(res, "respon")
+            setTimeout(() => {
+                toast.success('Reset Success, New Password is : '+ `${res.data.data.new_password}`, {
+                    position: "top-right",
+                    autoClose: false,
+                    hideProgressBar: false,
+                    closeOnClick: false,
+                    pauseOnHover: true,
+                    draggable: false,
+                    progress: undefined,
+                });
+                dispatch(resetPasswordSuccess(res.data.data));
+                // history.push("/dashboard");
+            }, 2000);
+        })
+        .catch(err => {
+            console.log(err)
+            if(err.response.status === 401){
+                toast.error("Unauthorized")
+                dispatch(fetchRefreshToken(token))
+                localStorage.removeItem("token");
+                history.push('/login')
+            }
+            dispatch(resetPasswordFailure(err));
         });
     };
 };
@@ -414,4 +462,23 @@ const changePasswordFailure = () => ({
 
 const changePassword = () => ({
     type: CHANGE_PASSWORD
+});
+
+// Reset Password
+const resetPasswordSuccess = (payload) => ({
+    type: RESET_PASSWORD_SUCCESS,
+    payload
+});
+
+const resetPasswordFailure = () => ({
+    type: RESET_PASSWORD_FAILURE
+});
+
+const resetPassword = () => ({
+    type: RESET_PASSWORD
+});
+
+const getRoleType = (payload) => ({
+    type: ROLE_TYPE,
+    payload
 });

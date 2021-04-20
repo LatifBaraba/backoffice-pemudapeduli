@@ -6,10 +6,10 @@ import { fetchAddProgram } from "../../redux/program/action";
 import uploadImage from "../../helper/index";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { Editor } from 'react-draft-wysiwyg';
-import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
-import draftToHtml from 'draftjs-to-html';
-import { EditorState, ContentState, convertToRaw, convertFromRaw } from 'draft-js';
+// import { Editor } from 'react-draft-wysiwyg';
+// import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
+// import draftToHtml from 'draftjs-to-html';
+// import { EditorState, ContentState, convertToRaw, convertFromRaw } from 'draft-js';
 
 const AddProgram = () => {
 
@@ -21,13 +21,14 @@ const AddProgram = () => {
     const [ titles, setTitles] = useState("");
     const [ sub, setSub] = useState("");
     const [ tag, setTag] = useState("");
+    const [ desc, setDesc] = useState("");
     const [ img, setImg] = useState();
 
     const loadingStatus = useSelector((state) => state.programReducer.loading);
 
-    let _contentState = EditorState.createEmpty("");
-    const [editorState, setEditorState] = useState(_contentState)
-    const desc = draftToHtml(convertToRaw(editorState.getCurrentContent()))
+    // let _contentState = EditorState.createEmpty("");
+    // const [editorState, setEditorState] = useState(_contentState)
+    // const desc = draftToHtml(convertToRaw(editorState.getCurrentContent()))
 
     const onSubmit = data => {
         if (data !== '') {
@@ -90,10 +91,16 @@ const AddProgram = () => {
                                                 <div className="valid-feedback">{"Looks good!"}</div>
                                             </div>
                                             <div className="col-md-12 mb-3">
+                                                <label>{"Description"}</label>
+                                                <input className="form-control" name="desc" type="text" placeholder="Description" ref={register({ required: true })} onChange={(e) => setDesc(e.target.value)} />
+                                                <span>{errors.description && 'Description is required'}</span>
+                                                <div className="valid-feedback">{"Looks good!"}</div>
+                                            </div>
+                                            <div className="col-md-12 mb-3">
                                                 <label>{"UploadFile"}</label>
                                                 <input className="form-control" type="file" accept="image/*" onChange={(e) => setImg(e.target.files[0])}/>
                                             </div>
-                                            <div className="col-md-12 mb-3">
+                                            {/* <div className="col-md-12 mb-3">
                                                 <Editor
                                                     editorState={editorState}
                                                     toolbarClassName="toolbarClassName"
@@ -101,7 +108,7 @@ const AddProgram = () => {
                                                     editorClassName="editorClassName"
                                                     onEditorStateChange={setEditorState}
                                                 />
-                                            </div>
+                                            </div> */}
                                         </div>
                                         {/* <button className="btn btn-pill btn-primary btn-block mt-3 mb-3" type="submit">{"Submit"}</button> */}
                                         {submitButton()}

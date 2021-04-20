@@ -6,16 +6,17 @@ import { fetchEditTentang } from "../../redux/tentang/action";
 import uploadImage from "../../helper/index";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { Editor } from 'react-draft-wysiwyg';
-import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
-import draftToHtml from 'draftjs-to-html';
-import htmlToDraft from 'html-to-draftjs';
-import { EditorState, ContentState, convertToRaw, convertFromRaw } from 'draft-js';
+// import { Editor } from 'react-draft-wysiwyg';
+// import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
+// import draftToHtml from 'draftjs-to-html';
+// import htmlToDraft from 'html-to-draftjs';
+// import { EditorState, ContentState, convertToRaw, convertFromRaw } from 'draft-js';
 
 const EditTentang = (props) => {
 
     const { data } = props.location.state;
     const [ id, setId] = useState(data.id);
+    const [ desc, setDesc] = useState(data.description);
     const [ thumb, setThumb] = useState(data.thumbnail_image_url);
     const [ img, setImg] = useState('');
 
@@ -25,14 +26,14 @@ const EditTentang = (props) => {
     let token = localStorage.getItem('token');
     const { register, handleSubmit, errors } = useForm();
 
-    const blocksFromHtml = htmlToDraft(data.description);
-    const { contentBlocks, entityMap } = blocksFromHtml;
-    const contentState = ContentState.createFromBlockArray(contentBlocks, entityMap);
-    const existing = EditorState.createWithContent(contentState);
+    // const blocksFromHtml = htmlToDraft(data.description);
+    // const { contentBlocks, entityMap } = blocksFromHtml;
+    // const contentState = ContentState.createFromBlockArray(contentBlocks, entityMap);
+    // const existing = EditorState.createWithContent(contentState);
 
-    let initialState = EditorState.createEmpty();
-    const [editorState, setEditorState] = useState(contentState ? existing : initialState)
-    const desc = draftToHtml(convertToRaw(editorState.getCurrentContent()))
+    // let initialState = EditorState.createEmpty();
+    // const [editorState, setEditorState] = useState(contentState ? existing : initialState)
+    // const desc = draftToHtml(convertToRaw(editorState.getCurrentContent()))
 
     const onSubmit = data => {
         if (data !== '') {
@@ -82,10 +83,16 @@ const EditTentang = (props) => {
                                     <div className="col-md-6 col-sm-12">
                                         <div className="form-row">
                                             <div className="col-md-12 mb-3">
+                                                <label>{"Description"}</label>
+                                                <input className="form-control" name="description" type="text" placeholder="Description" value={desc} ref={register({ required: true })} onChange={(e) => setDesc(e.target.value)} />
+                                                <span>{errors.description && 'Description is required'}</span>
+                                                <div className="valid-feedback">{"Looks good!"}</div>
+                                            </div>
+                                            <div className="col-md-12 mb-3">
                                                 <label>{"UploadFile"}</label>
                                                 <input className="form-control" type="file" accept="image/*" onChange={(e) => setImg(e.target.files[0])}/>
                                             </div>
-                                            <div className="col-md-12 mb-3">
+                                            {/* <div className="col-md-12 mb-3">
                                                 <Editor
                                                     editorState={editorState}
                                                     toolbarClassName="toolbarClassName"
@@ -93,7 +100,7 @@ const EditTentang = (props) => {
                                                     editorClassName="editorClassName"
                                                     onEditorStateChange={setEditorState}
                                                 />
-                                            </div>
+                                            </div> */}
                                         </div>
                                         {/* <button className="btn btn-pill btn-primary btn-block mt-3 mb-3" type="submit">{"Submit"}</button> */}
                                         {submitButton()}
