@@ -54,7 +54,7 @@ const Logins = ({history}) => {
                                                         <form className="theme-form" onSubmit={handleSubmit(onSubmit)}>
                                                             <div className="form-group">
                                                                 <label className="col-form-label pt-0">{YourName}</label>
-                                                                <input className="form-control" type="text" required onChange={(e) => setUsername(e.target.value)}/>
+                                                                <input className="form-control" type="text" required autoFocus onChange={(e) => setUsername(e.target.value)}/>
                                                             </div>
                                                             <div className="form-group">
                                                                 <label className="col-form-label">{Password}</label>
