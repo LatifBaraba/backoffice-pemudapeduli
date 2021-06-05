@@ -99,7 +99,7 @@ export function fetchEditDonasi(token, id, titles, sub, tag, newThumb, desc) {
     };
 };
 
-export function fetchAddDonasi(token, titles, sub, tag, newThumb, desc) {
+export function fetchAddDonasi(token, titles, sub, tag, startDate, endDate, target, newThumb, desc) {
     return (dispatch) => {
         dispatch(addDonasi())
         axios(AddURL, {
@@ -108,6 +108,9 @@ export function fetchAddDonasi(token, titles, sub, tag, newThumb, desc) {
                 title: titles,
                 sub_title: sub,
                 tag: tag,
+                valid_from: startDate,
+                valid_to: endDate,
+                target: parseInt(target),
                 description: desc,
                 thumbnail_image_url: newThumb
             },

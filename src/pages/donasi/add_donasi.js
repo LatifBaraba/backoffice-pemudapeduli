@@ -23,18 +23,50 @@ const AddDonasi = () => {
     const [ tag, setTag] = useState("");
     const [ desc, setDesc] = useState("");
     const [ img, setImg] = useState();
+    const [ validFrom, setValidFrom] = useState();
+    const [ validTo, setValidTo] = useState();
+    const [ target, setTarget] = useState();
 
     const loadingStatus = useSelector((state) => state.donasiReducer.loading);
 
     // let _contentState = EditorState.createEmpty("");
     // const [editorState, setEditorState] = useState(_contentState)
     // const desc = draftToHtml(convertToRaw(editorState.getCurrentContent()))
+    // const today = new Date().toISOString();
+
+    function toIsoString(date) {
+        var tzo = -date.getTimezoneOffset(),
+            dif = tzo >= 0 ? '+' : '-',
+            pad = function(num) {
+                var norm = Math.floor(Math.abs(num));
+                return (norm < 10 ? '0' : '') + norm;
+            };
+      
+        return date.getFullYear() +
+            '-' + pad(date.getMonth() + 1) +
+            '-' + pad(date.getDate()) +
+            'T' + pad(date.getHours()) +
+            ':' + pad(date.getMinutes()) +
+            ':' + pad(date.getSeconds()) +
+            dif + pad(tzo / 60) +
+            ':' + pad(tzo % 60);
+    }
 
     const onSubmit = data => {
+        // 
+        // format
+        // 2018-04-23T10:26:00.996Z
+        // 2021-06-05T15:13
+        // 
+        // console.log(validFrom, today, 'exist')
+        const startDate = toIsoString(new Date(validFrom))
+        const endDate = toIsoString(new Date(validTo))
+        // console.log(startDate, endDate, 'ini coba')
+
         if (data !== '') {
             uploadImage(img).then(message => {
                 const newThumb = message.response.data.url;
-                dispatch(fetchAddDonasi(token, titles, sub, tag, newThumb, desc))
+                dispatch(fetchAddDonasi(token, titles, sub, tag, startDate, endDate, target, newThumb, desc))
             })
             .catch(error => {
                 toast.error("Upload Image Failed !");
@@ -92,8 +124,26 @@ const AddDonasi = () => {
                                             </div>
                                             <div className="col-md-12 mb-3">
                                                 <label>{"Description"}</label>
-                                                <input className="form-control" name="desc" type="text" placeholder="Description" ref={register({ required: true })} onChange={(e) => setDesc(e.target.value)} />
-                                                <span>{errors.description && 'Description is required'}</span>
+                                                <input className="form-control" name="desc" type="text" placeholder="Description" onChange={(e) => setDesc(e.target.value)} />
+                                                {/* <span>{errors.description && 'Description is required'}</span> */}
+                                                <div className="valid-feedback">{"Looks good!"}</div>
+                                            </div>
+                                            <div className="col-md-12 mb-3">
+                                                <label>{"Valid-From"}</label>
+                                                <input className="form-control" name="validfrom" type="datetime-local" placeholder="Start Date" ref={register({ required: true })} onChange={(e) => setValidFrom(e.target.value)} />
+                                                <span>{errors.validfrom && 'Valid-From is required'}</span>
+                                                <div className="valid-feedback">{"Looks good!"}</div>
+                                            </div>
+                                            <div className="col-md-12 mb-3">
+                                                <label>{"Valid-To"}</label>
+                                                <input className="form-control" name="validto" type="datetime-local" placeholder="End Date" ref={register({ required: true })} onChange={(e) => setValidTo(e.target.value)} />
+                                                <span>{errors.validto && 'Valid-To is required'}</span>
+                                                <div className="valid-feedback">{"Looks good!"}</div>
+                                            </div>
+                                            <div className="col-md-12 mb-3">
+                                                <label>{"Target"}</label>
+                                                <input className="form-control" name="target" type="number" placeholder="Target Total Donasi" ref={register({ required: true })} onChange={(e) => setTarget(e.target.value)} />
+                                                <span>{errors.target && 'Target is required'}</span>
                                                 <div className="valid-feedback">{"Looks good!"}</div>
                                             </div>
                                             <div className="col-md-12 mb-3">
