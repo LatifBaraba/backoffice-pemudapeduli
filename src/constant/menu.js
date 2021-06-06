@@ -53,7 +53,7 @@ export const MENUITEMS = [
         title: 'Program', icon: Bookmark, type: 'link', path: '/program', active: false
     },
     {
-        title: 'Achivement', icon: Award, type: 'link', path: '/user', active: false
+        title: 'Achievement', icon: Award, type: 'link', path: '/achievement', active: false
     },
     {
         title: 'Berita', icon: FileText, type: 'link', path: '/berita', active: false

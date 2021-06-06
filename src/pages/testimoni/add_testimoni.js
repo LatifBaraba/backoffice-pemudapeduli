@@ -3,7 +3,7 @@ import Breadcrumb from '../../components/common/breadcrumb';
 import useForm from "react-hook-form";
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchAddTestimoni } from "../../redux/testimoni/action";
-import uploadImage from "../../helper/index";
+import { uploadImage } from "../../helper/index";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -76,9 +76,16 @@ const AddTestimoni = () => {
                                                 <span>{errors.role && 'Role is required'}</span>
                                                 <div className="valid-feedback">{"Looks good!"}</div>
                                             </div>
-                                            <div className="col-md-12 mb-3">
+                                            {/* <div className="col-md-12 mb-3">
                                                 <label>{"Message"}</label>
                                                 <input className="form-control" name="messages" type="text" placeholder="Message" ref={register({ required: true })} onChange={(e) => setMessages(e.target.value)}/>
+                                                <span>{errors.messages && 'Message is required'}</span>
+                                                <div className="valid-feedback">{"Looks good!"}</div>
+                                            </div> */}
+                                            <div className="col-md-12 mb-3">
+                                                <label>{"Message"}</label>
+                                                {/* <input className="form-control" name="messages" type="text" placeholder="Message" ref={register({ required: true })} onChange={(e) => setMessages(e.target.value)}/> */}
+                                                <textarea class="form-control" name="messages" rows="5" cols="5" placeholder="Default textarea" onChange={(e) => setMessages(e.target.value)}></textarea>
                                                 <span>{errors.messages && 'Message is required'}</span>
                                                 <div className="valid-feedback">{"Looks good!"}</div>
                                             </div>

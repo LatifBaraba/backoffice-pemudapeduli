@@ -3,13 +3,13 @@ import Breadcrumb from '../../components/common/breadcrumb';
 import useForm from "react-hook-form";
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchAddBerita } from "../../redux/berita/action";
-import uploadImage from "../../helper/index";
+import { uploadImage } from "../../helper/index";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-// import { Editor } from 'react-draft-wysiwyg';
-// import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
-// import draftToHtml from 'draftjs-to-html';
-// import { EditorState, ContentState, convertToRaw, convertFromRaw } from 'draft-js';
+import { Editor } from 'react-draft-wysiwyg';
+import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
+import draftToHtml from 'draftjs-to-html';
+import { EditorState, ContentState, convertToRaw, convertFromRaw } from 'draft-js';
 
 const AddBerita = () => {
     const { register, handleSubmit, errors } = useForm();
@@ -25,15 +25,15 @@ const AddBerita = () => {
 
     const loadingStatus = useSelector((state) => state.beritaReducer.loading);
 
-    // let _contentState = EditorState.createEmpty("");
-    // const [editorState, setEditorState] = useState(_contentState)
-    // const desc = draftToHtml(convertToRaw(editorState.getCurrentContent()))
+    let _contentState = EditorState.createEmpty("");
+    const [editorState, setEditorState] = useState(_contentState)
+    const content = draftToHtml(convertToRaw(editorState.getCurrentContent()))
 
     const onSubmit = data => {
         if (data !== '') {
             uploadImage(img).then(message => {
                 const newThumb = message.response.data.url;
-                dispatch(fetchAddBerita(token, titles, sub, tag, newThumb, desc))
+                dispatch(fetchAddBerita(token, titles, sub, tag, content, newThumb, desc))
             })
             .catch(error => {
                 toast.error("Upload Image Failed !");
@@ -99,7 +99,7 @@ const AddBerita = () => {
                                                 <label>{"UploadFile"}</label>
                                                 <input className="form-control" type="file" accept="image/*" onChange={(e) => setImg(e.target.files[0])}/>
                                             </div>
-                                            {/* <div className="col-md-12 mb-3">
+                                            <div className="col-md-12 mb-3">
                                                 <Editor
                                                     editorState={editorState}
                                                     toolbarClassName="toolbarClassName"
@@ -107,7 +107,7 @@ const AddBerita = () => {
                                                     editorClassName="editorClassName"
                                                     onEditorStateChange={setEditorState}
                                                 />
-                                            </div> */}
+                                            </div>
                                         </div>
                                         {/* <button className="btn btn-pill btn-primary btn-block mt-3 mb-3" type="submit">{"Submit"}</button> */}
                                         {submitButton()}

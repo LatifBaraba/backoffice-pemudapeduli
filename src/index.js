@@ -55,6 +55,9 @@ import EditTestimoni from './pages/testimoni/edit_testimoni';
 import Beneficaries from './pages/beneficaries/beneficaries';
 import AddBeneficaries from './pages/beneficaries/add_beneficaries';
 import EditBeneficaries from './pages/beneficaries/edit_beneficaries';
+import Achievement from './pages/achievement/achievement';
+import AddAchievement from './pages/achievement/add_achievement';
+import EditAchievement from './pages/achievement/edit_achievement';
 import Profile from './pages/user/profile';
 import ChangePassword from './pages/user/change_password';
 import { Redirect } from 'react-router-dom';
@@ -126,6 +129,9 @@ function Root() {
                                             <Route path={`${process.env.PUBLIC_URL}/beneficaries`} component={Beneficaries} />
                                             <Route path={`${process.env.PUBLIC_URL}/add-beneficaries`} component={AddBeneficaries} />
                                             <Route path={`${process.env.PUBLIC_URL}/edit-beneficaries`} component={EditBeneficaries} />
+                                            <Route path={`${process.env.PUBLIC_URL}/achievement`} exact component={Achievement} />
+                                            <Route path={`${process.env.PUBLIC_URL}/add-achievement`} component={AddAchievement} />
+                                            <Route path={`${process.env.PUBLIC_URL}/edit-achievement`} component={EditAchievement} />
                                             {/* <Route exact path={`${process.env.PUBLIC_URL}/dashboard/default`} component={Default} />
                                             <Route path={`${process.env.PUBLIC_URL}/dashboard/ecommerce`} component={Ecommerce} />
                                             <Route path={`${process.env.PUBLIC_URL}/dashboard/university`} component={University} />

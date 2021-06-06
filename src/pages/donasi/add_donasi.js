@@ -3,7 +3,7 @@ import Breadcrumb from '../../components/common/breadcrumb';
 import useForm from "react-hook-form";
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchAddDonasi } from "../../redux/donasi/action";
-import uploadImage from "../../helper/index";
+import { uploadImage, toIsoString } from "../../helper/index";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 // import { Editor } from 'react-draft-wysiwyg';
@@ -32,36 +32,10 @@ const AddDonasi = () => {
     // let _contentState = EditorState.createEmpty("");
     // const [editorState, setEditorState] = useState(_contentState)
     // const desc = draftToHtml(convertToRaw(editorState.getCurrentContent()))
-    // const today = new Date().toISOString();
-
-    function toIsoString(date) {
-        var tzo = -date.getTimezoneOffset(),
-            dif = tzo >= 0 ? '+' : '-',
-            pad = function(num) {
-                var norm = Math.floor(Math.abs(num));
-                return (norm < 10 ? '0' : '') + norm;
-            };
-      
-        return date.getFullYear() +
-            '-' + pad(date.getMonth() + 1) +
-            '-' + pad(date.getDate()) +
-            'T' + pad(date.getHours()) +
-            ':' + pad(date.getMinutes()) +
-            ':' + pad(date.getSeconds()) +
-            dif + pad(tzo / 60) +
-            ':' + pad(tzo % 60);
-    }
 
     const onSubmit = data => {
-        // 
-        // format
-        // 2018-04-23T10:26:00.996Z
-        // 2021-06-05T15:13
-        // 
-        // console.log(validFrom, today, 'exist')
         const startDate = toIsoString(new Date(validFrom))
         const endDate = toIsoString(new Date(validTo))
-        // console.log(startDate, endDate, 'ini coba')
 
         if (data !== '') {
             uploadImage(img).then(message => {

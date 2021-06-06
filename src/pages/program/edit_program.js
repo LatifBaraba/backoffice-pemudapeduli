@@ -1,47 +1,53 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useState, useEffect } from 'react';
 import Breadcrumb from '../../components/common/breadcrumb';
 import useForm from "react-hook-form";
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchEditProgram } from "../../redux/program/action";
-import uploadImage from "../../helper/index";
+import { fetchEditProgram, fetchDetailProgram } from "../../redux/program/action";
+import { uploadImage } from "../../helper/index";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-// import { Editor } from 'react-draft-wysiwyg';
-// import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
-// import {
-//     EditorState,
-//     ContentState,
-//     convertToRaw,
-// } from 'draft-js';
-// import draftToHtml from 'draftjs-to-html';
-// import htmlToDraft from 'html-to-draftjs';
+import { Editor } from 'react-draft-wysiwyg';
+import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
+import {
+    EditorState,
+    ContentState,
+    convertToRaw,
+} from 'draft-js';
+import draftToHtml from 'draftjs-to-html';
+import htmlToDraft from 'html-to-draftjs';
 
 const EditProgram = (props) => {
 
     const { data } = props.location.state;
-    console.log(data)
-    const [ id, setId] = useState(data.id);
-    const [ titles, setTitles] = useState(data.title);
-    const [ sub, setSub] = useState(data.sub_title);
-    const [ tag, setTag] = useState(data.tag);
-    const [ thumb, setThumb] = useState(data.thumbnail_image_url);
-    const [ desc, setDesc] = useState(data.description);
-    const [ img, setImg] = useState('');
-
-    const loadingStatus = useSelector((state) => state.programReducer.loading);
-
     const dispatch = useDispatch();
     let token = localStorage.getItem('token');
+    
+    useEffect(() => {
+        dispatch(fetchDetailProgram(token, data.id))
+    },[])
+    
+    const programDetailData = useSelector((state) => state.programReducer.program);
+    console.log(programDetailData.detail)
+    const [ id, setId] = useState(programDetailData.id);
+    const [ titles, setTitles] = useState(programDetailData.title);
+    const [ sub, setSub] = useState(programDetailData.sub_title);
+    const [ tag, setTag] = useState(programDetailData.tag);
+    const [ thumb, setThumb] = useState(programDetailData.thumbnail_image_url);
+    const [ desc, setDesc] = useState(programDetailData.description);
+    const [ content, setContent] = useState(programDetailData.detail);
+    const [ img, setImg] = useState('');
+    const loadingStatus = useSelector((state) => state.programReducer.loading);
+
     const { register, handleSubmit, errors } = useForm();
 
-    // const blocksFromHtml = htmlToDraft(data.description);
+    // const blocksFromHtml = htmlToDraft(content);
     // const { contentBlocks, entityMap } = blocksFromHtml;
     // const contentState = ContentState.createFromBlockArray(contentBlocks, entityMap);
     // const existing = EditorState.createWithContent(contentState);
 
     // let initialState = EditorState.createEmpty();
     // const [editorState, setEditorState] = useState(contentState ? existing : initialState)
-    // const desc = draftToHtml(convertToRaw(editorState.getCurrentContent()))
+    // const content = draftToHtml(convertToRaw(editorState.getCurrentContent()))
     
     const onSubmit = data => {
         if (data !== '') {

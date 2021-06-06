@@ -1,30 +1,31 @@
-import { GET_PROGRAM,
-    GET_PROGRAM_SUCCESS,
-    GET_PROGRAM_FAILURE,
-    GET_DETAIL_PROGRAM,
-    GET_DETAIL_PROGRAM_SUCCESS,
-    GET_DETAIL_PROGRAM_FAILURE,
-    ADD_PROGRAM,
-    ADD_PROGRAM_SUCCESS,
-    ADD_PROGRAM_FAILURE,
-    EDIT_PROGRAM,
-    EDIT_PROGRAM_SUCCESS,
-    EDIT_PROGRAM_FAILURE,
-    DELETE_PROGRAM_SUCCESS,
-    DELETE_PROGRAM_FAILURE
+import { GET_ACHIEVEMENT,
+    GET_ACHIEVEMENT_SUCCESS,
+    GET_ACHIEVEMENT_FAILURE,
+    GET_DETAIL_ACHIEVEMENT,
+    GET_DETAIL_ACHIEVEMENT_SUCCESS,
+    GET_DETAIL_ACHIEVEMENT_FAILURE,
+    ADD_ACHIEVEMENT,
+    ADD_ACHIEVEMENT_SUCCESS,
+    ADD_ACHIEVEMENT_FAILURE,
+    EDIT_ACHIEVEMENT,
+    EDIT_ACHIEVEMENT_SUCCESS,
+    EDIT_ACHIEVEMENT_FAILURE,
+    DELETE_ACHIEVEMENT_SUCCESS,
+    DELETE_ACHIEVEMENT_FAILURE
         } from '../actionTypes';
+
 import axios from 'axios';
 import { fetchToken, fetchRefreshToken } from "../token/action";
 import history from "../../history";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-const URL = `${process.env.REACT_APP_BASE_URL}/program-kami/list`;
-const EditURL = `${process.env.REACT_APP_BASE_URL}/program-kami/`;
-const AddURL = `${process.env.REACT_APP_BASE_URL}/program-kami/create`;
-const DetailUrl = `${process.env.REACT_APP_BASE_URL}/program-kami/`;
+const URL = `${process.env.REACT_APP_BASE_URL}/achievement/list`;
+const EditURL = `${process.env.REACT_APP_BASE_URL}/achievement/`;
+const AddURL = `${process.env.REACT_APP_BASE_URL}/achievement/create`;
+const DetailUrl = `${process.env.REACT_APP_BASE_URL}/achievement/`;
 
-export function fetchProgram(token) {
+export function fetchAchievement(token) {
     return (dispatch) => {
         axios(URL, {
             method: 'POST',
@@ -50,25 +51,24 @@ export function fetchProgram(token) {
             }
         })
         .then(res => {
-            dispatch(getProgramSuccess(res.data.data));
+            dispatch(getAchievementSuccess(res.data.data));
             console.log(res.data.data)
         })
         .catch(err => {
-            console.log(err)
             if(err.response.status === 401){
                 toast.error("Unauthorized")
                 dispatch(fetchRefreshToken(token))
                 localStorage.removeItem("token");
                 history.push('/login')
             }
-            dispatch(getProgramFailure(err));
+            dispatch(getAchievementFailure(err));
         });
     };
 };
 
-export function fetchDetailProgram(token, id) {
+export function fetchDetailAchievement(token, id) {
     return (dispatch) => {
-        dispatch(getDetailProgram())
+        dispatch(getDetailAchievement())
         axios(DetailUrl+`${id}`, {
             method: 'GET',
             headers: {
@@ -78,7 +78,7 @@ export function fetchDetailProgram(token, id) {
         })
         .then(res => { 
             console.log(res)
-            dispatch(GetDetailProgramSuccess(res.data.data));
+            dispatch(GetDetailAchievementSuccess(res.data.data));
         })
         .catch(err => {
             console.log(err)
@@ -92,56 +92,15 @@ export function fetchDetailProgram(token, id) {
     };
 };
 
-export function fetchEditProgram(token, id, titles, sub, tag, content, newThumb, desc) {
+export function fetchAddAchievement(token, name, total, desc) {
     return (dispatch) => {
-        dispatch(editProgram())
-        axios(EditURL+`${id}`, {
-            method: 'PUT',
-            data: {
-                title: titles,
-                sub_title: sub,
-                tag: tag,
-                content: content,
-                description: desc,
-                thumbnail_image_url: newThumb
-            },
-            headers: {
-                "pp-token": `${token}`,
-                "Content-type": "application/json"
-            }
-        })
-        .then(res => { 
-            setTimeout(() => {
-                toast.success("Edit Success !");
-                dispatch(editProgramSuccess(res));
-                history.push("/program");
-            }, 2000);
-        })
-        .catch(err => {
-            console.log(err)
-            if(err.response.status === 401){
-                toast.error("Unauthorized")
-                dispatch(fetchRefreshToken(token))
-                localStorage.removeItem("token");
-                history.push('/login')
-            }
-            dispatch(editProgramFailure(err));
-        });
-    };
-};
-
-export function fetchAddProgram(token, titles, sub, tag, content, newThumb, desc) {
-    return (dispatch) => {
-        dispatch(addProgram())
+        dispatch(addAchievement())
         axios(AddURL, {
             method: 'POST',
             data: {
-                title: titles,
-                sub_title: sub,
-                tag: tag,
-                content: content,
-                description: desc,
-                thumbnail_image_url: newThumb
+                achievement_name: name,
+                achievement_total: parseInt(total),
+                description: desc
             },
             headers: {
                 "pp-token": `${token}`,
@@ -151,8 +110,8 @@ export function fetchAddProgram(token, titles, sub, tag, content, newThumb, desc
         .then(res => {
             setTimeout(() => {
                 toast.success("Add Success !");
-                dispatch(addProgramSuccess(res));
-                history.push("/program");
+                dispatch(addAchievementSuccess(res));
+                history.push("/achievement");
             }, 2000);
         })
         .catch(err => {
@@ -163,12 +122,47 @@ export function fetchAddProgram(token, titles, sub, tag, content, newThumb, desc
                 localStorage.removeItem("token");
                 history.push('/login')
             }
-            dispatch(addProgramFailure(err));
+            dispatch(addAchievementFailure(err));
         });
     };
 };
 
-export function fetchDeleteProgram(token, id) {
+export function fetchEditAchievement(token, id, name, total, desc) {
+    return (dispatch) => {
+        dispatch(editAchievement())
+        axios(EditURL+`${id}`, {
+            method: 'PUT',
+            data: {
+                achievement_name: name,
+                achievement_total: parseInt(total),
+                description: desc
+            },
+            headers: {
+                "pp-token": `${token}`,
+                "Content-type": "application/json"
+            }
+        })
+        .then(res => { 
+            setTimeout(() => {
+                toast.success("Edit Success !");
+                dispatch(editAchievementSuccess(res));
+                history.push("/achievement");
+            }, 2000);
+        })
+        .catch(err => {
+            console.log(err)
+            if(err.response.status === 401){
+                toast.error("Unauthorized")
+                dispatch(fetchRefreshToken(token))
+                localStorage.removeItem("token");
+                history.push('/login')
+            }
+            dispatch(editAchievementFailure(err));
+        });
+    };
+};
+
+export function fetchDeleteAchievement(token, id) {
     return (dispatch) => {
         axios(EditURL+`${id}`, {
             method: 'DELETE',
@@ -180,8 +174,8 @@ export function fetchDeleteProgram(token, id) {
         .then(res => {
             setTimeout(() => {
                 toast.success("Delete Success !")
-                dispatch(deleteProgramSuccess(res));
-                history.push("/program");
+                dispatch(deleteAchievementSuccess(res));
+                history.push("/achievement");
                 window.location.reload();
             }, 2000);
         })
@@ -192,73 +186,69 @@ export function fetchDeleteProgram(token, id) {
                 localStorage.removeItem("token");
                 history.push('/login')
             }
-            dispatch(deleteProgramFailure(err));
+            dispatch(deleteAchievementFailure(err));
         });
     };
 };
 
-// Get Program
-const getProgramSuccess = (payload) => ({
-    type: GET_PROGRAM_SUCCESS,
+// Get Achievement
+const getAchievementSuccess = (payload) => ({
+    type: GET_ACHIEVEMENT_SUCCESS,
     payload
 });
 
-const getProgramFailure = () => ({
-    type: GET_PROGRAM_FAILURE
+const getAchievementFailure = () => ({
+    type: GET_ACHIEVEMENT_FAILURE
 });
 
-const getProgram = () => ({
-    type: GET_PROGRAM
-});
-
-// Get Program
-const GetDetailProgramSuccess = (payload) => ({
-    type: GET_DETAIL_PROGRAM_SUCCESS,
+// Get Achievement
+const GetDetailAchievementSuccess = (payload) => ({
+    type: GET_DETAIL_ACHIEVEMENT_SUCCESS,
     payload
 });
 
-const getDetailProgramFailure = () => ({
-    type: GET_DETAIL_PROGRAM_FAILURE
+const getDetailAchievementFailure = () => ({
+    type: GET_DETAIL_ACHIEVEMENT_FAILURE
 });
 
-const getDetailProgram = () => ({
-    type: GET_DETAIL_PROGRAM
+const getDetailAchievement = () => ({
+    type: GET_DETAIL_ACHIEVEMENT
 });
 
-// Edit Program
-const editProgram = () => ({
-    type: EDIT_PROGRAM
+// Edit Achievement
+const editAchievement = () => ({
+    type: EDIT_ACHIEVEMENT
 });
 
-const editProgramSuccess = (payload) => ({
-    type: EDIT_PROGRAM_SUCCESS,
+const editAchievementSuccess = (payload) => ({
+    type: EDIT_ACHIEVEMENT_SUCCESS,
     payload
 });
 
-const editProgramFailure = () => ({
-    type: EDIT_PROGRAM_FAILURE
+const editAchievementFailure = () => ({
+    type: EDIT_ACHIEVEMENT_FAILURE
 });
 
-// Add Program
-const addProgram = () => ({
-    type: ADD_PROGRAM
+// Add Achievement
+const addAchievement = () => ({
+    type: ADD_ACHIEVEMENT
 });
 
-const addProgramSuccess = (payload) => ({
-    type: ADD_PROGRAM_SUCCESS,
+const addAchievementSuccess = (payload) => ({
+    type: ADD_ACHIEVEMENT_SUCCESS,
     payload
 });
 
-const addProgramFailure = () => ({
-    type: ADD_PROGRAM_FAILURE
+const addAchievementFailure = () => ({
+    type: ADD_ACHIEVEMENT_FAILURE
 });
 
-// Delete Program
-const deleteProgramSuccess = (payload) => ({
-    type: DELETE_PROGRAM_SUCCESS,
+// Delete Achievement
+const deleteAchievementSuccess = (payload) => ({
+    type: DELETE_ACHIEVEMENT_SUCCESS,
     payload
 });
 
-const deleteProgramFailure = () => ({
-    type: DELETE_PROGRAM_FAILURE
+const deleteAchievementFailure = () => ({
+    type: DELETE_ACHIEVEMENT_FAILURE
 });

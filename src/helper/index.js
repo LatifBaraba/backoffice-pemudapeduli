@@ -6,7 +6,7 @@ const URL = `${process.env.REACT_APP_CLOUDINARY_URL}`;
 const PRESET = `${process.env.REACT_APP_CLOUDINARY_PRESET}`;
 const SIZE = `${process.env.REACT_APP_IMAGE_UPLOAD_LIMIT}`;
 
-const uploadImage = (files) => {
+export function uploadImage(files) {
     return new Promise((resolve, reject) => {
         const formData = new FormData();
         formData.append("file", files);
@@ -34,4 +34,21 @@ const uploadImage = (files) => {
     })
 }
 
-export default uploadImage
+export function toIsoString(date) {
+    console.log(date, 'date')
+    var tzo = -date.getTimezoneOffset(),
+        dif = tzo >= 0 ? '+' : '-',
+        pad = function(num) {
+            var norm = Math.floor(Math.abs(num));
+            return (norm < 10 ? '0' : '') + norm;
+        };
+  
+    return date.getFullYear() +
+        '-' + pad(date.getMonth() + 1) +
+        '-' + pad(date.getDate()) +
+        'T' + pad(date.getHours()) +
+        ':' + pad(date.getMinutes()) +
+        ':' + pad(date.getSeconds()) +
+        dif + pad(tzo / 60) +
+        ':' + pad(tzo % 60);
+}

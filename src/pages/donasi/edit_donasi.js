@@ -3,9 +3,10 @@ import Breadcrumb from '../../components/common/breadcrumb';
 import useForm from "react-hook-form";
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchEditDonasi } from "../../redux/donasi/action";
-import uploadImage from "../../helper/index";
+import { uploadImage, toIsoString } from "../../helper/index";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import moment from 'moment/moment.js';
 // import { Editor } from 'react-draft-wysiwyg';
 // import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 // import {
@@ -27,7 +28,10 @@ const EditDonasi = (props) => {
     const [ thumb, setThumb] = useState(data.thumbnail_image_url);
     const [ desc, setDesc] = useState(data.description);
     const [ img, setImg] = useState('');
-
+    const [ validFrom, setValidFrom] = useState(data.valid_from);
+    const [ validTo, setValidTo] = useState(data.valid_to);
+    const [ target, setTarget] = useState(data.target);
+ 
     const loadingStatus = useSelector((state) => state.donasiReducer.loading);
 
     const dispatch = useDispatch();
@@ -43,19 +47,25 @@ const EditDonasi = (props) => {
     // const [editorState, setEditorState] = useState(contentState ? existing : initialState)
     // const desc = draftToHtml(convertToRaw(editorState.getCurrentContent()))
     
+    console.log(moment(validFrom).format('YYYY-MM-DDTHH:mm:ss'))
+
     const onSubmit = data => {
+        
+        let startDate = toIsoString(new Date(validFrom))
+        let endDate = toIsoString(new Date(validTo))
+
         if (data !== '') {
             if (img !== '') {
                 uploadImage(img).then(message => {
                     const newThumb = message.response.data.url;
-                    dispatch(fetchEditDonasi(token, id, titles, sub, tag, newThumb, desc))
+                    dispatch(fetchEditDonasi(token, id, titles, sub, tag, startDate, endDate, target, newThumb, desc))
                 })
                 .catch(error => {
                     toast.error("Upload Image Failed !");
                 })
             } else {
                 const newThumb = thumb;
-                dispatch(fetchEditDonasi(token, id, titles, sub, tag, newThumb, desc))
+                dispatch(fetchEditDonasi(token, id, titles, sub, tag, startDate, endDate, target, newThumb, desc))
             }
         } else {
             errors.showMessages();
@@ -110,8 +120,26 @@ const EditDonasi = (props) => {
                                             </div>
                                             <div className="col-md-12 mb-3">
                                                 <label>{"Description"}</label>
-                                                <input className="form-control" name="description" type="text" placeholder="Description" value={desc} ref={register({ required: true })} onChange={(e) => setDesc(e.target.value)} />
+                                                <input className="form-control" name="description" type="text" placeholder="Description" value={desc} onChange={(e) => setDesc(e.target.value)} />
                                                 <span>{errors.description && 'Description is required'}</span>
+                                                <div className="valid-feedback">{"Looks good!"}</div>
+                                            </div>
+                                            <div className="col-md-12 mb-3">
+                                                <label>{"Valid-From"}</label>
+                                                <input className="form-control" name="validfrom" type="datetime-local" placeholder="Start Date" value={moment(validFrom).format('YYYY-MM-DDTHH:mm:ss')} ref={register({ required: true })} onChange={(e) => setValidFrom(e.target.value)} />
+                                                <span>{errors.validfrom && 'Valid-From is required'}</span>
+                                                <div className="valid-feedback">{"Looks good!"}</div>
+                                            </div>
+                                            <div className="col-md-12 mb-3">
+                                                <label>{"Valid-To"}</label>
+                                                <input className="form-control" name="validto" type="datetime-local" placeholder="End Date" value={moment(validTo).format('YYYY-MM-DDTHH:mm:ss')} ref={register({ required: true })} onChange={(e) => setValidTo(e.target.value)} />
+                                                <span>{errors.validto && 'Valid-To is required'}</span>
+                                                <div className="valid-feedback">{"Looks good!"}</div>
+                                            </div>
+                                            <div className="col-md-12 mb-3">
+                                                <label>{"Target"}</label>
+                                                <input className="form-control" name="target" type="number" placeholder="Target Total Donasi" value={target} ref={register({ required: true })} onChange={(e) => setTarget(e.target.value)} />
+                                                <span>{errors.target && 'Target is required'}</span>
                                                 <div className="valid-feedback">{"Looks good!"}</div>
                                             </div>
                                             <div className="col-md-12 mb-3">

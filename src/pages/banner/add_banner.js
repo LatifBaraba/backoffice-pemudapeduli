@@ -3,7 +3,7 @@ import Breadcrumb from '../../components/common/breadcrumb';
 import useForm from "react-hook-form";
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchAddBanner } from "../../redux/banner/action";
-import uploadImage from "../../helper/index";
+import { uploadImage } from "../../helper/index";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 // import { Editor } from 'react-draft-wysiwyg';
