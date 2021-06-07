@@ -5,16 +5,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchEditProgram, fetchDetailProgram } from "../../redux/program/action";
 import { uploadImage } from "../../helper/index";
 import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import { Editor } from 'react-draft-wysiwyg';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
-import {
-    EditorState,
-    ContentState,
-    convertToRaw,
-} from 'draft-js';
 import draftToHtml from 'draftjs-to-html';
 import htmlToDraft from 'html-to-draftjs';
+import { EditorState, ContentState, convertToRaw, convertFromRaw } from 'draft-js';
 
 const EditProgram = (props) => {
 
@@ -24,30 +19,35 @@ const EditProgram = (props) => {
     
     useEffect(() => {
         dispatch(fetchDetailProgram(token, data.id))
-    },[])
+    },[token, data.id])
     
     const programDetailData = useSelector((state) => state.programReducer.program);
-    console.log(programDetailData.detail)
+    // const programDetailContent = useSelector((state) => state.programReducer.content);
+    const loadingStatus = useSelector((state) => state.programReducer.loading);
+
+    console.log(programDetailData.detail?.content)
+
+    const draft = programDetailData.detail?.content;
+    console.log(draft, 'draft')
+
     const [ id, setId] = useState(programDetailData.id);
     const [ titles, setTitles] = useState(programDetailData.title);
     const [ sub, setSub] = useState(programDetailData.sub_title);
     const [ tag, setTag] = useState(programDetailData.tag);
     const [ thumb, setThumb] = useState(programDetailData.thumbnail_image_url);
     const [ desc, setDesc] = useState(programDetailData.description);
-    const [ content, setContent] = useState(programDetailData.detail);
     const [ img, setImg] = useState('');
-    const loadingStatus = useSelector((state) => state.programReducer.loading);
 
     const { register, handleSubmit, errors } = useForm();
 
-    // const blocksFromHtml = htmlToDraft(content);
-    // const { contentBlocks, entityMap } = blocksFromHtml;
-    // const contentState = ContentState.createFromBlockArray(contentBlocks, entityMap);
-    // const existing = EditorState.createWithContent(contentState);
+    const blocksFromHtml = htmlToDraft(programDetailData.description?.content);
+    const { contentBlocks, entityMap } = blocksFromHtml;
+    const contentState = ContentState.createFromBlockArray(contentBlocks, entityMap);
+    const existing = EditorState.createWithContent(contentState);
 
-    // let initialState = EditorState.createEmpty();
-    // const [editorState, setEditorState] = useState(contentState ? existing : initialState)
-    // const content = draftToHtml(convertToRaw(editorState.getCurrentContent()))
+    let initialState = EditorState.createEmpty();
+    const [editorState, setEditorState] = useState(contentState ? existing : initialState)
+    const des = draftToHtml(convertToRaw(editorState.getCurrentContent()))
     
     const onSubmit = data => {
         if (data !== '') {

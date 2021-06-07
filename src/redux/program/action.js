@@ -4,6 +4,7 @@ import { GET_PROGRAM,
     GET_DETAIL_PROGRAM,
     GET_DETAIL_PROGRAM_SUCCESS,
     GET_DETAIL_PROGRAM_FAILURE,
+    GET_DETAIL_PROGRAM_CONTENT,
     ADD_PROGRAM,
     ADD_PROGRAM_SUCCESS,
     ADD_PROGRAM_FAILURE,
@@ -78,7 +79,8 @@ export function fetchDetailProgram(token, id) {
         })
         .then(res => { 
             console.log(res)
-            dispatch(GetDetailProgramSuccess(res.data.data));
+            dispatch(getDetailProgramSuccess(res.data.data));
+            dispatch(getDetailProgramContent(res.data.data.detail));
         })
         .catch(err => {
             console.log(err)
@@ -212,13 +214,18 @@ const getProgram = () => ({
 });
 
 // Get Program
-const GetDetailProgramSuccess = (payload) => ({
+const getDetailProgramSuccess = (payload) => ({
     type: GET_DETAIL_PROGRAM_SUCCESS,
     payload
 });
 
 const getDetailProgramFailure = () => ({
     type: GET_DETAIL_PROGRAM_FAILURE
+});
+
+const getDetailProgramContent = (payload) => ({
+    type: GET_DETAIL_PROGRAM_CONTENT,
+    payload
 });
 
 const getDetailProgram = () => ({

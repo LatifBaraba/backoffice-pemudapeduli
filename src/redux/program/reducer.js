@@ -5,6 +5,7 @@ import {
     GET_DETAIL_PROGRAM,
     GET_DETAIL_PROGRAM_SUCCESS,
     GET_DETAIL_PROGRAM_FAILURE,
+    GET_DETAIL_PROGRAM_CONTENT,
     EDIT_PROGRAM,
     EDIT_PROGRAM_SUCCESS,
     EDIT_PROGRAM_FAILURE,
@@ -19,6 +20,7 @@ import {
 const initialState = {
     loading: false,
     program: [],
+    content: [],
     error: null
 };
 
@@ -52,6 +54,13 @@ export default function programReducer(state = initialState, action) {
                 loading: false,
                 error: null,
                 program: action.payload
+            };
+        case GET_DETAIL_PROGRAM_CONTENT:
+            return {
+                ...state,
+                loading: false,
+                error: null,
+                content: action.payload
             };
         case GET_DETAIL_PROGRAM_FAILURE:
             return {
