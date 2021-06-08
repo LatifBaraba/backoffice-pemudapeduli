@@ -20,15 +20,10 @@ const EditProgram = (props) => {
     useEffect(() => {
         dispatch(fetchDetailProgram(token, data.id))
     },[token, data.id])
-    
+
     const programDetailData = useSelector((state) => state.programReducer.program);
     // const programDetailContent = useSelector((state) => state.programReducer.content);
     const loadingStatus = useSelector((state) => state.programReducer.loading);
-
-    console.log(programDetailData.detail?.content)
-
-    const draft = programDetailData.detail?.content;
-    console.log(draft, 'draft')
 
     const [ id, setId] = useState(programDetailData.id);
     const [ titles, setTitles] = useState(programDetailData.title);
@@ -36,18 +31,26 @@ const EditProgram = (props) => {
     const [ tag, setTag] = useState(programDetailData.tag);
     const [ thumb, setThumb] = useState(programDetailData.thumbnail_image_url);
     const [ desc, setDesc] = useState(programDetailData.description);
+    const [ draft, setDraft] = useState(programDetailData.detail?.content);
     const [ img, setImg] = useState('');
 
+    console.log(programDetailData, 'data')
+    console.log(draft, 'draft')
+    
+    console.log(programDetailData.detail?.content, "coba")
+
+    const ss = programDetailData.detail?.content ?? '';
+    console.log(ss , 'ss')
     const { register, handleSubmit, errors } = useForm();
 
-    const blocksFromHtml = htmlToDraft(programDetailData.description?.content);
-    const { contentBlocks, entityMap } = blocksFromHtml;
-    const contentState = ContentState.createFromBlockArray(contentBlocks, entityMap);
-    const existing = EditorState.createWithContent(contentState);
+    // const blocksFromHtml = htmlToDraft(ss);
+    // const { contentBlocks, entityMap } = blocksFromHtml;
+    // const contentState = ContentState.createFromBlockArray(contentBlocks, entityMap);
+    // const existing = EditorState.createWithContent(contentState);
 
-    let initialState = EditorState.createEmpty();
-    const [editorState, setEditorState] = useState(contentState ? existing : initialState)
-    const des = draftToHtml(convertToRaw(editorState.getCurrentContent()))
+    // let initialState = EditorState.createEmpty();
+    // const [editorState, setEditorState] = useState(contentState ? existing : initialState)
+    // const des = draftToHtml(convertToRaw(editorState.getCurrentContent()))
     
     const onSubmit = data => {
         if (data !== '') {

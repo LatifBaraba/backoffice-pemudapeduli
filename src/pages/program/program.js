@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchProgram, fetchDeleteProgram } from "../../redux/program/action";
 
-const Program = (props) => {
+const Program = () => {
 
     const dispatch = useDispatch();
 
@@ -16,7 +16,7 @@ const Program = (props) => {
     },[])
 
     const programData = useSelector((state) => state.programReducer.program);
-
+    console.log(programData)
     const programDatas = programData.map((program, index) => {
         return (
             <tr key={index}>
