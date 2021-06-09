@@ -61,7 +61,7 @@ export function fetchBanner(token) {
     };
 };
 
-export function fetchEditBanner(token, id, titles, sub, titContent, newThumb, desc) {
+export function fetchEditBanner(token, id, titles, sub, titContent, titleLeft, titleRight, deepLeft, deepRight, newThumb, desc) {
     return (dispatch) => {
         dispatch(editBanner())
         axios(EditURL+`${id}`, {
@@ -70,8 +70,10 @@ export function fetchEditBanner(token, id, titles, sub, titContent, newThumb, de
                 title: titles,
                 sub_title: sub,
                 title_content: titContent,
-                deeplink_right:"",
-                deeplink_left:"",
+                title_button_right: titleRight,
+                deeplink_right: deepRight,
+                title_button_left: titleLeft,
+                deeplink_left: deepLeft,
                 description: desc,
                 thumbnail_image_url: newThumb
             },
@@ -100,7 +102,7 @@ export function fetchEditBanner(token, id, titles, sub, titContent, newThumb, de
     };
 };
 
-export function fetchAddBanner(token, titles, sub, titContent, newThumb, desc) {
+export function fetchAddBanner(token, titles, sub, titContent, titleLeft, titleRight, deepLeft, deepRight, newThumb, desc) {
     return (dispatch) => {
         dispatch(addBanner())
         axios(AddURL, {
@@ -109,8 +111,10 @@ export function fetchAddBanner(token, titles, sub, titContent, newThumb, desc) {
                 title: titles,
                 sub_title: sub,
                 title_content: titContent,
-                deeplink_right:"",
-                deeplink_left:"",
+                title_button_right: titleRight,
+                deeplink_right: deepRight,
+                title_button_left: titleLeft,
+                deeplink_left: deepLeft,
                 description: desc,
                 thumbnail_image_url: newThumb
             },

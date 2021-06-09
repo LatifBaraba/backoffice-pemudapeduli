@@ -73,7 +73,8 @@ function Root() {
         const color = localStorage.getItem('color')
         document.body.classList.add(layout);
         document.getElementById("color").setAttribute("href", `${process.env.PUBLIC_URL}/assets/css/${color}.css`);
-        let isToken = localStorage.getItem('token');
+        const isToken = localStorage.getItem('token');
+        console.log(isToken, 'true')
         if(isToken){
             setAuthenticated(true)
         }
@@ -89,7 +90,8 @@ function Root() {
                                     <Route path={`${process.env.PUBLIC_URL}/login`} component={Login} />
                                     {/* <Redirect from="/" to="/dashboard"/> */}
                                     <Route exact path="/">
-                                        {authenticated ? <Redirect to="/dashboard" /> : <Redirect to="/login" />}
+                                        {/* {authenticated ? <Redirect to="/dashboard" /> : <Redirect to="/login" />} */}
+                                        {<Redirect to="/login" />}
                                     </Route>
                                     {authenticated !== null ?
                                         <App>

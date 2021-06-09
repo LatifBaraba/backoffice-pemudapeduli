@@ -22,6 +22,10 @@ const AddBanner = () => {
     const [ sub, setSub] = useState("");
     const [ titContent, setTitContent] = useState("");
     const [ desc, setDesc] = useState("");
+    const [ titleLeft, setTitleLeft] = useState("");
+    const [ titleRight, setTitleRight] = useState("");
+    const [ deepLeft, setDeepLeft] = useState("");
+    const [ deepRight, setDeepRight] = useState("");
     const [ img, setImg] = useState();
 
     const loadingStatus = useSelector((state) => state.bannerReducer.loading);
@@ -34,7 +38,7 @@ const AddBanner = () => {
         if (data !== '') {
             uploadImage(img).then(message => {
                 const newThumb = message.response.data.url;
-                dispatch(fetchAddBanner(token, titles, sub, titContent, newThumb, desc))
+                dispatch(fetchAddBanner(token, titles, sub, titContent, titleLeft, titleRight, deepLeft, deepRight, newThumb, desc))
             })
             .catch(error => {
                 toast.error("Upload Image Failed !");
@@ -95,6 +99,30 @@ const AddBanner = () => {
                                                 <label>{"Description"}</label>
                                                 <input className="form-control" name="desc" type="text" placeholder="Description" ref={register({ required: true })} onChange={(e) => setDesc(e.target.value)} />
                                                 <span>{errors.description && 'Description is required'}</span>
+                                                <div className="valid-feedback">{"Looks good!"}</div>
+                                            </div>
+                                            <div className="col-md-6 mb-3">
+                                                <label>{"Title Button Left"}</label>
+                                                <input className="form-control" name="titleBtnLeft" type="text" placeholder="Title Left" ref={register({ required: true })} onChange={(e) => setTitleLeft(e.target.value)} />
+                                                <span>{errors.titleBtnLeft && 'Title Button Left is required'}</span>
+                                                <div className="valid-feedback">{"Looks good!"}</div>
+                                            </div>
+                                            <div className="col-md-6 mb-3">
+                                                <label>{"Link Button Left"}</label>
+                                                <input className="form-control" name="deepLinkLeft" type="text" placeholder="Link Left" ref={register({ required: true })} onChange={(e) => setDeepLeft(e.target.value)} />
+                                                <span>{errors.deepLinkLeft && 'Link Button Left is required'}</span>
+                                                <div className="valid-feedback">{"Looks good!"}</div>
+                                            </div>
+                                            <div className="col-md-6 mb-3">
+                                                <label>{"Title Button Right"}</label>
+                                                <input className="form-control" name="titleBtnRight" type="text" placeholder="Title Right" ref={register({ required: true })} onChange={(e) => setTitleRight(e.target.value)} />
+                                                <span>{errors.titleBtnRight && 'Title Button Right is required'}</span>
+                                                <div className="valid-feedback">{"Looks good!"}</div>
+                                            </div>
+                                            <div className="col-md-6 mb-3">
+                                                <label>{"Link Button Right"}</label>
+                                                <input className="form-control" name="deepLinkRight" type="text" placeholder="Link Right" ref={register({ required: true })} onChange={(e) => setDeepRight(e.target.value)} />
+                                                <span>{errors.deepLinkRight && 'Link Button Right is required'}</span>
                                                 <div className="valid-feedback">{"Looks good!"}</div>
                                             </div>
                                             {/* <div className="col-md-12 mb-3">

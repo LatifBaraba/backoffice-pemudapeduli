@@ -62,7 +62,7 @@ export function fetchDonasi(token) {
     };
 };
 
-export function fetchEditDonasi(token, id, titles, sub, tag, startDate, endDate, target, newThumb, desc) {
+export function fetchEditDonasi(token, id, titles, sub, tag, startDate, endDate, target, donasiType, newThumb, desc) {
     return (dispatch) => {
         dispatch(editDonasi())
         axios(EditURL+`${id}`, {
@@ -71,6 +71,7 @@ export function fetchEditDonasi(token, id, titles, sub, tag, startDate, endDate,
                 title: titles,
                 sub_title: sub,
                 tag: tag,
+                donasi_type: donasiType,
                 valid_from: startDate,
                 valid_to: endDate,
                 target: parseInt(target),
@@ -102,7 +103,7 @@ export function fetchEditDonasi(token, id, titles, sub, tag, startDate, endDate,
     };
 };
 
-export function fetchAddDonasi(token, titles, sub, tag, startDate, endDate, target, newThumb, desc) {
+export function fetchAddDonasi(token, titles, sub, tag, startDate, endDate, target, donasiType, newThumb, desc) {
     return (dispatch) => {
         dispatch(addDonasi())
         axios(AddURL, {
@@ -111,6 +112,7 @@ export function fetchAddDonasi(token, titles, sub, tag, startDate, endDate, targ
                 title: titles,
                 sub_title: sub,
                 tag: tag,
+                donasi_type: donasiType,
                 valid_from: startDate,
                 valid_to: endDate,
                 target: parseInt(target),

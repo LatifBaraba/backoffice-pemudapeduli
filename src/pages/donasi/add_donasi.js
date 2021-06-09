@@ -26,8 +26,10 @@ const AddDonasi = () => {
     const [ validFrom, setValidFrom] = useState();
     const [ validTo, setValidTo] = useState();
     const [ target, setTarget] = useState();
+    const [ donasiType, setDonasiType] = useState("Rutin");
 
     const loadingStatus = useSelector((state) => state.donasiReducer.loading);
+    console.log(donasiType, 'tipe lama')
 
     // let _contentState = EditorState.createEmpty("");
     // const [editorState, setEditorState] = useState(_contentState)
@@ -40,7 +42,7 @@ const AddDonasi = () => {
         if (data !== '') {
             uploadImage(img).then(message => {
                 const newThumb = message.response.data.url;
-                dispatch(fetchAddDonasi(token, titles, sub, tag, startDate, endDate, target, newThumb, desc))
+                dispatch(fetchAddDonasi(token, titles, sub, tag, startDate, endDate, target, donasiType, newThumb, desc))
             })
             .catch(error => {
                 toast.error("Upload Image Failed !");
@@ -120,6 +122,14 @@ const AddDonasi = () => {
                                                 <span>{errors.target && 'Target is required'}</span>
                                                 <div className="valid-feedback">{"Looks good!"}</div>
                                             </div>
+                                            <div className="col-md-12 mb-3">
+                                                <label for="donasiType">Donation Type</label>
+                                                <select class="form-control digits" id="donasiType" onChange={(e) => setDonasiType(e.target.value)}>
+                                                    <option selected value="Rutin">Rutin</option>
+                                                    <option value="One Time">One Time</option>
+                                                </select>
+                                            </div>
+                                                
                                             <div className="col-md-12 mb-3">
                                                 <label>{"UploadFile"}</label>
                                                 <input className="form-control" type="file" accept="image/*" onChange={(e) => setImg(e.target.files[0])}/>
