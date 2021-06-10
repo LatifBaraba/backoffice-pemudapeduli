@@ -1,26 +1,31 @@
-import { GET_BANNER,
-    GET_BANNER_SUCCESS,
-    GET_BANNER_FAILURE,
-    ADD_BANNER,
-    ADD_BANNER_SUCCESS,
-    ADD_BANNER_FAILURE,
-    EDIT_BANNER,
-    EDIT_BANNER_SUCCESS,
-    EDIT_BANNER_FAILURE,
-    DELETE_BANNER_SUCCESS,
-    DELETE_BANNER_FAILURE
+import { GET_MENU,
+    GET_MENU_SUCCESS,
+    GET_MENU_FAILURE,
+    GET_DETAIL_MENU,
+    GET_DETAIL_MENU_SUCCESS,
+    GET_DETAIL_MENU_FAILURE,
+    ADD_MENU,
+    ADD_MENU_SUCCESS,
+    ADD_MENU_FAILURE,
+    EDIT_MENU,
+    EDIT_MENU_SUCCESS,
+    EDIT_MENU_FAILURE,
+    DELETE_MENU_SUCCESS,
+    DELETE_MENU_FAILURE
         } from '../actionTypes';
+
 import axios from 'axios';
 import { fetchToken, fetchRefreshToken } from "../token/action";
 import history from "../../history";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-const URL = `${process.env.REACT_APP_BASE_URL}/banner/list`;
-const EditURL = `${process.env.REACT_APP_BASE_URL}/banner/`;
-const AddURL = `${process.env.REACT_APP_BASE_URL}/banner/create`;
+const URL = `${process.env.REACT_APP_BASE_URL}/menu-extras/list`;
+const EditURL = `${process.env.REACT_APP_BASE_URL}/menu-extras/`;
+const AddURL = `${process.env.REACT_APP_BASE_URL}/menu-extras/create`;
+const DetailUrl = `${process.env.REACT_APP_BASE_URL}/menu-extras/`;
 
-export function fetchBanner(token) {
+export function fetchMenu(token) {
     return (dispatch) => {
         axios(URL, {
             method: 'POST',
@@ -46,7 +51,7 @@ export function fetchBanner(token) {
             }
         })
         .then(res => {
-            dispatch(getBannerSuccess(res.data.data));
+            dispatch(getMenuSuccess(res.data.data));
             console.log(res.data.data)
         })
         .catch(err => {
@@ -56,66 +61,20 @@ export function fetchBanner(token) {
                 localStorage.removeItem("token");
                 history.push('/login')
             }
-            dispatch(getBannerFailure(err));
+            dispatch(getMenuFailure(err));
         });
     };
 };
 
-export function fetchEditBanner(token, id, titles, sub, titContent, titleLeft, titleRight, deepLeft, deepRight, newThumb, desc) {
+export function fetchAddMenu(token, name, total, desc) {
     return (dispatch) => {
-        dispatch(editBanner())
-        axios(EditURL+`${id}`, {
-            method: 'PUT',
-            data: {
-                title: titles,
-                sub_title: sub,
-                title_content: titContent,
-                title_button_right: titleRight == "" ? null : titleRight,
-                deeplink_right: deepRight,
-                title_button_left: titleLeft == "" ? null : titleRight,
-                deeplink_left: deepLeft,
-                description: desc,
-                thumbnail_image_url: newThumb
-            },
-            headers: {
-                "pp-token": `${token}`,
-                "Content-type": "application/json"
-            }
-        })
-        .then(res => { 
-            setTimeout(() => {
-                toast.success("Edit Success !");
-                dispatch(editBannerSuccess(res));
-                history.push("/banner");
-            }, 2000);
-        })
-        .catch(err => {
-            console.log(err)
-            if(err.response.status === 401){
-                toast.error("Unauthorized")
-                dispatch(fetchRefreshToken(token))
-                localStorage.removeItem("token");
-                history.push('/login')
-            }
-            dispatch(editBannerFailure(err));
-        });
-    };
-};
-
-export function fetchAddBanner(token, titles, sub, titContent, titleLeft, titleRight, deepLeft, deepRight, newThumb, desc) {
-    return (dispatch) => {
-        dispatch(addBanner())
+        dispatch(addMenu())
         axios(AddURL, {
             method: 'POST',
             data: {
-                title: titles,
-                sub_title: sub,
-                title_content: titContent,
-                title_button_right: titleRight == "" ? null : titleRight,
-                deeplink_right: deepRight,
-                title_button_left: titleLeft == "" ? null : titleRight,
-                description: desc,
-                thumbnail_image_url: newThumb
+                achievement_name: name,
+                achievement_total: parseInt(total),
+                description: desc
             },
             headers: {
                 "pp-token": `${token}`,
@@ -125,8 +84,8 @@ export function fetchAddBanner(token, titles, sub, titContent, titleLeft, titleR
         .then(res => {
             setTimeout(() => {
                 toast.success("Add Success !");
-                dispatch(addBannerSuccess(res));
-                history.push("/banner");
+                dispatch(addMenuSuccess(res));
+                history.push("/achievement");
             }, 2000);
         })
         .catch(err => {
@@ -137,12 +96,47 @@ export function fetchAddBanner(token, titles, sub, titContent, titleLeft, titleR
                 localStorage.removeItem("token");
                 history.push('/login')
             }
-            dispatch(addBannerFailure(err));
+            dispatch(addMenuFailure(err));
         });
     };
 };
 
-export function fetchDeleteBanner(token, id) {
+export function fetchEditMenu(token, id, name, total, desc) {
+    return (dispatch) => {
+        dispatch(editMenu())
+        axios(EditURL+`${id}`, {
+            method: 'PUT',
+            data: {
+                achievement_name: name,
+                achievement_total: parseInt(total),
+                description: desc
+            },
+            headers: {
+                "pp-token": `${token}`,
+                "Content-type": "application/json"
+            }
+        })
+        .then(res => { 
+            setTimeout(() => {
+                toast.success("Edit Success !");
+                dispatch(editMenuSuccess(res));
+                history.push("/achievement");
+            }, 2000);
+        })
+        .catch(err => {
+            console.log(err)
+            if(err.response.status === 401){
+                toast.error("Unauthorized")
+                dispatch(fetchRefreshToken(token))
+                localStorage.removeItem("token");
+                history.push('/login')
+            }
+            dispatch(editMenuFailure(err));
+        });
+    };
+};
+
+export function fetchDeleteMenu(token, id) {
     return (dispatch) => {
         axios(EditURL+`${id}`, {
             method: 'DELETE',
@@ -154,8 +148,8 @@ export function fetchDeleteBanner(token, id) {
         .then(res => {
             setTimeout(() => {
                 toast.success("Delete Success !")
-                dispatch(deleteBannerSuccess(res));
-                history.push("/banner");
+                dispatch(deleteMenuSuccess(res));
+                history.push("/menu");
                 window.location.reload();
             }, 2000);
         })
@@ -166,59 +160,55 @@ export function fetchDeleteBanner(token, id) {
                 localStorage.removeItem("token");
                 history.push('/login')
             }
-            dispatch(deleteBannerFailure(err));
+            dispatch(deleteMenuFailure(err));
         });
     };
 };
 
-// Get Banner
-const getBannerSuccess = (payload) => ({
-    type: GET_BANNER_SUCCESS,
+// Get Menu
+const getMenuSuccess = (payload) => ({
+    type: GET_MENU_SUCCESS,
     payload
 });
 
-const getBannerFailure = () => ({
-    type: GET_BANNER_FAILURE
+const getMenuFailure = () => ({
+    type: GET_MENU_FAILURE
 });
 
-const getBanner = () => ({
-    type: GET_BANNER
+// Edit Menu
+const editMenu = () => ({
+    type: EDIT_MENU
 });
 
-// Edit Banner
-const editBanner = () => ({
-    type: EDIT_BANNER
-});
-
-const editBannerSuccess = (payload) => ({
-    type: EDIT_BANNER_SUCCESS,
+const editMenuSuccess = (payload) => ({
+    type: EDIT_MENU_SUCCESS,
     payload
 });
 
-const editBannerFailure = () => ({
-    type: EDIT_BANNER_FAILURE
+const editMenuFailure = () => ({
+    type: EDIT_MENU_FAILURE
 });
 
-// Add Banner
-const addBanner = () => ({
-    type: ADD_BANNER
+// Add Menu
+const addMenu = () => ({
+    type: ADD_MENU
 });
 
-const addBannerSuccess = (payload) => ({
-    type: ADD_BANNER_SUCCESS,
+const addMenuSuccess = (payload) => ({
+    type: ADD_MENU_SUCCESS,
     payload
 });
 
-const addBannerFailure = () => ({
-    type: ADD_BANNER_FAILURE
+const addMenuFailure = () => ({
+    type: ADD_MENU_FAILURE
 });
 
-// Delete Banner
-const deleteBannerSuccess = (payload) => ({
-    type: DELETE_BANNER_SUCCESS,
+// Delete Menu
+const deleteMenuSuccess = (payload) => ({
+    type: DELETE_MENU_SUCCESS,
     payload
 });
 
-const deleteBannerFailure = () => ({
-    type: DELETE_BANNER_FAILURE
+const deleteMenuFailure = () => ({
+    type: DELETE_MENU_FAILURE
 });

@@ -23,14 +23,19 @@ const AddTestimoni = () => {
     const loadingStatus = useSelector((state) => state.testimoniReducer.loading);
 
     const onSubmit = data => {
+        // if (data !== '') {
+        //     uploadImage(img).then(message => {
+        //         const newThumb = message.response.data.url;
+        //         dispatch(fetchAddTestimoni(token, name, role, messages, newThumb))
+        //     })
+        //     .catch(error => {
+        //         toast.error("Upload Image Failed !");
+        //     })
+        // } else {
+        //     errors.showMessages();
+        // }
         if (data !== '') {
-            uploadImage(img).then(message => {
-                const newThumb = message.response.data.url;
-                dispatch(fetchAddTestimoni(token, name, role, messages, newThumb))
-            })
-            .catch(error => {
-                toast.error("Upload Image Failed !");
-            })
+            dispatch(fetchAddTestimoni(token, name, role, messages))
         } else {
             errors.showMessages();
         }
@@ -89,10 +94,10 @@ const AddTestimoni = () => {
                                                 <span>{errors.messages && 'Message is required'}</span>
                                                 <div className="valid-feedback">{"Looks good!"}</div>
                                             </div>
-                                            <div className="col-md-12 mb-3">
+                                            {/* <div className="col-md-12 mb-3">
                                                 <label>{"UploadFile"}</label>
                                                 <input className="form-control" type="file" accept="image/*" onChange={(e) => setImg(e.target.files[0])}/>
-                                            </div>
+                                            </div> */}
                                         </div>
                                         {/* <button className="btn btn-pill btn-primary btn-block mt-3 mb-3" type="submit">{"Submit"}</button>    */}
                                         {submitButton()}

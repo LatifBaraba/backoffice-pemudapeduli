@@ -13,6 +13,8 @@ import testimoniReducer from '../redux/testimoni/reducer';
 import userReducer from '../redux/user/reducer';
 import beneficariesReducer from '../redux/beneficaries/reducer';
 import achievementReducer from '../redux/achievement/reducer';
+import footerReducer from '../redux/footer/reducer';
+import menuReducer from '../redux/menu/reducer'
 
 const reducers = combineReducers({
     Customizer,
@@ -28,7 +30,9 @@ const reducers = combineReducers({
     testimoniReducer,
     userReducer,
     beneficariesReducer,
-    achievementReducer
+    achievementReducer,
+    footerReducer,
+    menuReducer
 
 });
 

@@ -7,7 +7,7 @@ import {
     DollarSign,
     AtSign,
     Award,
-    BookOpen,
+    // BookOpen,
     Columns,
     FileText,
     Bookmark,
@@ -15,7 +15,8 @@ import {
     Hash,
     CheckCircle,
     UserCheck,
-    CreditCard
+    CreditCard,
+    Shuffle
 } from 'react-feather';
 
 export const MENUITEMS = [
@@ -74,7 +75,10 @@ export const MENUITEMS = [
         title: 'Testimoni', icon: CheckCircle, type: 'link', path: '/testimoni', active: false
     },
     {
-        title: 'Kontak', icon: Hash, type: 'link', path: '/user', active: false
+        title: 'Footer', icon: Hash, type: 'link', path: '/footer', active: false
+    },
+    {
+        title: 'Menu External', icon: Shuffle, type: 'link', path: '/menu', active: false
     },
 ]
 

@@ -1,14 +1,14 @@
-import { GET_BANNER,
-    GET_BANNER_SUCCESS,
-    GET_BANNER_FAILURE,
-    ADD_BANNER,
-    ADD_BANNER_SUCCESS,
-    ADD_BANNER_FAILURE,
-    EDIT_BANNER,
-    EDIT_BANNER_SUCCESS,
-    EDIT_BANNER_FAILURE,
-    DELETE_BANNER_SUCCESS,
-    DELETE_BANNER_FAILURE
+import { GET_FOOTER,
+    GET_FOOTER_SUCCESS,
+    GET_FOOTER_FAILURE,
+    ADD_FOOTER,
+    ADD_FOOTER_SUCCESS,
+    ADD_FOOTER_FAILURE,
+    EDIT_FOOTER,
+    EDIT_FOOTER_SUCCESS,
+    EDIT_FOOTER_FAILURE,
+    DELETE_FOOTER_SUCCESS,
+    DELETE_FOOTER_FAILURE
         } from '../actionTypes';
 import axios from 'axios';
 import { fetchToken, fetchRefreshToken } from "../token/action";
@@ -16,16 +16,16 @@ import history from "../../history";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-const URL = `${process.env.REACT_APP_BASE_URL}/banner/list`;
-const EditURL = `${process.env.REACT_APP_BASE_URL}/banner/`;
-const AddURL = `${process.env.REACT_APP_BASE_URL}/banner/create`;
+const URL = `${process.env.REACT_APP_BASE_URL}/kontak-kami/list`;
+const EditURL = `${process.env.REACT_APP_BASE_URL}/kontak-kami/`;
+const AddURL = `${process.env.REACT_APP_BASE_URL}/kontak-kami/create`;
 
-export function fetchBanner(token) {
+export function fetchFooter(token) {
     return (dispatch) => {
         axios(URL, {
             method: 'POST',
             data: {
-                limit: "100",
+                limit: "1",
                 offset: "0",
                 filters: [
                     {
@@ -46,7 +46,7 @@ export function fetchBanner(token) {
             }
         })
         .then(res => {
-            dispatch(getBannerSuccess(res.data.data));
+            dispatch(getFooterSuccess(res.data.data));
             console.log(res.data.data)
         })
         .catch(err => {
@@ -56,14 +56,14 @@ export function fetchBanner(token) {
                 localStorage.removeItem("token");
                 history.push('/login')
             }
-            dispatch(getBannerFailure(err));
+            dispatch(getFooterFailure(err));
         });
     };
 };
 
-export function fetchEditBanner(token, id, titles, sub, titContent, titleLeft, titleRight, deepLeft, deepRight, newThumb, desc) {
+export function fetchEditFooter(token, id, titles, sub, titContent, titleLeft, titleRight, deepLeft, deepRight, newThumb, desc) {
     return (dispatch) => {
-        dispatch(editBanner())
+        dispatch(editFooter())
         axios(EditURL+`${id}`, {
             method: 'PUT',
             data: {
@@ -85,8 +85,8 @@ export function fetchEditBanner(token, id, titles, sub, titContent, titleLeft, t
         .then(res => { 
             setTimeout(() => {
                 toast.success("Edit Success !");
-                dispatch(editBannerSuccess(res));
-                history.push("/banner");
+                dispatch(editFooterSuccess(res));
+                history.push("/footer");
             }, 2000);
         })
         .catch(err => {
@@ -97,14 +97,14 @@ export function fetchEditBanner(token, id, titles, sub, titContent, titleLeft, t
                 localStorage.removeItem("token");
                 history.push('/login')
             }
-            dispatch(editBannerFailure(err));
+            dispatch(editFooterFailure(err));
         });
     };
 };
 
-export function fetchAddBanner(token, titles, sub, titContent, titleLeft, titleRight, deepLeft, deepRight, newThumb, desc) {
+export function fetchAddFooter(token, titles, sub, titContent, titleLeft, titleRight, deepLeft, deepRight, newThumb, desc) {
     return (dispatch) => {
-        dispatch(addBanner())
+        dispatch(addFooter())
         axios(AddURL, {
             method: 'POST',
             data: {
@@ -125,8 +125,8 @@ export function fetchAddBanner(token, titles, sub, titContent, titleLeft, titleR
         .then(res => {
             setTimeout(() => {
                 toast.success("Add Success !");
-                dispatch(addBannerSuccess(res));
-                history.push("/banner");
+                dispatch(addFooterSuccess(res));
+                history.push("/footer");
             }, 2000);
         })
         .catch(err => {
@@ -137,12 +137,12 @@ export function fetchAddBanner(token, titles, sub, titContent, titleLeft, titleR
                 localStorage.removeItem("token");
                 history.push('/login')
             }
-            dispatch(addBannerFailure(err));
+            dispatch(addFooterFailure(err));
         });
     };
 };
 
-export function fetchDeleteBanner(token, id) {
+export function fetchDeleteFooter(token, id) {
     return (dispatch) => {
         axios(EditURL+`${id}`, {
             method: 'DELETE',
@@ -154,8 +154,8 @@ export function fetchDeleteBanner(token, id) {
         .then(res => {
             setTimeout(() => {
                 toast.success("Delete Success !")
-                dispatch(deleteBannerSuccess(res));
-                history.push("/banner");
+                dispatch(deleteFooterSuccess(res));
+                history.push("/footer");
                 window.location.reload();
             }, 2000);
         })
@@ -166,59 +166,59 @@ export function fetchDeleteBanner(token, id) {
                 localStorage.removeItem("token");
                 history.push('/login')
             }
-            dispatch(deleteBannerFailure(err));
+            dispatch(deleteFooterFailure(err));
         });
     };
 };
 
-// Get Banner
-const getBannerSuccess = (payload) => ({
-    type: GET_BANNER_SUCCESS,
+// Get Footer
+const getFooterSuccess = (payload) => ({
+    type: GET_FOOTER_SUCCESS,
     payload
 });
 
-const getBannerFailure = () => ({
-    type: GET_BANNER_FAILURE
+const getFooterFailure = () => ({
+    type: GET_FOOTER_FAILURE
 });
 
-const getBanner = () => ({
-    type: GET_BANNER
+const getFooter = () => ({
+    type: GET_FOOTER
 });
 
-// Edit Banner
-const editBanner = () => ({
-    type: EDIT_BANNER
+// Edit Footer
+const editFooter = () => ({
+    type: EDIT_FOOTER
 });
 
-const editBannerSuccess = (payload) => ({
-    type: EDIT_BANNER_SUCCESS,
+const editFooterSuccess = (payload) => ({
+    type: EDIT_FOOTER_SUCCESS,
     payload
 });
 
-const editBannerFailure = () => ({
-    type: EDIT_BANNER_FAILURE
+const editFooterFailure = () => ({
+    type: EDIT_FOOTER_FAILURE
 });
 
-// Add Banner
-const addBanner = () => ({
-    type: ADD_BANNER
+// Add Footer
+const addFooter = () => ({
+    type: ADD_FOOTER
 });
 
-const addBannerSuccess = (payload) => ({
-    type: ADD_BANNER_SUCCESS,
+const addFooterSuccess = (payload) => ({
+    type: ADD_FOOTER_SUCCESS,
     payload
 });
 
-const addBannerFailure = () => ({
-    type: ADD_BANNER_FAILURE
+const addFooterFailure = () => ({
+    type: ADD_FOOTER_FAILURE
 });
 
-// Delete Banner
-const deleteBannerSuccess = (payload) => ({
-    type: DELETE_BANNER_SUCCESS,
+// Delete Footer
+const deleteFooterSuccess = (payload) => ({
+    type: DELETE_FOOTER_SUCCESS,
     payload
 });
 
-const deleteBannerFailure = () => ({
-    type: DELETE_BANNER_FAILURE
+const deleteFooterFailure = () => ({
+    type: DELETE_FOOTER_FAILURE
 });

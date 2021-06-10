@@ -58,6 +58,12 @@ import EditBeneficaries from './pages/beneficaries/edit_beneficaries';
 import Achievement from './pages/achievement/achievement';
 import AddAchievement from './pages/achievement/add_achievement';
 import EditAchievement from './pages/achievement/edit_achievement';
+import Menu from './pages/menu/menu';
+import AddMenu from './pages/menu/add_menu';
+import EditMenu from './pages/menu/edit_menu';
+import Footer from './pages/footer/footer';
+import AddFooter from './pages/footer/add_footer';
+import EditFooter from './pages/footer/edit_footer';
 import Profile from './pages/user/profile';
 import ChangePassword from './pages/user/change_password';
 import { Redirect } from 'react-router-dom';
@@ -134,6 +140,12 @@ function Root() {
                                             <Route path={`${process.env.PUBLIC_URL}/achievement`} exact component={Achievement} />
                                             <Route path={`${process.env.PUBLIC_URL}/add-achievement`} component={AddAchievement} />
                                             <Route path={`${process.env.PUBLIC_URL}/edit-achievement`} component={EditAchievement} />
+                                            <Route path={`${process.env.PUBLIC_URL}/footer`} exact component={Footer} />
+                                            <Route path={`${process.env.PUBLIC_URL}/add-footer`} component={AddFooter} />
+                                            <Route path={`${process.env.PUBLIC_URL}/edit-footer`} component={EditFooter} />
+                                            <Route path={`${process.env.PUBLIC_URL}/menu`} exact component={Menu} />
+                                            <Route path={`${process.env.PUBLIC_URL}/add-menu`} component={AddMenu} />
+                                            <Route path={`${process.env.PUBLIC_URL}/edit-menu`} component={EditMenu} />
                                             {/* <Route exact path={`${process.env.PUBLIC_URL}/dashboard/default`} component={Default} />
                                             <Route path={`${process.env.PUBLIC_URL}/dashboard/ecommerce`} component={Ecommerce} />
                                             <Route path={`${process.env.PUBLIC_URL}/dashboard/university`} component={University} />

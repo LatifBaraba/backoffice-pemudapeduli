@@ -26,6 +26,7 @@ const Donasi = (props) => {
                 <td>{donasi.title}</td>
                 <td>{donasi.sub_title}</td>
                 <td>{donasi.tag}</td>
+                <td>{donasi.donasi_type}</td>
                 <td className="text-center"><img src={donasi.thumbnail_image_url} alt={donasi.thumbnail_image_url} style={{width: 100}}/></td>
                 <td>
                     <Link to={{
@@ -68,6 +69,7 @@ const Donasi = (props) => {
                                     <th scope="col">{"Tittle"}</th>
                                     <th scope="col">{"Sub-title"}</th>
                                     <th scope="col">{"Tag"}</th>
+                                    <th scope="col">{"Donasi-Type"}</th>
                                     <th scope="col">{"Thumbnail-image"}</th>
                                     <th scope="col">{"Action"}</th>
                                 </tr>
