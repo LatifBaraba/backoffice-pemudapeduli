@@ -1,9 +1,6 @@
 import { GET_MENU,
     GET_MENU_SUCCESS,
     GET_MENU_FAILURE,
-    GET_DETAIL_MENU,
-    GET_DETAIL_MENU_SUCCESS,
-    GET_DETAIL_MENU_FAILURE,
     ADD_MENU,
     ADD_MENU_SUCCESS,
     ADD_MENU_FAILURE,
@@ -23,7 +20,6 @@ import 'react-toastify/dist/ReactToastify.css';
 const URL = `${process.env.REACT_APP_BASE_URL}/menu-extras/list`;
 const EditURL = `${process.env.REACT_APP_BASE_URL}/menu-extras/`;
 const AddURL = `${process.env.REACT_APP_BASE_URL}/menu-extras/create`;
-const DetailUrl = `${process.env.REACT_APP_BASE_URL}/menu-extras/`;
 
 export function fetchMenu(token) {
     return (dispatch) => {
@@ -66,15 +62,14 @@ export function fetchMenu(token) {
     };
 };
 
-export function fetchAddMenu(token, name, total, desc) {
+export function fetchAddMenu(token, title, link) {
     return (dispatch) => {
         dispatch(addMenu())
         axios(AddURL, {
             method: 'POST',
             data: {
-                achievement_name: name,
-                achievement_total: parseInt(total),
-                description: desc
+                title: title,
+                link: link
             },
             headers: {
                 "pp-token": `${token}`,
@@ -85,7 +80,7 @@ export function fetchAddMenu(token, name, total, desc) {
             setTimeout(() => {
                 toast.success("Add Success !");
                 dispatch(addMenuSuccess(res));
-                history.push("/achievement");
+                history.push("/menu");
             }, 2000);
         })
         .catch(err => {
@@ -101,15 +96,14 @@ export function fetchAddMenu(token, name, total, desc) {
     };
 };
 
-export function fetchEditMenu(token, id, name, total, desc) {
+export function fetchEditMenu(token, id, title, link) {
     return (dispatch) => {
         dispatch(editMenu())
         axios(EditURL+`${id}`, {
             method: 'PUT',
             data: {
-                achievement_name: name,
-                achievement_total: parseInt(total),
-                description: desc
+                title: title,
+                link: link
             },
             headers: {
                 "pp-token": `${token}`,
@@ -120,7 +114,7 @@ export function fetchEditMenu(token, id, name, total, desc) {
             setTimeout(() => {
                 toast.success("Edit Success !");
                 dispatch(editMenuSuccess(res));
-                history.push("/achievement");
+                history.push("/menu");
             }, 2000);
         })
         .catch(err => {

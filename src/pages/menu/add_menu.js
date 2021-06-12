@@ -2,26 +2,24 @@ import React, { Fragment, useState } from 'react';
 import Breadcrumb from '../../components/common/breadcrumb';
 import useForm from "react-hook-form";
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchAddAchievement } from "../../redux/achievement/action";
-import { uploadImage } from "../../helper/index";
+import { fetchAddMenu } from "../../redux/menu/action";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-const AddAchievement = () => {
+const AddMenu = () => {
     const { register, handleSubmit, errors } = useForm();
     const dispatch = useDispatch();
     
     let token = localStorage.getItem('token');
 
-    const [ name, setName] = useState("");
-    const [ total, setTotal] = useState("");
-    const [ desc, setDesc] = useState("");
+    const [ title, setTitle] = useState("");
+    const [ link, setLink] = useState("");
 
-    const loadingStatus = useSelector((state) => state.achievementReducer.loading);
+    const loadingStatus = useSelector((state) => state.menuReducer.loading);
 
     const onSubmit = data => {
         if (data !== '') {
-            dispatch(fetchAddAchievement(token, name, total, desc))
+            dispatch(fetchAddMenu(token, title, link))
         } else {
             errors.showMessages();
         }
@@ -41,13 +39,13 @@ const AddAchievement = () => {
 
     return (
         <Fragment>
-            <Breadcrumb title="Achievement Page" parent="Dashboard" />
+            <Breadcrumb title="Menu Page" parent="Dashboard" />
             <div className="container-fluid">
             <div className="row">
                 <div className="col-sm-12">
                     <div className="card">
                         <div className="card-header">
-                            <h5>Add Achievement</h5>    
+                            <h5>Add Menu</h5>    
                         </div>
                         <div className="card-body">
                             {/* content form */}
@@ -56,21 +54,15 @@ const AddAchievement = () => {
                                     <div className="col-md-6 col-sm-12">
                                         <div className="form-row">
                                             <div className="col-md-12 mb-3">
-                                                <label>{"Name"}</label>
-                                                <input className="form-control" name="title" type="text" placeholder="Name" ref={register({ required: true })} onChange={(e) => setName(e.target.value)} />
+                                                <label>{"Title"}</label>
+                                                <input className="form-control" name="title" type="text" placeholder="Name" ref={register({ required: true })} onChange={(e) => setTitle(e.target.value)} />
                                                 <span>{errors.title && 'Name is required'}</span>
                                                 <div className="valid-feedback">{"Looks good!"}</div>
                                             </div>
                                             <div className="col-md-12 mb-3">
-                                                <label>{"Total"}</label>
-                                                <input className="form-control" name="tag" type="text" placeholder="Total" ref={register({ required: true })} onChange={(e) => setTotal(e.target.value)} />
-                                                <span>{errors.tag && 'Total is required & Min 6 Character'}</span>
-                                                <div className="valid-feedback">{"Looks good!"}</div>
-                                            </div>
-                                            <div className="col-md-12 mb-3">
-                                                <label>{"Description"}</label>
-                                                <input className="form-control" name="desc" type="text" placeholder="Description" ref={register({ required: true })} onChange={(e) => setDesc(e.target.value)} />
-                                                <span>{errors.description && 'Description is required'}</span>
+                                                <label>{"Link"}</label>
+                                                <input className="form-control" name="link" type="text" placeholder="Total" ref={register({ required: true })} onChange={(e) => setLink(e.target.value)} />
+                                                <span>{errors.link && 'Link is required & Min 6 Character'}</span>
                                                 <div className="valid-feedback">{"Looks good!"}</div>
                                             </div>
                                         </div>
@@ -88,4 +80,4 @@ const AddAchievement = () => {
     );
 }
 
-export default AddAchievement
+export default AddMenu
