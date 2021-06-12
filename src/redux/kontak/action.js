@@ -1,14 +1,14 @@
-import { GET_FOOTER,
-    GET_FOOTER_SUCCESS,
-    GET_FOOTER_FAILURE,
-    ADD_FOOTER,
-    ADD_FOOTER_SUCCESS,
-    ADD_FOOTER_FAILURE,
-    EDIT_FOOTER,
-    EDIT_FOOTER_SUCCESS,
-    EDIT_FOOTER_FAILURE,
-    DELETE_FOOTER_SUCCESS,
-    DELETE_FOOTER_FAILURE
+import { GET_KONTAK,
+    GET_KONTAK_SUCCESS,
+    GET_KONTAK_FAILURE,
+    ADD_KONTAK,
+    ADD_KONTAK_SUCCESS,
+    ADD_KONTAK_FAILURE,
+    EDIT_KONTAK,
+    EDIT_KONTAK_SUCCESS,
+    EDIT_KONTAK_FAILURE,
+    DELETE_KONTAK_SUCCESS,
+    DELETE_KONTAK_FAILURE
         } from '../actionTypes';
 import axios from 'axios';
 import { fetchToken, fetchRefreshToken } from "../token/action";
@@ -20,12 +20,12 @@ const URL = `${process.env.REACT_APP_BASE_URL}/kontak-kami/list`;
 const EditURL = `${process.env.REACT_APP_BASE_URL}/kontak-kami/`;
 const AddURL = `${process.env.REACT_APP_BASE_URL}/kontak-kami/create`;
 
-export function fetchFooter(token) {
+export function fetchKontak(token) {
     return (dispatch) => {
         axios(URL, {
             method: 'POST',
             data: {
-                limit: "1",
+                limit: "100",
                 offset: "0",
                 filters: [
                     {
@@ -46,36 +46,29 @@ export function fetchFooter(token) {
             }
         })
         .then(res => {
-            dispatch(getFooterSuccess(res.data.data));
+            dispatch(getKontakSuccess(res.data.data));
             console.log(res.data.data)
         })
         .catch(err => {
-            if(err.response.status === 401){
+            if(err.response.status == 401){
                 toast.error("Unauthorized")
                 dispatch(fetchRefreshToken(token))
                 localStorage.removeItem("token");
                 history.push('/login')
             }
-            dispatch(getFooterFailure(err));
+            dispatch(getKontakFailure(err));
         });
     };
 };
 
-export function fetchEditFooter(token, id, titles, sub, titContent, titleLeft, titleRight, deepLeft, deepRight, newThumb, desc) {
+export function fetchEditKontak(token, id, newSk, address) {
     return (dispatch) => {
-        dispatch(editFooter())
+        dispatch(editKontak())
         axios(EditURL+`${id}`, {
             method: 'PUT',
             data: {
-                title: titles,
-                sub_title: sub,
-                title_content: titContent,
-                title_button_right: titleRight == "" ? null : titleRight,
-                deeplink_right: deepRight,
-                title_button_left: titleLeft == "" ? null : titleRight,
-                deeplink_left: deepLeft,
-                description: desc,
-                thumbnail_image_url: newThumb
+                sk_legalitas: newSk,
+                address: address
             },
             headers: {
                 "pp-token": `${token}`,
@@ -85,37 +78,31 @@ export function fetchEditFooter(token, id, titles, sub, titContent, titleLeft, t
         .then(res => { 
             setTimeout(() => {
                 toast.success("Edit Success !");
-                dispatch(editFooterSuccess(res));
-                history.push("/footer");
+                dispatch(editKontakSuccess(res));
+                history.push("/kontak");
             }, 2000);
         })
         .catch(err => {
             console.log(err)
-            if(err.response.status === 401){
+            if(err.response.status == 401){
                 toast.error("Unauthorized")
                 dispatch(fetchRefreshToken(token))
                 localStorage.removeItem("token");
                 history.push('/login')
             }
-            dispatch(editFooterFailure(err));
+            dispatch(editKontakFailure(err));
         });
     };
 };
 
-export function fetchAddFooter(token, titles, sub, titContent, titleLeft, titleRight, deepLeft, deepRight, newThumb, desc) {
+export function fetchAddKontak(token, newSk, address) {
     return (dispatch) => {
-        dispatch(addFooter())
+        dispatch(addKontak())
         axios(AddURL, {
             method: 'POST',
             data: {
-                title: titles,
-                sub_title: sub,
-                title_content: titContent,
-                title_button_right: titleRight == "" ? null : titleRight,
-                deeplink_right: deepRight,
-                title_button_left: titleLeft == "" ? null : titleRight,
-                description: desc,
-                thumbnail_image_url: newThumb
+                sk_legalitas: newSk,
+                address: address
             },
             headers: {
                 "pp-token": `${token}`,
@@ -125,8 +112,8 @@ export function fetchAddFooter(token, titles, sub, titContent, titleLeft, titleR
         .then(res => {
             setTimeout(() => {
                 toast.success("Add Success !");
-                dispatch(addFooterSuccess(res));
-                history.push("/footer");
+                dispatch(addKontakSuccess(res));
+                history.push("/kontak");
             }, 2000);
         })
         .catch(err => {
@@ -137,12 +124,12 @@ export function fetchAddFooter(token, titles, sub, titContent, titleLeft, titleR
                 localStorage.removeItem("token");
                 history.push('/login')
             }
-            dispatch(addFooterFailure(err));
+            dispatch(addKontakFailure(err));
         });
     };
 };
 
-export function fetchDeleteFooter(token, id) {
+export function fetchDeleteKontak(token, id) {
     return (dispatch) => {
         axios(EditURL+`${id}`, {
             method: 'DELETE',
@@ -154,71 +141,71 @@ export function fetchDeleteFooter(token, id) {
         .then(res => {
             setTimeout(() => {
                 toast.success("Delete Success !")
-                dispatch(deleteFooterSuccess(res));
-                history.push("/footer");
+                dispatch(deleteKontakSuccess(res));
+                history.push("/kontak");
                 window.location.reload();
             }, 2000);
         })
         .catch(err => {
-            if(err.response.status === 401){
+            if(err.response.status == 401){
                 toast.error("Unauthorized")
                 dispatch(fetchRefreshToken(token))
                 localStorage.removeItem("token");
                 history.push('/login')
             }
-            dispatch(deleteFooterFailure(err));
+            dispatch(deleteKontakFailure(err));
         });
     };
 };
 
-// Get Footer
-const getFooterSuccess = (payload) => ({
-    type: GET_FOOTER_SUCCESS,
+// Get Kontak
+const getKontakSuccess = (payload) => ({
+    type: GET_KONTAK_SUCCESS,
     payload
 });
 
-const getFooterFailure = () => ({
-    type: GET_FOOTER_FAILURE
+const getKontakFailure = () => ({
+    type: GET_KONTAK_FAILURE
 });
 
-const getFooter = () => ({
-    type: GET_FOOTER
+const getKontak = () => ({
+    type: GET_KONTAK
 });
 
-// Edit Footer
-const editFooter = () => ({
-    type: EDIT_FOOTER
+// Edit Kontak
+const editKontak = () => ({
+    type: EDIT_KONTAK
 });
 
-const editFooterSuccess = (payload) => ({
-    type: EDIT_FOOTER_SUCCESS,
+const editKontakSuccess = (payload) => ({
+    type: EDIT_KONTAK_SUCCESS,
     payload
 });
 
-const editFooterFailure = () => ({
-    type: EDIT_FOOTER_FAILURE
+const editKontakFailure = () => ({
+    type: EDIT_KONTAK_FAILURE
 });
 
-// Add Footer
-const addFooter = () => ({
-    type: ADD_FOOTER
+// Add Kontak
+const addKontak = () => ({
+    type: ADD_KONTAK
 });
 
-const addFooterSuccess = (payload) => ({
-    type: ADD_FOOTER_SUCCESS,
+const addKontakSuccess = (payload) => ({
+    type: ADD_KONTAK_SUCCESS,
     payload
 });
 
-const addFooterFailure = () => ({
-    type: ADD_FOOTER_FAILURE
+const addKontakFailure = () => ({
+    type: ADD_KONTAK_FAILURE
 });
 
-// Delete Footer
-const deleteFooterSuccess = (payload) => ({
-    type: DELETE_FOOTER_SUCCESS,
+// Delete Kontak
+const deleteKontakSuccess = (payload) => ({
+    type: DELETE_KONTAK_SUCCESS,
     payload
 });
 
-const deleteFooterFailure = () => ({
-    type: DELETE_FOOTER_FAILURE
+const deleteKontakFailure = () => ({
+    type: DELETE_KONTAK_FAILURE
 });

@@ -1,81 +1,82 @@
 import {
-    GET_FOOTER,
-    GET_FOOTER_SUCCESS,
-    GET_FOOTER_FAILURE,
-    EDIT_FOOTER,
-    EDIT_FOOTER_SUCCESS,
-    EDIT_FOOTER_FAILURE,
-    ADD_FOOTER,
-    ADD_FOOTER_SUCCESS,
-    ADD_FOOTER_FAILURE,
-    DELETE_FOOTER_SUCCESS,
-    DELETE_FOOTER_FAILURE
+    GET_HUBUNGI,
+    GET_HUBUNGI_SUCCESS,
+    GET_HUBUNGI_FAILURE,
+    EDIT_HUBUNGI,
+    EDIT_HUBUNGI_SUCCESS,
+    EDIT_HUBUNGI_FAILURE,
+    ADD_HUBUNGI,
+    ADD_HUBUNGI_SUCCESS,
+    ADD_HUBUNGI_FAILURE,
+    DELETE_HUBUNGI_SUCCESS,
+    DELETE_HUBUNGI_FAILURE
+    
 } from '../actionTypes';
 
 const initialState = {
     loading: false,
-    footer: [],
+    hubungi: [],
     error: null
 };
 
-export default function footerReducer(state = initialState, action) {
+export default function hubungiReducer(state = initialState, action) {
     switch (action.type) {
-        case GET_FOOTER:
+        case GET_HUBUNGI:
             return {
                 ...state,
-                loading: true
+                loading: false
             };
-        case GET_FOOTER_SUCCESS:
+        case GET_HUBUNGI_SUCCESS:
             return {
                 ...state,
                 loading: false,
                 error: null,
-                footer: action.payload
+                hubungi: action.payload
             };
-        case GET_FOOTER_FAILURE:
+        case GET_HUBUNGI_FAILURE:
             return {
                 ...state,
                 loading: false,
             };
-        case EDIT_FOOTER:
+        case EDIT_HUBUNGI:
             return {
                 ...state,
                 loading: true
             };
-        case EDIT_FOOTER_SUCCESS:
+        case EDIT_HUBUNGI_SUCCESS:
             return {
                 ...state,
                 loading: false,
                 error: null
             };
-        case EDIT_FOOTER_FAILURE:
+        case EDIT_HUBUNGI_FAILURE:
             return {
                 ...state,
                 loading: false,
             };
-        case ADD_FOOTER:
+        case ADD_HUBUNGI:
             return {
                 ...state,
                 loading: true
             };
-        case ADD_FOOTER_SUCCESS:
+        case ADD_HUBUNGI_SUCCESS:
             return {
                 ...state,
                 loading: false,
                 error: null
             };
-        case ADD_FOOTER_FAILURE:
+        case ADD_HUBUNGI_FAILURE:
             return {
                 ...state,
                 loading: false,
             };
-        case DELETE_FOOTER_SUCCESS:
+        case DELETE_HUBUNGI_SUCCESS:
             return {
                 ...state,
                 loading: false,
                 error: null
             };
-        case DELETE_FOOTER_FAILURE:
+        case DELETE_HUBUNGI_FAILURE:
             return {
                 ...state,
                 loading: false,

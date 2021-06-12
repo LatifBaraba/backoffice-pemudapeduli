@@ -75,7 +75,10 @@ export const MENUITEMS = [
         title: 'Testimoni', icon: CheckCircle, type: 'link', path: '/testimoni', active: false
     },
     {
-        title: 'Footer', icon: Hash, type: 'link', path: '/footer', active: false
+        title: 'Kontak', icon: Hash, type: 'link', path: '/kontak', active: false
+    },
+    {
+        title: 'Hubungi', icon: Hash, type: 'link', path: '/hubungi', active: false
     },
     {
         title: 'Menu External', icon: Shuffle, type: 'link', path: '/menu', active: false
