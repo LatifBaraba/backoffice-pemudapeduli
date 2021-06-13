@@ -24,27 +24,27 @@ const EditTestimoni = (props) => {
     const loadingStatus = useSelector((state) => state.testimoniReducer.loading);
 
     const onSubmit = data => {
-        // if (data !== '') {
-        //     if (img !== '') {
-        //         uploadImage(img).then(message => {
-        //             const newThumb = message.response.data.url;
-        //             dispatch(fetchEditTestimoni(token, id, name, role, messages, newThumb))
-        //         })
-        //         .catch(error => {
-        //             toast.error("Upload Image Failed !");
-        //         })
-        //     } else {
-        //         const newThumb = thumb;
-        //         dispatch(fetchEditTestimoni(token, id, name, role, messages, newThumb))
-        //     }
-        // } else {
-        //     errors.showMessages();
-        // }
         if (data !== '') {
-            dispatch(fetchEditTestimoni(token, name, role, messages))
+            if (img !== '') {
+                uploadImage(img).then(message => {
+                    const newThumb = message.response.data.url;
+                    dispatch(fetchEditTestimoni(token, id, name, role, messages, newThumb))
+                })
+                .catch(error => {
+                    toast.error("Upload Image Failed !");
+                })
+            } else {
+                const newThumb = thumb;
+                dispatch(fetchEditTestimoni(token, id, name, role, messages, newThumb))
+            }
         } else {
             errors.showMessages();
         }
+        // if (data !== '') {
+        //     dispatch(fetchEditTestimoni(token, name, role, messages))
+        // } else {
+        //     errors.showMessages();
+        // }
     }
 
     const submitButton = () => {

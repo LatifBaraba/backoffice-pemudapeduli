@@ -62,7 +62,7 @@ export function fetchTestimoni(token) {
     };
 };
 
-export function fetchEditTestimoni(token, id, name, role, messages) {
+export function fetchEditTestimoni(token, id, name, role, messages, newThumb) {
     return (dispatch) => {
         dispatch(editTestimoni())
         axios(EditURL+`${id}`, {
@@ -70,7 +70,8 @@ export function fetchEditTestimoni(token, id, name, role, messages) {
             data: {
                 name: name,
                 role: role,
-                message: messages
+                message: messages,
+                thumbnail_photo_url: newThumb
             },
             headers: {
                 "pp-token": `${token}`,
@@ -97,7 +98,7 @@ export function fetchEditTestimoni(token, id, name, role, messages) {
     };
 };
 
-export function fetchAddTestimoni(token, name, role, messages) {
+export function fetchAddTestimoni(token, name, role, messages, newThumb) {
     return (dispatch) => {
         dispatch(addTestimoni())
         axios(AddURL, {
@@ -105,7 +106,8 @@ export function fetchAddTestimoni(token, name, role, messages) {
             data: {
                 name: name,
                 role: role,
-                message: messages
+                message: messages,
+                thumbnail_photo_url: newThumb
             },
             headers: {
                 "pp-token": `${token}`,
