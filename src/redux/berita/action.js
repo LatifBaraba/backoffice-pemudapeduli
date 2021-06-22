@@ -1,6 +1,10 @@
-import { GET_BERITA,
+import { 
+    GET_BERITA,
     GET_BERITA_SUCCESS,
     GET_BERITA_FAILURE,
+    GET_DETAIL_BERITA,
+    GET_DETAIL_BERITA_SUCCESS,
+    GET_DETAIL_BERITA_FAILURE,
     ADD_BERITA,
     ADD_BERITA_SUCCESS,
     ADD_BERITA_FAILURE,
@@ -19,6 +23,7 @@ import 'react-toastify/dist/ReactToastify.css';
 const URL = `${process.env.REACT_APP_BASE_URL}/berita/list`;
 const EditURL = `${process.env.REACT_APP_BASE_URL}/berita/`;
 const AddURL = `${process.env.REACT_APP_BASE_URL}/berita/create`;
+const DetailUrl = `${process.env.REACT_APP_BASE_URL}/berita/`;
 
 export function fetchBerita(token) {
     return (dispatch) => {
@@ -62,7 +67,33 @@ export function fetchBerita(token) {
     };
 };
 
-export function fetchEditBerita(token, id, titles, sub, tag, newThumb, desc) {
+export function fetchDetailBerita(token, id) {
+    return (dispatch) => {
+        dispatch(getDetailBerita())
+        axios(DetailUrl+`${id}`, {
+            method: 'GET',
+            headers: {
+                "pp-token": `${token}`,
+                "Content-type": "application/json"
+            }
+        })
+        .then(res => { 
+            console.log(res)
+            dispatch(getDetailBeritaSuccess(res.data.data));
+        })
+        .catch(err => {
+            console.log(err)
+            if(err.response.status === 401){
+                toast.error("Unauthorized")
+                dispatch(fetchRefreshToken(token))
+                localStorage.removeItem("token");
+                history.push('/login')
+            }
+        });
+    };
+};
+
+export function fetchEditBerita(token, id, titles, sub, tag, newContent, newThumb, desc) {
     return (dispatch) => {
         dispatch(editBerita())
         axios(EditURL+`${id}`, {
@@ -71,6 +102,7 @@ export function fetchEditBerita(token, id, titles, sub, tag, newThumb, desc) {
                 title: titles,
                 sub_title: sub,
                 tag: tag,
+                content: newContent,
                 description: desc,
                 thumbnail_image_url: newThumb
             },
@@ -99,7 +131,7 @@ export function fetchEditBerita(token, id, titles, sub, tag, newThumb, desc) {
     };
 };
 
-export function fetchAddBerita(token, titles, sub, tag, newThumb, desc) {
+export function fetchAddBerita(token, titles, sub, tag, content, newThumb, desc) {
     return (dispatch) => {
         dispatch(addBerita())
         axios(AddURL, {
@@ -109,6 +141,7 @@ export function fetchAddBerita(token, titles, sub, tag, newThumb, desc) {
                 sub_title: sub,
                 tag: tag,
                 description: desc,
+                content: content,
                 thumbnail_image_url: newThumb
             },
             headers: {
@@ -191,6 +224,20 @@ const editBeritaSuccess = (payload) => ({
 
 const editBeritaFailure = () => ({
     type: EDIT_BERITA_FAILURE
+});
+
+// Get Berita
+const getDetailBeritaSuccess = (payload) => ({
+    type: GET_DETAIL_BERITA_SUCCESS,
+    payload
+});
+
+const getDetailBeritaFailure = () => ({
+    type: GET_DETAIL_BERITA_FAILURE
+});
+
+const getDetailBerita = () => ({
+    type: GET_DETAIL_BERITA
 });
 
 // Add Berita

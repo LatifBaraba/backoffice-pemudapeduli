@@ -63,7 +63,7 @@ const EditMenu = (props) => {
                                             </div>
                                             <div className="col-md-12 mb-3">
                                                 <label>{"Link"}</label>
-                                                <input className="form-control" name="link" type="text" placeholder="Total" value={link} ref={register({ required: true })} onChange={(e) => setLink(e.target.value)} />
+                                                <input className="form-control" name="link" type="text" placeholder="Link" value={link} ref={register({ required: true })} onChange={(e) => setLink(e.target.value)} />
                                                 <span>{errors.link && 'Link is required & Min 6 Character'}</span>
                                                 <div className="valid-feedback">{"Looks good!"}</div>
                                             </div>

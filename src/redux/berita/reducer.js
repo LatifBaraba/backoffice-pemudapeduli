@@ -2,6 +2,9 @@ import {
     GET_BERITA,
     GET_BERITA_SUCCESS,
     GET_BERITA_FAILURE,
+    GET_DETAIL_BERITA,
+    GET_DETAIL_BERITA_SUCCESS,
+    GET_DETAIL_BERITA_FAILURE,
     EDIT_BERITA,
     EDIT_BERITA_SUCCESS,
     EDIT_BERITA_FAILURE,
@@ -34,6 +37,23 @@ export default function beritaReducer(state = initialState, action) {
                 berita: action.payload
             };
         case GET_BERITA_FAILURE:
+            return {
+                ...state,
+                loading: false,
+            };
+        case GET_DETAIL_BERITA:
+            return {
+                ...state,
+                loading: true
+            };
+        case GET_DETAIL_BERITA_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                error: null,
+                berita: action.payload
+            };
+        case GET_DETAIL_BERITA_FAILURE:
             return {
                 ...state,
                 loading: false,

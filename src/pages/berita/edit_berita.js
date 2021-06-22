@@ -1,20 +1,24 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useState, useEffect } from 'react';
 import Breadcrumb from '../../components/common/breadcrumb';
 import useForm from "react-hook-form";
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchEditBerita } from "../../redux/berita/action";
+import { fetchEditBerita, fetchDetailBerita } from "../../redux/berita/action";
 import { uploadImage } from "../../helper/index";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-// import { Editor } from 'react-draft-wysiwyg';
-// import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
-// import draftToHtml from 'draftjs-to-html';
-// import htmlToDraft from 'html-to-draftjs';
-// import { EditorState, ContentState, convertToRaw, convertFromRaw } from 'draft-js';
+import { Editor } from 'react-draft-wysiwyg';
+import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
+import draftToHtml from 'draftjs-to-html';
+import htmlToDraft from 'html-to-draftjs';
+import { EditorState, ContentState, convertToRaw, convertFromRaw } from 'draft-js';
 
 const EditBerita = (props) => {
 
     const { data } = props.location.state;
+
+    const dispatch = useDispatch();
+    let token = localStorage.getItem('token');
+
     const [ id, setId] = useState(data.id);
     const [ titles, setTitles] = useState(data.title);
     const [ sub, setSub] = useState(data.sub_title);
@@ -22,35 +26,33 @@ const EditBerita = (props) => {
     const [ thumb, setThumb] = useState(data.thumbnail_image_url);
     const [ desc, setDesc] = useState(data.description);
     const [ img, setImg] = useState("");
-
+    
     const loadingStatus = useSelector((state) => state.beritaReducer.loading);
 
-    const dispatch = useDispatch();
-    let token = localStorage.getItem('token');
     const { register, handleSubmit, errors } = useForm();
 
-    // const blocksFromHtml = htmlToDraft(data.description);
-    // const { contentBlocks, entityMap } = blocksFromHtml;
-    // const contentState = ContentState.createFromBlockArray(contentBlocks, entityMap);
-    // const existing = EditorState.createWithContent(contentState);
+    const blocksFromHtml = htmlToDraft(data.content);
+    const { contentBlocks, entityMap } = blocksFromHtml;
+    const contentState = ContentState.createFromBlockArray(contentBlocks, entityMap);
+    const existing = EditorState.createWithContent(contentState);
 
-    // let initialState = EditorState.createEmpty();
-    // const [editorState, setEditorState] = useState(contentState ? existing : initialState)
-    // const desc = draftToHtml(convertToRaw(editorState.getCurrentContent()))
+    let initialState = EditorState.createEmpty();
+    const [editorState, setEditorState] = useState(contentState ? existing : initialState)
+    const newContent = draftToHtml(convertToRaw(editorState.getCurrentContent()))
 
     const onSubmit = data => {
         if (data !== '') {
             if (img !== "") {
                 uploadImage(img).then(message => {
                     const newThumb = message.response.data.url;
-                    dispatch(fetchEditBerita(token, id, titles, sub, tag, newThumb, desc))
+                    dispatch(fetchEditBerita(token, id, titles, sub, tag, newContent, newThumb, desc))
                 })
                 .catch(error => {
                     toast.error("Upload Image Failed !");
                 })
             } else {
                 const newThumb = thumb;
-                dispatch(fetchEditBerita(token, id, titles, sub, tag, newThumb, desc))
+                dispatch(fetchEditBerita(token, id, titles, sub, tag, newContent, newThumb, desc))
             }
         } else {
             errors.showMessages();
@@ -113,7 +115,7 @@ const EditBerita = (props) => {
                                                 <label>{"UploadFile"}</label>
                                                 <input className="form-control" type="file" accept="image/*" onChange={(e) => setImg(e.target.files[0])}/>
                                             </div>
-                                            {/* <div className="col-md-12 mb-3">
+                                            <div className="col-md-12 mb-3">
                                                 <Editor
                                                     editorState={editorState}
                                                     toolbarClassName="toolbarClassName"
@@ -121,7 +123,7 @@ const EditBerita = (props) => {
                                                     editorClassName="editorClassName"
                                                     onEditorStateChange={setEditorState}
                                                 />
-                                            </div> */}
+                                            </div>
                                         </div>
                                         {/* <button className="btn btn-pill btn-primary btn-block mt-3 mb-3" type="submit">{"Submit"}</button> */}
                                         {submitButton()}

@@ -21,7 +21,7 @@ const Kontak = () => {
         return (
             <tr key={index}>
                 <td scope="row">{index+1}</td>
-                <td><img src={data.sk_legalitas} alt={data.sk_legalitas} style={{width: 100}}/></td>
+                <td>{data.sk_legalitas}</td>
                 <td>{data.address}</td>
                 <td>
                     <Link to={{

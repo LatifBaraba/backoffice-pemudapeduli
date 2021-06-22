@@ -14,7 +14,7 @@ const EditKontak = (props) => {
     const [ id, setId] = useState(data.id);
     const [ sk, setSk] = useState(data.sk_legalitas);
     const [ address, setAddress] = useState(data.address);
-    const [ img, setImg] = useState('');
+    // const [ img, setImg] = useState('');
     const loadingStatus = useSelector((state) => state.kontakReducer.loading);
 
     const dispatch = useDispatch();
@@ -23,18 +23,7 @@ const EditKontak = (props) => {
 
     const onSubmit = data => {
         if (data !== '') {
-            if (img !== '') {
-                uploadImage(img).then(message => {
-                    const newSk = message.response.data.url;
-                    dispatch(fetchEditKontak(token, id, newSk, address))
-                })
-                .catch(error => {
-                    toast.error("Upload Image Failed !");
-                })
-            } else {
-                const newSk = sk;
-                dispatch(fetchEditKontak(token, id, newSk, address))
-            }
+            dispatch(fetchEditKontak(token, id, sk, address))
         } else {
             errors.showMessages();
         }
@@ -69,15 +58,21 @@ const EditKontak = (props) => {
                                     <div className="col-md-6 col-sm-12">
                                     <div className="form-row">
                                             <div className="col-md-12 mb-3">
+                                                <label>{"Sk Legalitas"}</label>
+                                                <input className="form-control" name="sk" type="text" placeholder="Sk Legalitas" value={sk} ref={register({ required: true })} onChange={(e) => setSk(e.target.value)} />
+                                                <span>{errors.sk && 'Sk Legalitas is required'}</span>
+                                                <div className="valid-feedback">{"Looks good!"}</div>
+                                            </div>
+                                            <div className="col-md-12 mb-3">
                                                 <label>{"Address"}</label>
                                                 <input className="form-control" name="address" type="text" placeholder="Title" value={address} ref={register({ required: true })} onChange={(e) => setAddress(e.target.value)} />
                                                 <span>{errors.address && 'Address is required'}</span>
                                                 <div className="valid-feedback">{"Looks good!"}</div>
                                             </div>
-                                            <div className="col-md-12 mb-3">
+                                            {/* <div className="col-md-12 mb-3">
                                                 <label>{"UploadFile"}</label>
                                                 <input className="form-control" type="file" accept="image/*" onChange={(e) => setImg(e.target.files[0])}/>
-                                            </div>
+                                            </div> */}
                                         </div>
                                         {/* <button className="btn btn-pill btn-primary btn-block mt-3 mb-3" type="submit">{"Submit"}</button> */}
                                         {submitButton()}

@@ -17,54 +17,40 @@ const EditProgram = (props) => {
     const dispatch = useDispatch();
     let token = localStorage.getItem('token');
     
-    useEffect(() => {
-        dispatch(fetchDetailProgram(token, data.id))
-    },[token, data.id])
-
-    const programDetailData = useSelector((state) => state.programReducer.program);
-    // const programDetailContent = useSelector((state) => state.programReducer.content);
     const loadingStatus = useSelector((state) => state.programReducer.loading);
 
-    const [ id, setId] = useState(programDetailData.id);
-    const [ titles, setTitles] = useState(programDetailData.title);
-    const [ sub, setSub] = useState(programDetailData.sub_title);
-    const [ tag, setTag] = useState(programDetailData.tag);
-    const [ thumb, setThumb] = useState(programDetailData.thumbnail_image_url);
-    const [ desc, setDesc] = useState(programDetailData.description);
-    const [ draft, setDraft] = useState(programDetailData.detail?.content);
+    const [ id, setId] = useState(data.id);
+    const [ titles, setTitles] = useState(data.title);
+    const [ sub, setSub] = useState(data.sub_title);
+    const [ tag, setTag] = useState(data.tag);
+    const [ thumb, setThumb] = useState(data.thumbnail_image_url);
+    const [ desc, setDesc] = useState(data.description);
     const [ img, setImg] = useState('');
 
-    console.log(programDetailData, 'data')
-    console.log(draft, 'draft')
-    
-    console.log(programDetailData.detail?.content, "coba")
-
-    const ss = programDetailData.detail?.content ?? '';
-    console.log(ss , 'ss')
     const { register, handleSubmit, errors } = useForm();
 
-    // const blocksFromHtml = htmlToDraft(ss);
-    // const { contentBlocks, entityMap } = blocksFromHtml;
-    // const contentState = ContentState.createFromBlockArray(contentBlocks, entityMap);
-    // const existing = EditorState.createWithContent(contentState);
+    const blocksFromHtml = htmlToDraft(data.content);
+    const { contentBlocks, entityMap } = blocksFromHtml;
+    const contentState = ContentState.createFromBlockArray(contentBlocks, entityMap);
+    const existing = EditorState.createWithContent(contentState);
 
-    // let initialState = EditorState.createEmpty();
-    // const [editorState, setEditorState] = useState(contentState ? existing : initialState)
-    // const des = draftToHtml(convertToRaw(editorState.getCurrentContent()))
+    let initialState = EditorState.createEmpty();
+    const [editorState, setEditorState] = useState(contentState ? existing : initialState)
+    const newContent = draftToHtml(convertToRaw(editorState.getCurrentContent()))
     
     const onSubmit = data => {
         if (data !== '') {
             if (img == 'undefined') {
                 uploadImage(img).then(message => {
                     const newThumb = message.response.data.url;
-                    dispatch(fetchEditProgram(token, id, titles, sub, tag, newThumb, desc))
+                    dispatch(fetchEditProgram(token, id, titles, sub, tag, newContent, newThumb, desc))
                 })
                 .catch(error => {
                     toast.error("Upload Image Failed !");
                 })
             } else {
                 const newThumb = thumb;
-                dispatch(fetchEditProgram(token, id, titles, sub, tag, newThumb, desc))
+                dispatch(fetchEditProgram(token, id, titles, sub, tag, newContent, newThumb, desc))
             }
         } else {
             errors.showMessages();
@@ -127,7 +113,7 @@ const EditProgram = (props) => {
                                                 <label>{"UploadFile"}</label>
                                                 <input className="form-control" type="file" accept="image/*" onChange={(e) => setImg(e.target.files[0])}/>
                                             </div>
-                                            {/* <div className="col-md-12 mb-3">
+                                            <div className="col-md-12 mb-3">
                                                 <Editor
                                                     editorState={editorState}
                                                     toolbarClassName="toolbarClassName"
@@ -135,7 +121,7 @@ const EditProgram = (props) => {
                                                     editorClassName="editorClassName"
                                                     onEditorStateChange={setEditorState}
                                                 />
-                                            </div> */}
+                                            </div>
                                         </div>
                                         {/* <button className="btn btn-pill btn-primary btn-block mt-3 mb-3" type="submit">{"Submit"}</button> */}
                                         {submitButton()}

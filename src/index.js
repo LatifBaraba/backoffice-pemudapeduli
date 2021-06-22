@@ -75,7 +75,7 @@ import { Redirect } from 'react-router-dom';
 
 //firebase Auth
 function Root() {
-    const [authenticated,setAuthenticated] = useState(false)
+    const [authenticated, setAuthenticated] = useState(false)
 
     useEffect(() => {
         const layout = localStorage.getItem('layout_version')
@@ -84,7 +84,7 @@ function Root() {
         document.getElementById("color").setAttribute("href", `${process.env.PUBLIC_URL}/assets/css/${color}.css`);
         
         const isToken = localStorage.getItem('token');
-
+        
         if(isToken){
             setAuthenticated(true)
         }

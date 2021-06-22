@@ -61,13 +61,13 @@ export function fetchKontak(token) {
     };
 };
 
-export function fetchEditKontak(token, id, newSk, address) {
+export function fetchEditKontak(token, id, sk, address) {
     return (dispatch) => {
         dispatch(editKontak())
         axios(EditURL+`${id}`, {
             method: 'PUT',
             data: {
-                sk_legalitas: newSk,
+                sk_legalitas: sk,
                 address: address
             },
             headers: {
@@ -95,13 +95,13 @@ export function fetchEditKontak(token, id, newSk, address) {
     };
 };
 
-export function fetchAddKontak(token, newSk, address) {
+export function fetchAddKontak(token, sk, address) {
     return (dispatch) => {
         dispatch(addKontak())
         axios(AddURL, {
             method: 'POST',
             data: {
-                sk_legalitas: newSk,
+                sk_legalitas: sk,
                 address: address
             },
             headers: {
