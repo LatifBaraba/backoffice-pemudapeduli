@@ -16,7 +16,8 @@ import {
     CheckCircle,
     UserCheck,
     CreditCard,
-    Shuffle
+    Shuffle,
+    Book
 } from 'react-feather';
 
 export const MENUITEMS = [
@@ -45,7 +46,10 @@ export const MENUITEMS = [
         title: 'Banner', icon: Image, type: 'link', path: '/banner', active: false
     },
     {
-        title: 'Donasi', icon: DollarSign, type: 'link', path: '/donasi', active: false
+        title: 'Donasi One Time', icon: DollarSign, type: 'link', path: '/donasi-onetime', active: false
+    },
+    {
+        title: 'Donasi Rutin', icon: DollarSign, type: 'link', path: '/donasi-rutin', active: false
     },
     {
         title: 'Tentang Kami', icon: AtSign, type: 'link', path: '/tentang-kami', active: false
@@ -78,7 +82,7 @@ export const MENUITEMS = [
         title: 'Kontak', icon: Hash, type: 'link', path: '/kontak', active: false
     },
     {
-        title: 'Hubungi', icon: Hash, type: 'link', path: '/hubungi', active: false
+        title: 'Hubungi', icon: Book, type: 'link', path: '/hubungi', active: false
     },
     {
         title: 'Menu External', icon: Shuffle, type: 'link', path: '/menu', active: false
