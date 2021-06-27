@@ -1,14 +1,14 @@
-import { GET_DONASI_RUTIN,
-    GET_DONASI_RUTIN_SUCCESS,
-    GET_DONASI_RUTIN_FAILURE,
-    ADD_DONASI_RUTIN,
-    ADD_DONASI_RUTIN_SUCCESS,
-    ADD_DONASI_RUTIN_FAILURE,
-    EDIT_DONASI_RUTIN,
-    EDIT_DONASI_RUTIN_SUCCESS,
-    EDIT_DONASI_RUTIN_FAILURE,
-    DELETE_DONASI_RUTIN_SUCCESS,
-    DELETE_DONASI_RUTIN_FAILURE
+import { GET_DONASI_KATEGORI,
+    GET_DONASI_KATEGORI_SUCCESS,
+    GET_DONASI_KATEGORI_FAILURE,
+    ADD_DONASI_KATEGORI,
+    ADD_DONASI_KATEGORI_SUCCESS,
+    ADD_DONASI_KATEGORI_FAILURE,
+    EDIT_DONASI_KATEGORI,
+    EDIT_DONASI_KATEGORI_SUCCESS,
+    EDIT_DONASI_KATEGORI_FAILURE,
+    DELETE_DONASI_KATEGORI_SUCCESS,
+    DELETE_DONASI_KATEGORI_FAILURE
         } from '../actionTypes';
 import axios from 'axios';
 import { fetchToken, fetchRefreshToken } from "../token/action";
@@ -20,7 +20,7 @@ const URL = `${process.env.REACT_APP_BASE_URL}/kategori/program-donasi-rutin/lis
 const EditURL = `${process.env.REACT_APP_BASE_URL}/kategori/program-donasi-rutin/`;
 const AddURL = `${process.env.REACT_APP_BASE_URL}/kategori/program-donasi-rutin/create`;
 
-export function fetchDonasiRutin(token) {
+export function fetchDonasiKategori(token) {
     return (dispatch) => {
         axios(URL, {
             method: 'POST',
@@ -42,7 +42,7 @@ export function fetchDonasiRutin(token) {
             }
         })
         .then(res => {
-            dispatch(getDonasiRutinSuccess(res.data.data));
+            dispatch(getDonasiKategoriSuccess(res.data.data));
             console.log(res.data.data)
         })
         .catch(err => {
@@ -53,14 +53,14 @@ export function fetchDonasiRutin(token) {
                 localStorage.removeItem("token");
                 history.push('/login')
             }
-            dispatch(getDonasiRutinFailure(err));
+            dispatch(getDonasiKategoriFailure(err));
         });
     };
 };
 
-export function fetchEditDonasiRutin(token, id, kategori) {
+export function fetchEditDonasiKategori(token, id, kategori) {
     return (dispatch) => {
-        dispatch(editDonasiRutin())
+        dispatch(editDonasiKategori())
         axios(EditURL+`${id}`, {
             method: 'PUT',
             data: {
@@ -74,8 +74,8 @@ export function fetchEditDonasiRutin(token, id, kategori) {
         .then(res => { 
             setTimeout(() => {
                 toast.success("Edit Success !");
-                dispatch(editDonasiRutinSuccess(res));
-                history.push("/donasi-rutin");
+                dispatch(editDonasiKategoriSuccess(res));
+                history.push("/donasi-kategori");
             }, 2000);
         })
         .catch(err => {
@@ -86,14 +86,14 @@ export function fetchEditDonasiRutin(token, id, kategori) {
                 localStorage.removeItem("token");
                 history.push('/login')
             }
-            dispatch(editDonasiRutinFailure(err));
+            dispatch(editDonasiKategoriFailure(err));
         });
     };
 };
 
-export function fetchAddDonasiRutin(token, kategori) {
+export function fetchAddDonasiKategori(token, kategori) {
     return (dispatch) => {
-        dispatch(addDonasiRutin())
+        dispatch(addDonasiKategori())
         axios(AddURL, {
             method: 'POST',
             data: {
@@ -107,8 +107,8 @@ export function fetchAddDonasiRutin(token, kategori) {
         .then(res => {
             setTimeout(() => {
                 toast.success("Add Success !");
-                dispatch(addDonasiRutinSuccess(res));
-                history.push("/donasi-rutin");
+                dispatch(addDonasiKategoriSuccess(res));
+                history.push("/donasi-kategori");
             }, 2000);
         })
         .catch(err => {
@@ -119,12 +119,12 @@ export function fetchAddDonasiRutin(token, kategori) {
                 localStorage.removeItem("token");
                 history.push('/login')
             }
-            dispatch(addDonasiRutinFailure(err));
+            dispatch(addDonasiKategoriFailure(err));
         });
     };
 };
 
-export function fetchDeleteDonasiRutin(token, id) {
+export function fetchDeleteDonasiKategori(token, id) {
     return (dispatch) => {
         axios(EditURL+`${id}`, {
             method: 'DELETE',
@@ -136,8 +136,8 @@ export function fetchDeleteDonasiRutin(token, id) {
         .then(res => {
             setTimeout(() => {
                 toast.success("Delete Success !")
-                dispatch(deleteDonasiRutinSuccess(res));
-                history.push("/donasi-rutin");
+                dispatch(deleteDonasiKategoriSuccess(res));
+                history.push("/donasi-kategori");
                 window.location.reload();
             }, 2000);
         })
@@ -148,59 +148,59 @@ export function fetchDeleteDonasiRutin(token, id) {
                 localStorage.removeItem("token");
                 history.push('/login')
             }
-            dispatch(deleteDonasiRutinFailure(err));
+            dispatch(deleteDonasiKategoriFailure(err));
         });
     };
 };
 
-// Get DonasiRutin
-const getDonasiRutinSuccess = (payload) => ({
-    type: GET_DONASI_RUTIN_SUCCESS,
+// Get DonasiKategori
+const getDonasiKategoriSuccess = (payload) => ({
+    type: GET_DONASI_KATEGORI_SUCCESS,
     payload
 });
 
-const getDonasiRutinFailure = () => ({
-    type: GET_DONASI_RUTIN_FAILURE
+const getDonasiKategoriFailure = () => ({
+    type: GET_DONASI_KATEGORI_FAILURE
 });
 
-const getDonasiRutin = () => ({
-    type: GET_DONASI_RUTIN
+const getDonasiKategori = () => ({
+    type: GET_DONASI_KATEGORI
 });
 
-// Edit DonasiRutin
-const editDonasiRutin = () => ({
-    type: EDIT_DONASI_RUTIN
+// Edit DonasiKategori
+const editDonasiKategori = () => ({
+    type: EDIT_DONASI_KATEGORI
 });
 
-const editDonasiRutinSuccess = (payload) => ({
-    type: EDIT_DONASI_RUTIN_SUCCESS,
+const editDonasiKategoriSuccess = (payload) => ({
+    type: EDIT_DONASI_KATEGORI_SUCCESS,
     payload
 });
 
-const editDonasiRutinFailure = () => ({
-    type: EDIT_DONASI_RUTIN_FAILURE
+const editDonasiKategoriFailure = () => ({
+    type: EDIT_DONASI_KATEGORI_FAILURE
 });
 
-// Add DonasiRutin
-const addDonasiRutin = () => ({
-    type: ADD_DONASI_RUTIN
+// Add DonasiKategori
+const addDonasiKategori = () => ({
+    type: ADD_DONASI_KATEGORI
 });
 
-const addDonasiRutinSuccess = (payload) => ({
-    type: ADD_DONASI_RUTIN_SUCCESS,
+const addDonasiKategoriSuccess = (payload) => ({
+    type: ADD_DONASI_KATEGORI_SUCCESS,
     payload
 });
 
-const addDonasiRutinFailure = () => ({
-    type: ADD_DONASI_RUTIN_FAILURE
+const addDonasiKategoriFailure = () => ({
+    type: ADD_DONASI_KATEGORI_FAILURE
 });
 
-// Delete DonasiRutin
-const deleteDonasiRutinSuccess = (payload) => ({
-    type: DELETE_DONASI_RUTIN_SUCCESS,
+// Delete DonasiKategori
+const deleteDonasiKategoriSuccess = (payload) => ({
+    type: DELETE_DONASI_KATEGORI_SUCCESS,
     payload
 });
 
-const deleteDonasiRutinFailure = () => ({
-    type: DELETE_DONASI_RUTIN_FAILURE
+const deleteDonasiKategoriFailure = () => ({
+    type: DELETE_DONASI_KATEGORI_FAILURE
 });

@@ -40,9 +40,12 @@ import EditBerita from './pages/berita/edit_berita';
 import Donasi from './pages/donasi/donasi';
 import AddDonasi from './pages/donasi/add_donasi';
 import EditDonasi from './pages/donasi/edit_donasi';
-import DonasiRutin from './pages/donasiRutin/donasi';
-import AddDonasiRutin from './pages/donasiRutin/add_donasi';
-import EditDonasiRutin from './pages/donasiRutin/edit_donasi';
+import DonasiKategori from './pages/donasiKategori/kategori';
+import AddDonasiKategori from './pages/donasiKategori/add_kategori';
+import EditDonasiKategori from './pages/donasiKategori/edit_kategori';
+import Paket from './pages/paket/paket';
+import AddPaket from './pages/paket/add_paket';
+import EditPaket from './pages/paket/edit_paket';
 import Program from './pages/program/program';
 import AddProgram from './pages/program/add_program';
 import EditProgram from './pages/program/edit_program';
@@ -129,9 +132,12 @@ function Root() {
                                             <Route path={`${process.env.PUBLIC_URL}/donasi-onetime`} component={Donasi} />
                                             <Route path={`${process.env.PUBLIC_URL}/add-donasi-onetime`} component={AddDonasi} />
                                             <Route path={`${process.env.PUBLIC_URL}/edit-donasi-onetime`} component={EditDonasi} />
-                                            <Route path={`${process.env.PUBLIC_URL}/donasi-rutin`} component={DonasiRutin} />
-                                            <Route path={`${process.env.PUBLIC_URL}/add-donasi-rutin`} component={AddDonasiRutin} />
-                                            <Route path={`${process.env.PUBLIC_URL}/edit-donasi-rutin`} component={EditDonasiRutin} />
+                                            <Route path={`${process.env.PUBLIC_URL}/donasi-kategori`} component={DonasiKategori} />
+                                            <Route path={`${process.env.PUBLIC_URL}/add-donasi-kategori`} component={AddDonasiKategori} />
+                                            <Route path={`${process.env.PUBLIC_URL}/edit-donasi-kategori`} component={EditDonasiKategori} />
+                                            <Route path={`${process.env.PUBLIC_URL}/paket`} component={Paket} />
+                                            <Route path={`${process.env.PUBLIC_URL}/add-paket`} component={AddPaket} />
+                                            <Route path={`${process.env.PUBLIC_URL}/edit-paket`} component={EditPaket} />
                                             <Route path={`${process.env.PUBLIC_URL}/program`} component={Program} />
                                             <Route path={`${process.env.PUBLIC_URL}/add-program`} component={AddProgram} />
                                             <Route path={`${process.env.PUBLIC_URL}/edit-program`} component={EditProgram} />

@@ -49,7 +49,7 @@ export const MENUITEMS = [
         title: 'Donasi One Time', icon: DollarSign, type: 'link', path: '/donasi-onetime', active: false
     },
     {
-        title: 'Donasi Rutin', icon: DollarSign, type: 'link', path: '/donasi-rutin', active: false
+        title: 'Donasi Rutin', icon: DollarSign, type: 'link', path: '/donasi-kategori', active: false
     },
     {
         title: 'Tentang Kami', icon: AtSign, type: 'link', path: '/tentang-kami', active: false

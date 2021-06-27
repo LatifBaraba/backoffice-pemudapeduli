@@ -2,30 +2,28 @@ import React, { Fragment, useState } from 'react';
 import Breadcrumb from '../../components/common/breadcrumb';
 import useForm from "react-hook-form";
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchAddDonasiRutin } from "../../redux/donasiRutin/action";
-import { uploadImage, toIsoString } from "../../helper/index";
-import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { fetchEditDonasiKategori } from "../../redux/donasiKategori/action";
 
-const AddDonasiRutin = () => {
+const EditDonasiKategori = (props) => {
 
-    const { register, handleSubmit, errors } = useForm();
+    const { data } = props.location.state;
+
+    const [ id, setId] = useState(data.id);
+    const [ kategori, setKategori] = useState(data.kategori_name);
+ 
+    const loadingStatus = useSelector((state) => state.donasiKategoriReducer.loading);
+
     const dispatch = useDispatch();
-    
     let token = localStorage.getItem('token');
-
-    const [ kategori, setKategori] = useState("");
-
-    const loadingStatus = useSelector((state) => state.donasiReducer.loading);
+    const { register, handleSubmit, errors } = useForm();
 
     const onSubmit = data => {
         if (data !== '') {
-            dispatch(fetchAddDonasiRutin(token, kategori))
+            dispatch(fetchEditDonasiKategori(token, id, kategori))
         } else {
             errors.showMessages();
         }
     }
-
     const submitButton = () => {
         if(loadingStatus == false) {
           return (
@@ -46,17 +44,17 @@ const AddDonasiRutin = () => {
                 <div className="col-sm-12">
                     <div className="card">
                         <div className="card-header">
-                            <h5>Add Kategori</h5>    
+                            <h5>Edit Donasi</h5>    
                         </div>
                         <div className="card-body">
                             {/* content form */}
                             <form className="needs-validation" noValidate="" onSubmit={handleSubmit(onSubmit)}>
                                 <div className="row justify-content-center">
                                     <div className="col-md-6 col-sm-12">
-                                        <div className="form-row">
+                                    <div className="form-row">
                                             <div className="col-md-12 mb-3">
                                                 <label>{"Kategori"}</label>
-                                                <input className="form-control" name="kategori" type="text" placeholder="Nama Kategori" ref={register({ required: true })} onChange={(e) => setKategori(e.target.value)} />
+                                                <input className="form-control" name="kategori" type="text" value={kategori} placeholder="Nama Kategori" ref={register({ required: true })} onChange={(e) => setKategori(e.target.value)} />
                                                 <span>{errors.kategori && 'Kategori is required'}</span>
                                                 <div className="valid-feedback">{"Looks good!"}</div>
                                             </div>
@@ -75,4 +73,4 @@ const AddDonasiRutin = () => {
     );
 }
 
-export default AddDonasiRutin
+export default EditDonasiKategori

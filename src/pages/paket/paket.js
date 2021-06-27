@@ -3,33 +3,38 @@ import Breadcrumb from '../../components/common/breadcrumb';
 import { Edit, Trash} from 'react-feather';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchDonasiRutin, fetchDeleteDonasiRutin } from "../../redux/donasiRutin/action";
+import { fetchPaket, fetchDeletePaket } from "../../redux/paket/action";
 
-const DonasiRutin = () => {
+const Paket = () => {
 
     const dispatch = useDispatch();
 
     let token = localStorage.getItem('token');
     
     useEffect(() => {
-        dispatch(fetchDonasiRutin(token))
+        dispatch(fetchPaket(token))
     },[])
 
-    const donasiRutinData = useSelector((state) => state.donasiRutinReducer.donasiRutin);
+    const paketData = useSelector((state) => state.paketReducer.paket);
 
-    const donasiRutinDatas = donasiRutinData.map((donasi, index) => {
+    const paketDatas = paketData.map((paket, index) => {
         return (
             <tr key={index}>
                 <th scope="row">{index+1}</th>
-                <td>{donasi.kategori_name}</td>
+                {/* <td>{user.id}</td> */}
+                <td>{paket.title}</td>
+                <td>{paket.sub_title}</td>
+                <td>{paket.tag}</td>
+                {/* <td>{paket.paket_type}</td> */}
+                <td className="text-center"><img src={paket.thumbnail_image_url} alt={paket.thumbnail_image_url} style={{width: 100}}/></td>
                 <td>
                     <Link to={{
-                            pathname: "/edit-donasi-rutin",
-                            state: { data: donasi }
+                            pathname: "/edit-paket-onetime",
+                            state: { data: paket }
                         }} className="mr-2">
-                        <Edit className="edit-donasi-rutin" style={{cursor:"pointer"}}/>
+                        <Edit className="edit-paket-onetime" style={{cursor:"pointer"}}/>
                     </Link>
-                    <Trash className="delete-donasi-rutin" style={{cursor:"pointer"}} onClick={() => dispatch(fetchDeleteDonasiRutin(token, donasi.id))}/>
+                    <Trash className="delete-paket" style={{cursor:"pointer"}} onClick={() => dispatch(fetchDeletePaket(token, paket.id))}/>
                 </td>
             </tr>
         )
@@ -37,7 +42,7 @@ const DonasiRutin = () => {
 
     return (
         <Fragment>
-            <Breadcrumb title="Donasi Page" parent="Dashboard" />
+            <Breadcrumb title="Paket Page" parent="Dashboard" />
             <div className="container-fluid">
             <div className="row">
             <div className="col-sm-12">
@@ -45,11 +50,11 @@ const DonasiRutin = () => {
                 <div className="card-header">
                     <div className="row justify-content-between">
                         <div className="col-md-3 col-sm-12">
-                            <h5>Donasi</h5>
+                            <h5>Paket</h5>
                         </div>
                         <div className="col-md-3 col-sm-12">
-                            <Link to="/add-donasi-rutin" className="btn btn-success float-right">
-                                Add Kategori
+                            <Link to="/add-paket-onetime" className="btn btn-success float-right">
+                                Add Paket
                             </Link>
                         </div>
                     </div>
@@ -60,12 +65,16 @@ const DonasiRutin = () => {
                             <thead>
                                 <tr>
                                     <th scope="col">{"#"}</th>
-                                    <th scope="col">{"Kategori"}</th>
+                                    <th scope="col">{"Tittle"}</th>
+                                    <th scope="col">{"Sub-title"}</th>
+                                    <th scope="col">{"Tag"}</th>
+                                    {/* <th scope="col">{"Paket-Type"}</th> */}
+                                    <th scope="col">{"Thumbnail-image"}</th>
                                     <th scope="col">{"Action"}</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {donasiRutinDatas}
+                                {paketDatas}
                             </tbody>
                         </table>
                     </div>
@@ -78,4 +87,4 @@ const DonasiRutin = () => {
     );
 }
 
-export default DonasiRutin
+export default Paket
