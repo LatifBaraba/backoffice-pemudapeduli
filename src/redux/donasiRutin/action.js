@@ -16,9 +16,9 @@ import history from "../../history";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-const URL = `${process.env.REACT_APP_BASE_URL}/program-donasi/list`;
-const EditURL = `${process.env.REACT_APP_BASE_URL}/program-donasi/`;
-const AddURL = `${process.env.REACT_APP_BASE_URL}/program-donasi/create`;
+const URL = `${process.env.REACT_APP_BASE_URL}/kategori/program-donasi-rutin/list`;
+const EditURL = `${process.env.REACT_APP_BASE_URL}/kategori/program-donasi-rutin/`;
+const AddURL = `${process.env.REACT_APP_BASE_URL}/kategori/program-donasi-rutin/create`;
 
 export function fetchDonasiRutin(token) {
     return (dispatch) => {
@@ -28,17 +28,13 @@ export function fetchDonasiRutin(token) {
                 limit: "100",
                 offset: "0",
                 filters: [
-                    {
-                        field: "is_deleted",
-                        keyword: "false"
-                    }
                 ],
-                order: "created_at",
+                order: "id",
                 sort: "ASC",
-                created_at_from: "",
-                created_at_to: "",
-                publish_at_from: "",
-                publish_at_to: ""
+                // created_at_from: "",
+                // created_at_to: "",
+                // publish_at_from: "",
+                // publish_at_to: ""
             },
             headers: {
                 "pp-token": `${token}`,
@@ -62,21 +58,13 @@ export function fetchDonasiRutin(token) {
     };
 };
 
-export function fetchEditDonasiRutin(token, id, titles, sub, tag, startDate, endDate, target, donasiType, newThumb, desc) {
+export function fetchEditDonasiRutin(token, id, kategori) {
     return (dispatch) => {
         dispatch(editDonasiRutin())
         axios(EditURL+`${id}`, {
             method: 'PUT',
             data: {
-                title: titles,
-                sub_title: sub,
-                tag: tag,
-                donasi_type: donasiType,
-                valid_from: startDate,
-                valid_to: endDate,
-                target: parseInt(target),
-                description: desc,
-                thumbnail_image_url: newThumb
+                kategori_name: kategori,
             },
             headers: {
                 "pp-token": `${token}`,
@@ -87,7 +75,7 @@ export function fetchEditDonasiRutin(token, id, titles, sub, tag, startDate, end
             setTimeout(() => {
                 toast.success("Edit Success !");
                 dispatch(editDonasiRutinSuccess(res));
-                history.push("/donasi");
+                history.push("/donasi-rutin");
             }, 2000);
         })
         .catch(err => {
@@ -103,21 +91,13 @@ export function fetchEditDonasiRutin(token, id, titles, sub, tag, startDate, end
     };
 };
 
-export function fetchAddDonasiRutin(token, titles, sub, tag, startDate, endDate, target, donasiType, newThumb, desc) {
+export function fetchAddDonasiRutin(token, kategori) {
     return (dispatch) => {
         dispatch(addDonasiRutin())
         axios(AddURL, {
             method: 'POST',
             data: {
-                title: titles,
-                sub_title: sub,
-                tag: tag,
-                donasi_type: donasiType,
-                valid_from: startDate,
-                valid_to: endDate,
-                target: parseInt(target),
-                description: desc,
-                thumbnail_image_url: newThumb
+                kategori_name: kategori,
             },
             headers: {
                 "pp-token": `${token}`,
@@ -128,7 +108,7 @@ export function fetchAddDonasiRutin(token, titles, sub, tag, startDate, endDate,
             setTimeout(() => {
                 toast.success("Add Success !");
                 dispatch(addDonasiRutinSuccess(res));
-                history.push("/donasi");
+                history.push("/donasi-rutin");
             }, 2000);
         })
         .catch(err => {
@@ -157,7 +137,7 @@ export function fetchDeleteDonasiRutin(token, id) {
             setTimeout(() => {
                 toast.success("Delete Success !")
                 dispatch(deleteDonasiRutinSuccess(res));
-                history.push("/donasi");
+                history.push("/donasi-rutin");
                 window.location.reload();
             }, 2000);
         })

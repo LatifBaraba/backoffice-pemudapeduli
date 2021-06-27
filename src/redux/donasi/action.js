@@ -62,7 +62,7 @@ export function fetchDonasi(token) {
     };
 };
 
-export function fetchEditDonasi(token, id, titles, sub, tag, startDate, endDate, target, donasiType, newThumb, desc) {
+export function fetchEditDonasi(token, id, titles, sub, tag, startDate, endDate, target, newThumb, desc, newContent) {
     return (dispatch) => {
         dispatch(editDonasi())
         axios(EditURL+`${id}`, {
@@ -71,12 +71,13 @@ export function fetchEditDonasi(token, id, titles, sub, tag, startDate, endDate,
                 title: titles,
                 sub_title: sub,
                 tag: tag,
-                donasi_type: donasiType,
+                // donasi_type: donasiType,
                 valid_from: startDate,
                 valid_to: endDate,
                 target: parseInt(target),
                 description: desc,
-                thumbnail_image_url: newThumb
+                thumbnail_image_url: newThumb,
+                content: newContent
             },
             headers: {
                 "pp-token": `${token}`,
@@ -87,7 +88,7 @@ export function fetchEditDonasi(token, id, titles, sub, tag, startDate, endDate,
             setTimeout(() => {
                 toast.success("Edit Success !");
                 dispatch(editDonasiSuccess(res));
-                history.push("/donasi");
+                history.push("/donasi-onetime");
             }, 2000);
         })
         .catch(err => {
@@ -103,7 +104,7 @@ export function fetchEditDonasi(token, id, titles, sub, tag, startDate, endDate,
     };
 };
 
-export function fetchAddDonasi(token, titles, sub, tag, startDate, endDate, target, donasiType, newThumb, desc) {
+export function fetchAddDonasi(token, titles, sub, tag, startDate, endDate, target, newThumb, desc, content) {
     return (dispatch) => {
         dispatch(addDonasi())
         axios(AddURL, {
@@ -112,12 +113,13 @@ export function fetchAddDonasi(token, titles, sub, tag, startDate, endDate, targ
                 title: titles,
                 sub_title: sub,
                 tag: tag,
-                donasi_type: donasiType,
+                // donasi_type: donasiType,
                 valid_from: startDate,
                 valid_to: endDate,
                 target: parseInt(target),
                 description: desc,
-                thumbnail_image_url: newThumb
+                thumbnail_image_url: newThumb,
+                content: content
             },
             headers: {
                 "pp-token": `${token}`,
@@ -128,7 +130,7 @@ export function fetchAddDonasi(token, titles, sub, tag, startDate, endDate, targ
             setTimeout(() => {
                 toast.success("Add Success !");
                 dispatch(addDonasiSuccess(res));
-                history.push("/donasi");
+                history.push("/donasi-onetime");
             }, 2000);
         })
         .catch(err => {
@@ -157,7 +159,7 @@ export function fetchDeleteDonasi(token, id) {
             setTimeout(() => {
                 toast.success("Delete Success !")
                 dispatch(deleteDonasiSuccess(res));
-                history.push("/donasi");
+                history.push("/donasi-onetime");
                 window.location.reload();
             }, 2000);
         })

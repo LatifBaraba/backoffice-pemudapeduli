@@ -6,10 +6,10 @@ import { fetchAddDonasi } from "../../redux/donasi/action";
 import { uploadImage, toIsoString } from "../../helper/index";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-// import { Editor } from 'react-draft-wysiwyg';
-// import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
-// import draftToHtml from 'draftjs-to-html';
-// import { EditorState, ContentState, convertToRaw, convertFromRaw } from 'draft-js';
+import { Editor } from 'react-draft-wysiwyg';
+import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
+import draftToHtml from 'draftjs-to-html';
+import { EditorState, ContentState, convertToRaw, convertFromRaw } from 'draft-js';
 
 const AddDonasi = () => {
 
@@ -29,11 +29,10 @@ const AddDonasi = () => {
     const [ donasiType, setDonasiType] = useState("Rutin");
 
     const loadingStatus = useSelector((state) => state.donasiReducer.loading);
-    console.log(donasiType, 'tipe lama')
 
-    // let _contentState = EditorState.createEmpty("");
-    // const [editorState, setEditorState] = useState(_contentState)
-    // const desc = draftToHtml(convertToRaw(editorState.getCurrentContent()))
+    let _contentState = EditorState.createEmpty("");
+    const [editorState, setEditorState] = useState(_contentState)
+    const content = draftToHtml(convertToRaw(editorState.getCurrentContent()))
 
     const onSubmit = data => {
         const startDate = toIsoString(new Date(validFrom))
@@ -42,7 +41,7 @@ const AddDonasi = () => {
         if (data !== '') {
             uploadImage(img).then(message => {
                 const newThumb = message.response.data.url;
-                dispatch(fetchAddDonasi(token, titles, sub, tag, startDate, endDate, target, donasiType, newThumb, desc))
+                dispatch(fetchAddDonasi(token, titles, sub, tag, startDate, endDate, target, donasiType, newThumb, desc, content))
             })
             .catch(error => {
                 toast.error("Upload Image Failed !");
@@ -118,7 +117,7 @@ const AddDonasi = () => {
                                             </div>
                                             <div className="col-md-12 mb-3">
                                                 <label>{"Target"}</label>
-                                                <input className="form-control" name="target" type="number" placeholder="Target Total Donasi" ref={register({ required: true })} onChange={(e) => setTarget(e.target.value)} />
+                                                <input className="form-control" name="target" type="number" placeholder="Target Total Donasi" ref={register({ required: true })} oonChange={(e) => setTarget(e.target.value)} />
                                                 <span>{errors.target && 'Target is required'}</span>
                                                 <div className="valid-feedback">{"Looks good!"}</div>
                                             </div>
@@ -134,7 +133,7 @@ const AddDonasi = () => {
                                                 <label>{"UploadFile"}</label>
                                                 <input className="form-control" type="file" accept="image/*" onChange={(e) => setImg(e.target.files[0])}/>
                                             </div>
-                                            {/* <div className="col-md-12 mb-3">
+                                            <div className="col-md-12 mb-3">
                                                 <Editor
                                                     editorState={editorState}
                                                     toolbarClassName="toolbarClassName"
@@ -142,7 +141,7 @@ const AddDonasi = () => {
                                                     editorClassName="editorClassName"
                                                     onEditorStateChange={setEditorState}
                                                 />
-                                            </div> */}
+                                            </div>
                                         </div>
                                         {/* <button className="btn btn-pill btn-primary btn-block mt-3 mb-3" type="submit">{"Submit"}</button> */}
                                         {submitButton()}

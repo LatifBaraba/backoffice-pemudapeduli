@@ -16,6 +16,7 @@ import achievementReducer from '../redux/achievement/reducer';
 import kontakReducer from '../redux/kontak/reducer';
 import menuReducer from '../redux/menu/reducer';
 import hubungiReducer from '../redux/hubungi/reducer'
+import donasiRutinReducer from '../redux/donasiRutin/reducer'
 
 const reducers = combineReducers({
     Customizer,
@@ -25,6 +26,7 @@ const reducers = combineReducers({
     bannerReducer,
     beritaReducer,
     donasiReducer,
+    donasiRutinReducer,
     tentangReducer,
     programReducer,
     teamReducer,

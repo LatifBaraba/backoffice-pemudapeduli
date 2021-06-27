@@ -1,41 +1,35 @@
 import React, { Fragment, useEffect } from 'react';
 import Breadcrumb from '../../components/common/breadcrumb';
-import PropTypes from "prop-types";
 import { Edit, Trash} from 'react-feather';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchDonasi, fetchDeleteDonasi } from "../../redux/donasi/action";
+import { fetchDonasiRutin, fetchDeleteDonasiRutin } from "../../redux/donasiRutin/action";
 
-const DonasiRutin = (props) => {
+const DonasiRutin = () => {
 
     const dispatch = useDispatch();
 
     let token = localStorage.getItem('token');
     
     useEffect(() => {
-        dispatch(fetchDonasi(token))
+        dispatch(fetchDonasiRutin(token))
     },[])
 
-    const donasiData = useSelector((state) => state.donasiReducer.donasi);
+    const donasiRutinData = useSelector((state) => state.donasiRutinReducer.donasiRutin);
 
-    const donasiDatas = donasiData.map((donasi, index) => {
+    const donasiRutinDatas = donasiRutinData.map((donasi, index) => {
         return (
             <tr key={index}>
                 <th scope="row">{index+1}</th>
-                {/* <td>{user.id}</td> */}
-                <td>{donasi.title}</td>
-                <td>{donasi.sub_title}</td>
-                <td>{donasi.tag}</td>
-                <td>{donasi.donasi_type}</td>
-                <td className="text-center"><img src={donasi.thumbnail_image_url} alt={donasi.thumbnail_image_url} style={{width: 100}}/></td>
+                <td>{donasi.kategori_name}</td>
                 <td>
                     <Link to={{
-                            pathname: "/edit-donasi",
+                            pathname: "/edit-donasi-rutin",
                             state: { data: donasi }
                         }} className="mr-2">
-                        <Edit className="edit-donasi" style={{cursor:"pointer"}}/>
+                        <Edit className="edit-donasi-rutin" style={{cursor:"pointer"}}/>
                     </Link>
-                    <Trash className="delete-donasi" style={{cursor:"pointer"}} onClick={() => dispatch(fetchDeleteDonasi(token, donasi.id))}/>
+                    <Trash className="delete-donasi-rutin" style={{cursor:"pointer"}} onClick={() => dispatch(fetchDeleteDonasiRutin(token, donasi.id))}/>
                 </td>
             </tr>
         )
@@ -54,8 +48,8 @@ const DonasiRutin = (props) => {
                             <h5>Donasi</h5>
                         </div>
                         <div className="col-md-3 col-sm-12">
-                            <Link to="/add-donasi" className="btn btn-success float-right">
-                                Add Donasi
+                            <Link to="/add-donasi-rutin" className="btn btn-success float-right">
+                                Add Kategori
                             </Link>
                         </div>
                     </div>
@@ -66,16 +60,12 @@ const DonasiRutin = (props) => {
                             <thead>
                                 <tr>
                                     <th scope="col">{"#"}</th>
-                                    <th scope="col">{"Tittle"}</th>
-                                    <th scope="col">{"Sub-title"}</th>
-                                    <th scope="col">{"Tag"}</th>
-                                    <th scope="col">{"Donasi-Type"}</th>
-                                    <th scope="col">{"Thumbnail-image"}</th>
+                                    <th scope="col">{"Kategori"}</th>
                                     <th scope="col">{"Action"}</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {donasiDatas}
+                                {donasiRutinDatas}
                             </tbody>
                         </table>
                     </div>
@@ -87,41 +77,5 @@ const DonasiRutin = (props) => {
     </Fragment>
     );
 }
-
-Donasi.propTypes = {
-    bannerData: PropTypes.array
-};
-  
-Donasi.defaultProps = {
-    bannerData: [
-        {
-            title:"banner1",
-            sub_title:"coba banner1",
-            title_content:"title1",
-            thumbnail_image_url:"http://gambar,png",
-            deeplink_right:"view",
-            deeplink_left:"button",
-            description:"Lorem ipsum dolor sit amet consectetur, adipisicing elit. Tempora, iure!"
-        },
-        {
-            title:"banner2",
-            sub_title:"coba banner2",
-            title_content:"title1",
-            thumbnail_image_url:"http://gambar,png",
-            deeplink_right:"view",
-            deeplink_left:"button",
-            description:"Lorem ipsum dolor sit amet consectetur, adipisicing elit. Tempora, iure!"
-        },
-        {
-            title:"banner3",
-            sub_title:"coba banner3",
-            title_content:"title3",
-            thumbnail_image_url:"http://gambar,png",
-            deeplink_right:"view",
-            deeplink_left:"button",
-            description:"Lorem ipsum dolor sit amet consectetur, adipisicing elit. Tempora, iure!"
-        },
-    ]
-};
 
 export default DonasiRutin

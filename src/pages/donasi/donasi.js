@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchDonasi, fetchDeleteDonasi } from "../../redux/donasi/action";
 
-const Donasi = (props) => {
+const Donasi = () => {
 
     const dispatch = useDispatch();
 
@@ -26,14 +26,14 @@ const Donasi = (props) => {
                 <td>{donasi.title}</td>
                 <td>{donasi.sub_title}</td>
                 <td>{donasi.tag}</td>
-                <td>{donasi.donasi_type}</td>
+                {/* <td>{donasi.donasi_type}</td> */}
                 <td className="text-center"><img src={donasi.thumbnail_image_url} alt={donasi.thumbnail_image_url} style={{width: 100}}/></td>
                 <td>
                     <Link to={{
-                            pathname: "/edit-donasi",
+                            pathname: "/edit-donasi-onetime",
                             state: { data: donasi }
                         }} className="mr-2">
-                        <Edit className="edit-donasi" style={{cursor:"pointer"}}/>
+                        <Edit className="edit-donasi-onetime" style={{cursor:"pointer"}}/>
                     </Link>
                     <Trash className="delete-donasi" style={{cursor:"pointer"}} onClick={() => dispatch(fetchDeleteDonasi(token, donasi.id))}/>
                 </td>
@@ -54,7 +54,7 @@ const Donasi = (props) => {
                             <h5>Donasi</h5>
                         </div>
                         <div className="col-md-3 col-sm-12">
-                            <Link to="/add-donasi" className="btn btn-success float-right">
+                            <Link to="/add-donasi-onetime" className="btn btn-success float-right">
                                 Add Donasi
                             </Link>
                         </div>
@@ -69,7 +69,7 @@ const Donasi = (props) => {
                                     <th scope="col">{"Tittle"}</th>
                                     <th scope="col">{"Sub-title"}</th>
                                     <th scope="col">{"Tag"}</th>
-                                    <th scope="col">{"Donasi-Type"}</th>
+                                    {/* <th scope="col">{"Donasi-Type"}</th> */}
                                     <th scope="col">{"Thumbnail-image"}</th>
                                     <th scope="col">{"Action"}</th>
                                 </tr>
