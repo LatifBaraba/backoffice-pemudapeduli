@@ -33,8 +33,8 @@ export function fetchPaket(token, kat) {
                         keyword: "false"
                     },
                     {
-                        field: "kategori_name",
-                        keyword: kat
+                        field: "id",
+                        keyword: `${kat}`
                     }
                 ],
                 order: "created_at",

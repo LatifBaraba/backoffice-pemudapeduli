@@ -13,7 +13,7 @@ const Paket = (props) => {
     let token = localStorage.getItem('token');
     
     useEffect(() => {
-        dispatch(fetchPaket(token, data.kategori_name))
+        dispatch(fetchPaket(token, data.id))
     },[])
 
     const paketData = useSelector((state) => state.paketReducer.paket);
