@@ -26,7 +26,7 @@ const DonasiKategori = () => {
                 <td>
                     <Link to={{
                             pathname: "/paket",
-                            state: { data: donasi.id }
+                            state: { data: donasi }
                         }}>
                         <Button variant="primary">
                             {donasi.kategori_name}

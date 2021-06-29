@@ -20,7 +20,7 @@ const URL = `${process.env.REACT_APP_BASE_URL}/program-donasi/list`;
 const EditURL = `${process.env.REACT_APP_BASE_URL}/program-donasi/`;
 const AddURL = `${process.env.REACT_APP_BASE_URL}/program-donasi/create`;
 
-export function fetchPaket(token) {
+export function fetchPaket(token, kat) {
     return (dispatch) => {
         axios(URL, {
             method: 'POST',
@@ -33,8 +33,8 @@ export function fetchPaket(token) {
                         keyword: "false"
                     },
                     {
-                        field: "donasi_type",
-                        keyword: ""
+                        field: "kategori_name",
+                        keyword: kat
                     }
                 ],
                 order: "created_at",

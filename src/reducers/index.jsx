@@ -17,6 +17,7 @@ import kontakReducer from '../redux/kontak/reducer';
 import menuReducer from '../redux/menu/reducer';
 import hubungiReducer from '../redux/hubungi/reducer'
 import donasiKategoriReducer from '../redux/donasiKategori/reducer'
+import paketReducer from '../redux/paket/reducer'
 
 const reducers = combineReducers({
     Customizer,
@@ -36,7 +37,8 @@ const reducers = combineReducers({
     achievementReducer,
     kontakReducer,
     menuReducer,
-    hubungiReducer
+    hubungiReducer,
+    paketReducer
 });
 
 export default reducers;

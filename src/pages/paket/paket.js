@@ -5,14 +5,15 @@ import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchPaket, fetchDeletePaket } from "../../redux/paket/action";
 
-const Paket = () => {
+const Paket = (props) => {
 
+    const {data} = props.location.state;
+    console.log(data, 'ini kategori nya')
     const dispatch = useDispatch();
-
     let token = localStorage.getItem('token');
     
     useEffect(() => {
-        dispatch(fetchPaket(token))
+        dispatch(fetchPaket(token, data.kategori_name))
     },[])
 
     const paketData = useSelector((state) => state.paketReducer.paket);
