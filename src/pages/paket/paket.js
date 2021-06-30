@@ -8,7 +8,7 @@ import { fetchPaket, fetchDeletePaket } from "../../redux/paket/action";
 const Paket = (props) => {
 
     const {data} = props.location.state;
-    console.log(data, 'ini kategori nya')
+
     const dispatch = useDispatch();
     let token = localStorage.getItem('token');
     
@@ -51,10 +51,10 @@ const Paket = (props) => {
                 <div className="card-header">
                     <div className="row justify-content-between">
                         <div className="col-md-3 col-sm-12">
-                            <h5>Paket</h5>
+                            <h5>Kategori "{data.kategori_name}"</h5>
                         </div>
                         <div className="col-md-3 col-sm-12">
-                            <Link to="/add-paket-onetime" className="btn btn-success float-right">
+                            <Link to="/add-paket" className="btn btn-success float-right">
                                 Add Paket
                             </Link>
                         </div>
