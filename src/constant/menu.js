@@ -49,6 +49,12 @@ export const MENUITEMS = [
         title: 'Donasi One Time', icon: DollarSign, type: 'link', path: '/donasi-onetime', active: false
     },
     {
+        title: 'Donasi Rutin', icon: DollarSign, type: 'sub', active: false, children: [
+            { path: '/donasi-kategori', title: 'Kategori Donasi', type: 'link' },
+            { path: '/paket', title: 'Paket Donasi', type: 'link' },
+        ]
+    },
+    {
         title: 'Donasi Rutin', icon: DollarSign, type: 'link', path: '/donasi-kategori', active: false
     },
     {

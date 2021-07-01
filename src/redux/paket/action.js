@@ -16,11 +16,11 @@ import history from "../../history";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-const URL = `${process.env.REACT_APP_BASE_URL}/program-donasi/list`;
-const EditURL = `${process.env.REACT_APP_BASE_URL}/program-donasi/`;
-const AddURL = `${process.env.REACT_APP_BASE_URL}/program-donasi/create`;
+const URL = `${process.env.REACT_APP_BASE_URL}/program-donasi-rutin/list`;
+const EditURL = `${process.env.REACT_APP_BASE_URL}/program-donasi-rutin/`;
+const AddURL = `${process.env.REACT_APP_BASE_URL}/program-donasi-rutin/create`;
 
-export function fetchPaket(token, kat) {
+export function fetchPaket(token) {
     return (dispatch) => {
         axios(URL, {
             method: 'POST',
@@ -32,10 +32,6 @@ export function fetchPaket(token, kat) {
                         field: "is_deleted",
                         keyword: "false"
                     },
-                    {
-                        field: "id",
-                        keyword: `${kat}`
-                    }
                 ],
                 order: "created_at",
                 sort: "ASC",
@@ -66,7 +62,47 @@ export function fetchPaket(token, kat) {
     };
 };
 
-export function fetchEditPaket(token, id, titles, sub, tag, startDate, endDate, target, newThumb, desc, newContent) {
+export function fetchAddPaket(token, titles, sub, tag, donasiType, benefit, newThumb, desc, content) {
+    return (dispatch) => {
+        dispatch(addPaket())
+        axios(AddURL, {
+            method: 'POST',
+            data: {
+                title: titles,
+                sub_title: sub,
+                id_kategori: donasiType,
+                tag : tag,
+                content: content,
+                benefit: benefit,
+                thumbnail_image_url: newThumb,
+                description: desc
+            },
+            headers: {
+                "pp-token": `${token}`,
+                "Content-type": "application/json"
+            }
+        })
+        .then(res => {
+            setTimeout(() => {
+                toast.success("Add Success !");
+                dispatch(addPaketSuccess(res));
+                history.push("/paket");
+            }, 2000);
+        })
+        .catch(err => {
+            console.log(err)
+            if(err.response.status === 401){
+                toast.error("Unauthorized")
+                dispatch(fetchRefreshToken(token))
+                localStorage.removeItem("token");
+                history.push('/login')
+            }
+            dispatch(addPaketFailure(err));
+        });
+    };
+};
+
+export function fetchEditPaket(id, token, titles, sub, tag, donasiType, benefit, newThumb, desc, newContent) {
     return (dispatch) => {
         dispatch(editPaket())
         axios(EditURL+`${id}`, {
@@ -74,14 +110,12 @@ export function fetchEditPaket(token, id, titles, sub, tag, startDate, endDate, 
             data: {
                 title: titles,
                 sub_title: sub,
-                tag: tag,
-                // donasi_type: donasiType,
-                valid_from: startDate,
-                valid_to: endDate,
-                target: parseInt(target),
-                description: desc,
+                id_kategori: donasiType,
+                tag : tag,
+                content: newContent,
+                benefit: benefit,
                 thumbnail_image_url: newThumb,
-                content: newContent
+                description: desc
             },
             headers: {
                 "pp-token": `${token}`,
@@ -104,48 +138,6 @@ export function fetchEditPaket(token, id, titles, sub, tag, startDate, endDate, 
                 history.push('/login')
             }
             dispatch(editPaketFailure(err));
-        });
-    };
-};
-
-export function fetchAddPaket(token, titles, sub, tag, startDate, endDate, target, newThumb, desc, content) {
-    return (dispatch) => {
-        dispatch(addPaket())
-        axios(AddURL, {
-            method: 'POST',
-            data: {
-                title: titles,
-                sub_title: sub,
-                tag: tag,
-                // donasi_type: donasiType,
-                valid_from: startDate,
-                valid_to: endDate,
-                target: parseInt(target),
-                description: desc,
-                thumbnail_image_url: newThumb,
-                content: content
-            },
-            headers: {
-                "pp-token": `${token}`,
-                "Content-type": "application/json"
-            }
-        })
-        .then(res => {
-            setTimeout(() => {
-                toast.success("Add Success !");
-                dispatch(addPaketSuccess(res));
-                history.push("/donasi-onetime");
-            }, 2000);
-        })
-        .catch(err => {
-            console.log(err)
-            if(err.response.status === 401){
-                toast.error("Unauthorized")
-                dispatch(fetchRefreshToken(token))
-                localStorage.removeItem("token");
-                history.push('/login')
-            }
-            dispatch(addPaketFailure(err));
         });
     };
 };

@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useState, useEffect } from 'react';
 import Breadcrumb from '../../components/common/breadcrumb';
 import useForm from "react-hook-form";
 import { useDispatch, useSelector } from 'react-redux';
@@ -9,6 +9,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import moment from 'moment/moment.js';
 import { Editor } from 'react-draft-wysiwyg';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
+import { fetchDonasiKategori } from '../../redux/donasiKategori/action'
 import {
     EditorState,
     ContentState,
@@ -21,6 +22,10 @@ const EditDonasi = (props) => {
 
     const { data } = props.location.state;
 
+    useEffect(() => {
+        dispatch(fetchDonasiKategori(token))
+    },[])
+
     const [ id, setId] = useState(data.id);
     const [ titles, setTitles] = useState(data.title);
     const [ sub, setSub] = useState(data.sub_title);
@@ -28,11 +33,9 @@ const EditDonasi = (props) => {
     const [ thumb, setThumb] = useState(data.thumbnail_image_url);
     const [ desc, setDesc] = useState(data.description);
     const [ img, setImg] = useState('');
-    const [ validFrom, setValidFrom] = useState(data.valid_from);
-    const [ validTo, setValidTo] = useState(data.valid_to);
-    const [ target, setTarget] = useState(data.target);
-    // const [ donasiType, setDonasiType] = useState(data.donasi_type);
- 
+    const [ benefit, setBenefit] = useState(data.benefit);
+    const [ donasiType, setDonasiType] = useState(data.donasi_type);
+    const categories = useSelector((state) => state.donasiKategoriReducer.donasiKategori);
     const loadingStatus = useSelector((state) => state.donasiReducer.loading);
 
     const dispatch = useDispatch();
@@ -48,53 +51,25 @@ const EditDonasi = (props) => {
     const [editorState, setEditorState] = useState(contentState ? existing : initialState)
     const newContent = draftToHtml(convertToRaw(editorState.getCurrentContent()))
     
-    console.log(moment(validFrom).format('YYYY-MM-DDTHH:mm:ss'))
-
     const onSubmit = data => {
-        
-        let startDate = toIsoString(new Date(validFrom))
-        let endDate = toIsoString(new Date(validTo))
 
         if (data !== '') {
             if (img !== '') {
                 uploadImage(img).then(message => {
                     const newThumb = message.response.data.url;
-                    dispatch(fetchEditDonasi(token, id, titles, sub, tag, startDate, endDate, target, 
-                        // donasiType, 
-                        newThumb, desc, newContent))
+                    dispatch(fetchEditDonasi(id, token, titles, sub, tag, donasiType, benefit, newThumb, desc, newContent))
                 })
                 .catch(error => {
                     toast.error("Upload Image Failed !");
                 })
             } else {
                 const newThumb = thumb;
-                dispatch(fetchEditDonasi(token, id, titles, sub, tag, startDate, endDate, target, 
-                    // donasiType, 
-                    newThumb, desc, newContent))
+                dispatch(fetchEditDonasi(id, token, titles, sub, tag, donasiType, benefit, newThumb, desc, newContent))
             }
         } else {
             errors.showMessages();
         }
     }
-
-    // const selectDonasiType = (donasiType) => {
-    //     if( donasiType == "Rutin") {
-    //         return(
-    //             <select class="form-control digits" id="donasiType" onChange={(e) => setDonasiType(e.target.value)}>
-    //                 <option selected value="Rutin">Rutin</option>
-    //                 <option value="One Time">One Time</option>
-    //             </select>
-    //         )
-    //     }
-
-    //     return(
-    //         <select class="form-control digits" id="donasiType" onChange={(e) => setDonasiType(e.target.value)}>
-    //             <option value="Rutin">Rutin</option>
-    //             <option selected value="One Time">One Time</option>
-    //         </select>
-    //     )
-        
-    // }
 
     const submitButton = () => {
         if(loadingStatus == false) {
@@ -149,27 +124,18 @@ const EditDonasi = (props) => {
                                                 <div className="valid-feedback">{"Looks good!"}</div>
                                             </div>
                                             <div className="col-md-12 mb-3">
-                                                <label>{"Valid-From"}</label>
-                                                <input className="form-control" name="validfrom" type="datetime-local" placeholder="Start Date" value={moment(validFrom).format('YYYY-MM-DDTHH:mm:ss')} ref={register({ required: true })} onChange={(e) => setValidFrom(e.target.value)} />
-                                                <span>{errors.validfrom && 'Valid-From is required'}</span>
+                                                <label>{"Benefit"}</label>
+                                                <input className="form-control" name="benefit" type="text" placeholder="Benefit" value={benefit} onChange={(e) => setBenefit(e.target.value)} />
+                                                <span>{errors.benefit && 'Benefit is required'}</span>
                                                 <div className="valid-feedback">{"Looks good!"}</div>
                                             </div>
                                             <div className="col-md-12 mb-3">
-                                                <label>{"Valid-To"}</label>
-                                                <input className="form-control" name="validto" type="datetime-local" placeholder="End Date" value={moment(validTo).format('YYYY-MM-DDTHH:mm:ss')} ref={register({ required: true })} onChange={(e) => setValidTo(e.target.value)} />
-                                                <span>{errors.validto && 'Valid-To is required'}</span>
-                                                <div className="valid-feedback">{"Looks good!"}</div>
+                                                <label>Donation Type</label>
+                                                <select className="form-control digits" id="donasiType" onChange={(e) => setDonasiType(e.target.value)}>
+                                                    {/* {donasiTypes} */}
+                                                    {categories.map((cat, index) => <option key={index} value={cat.id}>{cat.kategori_name}</option>)}
+                                                </select>
                                             </div>
-                                            <div className="col-md-12 mb-3">
-                                                <label>{"Target"}</label>
-                                                <input className="form-control" name="target" type="number" placeholder="Target Total Donasi" value={target} ref={register({ required: true })} onChange={(e) => setTarget(e.target.value)} />
-                                                <span>{errors.target && 'Target is required'}</span>
-                                                <div className="valid-feedback">{"Looks good!"}</div>
-                                            </div>
-                                            {/* <div className="col-md-12 mb-3">
-                                                <label for="donasiType">Donation Type</label>
-                                                {selectDonasiType(data.donasi_type)}
-                                            </div> */}
                                             <div className="col-md-12 mb-3">
                                                 <label>{"UploadFile"}</label>
                                                 <input className="form-control" type="file" accept="image/*" onChange={(e) => setImg(e.target.files[0])}/>

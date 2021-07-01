@@ -1,19 +1,18 @@
 import React, { Fragment, useEffect } from 'react';
 import Breadcrumb from '../../components/common/breadcrumb';
 import { Edit, Trash} from 'react-feather';
-import { Link } from 'react-router-dom';
+import { Link, Route } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchPaket, fetchDeletePaket } from "../../redux/paket/action";
 
-const Paket = (props) => {
+const Paket = () => {
 
-    const {data} = props.location.state;
 
     const dispatch = useDispatch();
     let token = localStorage.getItem('token');
     
     useEffect(() => {
-        dispatch(fetchPaket(token, data.id))
+        dispatch(fetchPaket(token))
     },[])
 
     const paketData = useSelector((state) => state.paketReducer.paket);
@@ -26,11 +25,11 @@ const Paket = (props) => {
                 <td>{paket.title}</td>
                 <td>{paket.sub_title}</td>
                 <td>{paket.tag}</td>
-                {/* <td>{paket.paket_type}</td> */}
+                <td>{paket.kategori_name}</td>
                 <td className="text-center"><img src={paket.thumbnail_image_url} alt={paket.thumbnail_image_url} style={{width: 100}}/></td>
                 <td>
                     <Link to={{
-                            pathname: "/edit-paket-onetime",
+                            pathname: "/edit-paket",
                             state: { data: paket }
                         }} className="mr-2">
                         <Edit className="edit-paket-onetime" style={{cursor:"pointer"}}/>
@@ -51,7 +50,7 @@ const Paket = (props) => {
                 <div className="card-header">
                     <div className="row justify-content-between">
                         <div className="col-md-3 col-sm-12">
-                            <h5>Kategori "{data.kategori_name}"</h5>
+                            <h5>Paket Donasi</h5>
                         </div>
                         <div className="col-md-3 col-sm-12">
                             <Link to="/add-paket" className="btn btn-success float-right">
@@ -69,7 +68,7 @@ const Paket = (props) => {
                                     <th scope="col">{"Tittle"}</th>
                                     <th scope="col">{"Sub-title"}</th>
                                     <th scope="col">{"Tag"}</th>
-                                    {/* <th scope="col">{"Paket-Type"}</th> */}
+                                    <th scope="col">{"Donasi-Type"}</th>
                                     <th scope="col">{"Thumbnail-image"}</th>
                                     <th scope="col">{"Action"}</th>
                                 </tr>

@@ -22,8 +22,8 @@ const DonasiKategori = () => {
         return (
             <tr key={index}>
                 <th scope="row">{index+1}</th>
-                {/* <td>{donasi.kategori_name}</td> */}
-                <td>
+                <td>{donasi.kategori_name}</td>
+                {/* <td>
                     <Link to={{
                             pathname: "/paket",
                             state: { data: donasi }
@@ -32,7 +32,7 @@ const DonasiKategori = () => {
                             {donasi.kategori_name}
                         </Button>
                     </Link>
-                </td>
+                </td> */}
                 <td>
                     <Link to={{
                             pathname: "/edit-donasi-kategori",
