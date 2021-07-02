@@ -126,7 +126,7 @@ export function fetchEditPaket(id, token, titles, sub, tag, donasiType, benefit,
             setTimeout(() => {
                 toast.success("Edit Success !");
                 dispatch(editPaketSuccess(res));
-                history.push("/donasi-onetime");
+                history.push("/paket");
             }, 2000);
         })
         .catch(err => {
@@ -155,7 +155,7 @@ export function fetchDeletePaket(token, id) {
             setTimeout(() => {
                 toast.success("Delete Success !")
                 dispatch(deletePaketSuccess(res));
-                history.push("/donasi-onetime");
+                history.push("/paket");
                 window.location.reload();
             }, 2000);
         })

@@ -21,7 +21,7 @@ import htmlToDraft from 'html-to-draftjs';
 const EditDonasi = (props) => {
 
     const { data } = props.location.state;
-
+    console.log(data)
     useEffect(() => {
         dispatch(fetchDonasiKategori(token))
     },[])
@@ -131,9 +131,11 @@ const EditDonasi = (props) => {
                                             </div>
                                             <div className="col-md-12 mb-3">
                                                 <label>Donation Type</label>
-                                                <select className="form-control digits" id="donasiType" onChange={(e) => setDonasiType(e.target.value)}>
+                                                <select className="form-control digits" id="donasiType" value={data.id_kategori} onChange={(e) => setDonasiType(e.target.value)}>
                                                     {/* {donasiTypes} */}
-                                                    {categories.map((cat, index) => <option key={index} value={cat.id}>{cat.kategori_name}</option>)}
+                                                    {categories.map((cat, index) => 
+                                                        <option key={index} value={cat.id}>{cat.kategori_name}</option>
+                                                    )}
                                                 </select>
                                             </div>
                                             <div className="col-md-12 mb-3">
