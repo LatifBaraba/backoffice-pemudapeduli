@@ -84,7 +84,8 @@ const EditTentang = (props) => {
                                         <div className="form-row">
                                             <div className="col-md-12 mb-3">
                                                 <label>{"Description"}</label>
-                                                <input className="form-control" name="description" type="text" placeholder="Description" value={desc} ref={register({ required: true })} onChange={(e) => setDesc(e.target.value)} />
+                                                {/* <input className="form-control" name="description" type="text" placeholder="Description" value={desc} ref={register({ required: true })} onChange={(e) => setDesc(e.target.value)} /> */}
+                                                <textarea className="form-control" name="desc" rows="5" cols="5" placeholder="Description" value={desc} ref={register({ required: true })} onChange={(e) => setDesc(e.target.value)}></textarea>
                                                 <span>{errors.description && 'Description is required'}</span>
                                                 <div className="valid-feedback">{"Looks good!"}</div>
                                             </div>

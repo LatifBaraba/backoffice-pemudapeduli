@@ -87,25 +87,25 @@ const EditTeam = (props) => {
                                             </div>
                                             <div className="col-md-12 mb-3">
                                                 <label>{"Facebook Link"}</label>
-                                                <input className="form-control" name="facebook" type="text" value={facebook} placeholder="Link" ref={register({ required: true })} onChange={(e) => setFacebook(e.target.value)}/>
+                                                <input className="form-control" name="facebook" type="url" value={facebook} placeholder="Link" ref={register({ required: true })} onChange={(e) => setFacebook(e.target.value)}/>
                                                 <span>{errors.facebook && 'Facebook Link is required'}</span>
                                                 <div className="valid-feedback">{"Looks good!"}</div>
                                             </div>
                                             <div className="col-md-12 mb-3">
                                                 <label>{"Google Link"}</label>
-                                                <input className="form-control" name="google" type="text" value={google} placeholder="Link" ref={register({ required: true })} onChange={(e) => setGoogle(e.target.value)}/>
+                                                <input className="form-control" name="google" type="url" value={google} placeholder="Link" ref={register({ required: true })} onChange={(e) => setGoogle(e.target.value)}/>
                                                 <span>{errors.google && 'Google Link is required'}</span>
                                                 <div className="valid-feedback">{"Looks good!"}</div>
                                             </div>
                                             <div className="col-md-12 mb-3">
                                                 <label>{"Instagram Link"}</label>
-                                                <input className="form-control" name="instagram" type="text" value={instagram} placeholder="Link" ref={register({ required: true })} onChange={(e) => setInstagram(e.target.value)}/>
+                                                <input className="form-control" name="instagram" type="url" value={instagram} placeholder="Link" ref={register({ required: true })} onChange={(e) => setInstagram(e.target.value)}/>
                                                 <span>{errors.instagram && 'Instagram Link is required'}</span>
                                                 <div className="valid-feedback">{"Looks good!"}</div>
                                             </div>
                                             <div className="col-md-12 mb-3">
                                                 <label>{"Linkedin Link"}</label>
-                                                <input className="form-control" name="linkedin" type="text" value={linkedin} placeholder="Link" ref={register({ required: true })} onChange={(e) => setLinkedin(e.target.value)}/>
+                                                <input className="form-control" name="linkedin" type="url" value={linkedin} placeholder="Link" ref={register({ required: true })} onChange={(e) => setLinkedin(e.target.value)}/>
                                                 <span>{errors.linkedin && 'Linkedin Link is required'}</span>
                                                 <div className="valid-feedback">{"Looks good!"}</div>
                                             </div>
