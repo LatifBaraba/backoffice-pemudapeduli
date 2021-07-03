@@ -23,7 +23,7 @@ const EditDonasi = (props) => {
     const { data } = props.location.state;
 
     useEffect(() => {
-        setTarget(addCommas(target))
+        setTarget(target && addCommas(target))
     }, [])
 
     const [ id, setId] = useState(data.id);
@@ -135,12 +135,13 @@ const EditDonasi = (props) => {
                                             </div>
                                             <div className="col-md-12 mb-3">
                                                 <label>{"Description"}</label>
-                                                <input className="form-control" name="description" type="text" placeholder="Description" value={desc} onChange={(e) => setDesc(e.target.value)} />
+                                                {/* <input className="form-control" name="description" type="text" placeholder="Description" value={desc} onChange={(e) => setDesc(e.target.value)} /> */}
+                                                <textarea className="form-control" name="desc" rows="5" cols="5" placeholder="Description" onChange={(e) => setDesc(e.target.value)}>{desc}</textarea>
                                                 <span>{errors.description && 'Description is required'}</span>
                                                 <div className="valid-feedback">{"Looks good!"}</div>
                                             </div>
                                             <div className="col-md-12 mb-3">
-                                                <label>{"Valid-From"}</label>
+                                                <label>{"Valid-From"}{validFrom}</label>
                                                 <input className="form-control" name="validfrom" type="datetime-local" placeholder="Start Date" value={moment(validFrom).format('YYYY-MM-DDTHH:mm:ss')} ref={register({ required: true })} onChange={(e) => setValidFrom(e.target.value)} />
                                                 <span>{errors.validfrom && 'Valid-From is required'}</span>
                                                 <div className="valid-feedback">{"Looks good!"}</div>
