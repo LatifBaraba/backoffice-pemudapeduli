@@ -90,7 +90,7 @@ const AddTestimoni = () => {
                                             <div className="col-md-12 mb-3">
                                                 <label>{"Message"}</label>
                                                 {/* <input className="form-control" name="messages" type="text" placeholder="Message" ref={register({ required: true })} onChange={(e) => setMessages(e.target.value)}/> */}
-                                                <textarea class="form-control" name="messages" rows="5" cols="5" placeholder="Default textarea" onChange={(e) => setMessages(e.target.value)}></textarea>
+                                                <textarea className="form-control" name="messages" rows="5" cols="5" placeholder="Default textarea" onChange={(e) => setMessages(e.target.value)}></textarea>
                                                 <span>{errors.messages && 'Message is required'}</span>
                                                 <div className="valid-feedback">{"Looks good!"}</div>
                                             </div>

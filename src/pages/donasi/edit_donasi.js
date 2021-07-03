@@ -23,9 +23,7 @@ const EditDonasi = (props) => {
     const { data } = props.location.state;
 
     useEffect(() => {
-        if (target !== null || target !== undefined ) {
-            addCommas(target)
-        }
+        setTarget(addCommas(target))
     }, [])
 
     const [ id, setId] = useState(data.id);

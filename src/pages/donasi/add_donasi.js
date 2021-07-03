@@ -41,8 +41,10 @@ const AddDonasi = () => {
 
         if (data !== '') {
             uploadImage(img).then(message => {
-                const newThumb = message.response.data.url;
-                dispatch(fetchAddDonasi(token, titles, sub, tag, startDate, endDate, target, 
+                const newThumb = message.response.data.url
+                const newTarget = target.split('.').join("")
+                console.log(target, 'new target')
+                dispatch(fetchAddDonasi(token, titles, sub, tag, startDate, endDate, newTarget, 
                     // donasiType, 
                     newThumb, desc, content))
             })
