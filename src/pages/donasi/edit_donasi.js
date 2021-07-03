@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useState, useEffect } from 'react';
 import Breadcrumb from '../../components/common/breadcrumb';
 import useForm from "react-hook-form";
 import { useDispatch, useSelector } from 'react-redux';
@@ -16,10 +16,17 @@ import {
 } from 'draft-js';
 import draftToHtml from 'draftjs-to-html';
 import htmlToDraft from 'html-to-draftjs';
+import { addCommas, removeNonNumeric} from '../../helper/index'
 
 const EditDonasi = (props) => {
 
     const { data } = props.location.state;
+
+    useEffect(() => {
+        if (target !== null || target !== undefined ) {
+            addCommas(target)
+        }
+    }, [])
 
     const [ id, setId] = useState(data.id);
     const [ titles, setTitles] = useState(data.title);
@@ -49,6 +56,7 @@ const EditDonasi = (props) => {
     const newContent = draftToHtml(convertToRaw(editorState.getCurrentContent()))
     
     // console.log(moment(validFrom).format('YYYY-MM-DDTHH:mm:ss'))
+    console.log(target, 'targetnya')
 
     const onSubmit = data => {
         
@@ -77,6 +85,10 @@ const EditDonasi = (props) => {
         }
     }
 
+    const handleChange = e => {
+        setTarget(addCommas(removeNonNumeric(e.target.value)));
+    }
+
     const submitButton = () => {
         if(loadingStatus == false) {
           return (
@@ -88,7 +100,7 @@ const EditDonasi = (props) => {
           )
         }
     }
-
+    
     return (
         <Fragment>
             <Breadcrumb title="Donasi Page" parent="Dashboard" />
@@ -143,7 +155,8 @@ const EditDonasi = (props) => {
                                             </div>
                                             <div className="col-md-12 mb-3">
                                                 <label>{"Target"}</label>
-                                                <input className="form-control" name="target" type="number" placeholder="Target Total Donasi" value={target} ref={register({ required: true })} onChange={(e) => setTarget(e.target.value)} />
+                                                <input className="form-control" name="target" type="text" placeholder="Target Total Donasi" value={target} ref={register({ required: true })} 
+                                                onInput={handleChange} />
                                                 <span>{errors.target && 'Target is required'}</span>
                                                 <div className="valid-feedback">{"Looks good!"}</div>
                                             </div>

@@ -69,3 +69,11 @@ export function formatRupiah(angka, prefix)
     rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
     return prefix == undefined ? rupiah : (rupiah ? 'Rp. ' + rupiah : '');
 }
+
+export function addCommas(num) {
+    return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
+}
+
+export function removeNonNumeric(num) {
+    return num.toString().replace(/[^0-9]/g, "")
+}

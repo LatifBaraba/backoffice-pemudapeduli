@@ -10,7 +10,7 @@ import { Editor } from 'react-draft-wysiwyg';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import draftToHtml from 'draftjs-to-html';
 import { EditorState, ContentState, convertToRaw, convertFromRaw } from 'draft-js';
-import {formatRupiah} from '../../helper/index'
+import { addCommas, removeNonNumeric} from '../../helper/index'
 
 const AddDonasi = () => {
 
@@ -26,7 +26,7 @@ const AddDonasi = () => {
     const [ img, setImg] = useState();
     const [ validFrom, setValidFrom] = useState();
     const [ validTo, setValidTo] = useState();
-    const [ target, setTarget] = useState();
+    const [ target, setTarget] = useState("");
     const [ donasiType, setDonasiType] = useState("Rutin");
 
     const loadingStatus = useSelector((state) => state.donasiReducer.loading);
@@ -34,10 +34,6 @@ const AddDonasi = () => {
     let _contentState = EditorState.createEmpty("");
     const [editorState, setEditorState] = useState(_contentState)
     const content = draftToHtml(convertToRaw(editorState.getCurrentContent()))
-
-    const targetRp = (val) => {
-        return formatRupiah(val, 'Rp. ')
-    }
 
     const onSubmit = data => {
         const startDate = toIsoString(new Date(validFrom))
@@ -68,6 +64,10 @@ const AddDonasi = () => {
             <button className="btn btn-pill btn-block mt-3 mb-3" type="submit" disabled>{"Loading"}</button>
           )
         }
+    }
+    
+    const handleChange = e => {
+        setTarget(addCommas(removeNonNumeric(e.target.value)));
     }
 
     return (
@@ -122,9 +122,17 @@ const AddDonasi = () => {
                                                 <span>{errors.validto && 'Valid-To is required'}</span>
                                                 <div className="valid-feedback">{"Looks good!"}</div>
                                             </div>
+                                            {/* <div className="col-md-12 mb-3">
+                                                <label>{"Target"}</label>
+                                                <input className="form-control" name="target" type="number" placeholder="Target Total Donasi" ref={register({ required: true })} 
+                                                onKeyUp={(e) => targetRp(e.target.value)} onChange={(e) => setTarget(e.target.value)} />
+                                                <span>{errors.target && 'Target is required'}</span>
+                                                <div className="valid-feedback">{"Looks good!"}</div>
+                                            </div> */}
                                             <div className="col-md-12 mb-3">
                                                 <label>{"Target"}</label>
-                                                <input className="form-control" name="target" type="number" placeholder="Target Total Donasi" ref={register({ required: true })} onKeyUp={(e) => targetRp(e.target.value)} onChange={(e) => setTarget(e.target.value)} />
+                                                <input className="form-control" name="target" type="text" value={target} placeholder="Target Total Donasi" ref={register({ required: true })} 
+                                                onInput={handleChange} />
                                                 <span>{errors.target && 'Target is required'}</span>
                                                 <div className="valid-feedback">{"Looks good!"}</div>
                                             </div>
