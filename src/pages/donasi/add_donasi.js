@@ -10,6 +10,7 @@ import { Editor } from 'react-draft-wysiwyg';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import draftToHtml from 'draftjs-to-html';
 import { EditorState, ContentState, convertToRaw, convertFromRaw } from 'draft-js';
+import {formatRupiah} from '../../helper/index'
 
 const AddDonasi = () => {
 
@@ -34,6 +35,10 @@ const AddDonasi = () => {
     const [editorState, setEditorState] = useState(_contentState)
     const content = draftToHtml(convertToRaw(editorState.getCurrentContent()))
 
+    const targetRp = (val) => {
+        return formatRupiah(val, 'Rp. ')
+    }
+
     const onSubmit = data => {
         const startDate = toIsoString(new Date(validFrom))
         const endDate = toIsoString(new Date(validTo))
@@ -41,7 +46,9 @@ const AddDonasi = () => {
         if (data !== '') {
             uploadImage(img).then(message => {
                 const newThumb = message.response.data.url;
-                dispatch(fetchAddDonasi(token, titles, sub, tag, startDate, endDate, target, donasiType, newThumb, desc, content))
+                dispatch(fetchAddDonasi(token, titles, sub, tag, startDate, endDate, target, 
+                    // donasiType, 
+                    newThumb, desc, content))
             })
             .catch(error => {
                 toast.error("Upload Image Failed !");
@@ -117,18 +124,17 @@ const AddDonasi = () => {
                                             </div>
                                             <div className="col-md-12 mb-3">
                                                 <label>{"Target"}</label>
-                                                <input className="form-control" name="target" type="number" placeholder="Target Total Donasi" ref={register({ required: true })} oonChange={(e) => setTarget(e.target.value)} />
+                                                <input className="form-control" name="target" type="number" placeholder="Target Total Donasi" ref={register({ required: true })} onKeyUp={(e) => targetRp(e.target.value)} onChange={(e) => setTarget(e.target.value)} />
                                                 <span>{errors.target && 'Target is required'}</span>
                                                 <div className="valid-feedback">{"Looks good!"}</div>
                                             </div>
                                             <div className="col-md-12 mb-3">
-                                                <label for="donasiType">Donation Type</label>
-                                                <select class="form-control digits" id="donasiType" onChange={(e) => setDonasiType(e.target.value)}>
-                                                    <option selected value="Rutin">Rutin</option>
+                                                <label>Donation Type</label>
+                                                <select className="form-control digits" id="donasiType" defaultValue="Rutin" onChange={(e) => setDonasiType(e.target.value)}>
+                                                    <option value="Rutin">Rutin</option>
                                                     <option value="One Time">One Time</option>
                                                 </select>
                                             </div>
-                                                
                                             <div className="col-md-12 mb-3">
                                                 <label>{"UploadFile"}</label>
                                                 <input className="form-control" type="file" accept="image/*" onChange={(e) => setImg(e.target.files[0])}/>

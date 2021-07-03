@@ -48,7 +48,7 @@ const EditDonasi = (props) => {
     const [editorState, setEditorState] = useState(contentState ? existing : initialState)
     const newContent = draftToHtml(convertToRaw(editorState.getCurrentContent()))
     
-    console.log(moment(validFrom).format('YYYY-MM-DDTHH:mm:ss'))
+    // console.log(moment(validFrom).format('YYYY-MM-DDTHH:mm:ss'))
 
     const onSubmit = data => {
         
@@ -76,25 +76,6 @@ const EditDonasi = (props) => {
             errors.showMessages();
         }
     }
-
-    // const selectDonasiType = (donasiType) => {
-    //     if( donasiType == "Rutin") {
-    //         return(
-    //             <select class="form-control digits" id="donasiType" onChange={(e) => setDonasiType(e.target.value)}>
-    //                 <option selected value="Rutin">Rutin</option>
-    //                 <option value="One Time">One Time</option>
-    //             </select>
-    //         )
-    //     }
-
-    //     return(
-    //         <select class="form-control digits" id="donasiType" onChange={(e) => setDonasiType(e.target.value)}>
-    //             <option value="Rutin">Rutin</option>
-    //             <option selected value="One Time">One Time</option>
-    //         </select>
-    //     )
-        
-    // }
 
     const submitButton = () => {
         if(loadingStatus == false) {
@@ -166,10 +147,6 @@ const EditDonasi = (props) => {
                                                 <span>{errors.target && 'Target is required'}</span>
                                                 <div className="valid-feedback">{"Looks good!"}</div>
                                             </div>
-                                            {/* <div className="col-md-12 mb-3">
-                                                <label for="donasiType">Donation Type</label>
-                                                {selectDonasiType(data.donasi_type)}
-                                            </div> */}
                                             <div className="col-md-12 mb-3">
                                                 <label>{"UploadFile"}</label>
                                                 <input className="form-control" type="file" accept="image/*" onChange={(e) => setImg(e.target.files[0])}/>

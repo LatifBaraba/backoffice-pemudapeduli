@@ -54,9 +54,9 @@ export const MENUITEMS = [
             { path: '/paket', title: 'Paket Donasi', type: 'link' },
         ]
     },
-    {
-        title: 'Donasi Rutin', icon: DollarSign, type: 'link', path: '/donasi-kategori', active: false
-    },
+    // {
+    //     title: 'Donasi Rutin', icon: DollarSign, type: 'link', path: '/donasi-kategori', active: false
+    // },
     {
         title: 'Tentang Kami', icon: AtSign, type: 'link', path: '/tentang-kami', active: false
     },

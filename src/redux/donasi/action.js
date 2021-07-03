@@ -93,11 +93,13 @@ export function fetchEditDonasi(token, id, titles, sub, tag, startDate, endDate,
         })
         .catch(err => {
             console.log(err)
-            if(err.response.status === 401){
+            if (err.response.status === 401) {
                 toast.error("Unauthorized")
                 dispatch(fetchRefreshToken(token))
                 localStorage.removeItem("token");
                 history.push('/login')
+            } else if(err.response.status === 400) {
+                toast.error(err.response.data.message)
             }
             dispatch(editDonasiFailure(err));
         });
@@ -140,6 +142,9 @@ export function fetchAddDonasi(token, titles, sub, tag, startDate, endDate, targ
                 dispatch(fetchRefreshToken(token))
                 localStorage.removeItem("token");
                 history.push('/login')
+            }
+            else if(err.response.status === 400) {
+                toast.error(err.response.data.message)
             }
             dispatch(addDonasiFailure(err));
         });
