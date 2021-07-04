@@ -39,18 +39,18 @@ const AddDonasi = () => {
     const content = draftToHtml(convertToRaw(editorState.getCurrentContent()))
 
     const onSubmit = data => {
-
-        if (data !== '') {
-            uploadImage(img).then(message => {
-                const newThumb = message.response.data.url;
-                dispatch(fetchAddPaket(token, titles, sub, tag, donasiType, benefit, newThumb, desc, content))
-            })
-            .catch(error => {
-                toast.error("Upload Image Failed !");
-            })
-        } else {
-            errors.showMessages();
-        }
+        console.log(data)
+        // if (data !== '') {
+        //     uploadImage(img).then(message => {
+        //         const newThumb = message.response.data.url;
+        //         dispatch(fetchAddPaket(token, titles, sub, tag, donasiType, benefit, newThumb, desc, content))
+        //     })
+        //     .catch(error => {
+        //         toast.error("Upload Image Failed !");
+        //     })
+        // } else {
+        //     errors.showMessages();
+        // }
     }
 
     const submitButton = () => {
@@ -95,7 +95,7 @@ const AddDonasi = () => {
                                             </div>
                                             <div className="col-md-12 mb-3">
                                                 <label>{"Tag"}</label>
-                                                <input className="form-control" name="tag" type="text" placeholder="Tag" ref={register({ required: true, maxLength: 6 })} onChange={(e) => setTag(e.target.value)} />
+                                                <input className="form-control" name="tag" type="text" placeholder="Tag" ref={register({ required: true })} onChange={(e) => setTag(e.target.value)} />
                                                 <span>{errors.tag && 'Tag is required & Min 6 Character'}</span>
                                                 <div className="valid-feedback">{"Looks good!"}</div>
                                             </div>
@@ -107,16 +107,20 @@ const AddDonasi = () => {
                                             </div>
                                             <div className="col-md-12 mb-3">
                                                 <label>{"Description"}</label>
-                                                <input className="form-control" name="desc" type="text" placeholder="Description" onChange={(e) => setDesc(e.target.value)} />
+                                                {/* <input className="form-control" name="desc" type="text" placeholder="Description" onChange={(e) => setDesc(e.target.value)} /> */}
+                                                <textarea className="form-control" name="desc" rows="5" cols="5" placeholder="Default textarea" onChange={(e) => setDesc(e.target.value)}></textarea>
                                                 {/* <span>{errors.description && 'Description is required'}</span> */}
                                                 <div className="valid-feedback">{"Looks good!"}</div>
                                             </div>
                                             <div className="col-md-12 mb-3">
                                                 <label>Donation Type</label>
-                                                <select className="form-control digits" id="donasiType" onChange={(e) => setDonasiType(e.target.value)}>
+                                                <select className="form-control" name="type" id="donasiType" ref={register({ required: true })} onChange={(e) => setDonasiType(e.target.value)}>
                                                     {/* {donasiTypes} */}
-                                                    {categories.map((cat, index) => <option key={index} value={cat.id} >{cat.kategori_name}</option>)}
+                                                    <option value={""}> --- </option>
+                                                    {categories.map((cat, index) => <option key={index} value={cat.id}>{cat.kategori_name}</option>)}
                                                 </select>
+                                                <span style={{color:"#ff5370"}}>{errors.type && 'Type is required'}</span>
+                                                <div className="valid-feedback">{"Looks good!"}</div>
                                             </div>
                                                 
                                             <div className="col-md-12 mb-3">
