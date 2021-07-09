@@ -30,6 +30,7 @@ const AddDonasi = () => {
     const [ img, setImg] = useState();
     const [ benefit, setBenefit] = useState("");
     const [ donasiType, setDonasiType] = useState();
+    const [ show, setShow] = useState();
 
     const categories = useSelector((state) => state.donasiKategoriReducer.donasiKategori);
     const loadingStatus = useSelector((state) => state.donasiReducer.loading);
@@ -40,17 +41,17 @@ const AddDonasi = () => {
 
     const onSubmit = data => {
         console.log(data)
-        // if (data !== '') {
-        //     uploadImage(img).then(message => {
-        //         const newThumb = message.response.data.url;
-        //         dispatch(fetchAddPaket(token, titles, sub, tag, donasiType, benefit, newThumb, desc, content))
-        //     })
-        //     .catch(error => {
-        //         toast.error("Upload Image Failed !");
-        //     })
-        // } else {
-        //     errors.showMessages();
-        // }
+        if (data !== '') {
+            uploadImage(img).then(message => {
+                const newThumb = message.response.data.url;
+                dispatch(fetchAddPaket(token, titles, sub, tag, donasiType, benefit, newThumb, desc, content))
+            })
+            .catch(error => {
+                toast.error("Upload Image Failed !");
+            })
+        } else {
+            errors.showMessages();
+        }
     }
 
     const submitButton = () => {
@@ -122,7 +123,15 @@ const AddDonasi = () => {
                                                 <span style={{color:"#ff5370"}}>{errors.type && 'Type is required'}</span>
                                                 <div className="valid-feedback">{"Looks good!"}</div>
                                             </div>
-                                                
+                                            {/* <div className="col-md-12 mb-3">
+                                                <label>Showing</label>
+                                                <select className="form-control" name="show" defaultValue="0" ref={register({ required: true })} onChange={(e) => setShow(e.target.value)}>
+                                                    <option value={0}>Unshow</option>
+                                                    <option value={1}>Show</option>
+                                                </select>
+                                                <span style={{color:"#ff5370"}}>{errors.show && 'Show is required'}</span>
+                                                <div className="valid-feedback">{"Looks good!"}</div>
+                                            </div> */}
                                             <div className="col-md-12 mb-3">
                                                 <label>{"UploadFile"}</label>
                                                 <input className="form-control" type="file" accept="image/*" onChange={(e) => setImg(e.target.files[0])}/>

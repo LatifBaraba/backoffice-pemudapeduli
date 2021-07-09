@@ -2,7 +2,7 @@ import React, { Fragment, useState, useEffect } from 'react';
 import Breadcrumb from '../../components/common/breadcrumb';
 import useForm from "react-hook-form";
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchEditDonasi } from "../../redux/donasi/action";
+import { fetchEditPaket } from "../../redux/paket/action";
 import { uploadImage, toIsoString } from "../../helper/index";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -35,6 +35,7 @@ const EditDonasi = (props) => {
     const [ img, setImg] = useState('');
     const [ benefit, setBenefit] = useState(data.benefit);
     const [ donasiType, setDonasiType] = useState(data.donasi_type);
+    const [ show, setShow] = useState(data.is_show);
     const categories = useSelector((state) => state.donasiKategoriReducer.donasiKategori);
     const loadingStatus = useSelector((state) => state.donasiReducer.loading);
 
@@ -57,14 +58,14 @@ const EditDonasi = (props) => {
             if (img !== '') {
                 uploadImage(img).then(message => {
                     const newThumb = message.response.data.url;
-                    dispatch(fetchEditDonasi(id, token, titles, sub, tag, donasiType, benefit, newThumb, desc, newContent))
+                    dispatch(fetchEditPaket(id, token, titles, sub, tag, donasiType, benefit, newThumb, desc, newContent, show))
                 })
                 .catch(error => {
                     toast.error("Upload Image Failed !");
                 })
             } else {
                 const newThumb = thumb;
-                dispatch(fetchEditDonasi(id, token, titles, sub, tag, donasiType, benefit, newThumb, desc, newContent))
+                dispatch(fetchEditPaket(id, token, titles, sub, tag, donasiType, benefit, newThumb, desc, newContent, show))
             }
         } else {
             errors.showMessages();
@@ -132,12 +133,21 @@ const EditDonasi = (props) => {
                                             </div>
                                             <div className="col-md-12 mb-3">
                                                 <label>Donation Type</label>
-                                                <select className="form-control digits" id="donasiType" value={data.id_kategori} onChange={(e) => setDonasiType(e.target.value)}>
+                                                <select className="form-control digits" id="donasiType" defaultValue={data.id_kategori} onChange={(e) => setDonasiType(e.target.value)}>
                                                     {/* {donasiTypes} */}
                                                     {categories.map((cat, index) => 
                                                         <option key={index} value={cat.id}>{cat.kategori_name}</option>
                                                     )}
                                                 </select>
+                                            </div>
+                                            <div className="col-md-12 mb-3">
+                                                <label>Showing</label>
+                                                <select className="form-control" name="show" defaultValue={data.is_show} ref={register({ required: true })} onChange={(e) => setShow(e.target.value)}>
+                                                    <option value={false}>Unshow</option>
+                                                    <option value={true}>Show</option>
+                                                </select>
+                                                <span style={{color:"#ff5370"}}>{errors.show && 'Show is required'}</span>
+                                                <div className="valid-feedback">{"Looks good!"}</div>
                                             </div>
                                             <div className="col-md-12 mb-3">
                                                 <label>{"UploadFile"}</label>

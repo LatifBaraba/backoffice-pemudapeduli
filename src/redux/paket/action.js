@@ -102,7 +102,8 @@ export function fetchAddPaket(token, titles, sub, tag, donasiType, benefit, newT
     };
 };
 
-export function fetchEditPaket(id, token, titles, sub, tag, donasiType, benefit, newThumb, desc, newContent) {
+export function fetchEditPaket(id, token, titles, sub, tag, donasiType, benefit, newThumb, desc, newContent, show) {
+    console.log(show, 'showwww')
     return (dispatch) => {
         dispatch(editPaket())
         axios(EditURL+`${id}`, {
@@ -115,7 +116,8 @@ export function fetchEditPaket(id, token, titles, sub, tag, donasiType, benefit,
                 content: newContent,
                 benefit: benefit,
                 thumbnail_image_url: newThumb,
-                description: desc
+                description: desc,
+                is_show: show === "true" ? true : false
             },
             headers: {
                 "pp-token": `${token}`,
