@@ -27,6 +27,7 @@ const Paket = () => {
                 <td>{paket.tag}</td>
                 <td>{paket.kategori_name}</td>
                 <td className="text-center"><img src={paket.thumbnail_image_url} alt={paket.thumbnail_image_url} style={{width: 100}}/></td>
+                <td className="text-center">{paket.is_show ? <span class="badge badge-primary">Yes</span> : <span class="badge badge-warning">No</span>}</td>
                 <td>
                     <Link to={{
                             pathname: "/edit-paket",
@@ -70,6 +71,7 @@ const Paket = () => {
                                     <th scope="col">{"Tag"}</th>
                                     <th scope="col">{"Donasi-Type"}</th>
                                     <th scope="col">{"Thumbnail-image"}</th>
+                                    <th scope="col">{"Show in Comprof"}</th>
                                     <th scope="col">{"Action"}</th>
                                 </tr>
                             </thead>

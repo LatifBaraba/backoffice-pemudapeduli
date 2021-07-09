@@ -28,6 +28,7 @@ const Donasi = () => {
                 <td>{donasi.tag}</td>
                 {/* <td>{donasi.donasi_type}</td> */}
                 <td className="text-center"><img src={donasi.thumbnail_image_url} alt={donasi.thumbnail_image_url} style={{width: 100}}/></td>
+                <td className="text-center">{donasi.is_show ? <span class="badge badge-primary">Yes</span> : <span class="badge badge-warning">No</span>}</td>
                 <td>
                     <Link to={{
                             pathname: "/edit-donasi-onetime",
@@ -71,6 +72,7 @@ const Donasi = () => {
                                     <th scope="col">{"Tag"}</th>
                                     {/* <th scope="col">{"Donasi-Type"}</th> */}
                                     <th scope="col">{"Thumbnail-image"}</th>
+                                    <th scope="col">{"Show in Comprof"}</th>
                                     <th scope="col">{"Action"}</th>
                                 </tr>
                             </thead>
