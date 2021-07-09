@@ -37,6 +37,7 @@ const EditDonasi = (props) => {
     const [ validTo, setValidTo] = useState(data.valid_to);
     const [ target, setTarget] = useState(data.target);
     // const [ donasiType, setDonasiType] = useState(data.donasi_type);
+    const [ show, setShow] = useState(data.is_show);
  
     const loadingStatus = useSelector((state) => state.donasiReducer.loading);
 
@@ -67,7 +68,7 @@ const EditDonasi = (props) => {
                     const newThumb = message.response.data.url;
                     dispatch(fetchEditDonasi(token, id, titles, sub, tag, startDate, endDate, target, 
                         // donasiType, 
-                        newThumb, desc, newContent))
+                        newThumb, desc, newContent, show))
                 })
                 .catch(error => {
                     toast.error("Upload Image Failed !");
@@ -76,7 +77,7 @@ const EditDonasi = (props) => {
                 const newThumb = thumb;
                 dispatch(fetchEditDonasi(token, id, titles, sub, tag, startDate, endDate, target, 
                     // donasiType, 
-                    newThumb, desc, newContent))
+                    newThumb, desc, newContent, show))
             }
         } else {
             errors.showMessages();
@@ -157,6 +158,15 @@ const EditDonasi = (props) => {
                                                 <input className="form-control" name="target" type="text" placeholder="Target Total Donasi" value={target} ref={register({ required: true })} 
                                                 onInput={handleChange} />
                                                 <span>{errors.target && 'Target is required'}</span>
+                                                <div className="valid-feedback">{"Looks good!"}</div>
+                                            </div>
+                                            <div className="col-md-12 mb-3">
+                                                <label>Showing</label>
+                                                <select className="form-control" name="show" defaultValue={data.is_show} ref={register({ required: true })} onChange={(e) => setShow(e.target.value)}>
+                                                    <option value={false}>Unshow</option>
+                                                    <option value={true}>Show</option>
+                                                </select>
+                                                <span style={{color:"#ff5370"}}>{errors.show && 'Show is required'}</span>
                                                 <div className="valid-feedback">{"Looks good!"}</div>
                                             </div>
                                             <div className="col-md-12 mb-3">

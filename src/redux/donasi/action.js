@@ -62,7 +62,7 @@ export function fetchDonasi(token) {
     };
 };
 
-export function fetchEditDonasi(token, id, titles, sub, tag, startDate, endDate, target, newThumb, desc, newContent) {
+export function fetchEditDonasi(token, id, titles, sub, tag, startDate, endDate, target, newThumb, desc, newContent, show) {
     return (dispatch) => {
         dispatch(editDonasi())
         axios(EditURL+`${id}`, {
@@ -77,7 +77,8 @@ export function fetchEditDonasi(token, id, titles, sub, tag, startDate, endDate,
                 target: parseInt(target),
                 description: desc,
                 thumbnail_image_url: newThumb,
-                content: newContent
+                content: newContent,
+                is_show: show === "true" ? true : false
             },
             headers: {
                 "pp-token": `${token}`,
