@@ -27,7 +27,9 @@ const AddDonasi = () => {
     const [ validFrom, setValidFrom] = useState();
     const [ validTo, setValidTo] = useState();
     const [ target, setTarget] = useState("");
-    const [ donasiType, setDonasiType] = useState("Rutin");
+    const [ ayoBantu, setAyoBantu] = useState("");
+    const [ kitaBisa, setKitaBisa] = useState("");
+    // const [ donasiType, setDonasiType] = useState("Rutin");
 
     const loadingStatus = useSelector((state) => state.donasiReducer.loading);
 
@@ -43,10 +45,9 @@ const AddDonasi = () => {
             uploadImage(img).then(message => {
                 const newThumb = message.response.data.url
                 const newTarget = target.split('.').join("")
-                console.log(target, 'new target')
                 dispatch(fetchAddDonasi(token, titles, sub, tag, startDate, endDate, newTarget, 
                     // donasiType, 
-                    newThumb, desc, content))
+                    newThumb, desc, content, ayoBantu, kitaBisa))
             })
             .catch(error => {
                 toast.error("Upload Image Failed !");
@@ -139,12 +140,24 @@ const AddDonasi = () => {
                                                 <span>{errors.target && 'Target is required'}</span>
                                                 <div className="valid-feedback">{"Looks good!"}</div>
                                             </div>
-                                            <div className="col-md-12 mb-3">
+                                            {/* <div className="col-md-12 mb-3">
                                                 <label>Donation Type</label>
                                                 <select className="form-control digits" id="donasiType" defaultValue="Rutin" onChange={(e) => setDonasiType(e.target.value)}>
                                                     <option value="Rutin">Rutin</option>
                                                     <option value="One Time">One Time</option>
                                                 </select>
+                                            </div> */}
+                                            <div className="col-md-12 mb-3">
+                                                <label>{"AyoBantu Link"}</label>
+                                                <input className="form-control" name="ayobantu" type="url" placeholder="https://ayobantu.com/xxx" onChange={(e) => setAyoBantu(e.target.value)}/>
+                                                <span>{errors.ayobantu && 'Link is required'}</span>
+                                                <div className="valid-feedback">{"Looks good!"}</div>
+                                            </div>
+                                            <div className="col-md-12 mb-3">
+                                                <label>{"KitaBisa Link"}</label>
+                                                <input className="form-control" name="kitabisa" type="url" placeholder="https://kitabisa.com/xxx" onChange={(e) => setKitaBisa(e.target.value)}/>
+                                                <span>{errors.kitabisa && 'Facebook Link is required'}</span>
+                                                <div className="valid-feedback">{"Looks good!"}</div>
                                             </div>
                                             <div className="col-md-12 mb-3">
                                                 <label>{"UploadFile"}</label>

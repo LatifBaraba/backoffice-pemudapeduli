@@ -21,7 +21,7 @@ import { addCommas, removeNonNumeric} from '../../helper/index'
 const EditDonasi = (props) => {
 
     const { data } = props.location.state;
-
+    console.log(data)
     useEffect(() => {
         setTarget(target && addCommas(target))
     }, [])
@@ -38,6 +38,8 @@ const EditDonasi = (props) => {
     const [ target, setTarget] = useState(data.target);
     // const [ donasiType, setDonasiType] = useState(data.donasi_type);
     const [ show, setShow] = useState(data.is_show);
+    const [ ayoBantu, setAyoBantu] = useState(data.ayobantu_link);
+    const [ kitaBisa, setKitaBisa] = useState(data.kitabisa_link);
  
     const loadingStatus = useSelector((state) => state.donasiReducer.loading);
 
@@ -68,7 +70,7 @@ const EditDonasi = (props) => {
                     const newThumb = message.response.data.url;
                     dispatch(fetchEditDonasi(token, id, titles, sub, tag, startDate, endDate, target, 
                         // donasiType, 
-                        newThumb, desc, newContent, show))
+                        newThumb, desc, newContent, show, ayoBantu, kitaBisa))
                 })
                 .catch(error => {
                     toast.error("Upload Image Failed !");
@@ -77,7 +79,7 @@ const EditDonasi = (props) => {
                 const newThumb = thumb;
                 dispatch(fetchEditDonasi(token, id, titles, sub, tag, startDate, endDate, target, 
                     // donasiType, 
-                    newThumb, desc, newContent, show))
+                    newThumb, desc, newContent, show, ayoBantu, kitaBisa))
             }
         } else {
             errors.showMessages();
@@ -142,7 +144,7 @@ const EditDonasi = (props) => {
                                                 <div className="valid-feedback">{"Looks good!"}</div>
                                             </div>
                                             <div className="col-md-12 mb-3">
-                                                <label>{"Valid-From"}{validFrom}</label>
+                                                <label>{"Valid-From"}</label>
                                                 <input className="form-control" name="validfrom" type="datetime-local" placeholder="Start Date" value={moment(validFrom).format('YYYY-MM-DDTHH:mm:ss')} ref={register({ required: true })} onChange={(e) => setValidFrom(e.target.value)} />
                                                 <span>{errors.validfrom && 'Valid-From is required'}</span>
                                                 <div className="valid-feedback">{"Looks good!"}</div>
@@ -158,6 +160,18 @@ const EditDonasi = (props) => {
                                                 <input className="form-control" name="target" type="text" placeholder="Target Total Donasi" value={target} ref={register({ required: true })} 
                                                 onInput={handleChange} />
                                                 <span>{errors.target && 'Target is required'}</span>
+                                                <div className="valid-feedback">{"Looks good!"}</div>
+                                            </div>
+                                            <div className="col-md-12 mb-3">
+                                                <label>{"AyoBantu Link"}</label>
+                                                <input className="form-control" name="ayobantu" type="url" value={ayoBantu} onChange={(e) => setAyoBantu(e.target.value)}/>
+                                                <span>{errors.ayobantu && 'Link is required'}</span>
+                                                <div className="valid-feedback">{"Looks good!"}</div>
+                                            </div>
+                                            <div className="col-md-12 mb-3">
+                                                <label>{"KitaBisa Link"}</label>
+                                                <input className="form-control" name="kitabisa" type="url" value={kitaBisa} onChange={(e) => setKitaBisa(e.target.value)}/>
+                                                <span>{errors.kitabisa && 'Link is required'}</span>
                                                 <div className="valid-feedback">{"Looks good!"}</div>
                                             </div>
                                             <div className="col-md-12 mb-3">

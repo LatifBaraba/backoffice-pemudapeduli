@@ -62,7 +62,7 @@ export function fetchDonasi(token) {
     };
 };
 
-export function fetchEditDonasi(token, id, titles, sub, tag, startDate, endDate, target, newThumb, desc, newContent, show) {
+export function fetchEditDonasi(token, id, titles, sub, tag, startDate, endDate, target, newThumb, desc, newContent, show, ayoBantu, kitaBisa) {
     return (dispatch) => {
         dispatch(editDonasi())
         axios(EditURL+`${id}`, {
@@ -78,7 +78,9 @@ export function fetchEditDonasi(token, id, titles, sub, tag, startDate, endDate,
                 description: desc,
                 thumbnail_image_url: newThumb,
                 content: newContent,
-                is_show: show === "true" ? true : false
+                is_show: show === "true" ? true : false,
+                ayobantu_link: ayoBantu,
+                kitabisa_link: kitaBisa
             },
             headers: {
                 "pp-token": `${token}`,
@@ -107,7 +109,7 @@ export function fetchEditDonasi(token, id, titles, sub, tag, startDate, endDate,
     };
 };
 
-export function fetchAddDonasi(token, titles, sub, tag, startDate, endDate, target, newThumb, desc, content) {
+export function fetchAddDonasi(token, titles, sub, tag, startDate, endDate, target, newThumb, desc, content, ayoBantu, kitaBisa) {
     return (dispatch) => {
         dispatch(addDonasi())
         axios(AddURL, {
@@ -122,7 +124,9 @@ export function fetchAddDonasi(token, titles, sub, tag, startDate, endDate, targ
                 target: parseInt(target),
                 description: desc,
                 thumbnail_image_url: newThumb,
-                content: content
+                content: content,
+                ayobantu_link: ayoBantu,
+                kitabisa_link: kitaBisa
             },
             headers: {
                 "pp-token": `${token}`,
