@@ -18,7 +18,8 @@ import {
     CreditCard,
     Shuffle,
     Book,
-    Command
+    Command,
+    List
 } from 'react-feather';
 
 export const MENUITEMS = [
@@ -93,6 +94,9 @@ export const MENUITEMS = [
     },
     {
         title: 'Qris', icon: Command, type: 'link', path: '/qris', active: false
+    },
+    {
+        title: 'History', icon: List, type: 'link', path: '/history', active: false
     },
     {
         title: 'Menu External', icon: Shuffle, type: 'link', path: '/menu', active: false
