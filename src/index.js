@@ -67,6 +67,9 @@ import EditAchievement from './pages/achievement/edit_achievement';
 import Hubungi from './pages/hubungi/hubungi';
 import AddHubungi from './pages/hubungi/add_hubungi';
 import EditHubungi from './pages/hubungi/edit_hubungi';
+import Qris from './pages/qris/qris';
+import AddQris from './pages/qris/add_qris';
+import EditQris from './pages/qris/edit_qris';
 import Menu from './pages/menu/menu';
 import AddMenu from './pages/menu/add_menu';
 import EditMenu from './pages/menu/edit_menu';
@@ -165,6 +168,9 @@ function Root() {
                                             <Route path={`${process.env.PUBLIC_URL}/hubungi`} exact component={Hubungi} />
                                             <Route path={`${process.env.PUBLIC_URL}/add-hubungi`} component={AddHubungi} />
                                             <Route path={`${process.env.PUBLIC_URL}/edit-hubungi`} component={EditHubungi} />
+                                            <Route path={`${process.env.PUBLIC_URL}/qris`} exact component={Qris} />
+                                            <Route path={`${process.env.PUBLIC_URL}/add-qris`} component={AddQris} />
+                                            <Route path={`${process.env.PUBLIC_URL}/edit-qris`} component={EditQris} />
                                             {/* <Route exact path={`${process.env.PUBLIC_URL}/dashboard/default`} component={Default} />
                                             <Route path={`${process.env.PUBLIC_URL}/dashboard/ecommerce`} component={Ecommerce} />
                                             <Route path={`${process.env.PUBLIC_URL}/dashboard/university`} component={University} />

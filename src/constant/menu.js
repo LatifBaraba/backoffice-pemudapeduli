@@ -17,7 +17,8 @@ import {
     UserCheck,
     CreditCard,
     Shuffle,
-    Book
+    Book,
+    Command
 } from 'react-feather';
 
 export const MENUITEMS = [
@@ -89,6 +90,9 @@ export const MENUITEMS = [
     },
     {
         title: 'Hubungi', icon: Book, type: 'link', path: '/hubungi', active: false
+    },
+    {
+        title: 'Qris', icon: Command, type: 'link', path: '/qris', active: false
     },
     {
         title: 'Menu External', icon: Shuffle, type: 'link', path: '/menu', active: false

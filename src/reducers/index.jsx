@@ -16,6 +16,7 @@ import achievementReducer from '../redux/achievement/reducer';
 import kontakReducer from '../redux/kontak/reducer';
 import menuReducer from '../redux/menu/reducer';
 import hubungiReducer from '../redux/hubungi/reducer'
+import qrisReducer from '../redux/qris/reducer'
 import donasiKategoriReducer from '../redux/donasiKategori/reducer'
 import paketReducer from '../redux/paket/reducer'
 
@@ -38,6 +39,7 @@ const reducers = combineReducers({
     kontakReducer,
     menuReducer,
     hubungiReducer,
+    qrisReducer,
     paketReducer
 });
 
