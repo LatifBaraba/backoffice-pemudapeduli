@@ -70,6 +70,7 @@ import EditHubungi from './pages/hubungi/edit_hubungi';
 import Qris from './pages/qris/qris';
 import AddQris from './pages/qris/add_qris';
 import EditQris from './pages/qris/edit_qris';
+import DetailHistory from './pages/history/detail_history';
 import History from './pages/history/history';
 import Menu from './pages/menu/menu';
 import AddMenu from './pages/menu/add_menu';
@@ -173,6 +174,7 @@ function Root() {
                                             <Route path={`${process.env.PUBLIC_URL}/add-qris`} component={AddQris} />
                                             <Route path={`${process.env.PUBLIC_URL}/edit-qris`} component={EditQris} />
                                             <Route path={`${process.env.PUBLIC_URL}/history`} component={History} />
+                                            <Route path={`${process.env.PUBLIC_URL}/detail-history`} component={DetailHistory} />
                                             {/* <Route exact path={`${process.env.PUBLIC_URL}/dashboard/default`} component={Default} />
                                             <Route path={`${process.env.PUBLIC_URL}/dashboard/ecommerce`} component={Ecommerce} />
                                             <Route path={`${process.env.PUBLIC_URL}/dashboard/university`} component={University} />

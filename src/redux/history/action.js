@@ -126,34 +126,34 @@ export function fetchHistory(token) {
 //     };
 // };
 
-// export function fetchDeleteQris(token, id) {
-//     return (dispatch) => {
-//         axios(EditURL+`${id}`, {
-//             method: 'DELETE',
-//             headers: {
-//                 "pp-token": `${token}`,
-//                 "Content-type": "application/json"
-//             }
-//         })
-//         .then(res => {
-//             setTimeout(() => {
-//                 toast.success("Delete Success !")
-//                 dispatch(deleteQrisSuccess(res));
-//                 history.push("/qris");
-//                 window.location.reload();
-//             }, 2000);
-//         })
-//         .catch(err => {
-//             if(err.response.status == 401){
-//                 toast.error("Unauthorized")
-//                 dispatch(fetchRefreshToken(token))
-//                 localStorage.removeItem("token");
-//                 history.push('/login')
-//             }
-//             dispatch(deleteQrisFailure(err));
-//         });
-//     };
-// };
+export function fetchDetailHistory(token, id) {
+    return (dispatch) => {
+        axios(EditURL+`${id}`, {
+            method: 'POST',
+            headers: {
+                "pp-token": `${token}`,
+                "Content-type": "application/json"
+            }
+        })
+        .then(res => {
+            setTimeout(() => {
+                toast.success("Delete Success !")
+                dispatch(deleteQrisSuccess(res));
+                history.push("/qris");
+                window.location.reload();
+            }, 2000);
+        })
+        .catch(err => {
+            if(err.response.status == 401){
+                toast.error("Unauthorized")
+                dispatch(fetchRefreshToken(token))
+                localStorage.removeItem("token");
+                history.push('/login')
+            }
+            dispatch(deleteQrisFailure(err));
+        });
+    };
+};
 
 // Get History
 const getHistorySuccess = (payload) => ({

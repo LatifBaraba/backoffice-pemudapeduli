@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import { Edit, Trash} from 'react-feather';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchHistory /*fetchDeleteQris*/ } from "../../redux/history/action";
+import { fetchHistory, fetchDetailHistory } from "../../redux/history/action";
 
 const History = (props) => {
 
@@ -25,15 +25,15 @@ const History = (props) => {
                 <td>{history.description}</td>
                 <td><img src={history.thumbnail_image_url} alt={history.thumbnail_image_url} style={{width: 100}}/></td>
                 <td><img src={history.thumbnail_image_url} alt={history.thumbnail_image_url} style={{width: 100}}/></td>
-                {/* <td>                
+                <td>                
                     <Link to={{
-                            pathname: "/edit-history",
+                            pathname: "/detail-history",
                             state: { data: history }
                         }} className="mr-2">
                         <Edit className="edit-history" style={{cursor:"pointer"}}/>
                     </Link>
-                    <Trash className="delete-history" style={{cursor:"pointer"}} onClick={() => dispatch(fetchDeleteHistory(token, history.id))}/>
-                </td> */}
+                    <Trash className="delete-history" style={{cursor:"pointer"}} onClick={() => dispatch(fetchDetailHistory(token, history.id))}/>
+                </td>
             </tr>
         )
     })
