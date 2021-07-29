@@ -19,7 +19,8 @@ import {
     Shuffle,
     Book,
     Command,
-    List
+    List,
+    CheckSquare
 } from 'react-feather';
 
 export const MENUITEMS = [
@@ -55,6 +56,9 @@ export const MENUITEMS = [
             { path: '/donasi-kategori', title: 'Kategori Donasi', type: 'link' },
             { path: '/paket', title: 'Paket Donasi', type: 'link' },
         ]
+    },
+    {
+        title: 'Transaction', icon: CheckSquare, type: 'link', path: '/transaction', active: false
     },
     // {
     //     title: 'Donasi Rutin', icon: DollarSign, type: 'link', path: '/donasi-kategori', active: false
@@ -97,7 +101,7 @@ export const MENUITEMS = [
     },
     {
         title: 'History', icon: List, type: 'link', path: '/history', active: false
-    },
+    },   
     {
         title: 'Menu External', icon: Shuffle, type: 'link', path: '/menu', active: false
     },

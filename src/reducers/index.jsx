@@ -18,6 +18,7 @@ import menuReducer from '../redux/menu/reducer';
 import hubungiReducer from '../redux/hubungi/reducer'
 import qrisReducer from '../redux/qris/reducer'
 import historyReducer from '../redux/history/reducer'
+import transactionReducer from '../redux/transaction/reducer'
 import donasiKategoriReducer from '../redux/donasiKategori/reducer'
 import paketReducer from '../redux/paket/reducer'
 
@@ -42,6 +43,7 @@ const reducers = combineReducers({
     hubungiReducer,
     qrisReducer,
     historyReducer,
+    transactionReducer,
     paketReducer
 });
 
