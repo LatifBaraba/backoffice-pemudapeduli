@@ -138,7 +138,7 @@ export function fetchDetailHistory(token, id) {
         .then(res => {
             setTimeout(() => {
                 toast.success("Delete Success !")
-                dispatch(deleteQrisSuccess(res));
+                dispatch(getHistorySuccess(res));
                 history.push("/qris");
                 window.location.reload();
             }, 2000);
@@ -150,7 +150,7 @@ export function fetchDetailHistory(token, id) {
                 localStorage.removeItem("token");
                 history.push('/login')
             }
-            dispatch(deleteQrisFailure(err));
+            dispatch(getHistoryFailure(err));
         });
     };
 };

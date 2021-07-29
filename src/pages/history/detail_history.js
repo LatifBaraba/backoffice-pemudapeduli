@@ -11,10 +11,10 @@ const DetailHistory = (props) => {
     const { data } = props.location.state;
 
     const [ id, setId] = useState(data.id);
-    const [ user, setTitle] = useState(data.title);
-    const [ amount, setDescription] = useState(data.description);
-    const [ donasitype, setDescription] = useState(data.description);
-    const [ date, setThumb] = useState(data.thumbnail_image_url);
+    const [ user, setUser] = useState(data.title);
+    const [ amount, setAmount] = useState(data.description);
+    const [ donasitype, setDonasitype] = useState(data.description);
+    const [ date, setDate] = useState(data.thumbnail_image_url);
     const [ img, setImg] = useState('');
 
     const loadingStatus = useSelector((state) => state.historyReducer.loading);
@@ -72,27 +72,27 @@ const DetailHistory = (props) => {
                                     <div className="col-md-6 col-sm-12">
                                         <div className="form-row">
                                             <div className="col-md-12 mb-3">
-                                                <label>{"Title"}</label>
-                                                <input className="form-control" name="title" type="text" value={title} ref={register({ required: true })} onChange={(e) => setTitle(e.target.value)} />
-                                                <span>{errors.title && 'Title is required'}</span> 
+                                                <label>{"User"}</label>
+                                                <input className="form-control" name="user" type="text" value={user} ref={register({ required: true })} onChange={(e) => setUser(e.target.value)} />
+                                                <span>{errors.user && 'User is required'}</span> 
                                                 <div className="valid-feedback">{"Looks good!"}</div>
                                             </div>
                                             <div className="col-md-12 mb-3">
-                                                <label>{"Description"}</label>
-                                                <input className="form-control" name="description" type="text" value={description} ref={register({ required: true })} onChange={(e) => setDescription(e.target.value)} />
-                                                <span>{errors.description && 'Description is required'}</span>
+                                                <label>{"Amount"}</label>
+                                                <input className="form-control" name="amount" type="text" value={amount} ref={register({ required: true })} onChange={(e) => setAmount(e.target.value)} />
+                                                <span>{errors.amount && 'Amount is required'}</span>
                                                 <div className="valid-feedback">{"Looks good!"}</div>
                                             </div>
                                             <div className="col-md-12 mb-3">
-                                                <label>{"Description"}</label>
-                                                <input className="form-control" name="description" type="text" value={description} ref={register({ required: true })} onChange={(e) => setDescription(e.target.value)} />
-                                                <span>{errors.description && 'Description is required'}</span>
+                                                <label>{"Donasi Type"}</label>
+                                                <input className="form-control" name="donasitype" type="text" value={donasitype} ref={register({ required: true })} onChange={(e) => setDonasitype(e.target.value)} />
+                                                <span>{errors.donasitype && 'Donasi Type is required'}</span>
                                                 <div className="valid-feedback">{"Looks good!"}</div>
                                             </div>
                                             <div className="col-md-12 mb-3">
-                                                <label>{"Description"}</label>
-                                                <input className="form-control" name="description" type="text" value={description} ref={register({ required: true })} onChange={(e) => setDescription(e.target.value)} />
-                                                <span>{errors.description && 'Description is required'}</span>
+                                                <label>{"Date"}</label>
+                                                <input className="form-control" name="date" type="text" value={date} ref={register({ required: true })} onChange={(e) => setDate(e.target.value)} />
+                                                <span>{errors.date && 'Date is required'}</span>
                                                 <div className="valid-feedback">{"Looks good!"}</div>
                                             </div>
                                             {/* <div className="col-md-12 mb-3">
