@@ -17,6 +17,8 @@ import {
 } from 'draft-js';
 import draftToHtml from 'draftjs-to-html';
 import htmlToDraft from 'html-to-draftjs';
+import { fetchQris } from "../../redux/qris/action";
+import { Form} from "react-bootstrap";
 
 const EditDonasi = (props) => {
 
@@ -24,6 +26,7 @@ const EditDonasi = (props) => {
     console.log(data)
     useEffect(() => {
         dispatch(fetchDonasiKategori(token))
+        dispatch(fetchQris(token))
     },[])
 
     const [ id, setId] = useState(data.id);
@@ -36,6 +39,10 @@ const EditDonasi = (props) => {
     const [ benefit, setBenefit] = useState(data.benefit);
     const [ donasiType, setDonasiType] = useState(data.donasi_type);
     const [ show, setShow] = useState(data.is_show);
+    const [tipebayar, setTipeBayar] = useState(data.id_pp_cp_master_qris);
+    const [qrisimage, setQrisimage] = useState(data.qris_image_url);
+
+    const qrisData = useSelector((state) => state.qrisReducer.qris);
     const categories = useSelector((state) => state.donasiKategoriReducer.donasiKategori);
     const loadingStatus = useSelector((state) => state.donasiReducer.loading);
 
@@ -54,18 +61,22 @@ const EditDonasi = (props) => {
     
     const onSubmit = data => {
 
+        let str = tipebayar 
+        const id_pp_cp_master_qris = str.split("_")
+        const qris_image_url = str.split("_")
+
         if (data !== '') {
             if (img !== '') {
                 uploadImage(img).then(message => {
                     const newThumb = message.response.data.url;
-                    dispatch(fetchEditPaket(id, token, titles, sub, tag, donasiType, benefit, newThumb, desc, newContent, show))
+                    dispatch(fetchEditPaket(id, token, titles, sub, tag, donasiType, benefit, newThumb, desc, newContent, show,  id_pp_cp_master_qris[0], qris_image_url[1]))
                 })
                 .catch(error => {
                     toast.error("Upload Image Failed !");
                 })
             } else {
                 const newThumb = thumb;
-                dispatch(fetchEditPaket(id, token, titles, sub, tag, donasiType, benefit, newThumb, desc, newContent, show))
+                dispatch(fetchEditPaket(id, token, titles, sub, tag, donasiType, benefit, newThumb, desc, newContent, show, id_pp_cp_master_qris[0], qris_image_url[1]))
             }
         } else {
             errors.showMessages();
@@ -140,6 +151,32 @@ const EditDonasi = (props) => {
                                                     )}
                                                 </select>
                                             </div>
+                                             <div className="col-md-12 mb-3">
+                                                <label>{"Pilih QRIS"}</label>
+                                                <Form.Group controlId="formTipeBayar">                                                
+                                                <Form.Control
+                                                    required
+                                                    as="select"
+                                                    type="select"
+                                                    onChange={(e) => setTipeBayar(e.target.value)}      
+                                                    // {...register("tipebayar", {
+                                                    //   required: true,
+                                                    // })}          
+                                                    
+                                                    >
+                                                    <option value="">Pilih QRIS</option>                                                        
+                                                    {qrisData.map((qris, index) => (
+                                                    
+                                                        qris.id == data.id_pp_cp_master_qris ? (
+                                                        <option key={index} value={qris.id + '_' + qris.thumbnail_image_url } selected>{qris.description}</option>
+                                                        ):(
+                                                        <option key={index} value={qris.id + '_' + qris.thumbnail_image_url } >{qris.description}</option>
+                                                        )
+                                                        
+                                                        ))}
+                                                </Form.Control>                                                                                                
+                                                </Form.Group>
+                                            </div>  
                                             <div className="col-md-12 mb-3">
                                                 <label>Showing</label>
                                                 <select className="form-control" name="show" defaultValue={data.is_show} ref={register({ required: true })} onChange={(e) => setShow(e.target.value)}>

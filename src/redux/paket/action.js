@@ -62,7 +62,7 @@ export function fetchPaket(token) {
     };
 };
 
-export function fetchAddPaket(token, titles, sub, tag, donasiType, benefit, newThumb, desc, content) {
+export function fetchAddPaket(token, titles, sub, tag, donasiType, benefit, newThumb, desc, content, id_pp_cp_master_qris, qris_image_url) {
     return (dispatch) => {
         dispatch(addPaket())
         axios(AddURL, {
@@ -75,7 +75,9 @@ export function fetchAddPaket(token, titles, sub, tag, donasiType, benefit, newT
                 content: content,
                 benefit: benefit,
                 thumbnail_image_url: newThumb,
-                description: desc
+                description: desc,
+                id_pp_cp_master_qris: id_pp_cp_master_qris,
+                qris_image_url:qris_image_url
             },
             headers: {
                 "pp-token": `${token}`,
@@ -102,7 +104,7 @@ export function fetchAddPaket(token, titles, sub, tag, donasiType, benefit, newT
     };
 };
 
-export function fetchEditPaket(id, token, titles, sub, tag, donasiType, benefit, newThumb, desc, newContent, show) {
+export function fetchEditPaket(id, token, titles, sub, tag, donasiType, benefit, newThumb, desc, newContent, show, id_pp_cp_master_qris, qris_image_url) {
     console.log(show, 'showwww')
     return (dispatch) => {
         dispatch(editPaket())
@@ -117,7 +119,9 @@ export function fetchEditPaket(id, token, titles, sub, tag, donasiType, benefit,
                 benefit: benefit,
                 thumbnail_image_url: newThumb,
                 description: desc,
-                is_show: show === "true" ? true : false
+                is_show: show === "true" ? true : false,
+                id_pp_cp_master_qris: id_pp_cp_master_qris,
+                qris_image_url:qris_image_url
             },
             headers: {
                 "pp-token": `${token}`,

@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useState, useEffect } from 'react';
 import Breadcrumb from '../../components/common/breadcrumb';
 import useForm from "react-hook-form";
 import { useDispatch, useSelector } from 'react-redux';
@@ -11,6 +11,8 @@ import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import draftToHtml from 'draftjs-to-html';
 import { EditorState, ContentState, convertToRaw, convertFromRaw } from 'draft-js';
 import { addCommas, removeNonNumeric} from '../../helper/index'
+import { Form} from "react-bootstrap";
+import { fetchQris } from "../../redux/qris/action";
 
 const AddDonasi = () => {
 
@@ -30,16 +32,27 @@ const AddDonasi = () => {
     const [ ayoBantu, setAyoBantu] = useState("");
     const [ kitaBisa, setKitaBisa] = useState("");
     // const [ donasiType, setDonasiType] = useState("Rutin");
+    const [tipebayar, setTipeBayar] = useState("");
+    const [qrisimage, setQrisimage] = useState("");
 
     const loadingStatus = useSelector((state) => state.donasiReducer.loading);
+    const qrisData = useSelector((state) => state.qrisReducer.qris);
 
     let _contentState = EditorState.createEmpty("");
     const [editorState, setEditorState] = useState(_contentState)
     const content = draftToHtml(convertToRaw(editorState.getCurrentContent()))
 
+    useEffect(() => {
+        dispatch(fetchQris(token))
+    }, [])
+
     const onSubmit = data => {
         const startDate = toIsoString(new Date(validFrom))
-        const endDate = toIsoString(new Date(validTo))
+        const endDate = toIsoString(new Date(validTo))        
+
+        let str = tipebayar 
+        const id_pp_cp_master_qris = str.split("_")
+        const qris_image_url = str.split("_")
 
         if (data !== '') {
             uploadImage(img).then(message => {
@@ -47,7 +60,7 @@ const AddDonasi = () => {
                 const newTarget = target.split('.').join("")
                 dispatch(fetchAddDonasi(token, titles, sub, tag, startDate, endDate, newTarget, 
                     // donasiType, 
-                    newThumb, desc, content, ayoBantu, kitaBisa))
+                    newThumb, desc, content, ayoBantu, kitaBisa, id_pp_cp_master_qris[0], qris_image_url[1]))
             })
             .catch(error => {
                 toast.error("Upload Image Failed !");
@@ -103,7 +116,7 @@ const AddDonasi = () => {
                                             </div>
                                             <div className="col-md-12 mb-3">
                                                 <label>{"Tag"}</label>
-                                                <input className="form-control" name="tag" type="text" placeholder="Tag" ref={register({ required: true, maxLength: 6 })} onChange={(e) => setTag(e.target.value)} />
+                                                <input className="form-control" name="tag" type="text" placeholder="Tag" ref={register({ required: true, minLength: 6 })} onChange={(e) => setTag(e.target.value)} />
                                                 <span>{errors.tag && 'Tag is required & Min 6 Character'}</span>
                                                 <div className="valid-feedback">{"Looks good!"}</div>
                                             </div>
@@ -140,6 +153,27 @@ const AddDonasi = () => {
                                                 <span>{errors.target && 'Target is required'}</span>
                                                 <div className="valid-feedback">{"Looks good!"}</div>
                                             </div>
+                                            <div className="col-md-12 mb-3">
+                                                <label>{"Pilih QRIS"}</label>
+                                                <Form.Group controlId="formTipeBayar">
+                                                <Form.Control
+                                                    required
+                                                    as="select"
+                                                    type="select"
+                                                    onChange={(e) => setTipeBayar(e.target.value)}      
+                                                    // {...register("tipebayar", {
+                                                    //   required: true,
+                                                    // })}          
+                                                    
+                                                >
+                                                    <option value="">Pilih QRIS</option>
+                                                    {/* <option value="mandiri">Rekening Mandiri</option>
+                                                    <option value="qris">QRIS</option> */}
+                                                    {qrisData.map((qris, index) => 
+                                                        <option key={index} value={qris.id + '_' + qris.thumbnail_image_url } >{qris.description}</option>)}
+                                                </Form.Control>                                            
+                                            </Form.Group>
+                                            </div>                                            
                                             {/* <div className="col-md-12 mb-3">
                                                 <label>Donation Type</label>
                                                 <select className="form-control digits" id="donasiType" defaultValue="Rutin" onChange={(e) => setDonasiType(e.target.value)}>

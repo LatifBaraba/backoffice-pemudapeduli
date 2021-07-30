@@ -17,15 +17,19 @@ import {
 import draftToHtml from 'draftjs-to-html';
 import htmlToDraft from 'html-to-draftjs';
 import { addCommas, removeNonNumeric} from '../../helper/index'
+import { fetchQris } from "../../redux/qris/action";
+import { Form} from "react-bootstrap";
 
 const EditDonasi = (props) => {
 
     const { data } = props.location.state;
     console.log(data)
+    
+    let token = localStorage.getItem('token');
     useEffect(() => {
         setTarget(target && addCommas(target))
+        dispatch(fetchQris(token))
     }, [])
-
     const [ id, setId] = useState(data.id);
     const [ titles, setTitles] = useState(data.title);
     const [ sub, setSub] = useState(data.sub_title);
@@ -40,13 +44,18 @@ const EditDonasi = (props) => {
     const [ show, setShow] = useState(data.is_show);
     const [ ayoBantu, setAyoBantu] = useState(data.ayobantu_link);
     const [ kitaBisa, setKitaBisa] = useState(data.kitabisa_link);
+    const [tipebayar, setTipeBayar] = useState(data.id_pp_cp_master_qris);
+    const [qrisimage, setQrisimage] = useState(data.qris_image_url);
  
     const loadingStatus = useSelector((state) => state.donasiReducer.loading);
 
     const dispatch = useDispatch();
-    let token = localStorage.getItem('token');
+    const qrisData = useSelector((state) => state.qrisReducer.qris);
     const { register, handleSubmit, errors } = useForm();
 
+    
+    
+    
     const blocksFromHtml = htmlToDraft(data.content);
     const { contentBlocks, entityMap } = blocksFromHtml;
     const contentState = ContentState.createFromBlockArray(contentBlocks, entityMap);
@@ -55,31 +64,37 @@ const EditDonasi = (props) => {
     let initialState = EditorState.createEmpty();
     const [editorState, setEditorState] = useState(contentState ? existing : initialState)
     const newContent = draftToHtml(convertToRaw(editorState.getCurrentContent()))
+
     
     // console.log(moment(validFrom).format('YYYY-MM-DDTHH:mm:ss'))
     console.log(target, 'targetnya')
+    console.log(qrisData)
 
     const onSubmit = data => {
         
         let startDate = toIsoString(new Date(validFrom))
         let endDate = toIsoString(new Date(validTo))
 
+        let str = tipebayar 
+        const id_pp_cp_master_qris = str.split("_")
+        const qris_image_url = str.split("_")
+
         if (data !== '') {
             if (img !== '') {
                 uploadImage(img).then(message => {
                     const newThumb = message.response.data.url;
-                    dispatch(fetchEditDonasi(token, id, titles, sub, tag, startDate, endDate, target, 
+                    dispatch(fetchEditDonasi(token, id, titles, sub, tag, startDate, endDate, removeNonNumeric(target), 
                         // donasiType, 
-                        newThumb, desc, newContent, show, ayoBantu, kitaBisa))
+                        newThumb, desc, newContent, show, ayoBantu, kitaBisa, id_pp_cp_master_qris[0], qris_image_url[1]))
                 })
                 .catch(error => {
                     toast.error("Upload Image Failed !");
                 })
             } else {
                 const newThumb = thumb;
-                dispatch(fetchEditDonasi(token, id, titles, sub, tag, startDate, endDate, target, 
+                dispatch(fetchEditDonasi(token, id, titles, sub, tag, startDate, endDate, removeNonNumeric(target), 
                     // donasiType, 
-                    newThumb, desc, newContent, show, ayoBantu, kitaBisa))
+                    newThumb, desc, newContent, show, ayoBantu, kitaBisa, id_pp_cp_master_qris[0], qris_image_url[1]))
             }
         } else {
             errors.showMessages();
@@ -162,6 +177,33 @@ const EditDonasi = (props) => {
                                                 <span>{errors.target && 'Target is required'}</span>
                                                 <div className="valid-feedback">{"Looks good!"}</div>
                                             </div>
+                                            <div className="col-md-12 mb-3">
+                                                <label>{"Pilih QRIS"}</label>
+                                                <Form.Group controlId="formTipeBayar">                                                
+                                                <Form.Control
+                                                    required
+                                                    as="select"
+                                                    type="select"
+                                                    onChange={(e) => setTipeBayar(e.target.value)}      
+                                                    // {...register("tipebayar", {
+                                                    //   required: true,
+                                                    // })}          
+                                                    
+                                                    >
+                                                    <option value="">Pilih QRIS</option>                                                        
+                                                    {qrisData.map((qris, index) => (
+                                                    
+                                                        qris.id == data.id_pp_cp_master_qris ? (
+                                                        <option key={index} value={qris.id + '_' + qris.thumbnail_image_url } selected>{qris.description}</option>
+                                                        ):(
+                                                        <option key={index} value={qris.id + '_' + qris.thumbnail_image_url } >{qris.description}</option>
+                                                        )
+                                                        
+                                                        ))}
+                                                </Form.Control>                                                                                                
+                                                </Form.Group>
+                                            </div>  
+                                            
                                             <div className="col-md-12 mb-3">
                                                 <label>{"AyoBantu Link"}</label>
                                                 <input className="form-control" name="ayobantu" type="url" value={ayoBantu} onChange={(e) => setAyoBantu(e.target.value)}/>

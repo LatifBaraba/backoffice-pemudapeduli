@@ -11,6 +11,8 @@ import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import draftToHtml from 'draftjs-to-html';
 import { EditorState, ContentState, convertToRaw, convertFromRaw } from 'draft-js';
 import { fetchDonasiKategori } from '../../redux/donasiKategori/action'
+import { Form} from "react-bootstrap";
+import { fetchQris } from "../../redux/qris/action";
 
 const AddDonasi = () => {
 
@@ -21,6 +23,7 @@ const AddDonasi = () => {
 
     useEffect(() => {
         dispatch(fetchDonasiKategori(token))
+        dispatch(fetchQris(token))
     },[])
 
     const [ titles, setTitles] = useState("");
@@ -31,6 +34,8 @@ const AddDonasi = () => {
     const [ benefit, setBenefit] = useState("");
     const [ donasiType, setDonasiType] = useState();
     const [ show, setShow] = useState();
+    const [tipebayar, setTipeBayar] = useState("");
+    const [qrisimage, setQrisimage] = useState("");
 
     const categories = useSelector((state) => state.donasiKategoriReducer.donasiKategori);
     const loadingStatus = useSelector((state) => state.donasiReducer.loading);
@@ -38,13 +43,19 @@ const AddDonasi = () => {
     let _contentState = EditorState.createEmpty("");
     const [editorState, setEditorState] = useState(_contentState)
     const content = draftToHtml(convertToRaw(editorState.getCurrentContent()))
+    const qrisData = useSelector((state) => state.qrisReducer.qris);
 
     const onSubmit = data => {
         console.log(data)
+        
+        let str = tipebayar 
+        const id_pp_cp_master_qris = str.split("_")
+        const qris_image_url = str.split("_")
+
         if (data !== '') {
             uploadImage(img).then(message => {
                 const newThumb = message.response.data.url;
-                dispatch(fetchAddPaket(token, titles, sub, tag, donasiType, benefit, newThumb, desc, content))
+                dispatch(fetchAddPaket(token, titles, sub, tag, donasiType, benefit, newThumb, desc, content, id_pp_cp_master_qris[0], qris_image_url[1]))
             })
             .catch(error => {
                 toast.error("Upload Image Failed !");
@@ -123,6 +134,27 @@ const AddDonasi = () => {
                                                 <span style={{color:"#ff5370"}}>{errors.type && 'Type is required'}</span>
                                                 <div className="valid-feedback">{"Looks good!"}</div>
                                             </div>
+                                            <div className="col-md-12 mb-3">
+                                                <label>{"Pilih QRIS"}</label>
+                                                <Form.Group controlId="formTipeBayar">
+                                                <Form.Control
+                                                    required
+                                                    as="select"
+                                                    type="select"
+                                                    onChange={(e) => setTipeBayar(e.target.value)}      
+                                                    // {...register("tipebayar", {
+                                                    //   required: true,
+                                                    // })}          
+                                                    
+                                                >
+                                                    <option value="">Pilih QRIS</option>
+                                                    {/* <option value="mandiri">Rekening Mandiri</option>
+                                                    <option value="qris">QRIS</option> */}
+                                                    {qrisData.map((qris, index) => 
+                                                        <option key={index} value={qris.id + '_' + qris.thumbnail_image_url } >{qris.description}</option>)}
+                                                </Form.Control>                                            
+                                            </Form.Group>
+                                            </div>                   
                                             {/* <div className="col-md-12 mb-3">
                                                 <label>Showing</label>
                                                 <select className="form-control" name="show" defaultValue="0" ref={register({ required: true })} onChange={(e) => setShow(e.target.value)}>
