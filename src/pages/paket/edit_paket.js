@@ -167,7 +167,7 @@ const EditDonasi = (props) => {
                                                     <option value="">Pilih QRIS</option>                                                        
                                                     {qrisData.map((qris, index) => (
                                                     
-                                                        qris.id == data.id_pp_cp_master_qris ? (
+                                                        qris.id == tipebayar ? (
                                                         <option key={index} value={qris.id + '_' + qris.thumbnail_image_url } selected>{qris.description}</option>
                                                         ):(
                                                         <option key={index} value={qris.id + '_' + qris.thumbnail_image_url } >{qris.description}</option>
@@ -176,6 +176,7 @@ const EditDonasi = (props) => {
                                                         ))}
                                                 </Form.Control>                                                                                                
                                                 </Form.Group>
+                                                <img src={qrisimage} alt={qrisimage} style={{width: 100}}/>                                                                                         
                                             </div>  
                                             <div className="col-md-12 mb-3">
                                                 <label>Showing</label>

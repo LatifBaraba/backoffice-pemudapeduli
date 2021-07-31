@@ -69,7 +69,7 @@ const EditDonasi = (props) => {
     // console.log(moment(validFrom).format('YYYY-MM-DDTHH:mm:ss'))
     console.log(target, 'targetnya')
     console.log(qrisData)
-
+   
     const onSubmit = data => {
         
         let startDate = toIsoString(new Date(validFrom))
@@ -77,7 +77,7 @@ const EditDonasi = (props) => {
 
         let str = tipebayar 
         const id_pp_cp_master_qris = str.split("_")
-        const qris_image_url = str.split("_")
+        const qris_image_url = str.split("_")        
 
         if (data !== '') {
             if (img !== '') {
@@ -193,15 +193,16 @@ const EditDonasi = (props) => {
                                                     <option value="">Pilih QRIS</option>                                                        
                                                     {qrisData.map((qris, index) => (
                                                     
-                                                        qris.id == data.id_pp_cp_master_qris ? (
+                                                        qris.id == tipebayar ? (
                                                         <option key={index} value={qris.id + '_' + qris.thumbnail_image_url } selected>{qris.description}</option>
                                                         ):(
                                                         <option key={index} value={qris.id + '_' + qris.thumbnail_image_url } >{qris.description}</option>
-                                                        )
+                                                        )                                                    
+                                                    ))}
                                                         
-                                                        ))}
                                                 </Form.Control>                                                                                                
                                                 </Form.Group>
+                                                <img src={qrisimage} alt={qrisimage} style={{width: 100}}/>                                            
                                             </div>  
                                             
                                             <div className="col-md-12 mb-3">
