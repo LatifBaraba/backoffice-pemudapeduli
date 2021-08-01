@@ -38,6 +38,7 @@ const Transaction = (props) => {
                 paid_at={transaction.paid_at}
                 status={transaction.status}
                 amount={transaction.amount}
+                id={transaction.id}
             />      
         //     <tr key={index}>
         //         <th scope="row">{index+1}</th>
