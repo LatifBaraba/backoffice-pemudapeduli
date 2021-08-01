@@ -39,7 +39,7 @@ const EditDonasi = (props) => {
     const [ benefit, setBenefit] = useState(data.benefit);
     const [ donasiType, setDonasiType] = useState(data.id_kategori);
     const [ show, setShow] = useState(data.is_show);
-    const [tipebayar, setTipeBayar] = useState(data.id_pp_cp_master_qris);
+    const [tipebayar, setTipeBayar] = useState(data.id_pp_cp_master_qris + '_' + data.qris_image_url);
     const [qrisimage, setQrisimage] = useState(data.qris_image_url);
 
     const qrisData = useSelector((state) => state.qrisReducer.qris);
@@ -181,7 +181,7 @@ const EditDonasi = (props) => {
                                                     <option value="">Pilih QRIS</option>                                                        
                                                     {qrisData.map((qris, index) => (
                                                     
-                                                        qris.id == tipebayar ? (
+                                                        qris.id == tipebayar.split("_")[0] ? (
                                                         <option key={index} value={qris.id + '_' + qris.thumbnail_image_url } selected>{qris.description}</option>
                                                         ):(
                                                         <option key={index} value={qris.id + '_' + qris.thumbnail_image_url } >{qris.description}</option>

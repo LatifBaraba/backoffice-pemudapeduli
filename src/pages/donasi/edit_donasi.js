@@ -23,7 +23,7 @@ import { Form} from "react-bootstrap";
 const EditDonasi = (props) => {
 
     const { data } = props.location.state;
-    console.log(data)
+    // console.log(data)
     
     let token = localStorage.getItem('token');
     useEffect(() => {
@@ -44,7 +44,7 @@ const EditDonasi = (props) => {
     const [ show, setShow] = useState(data.is_show);
     const [ ayoBantu, setAyoBantu] = useState(data.ayobantu_link);
     const [ kitaBisa, setKitaBisa] = useState(data.kitabisa_link);
-    const [tipebayar, setTipeBayar] = useState(data.id_pp_cp_master_qris);
+    const [tipebayar, setTipeBayar] = useState(data.id_pp_cp_master_qris + '_' + data.qris_image_url);
     const [qrisimage, setQrisimage] = useState(data.qris_image_url);
  
     const loadingStatus = useSelector((state) => state.donasiReducer.loading);
@@ -67,8 +67,8 @@ const EditDonasi = (props) => {
 
     
     // console.log(moment(validFrom).format('YYYY-MM-DDTHH:mm:ss'))
-    console.log(target, 'targetnya')
-    console.log(qrisData)
+    // console.log(target, 'targetnya')
+    // console.log(qrisData)
    
     const onSubmit = data => {
         
@@ -179,21 +179,18 @@ const EditDonasi = (props) => {
                                             </div>
                                             <div className="col-md-12 mb-3">
                                                 <label>{"Pilih QRIS"}</label>
+                                                {tipebayar}
                                                 <Form.Group controlId="formTipeBayar">                                                
                                                 <Form.Control
                                                     required
                                                     as="select"
                                                     type="select"
-                                                    onChange={(e) => setTipeBayar(e.target.value)}      
-                                                    // {...register("tipebayar", {
-                                                    //   required: true,
-                                                    // })}          
-                                                    
+                                                    onChange={(e) => setTipeBayar(e.target.value)}   
                                                     >
                                                     <option value="">Pilih QRIS</option>                                                        
-                                                    {qrisData.map((qris, index) => (
-                                                    
-                                                        qris.id == tipebayar ? (
+                                                    {qrisData.map((qris, index) => (                                                        
+                                                            
+                                                        qris.id == tipebayar.split("_")[0] ? (
                                                         <option key={index} value={qris.id + '_' + qris.thumbnail_image_url } selected>{qris.description}</option>
                                                         ):(
                                                         <option key={index} value={qris.id + '_' + qris.thumbnail_image_url } >{qris.description}</option>
