@@ -20,11 +20,11 @@ const Transaction = (props) => {
     const transactionData = useSelector((state) => state.transactionReducer.transaction);
 
     const transactionDatas = transactionData.map((transaction, index) => {
-        let status = ""      
+        let status_donasi = ""      
         if(transaction.is_rutin === false){
-            status = "One Time"
+            status_donasi = "One Time"
         } else {
-            status = "Rutin"
+            status_donasi = "Rutin"
         }
         
         return (
@@ -33,7 +33,7 @@ const Transaction = (props) => {
                 username={transaction.username}
                 email={transaction.email}
                 donasi_title={transaction.donasi_title}
-                status={status}
+                status={status_donasi}
                 image_payment_url={transaction.image_payment_url}
                 paid_at={transaction.paid_at}
                 status={transaction.status}

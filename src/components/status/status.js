@@ -33,7 +33,7 @@ const Status = (props) => {
             </td>            
             <td>{props.email}</td>
             <td>{props.donasi_title}</td>
-            <td>{props.status}</td>
+            <td>{props.status_donasi}</td>
             <td>{<img src={props.image_payment_url} alt={props.image_payment_url} style={{width: 100}}/>}</td>
             <td>{props.paid_at}</td>
             <td><badge className={`badge badge-${colour}`}>{props.status}</badge></td>
