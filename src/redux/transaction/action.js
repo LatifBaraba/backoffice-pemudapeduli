@@ -4,7 +4,10 @@ import {
     GET_TRANSACTION_FAILURE,
     EDIT_TRANSACTION,
     EDIT_TRANSACTION_SUCCESS,
-    EDIT_TRANSACTION_FAILURE
+    EDIT_TRANSACTION_FAILURE,
+    DELETE_TRANSACTION,
+    DELETE_TRANSACTION_SUCCESS,
+    DELETE_TRANSACTION_FAILURE
    
         } from '../actionTypes';
 
@@ -15,55 +18,55 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const URL = `${process.env.REACT_APP_BASE_URL}/transaction/list`;
-const EditURL = `${process.env.REACT_APP_BASE_URL}/transaction/`;
-// const AddURL = `${process.env.REACT_APP_BASE_URL}/qris/create`;
+const DeclineURL = `${process.env.REACT_APP_BASE_URL}/transaction/decline/`;
+const ApproveURL = `${process.env.REACT_APP_BASE_URL}/transaction/applied/`;
 
 export function fetchTransaction(token) {
     return (dispatch) => {
         console.log('masuk redux')
-        // axios(URL, {
-        //     method: 'POST',
-        //     data: {
-        //         limit: "100",
-        //         offset: "0",
-        //         filters: [
-        //             {
-        //                 field: "status",
-        //                 keyword: "created"
-        //             }
-        //         ],
-        //         order: "created_at",
-        //         sort: "ASC",
-        //         created_at_from: "",
-        //         created_at_to: ""
-        //         // publish_at_from: "",
-        //         // publish_at_to: ""
-        //     },
-        //     headers: {
-        //         "pp-token": `${token}`,
-        //         "Content-type": "application/json"
-        //     }
-        // })
-        // .then(res => {
-        //     dispatch(getTransactionSuccess(res.data.data));
-        //     console.log(res.data.data)
-        // })
-        // .catch(err => {
-        //     if(err.response.status == 401){
-        //         toast.error("Unauthorized")
-        //         dispatch(fetchRefreshToken(token))
-        //         localStorage.removeItem("token");
-        //         history.push('/transaction')
-        //     }
-        //     dispatch(getTransactionFailure(err));
-        // });
+        axios(URL, {
+            method: 'POST',
+            data: {
+                limit: "10",
+                offset: "1",
+                filters: [
+                    {
+                        field: "id",
+                        keyword: ""
+                    }
+                ],
+                order: "created_at",
+                sort: "ASC",
+                created_at_from: "",
+                created_at_to: "",
+                paid_at_from: "",
+                paid_at_to: ""
+            },
+            headers: {
+                "pp-token": `${token}`,
+                "Content-type": "application/json"
+            }
+        })
+        .then(res => {
+            dispatch(getTransactionSuccess(res.data.data));
+            console.log(res.data.data)
+        })
+        .catch(err => {
+            if(err.response.status == 401){
+                toast.error("Unauthorized")
+                dispatch(fetchRefreshToken(token))
+                localStorage.removeItem("token");
+                history.push('/transaction')
+            }
+            dispatch(getTransactionFailure(err));
+        });
     };
 };
 
 // export function fetchAddQris(token, title, description, newIcon) {
 //     return (dispatch) => {        
 //         dispatch(addQris())
-//         axios(AddURL, {
+//         axios(ApproveURL, {
 //             method: 'POST',
 //             data: {
 //                 title: title,
@@ -95,75 +98,66 @@ export function fetchTransaction(token) {
 //     };
 // };
 
-export function fetchEditTransaction(token, id, user, campaign, pengirim, email, tanggalbayar, jumlah, banktujuan, norekening) {
+export function fetchApproveTransaction(token, id) {
     return (dispatch) => {
-        // dispatch(editTransaction())            
-        console.log(id, user, campaign, pengirim, email, tanggalbayar, jumlah, banktujuan, norekening)
-        // axios(EditURL+`${id}`, {
-        //     method: 'PUT',
-        //     data: {
-        //         user: user,
-        //         campaign: campaign,
-        //         pengirim: pengirim,
-        //         email: email,
-        //         tanggalbayar: tanggalbayar,
-        //         jumlah: jumlah,
-        //         banktujuan: banktujuan,
-        //         norekening: norekening
-        //     },
-        //     headers: {
-        //         "pp-token": `${token}`,
-        //         "Content-type": "application/json"
-        //     }
-        // })
-        // .then(res => { 
-        //     setTimeout(() => {
-        //         toast.success("Edit Success !");
-        //         dispatch(editTransactionSuccess(res));
-        //         history.push("/transaction");
-        //     }, 2000);
-        // })
-        // .catch(err => {
-        //     console.log(err)
-        //     if(err.response.status == 401){
-        //         toast.error("Unauthorized")
-        //         dispatch(fetchRefreshToken(token))
-        //         localStorage.removeItem("token");
-        //         history.push('/transaction')
-        //     }
-        //     dispatch(editTransactionFailure(err));
-        // });
+        dispatch(editTransaction())            
+        // console.log(id, user, campaign, pengirim, email, tanggalbayar, jumlah, banktujuan, norekening)
+        axios(ApproveURL+`${id}`, {
+            method: 'PUT',
+            headers: {
+                "pp-token": `${token}`,
+                "Content-type": "application/json"
+            }
+        })
+        .then(res => { 
+            setTimeout(() => {
+                toast.success("Status Updated !");
+                dispatch(editTransactionSuccess(res));
+                history.push("/transaction");                
+            }, 2000);
+            window.location.reload();
+        })
+        .catch(err => {
+            console.log(err)
+            if(err.response.status == 401){
+                toast.error("Unauthorized")
+                dispatch(fetchRefreshToken(token))
+                localStorage.removeItem("token");
+                history.push('/transaction')
+            }
+            dispatch(editTransactionFailure(err));
+        });
     };
 };
 
-// export function fetchDeleteQris(token, id) {
-//     return (dispatch) => {
-//         axios(EditURL+`${id}`, {
-//             method: 'DELETE',
-//             headers: {
-//                 "pp-token": `${token}`,
-//                 "Content-type": "application/json"
-//             }
-//         })
-//         .then(res => {
-//             setTimeout(() => {
-//                 toast.success("Delete Success !")
-//                 dispatch(deleteQrisSuccess(res));
-//                 history.push("/qris");
-//                 window.location.reload();
-//             }, 2000);
-//         })
-//         .catch(err => {
-//             if(err.response.status == 401){
-//                 toast.error("Unauthorized")
-//                 dispatch(fetchRefreshToken(token))
-//                 localStorage.removeItem("token");
-//                 history.push('/login')
-//             }
-//             dispatch(deleteQrisFailure(err));
-//         });
-//     };
-// };
+export function fetchDeclineTransaction(token, id) {
+    return (dispatch) => {
+        axios(DeclineURL+`${id}`, {
+            method: 'PUT',
+            headers: {
+                "pp-token": `${token}`,
+                "Content-type": "application/json"
+            }
+        })
+        .then(res => {
+            setTimeout(() => {
+                toast.success("Decline Success !")
+                dispatch(deleteTransactionSuccess(res));
+                history.push("/transaction");
+            }, 2000);
+            window.location.reload();
+        })
+        .catch(err => {
+            if(err.response.status == 401){
+                toast.error("Unauthorized")
+                dispatch(fetchRefreshToken(token))
+                localStorage.removeItem("token");
+                history.push('/login')
+            }
+            dispatch(deleteTransactionFailure(err));
+        });
+    };
+};
 
 // Get Transaction
 const getTransactionSuccess = (payload) => ({
@@ -203,12 +197,12 @@ const editTransactionFailure = () => ({
 //     type: ADD_QRIS_FAILURE
 // });
 
-// // Delete Qris
-// const deleteQrisSuccess = (payload) => ({
-//     type: DELETE_QRIS_SUCCESS,
-//     payload
-// });
+// Delete Qris
+const deleteTransactionSuccess = (payload) => ({
+    type: DELETE_TRANSACTION_SUCCESS,
+    payload
+});
 
-// const deleteQrisFailure = () => ({
-//     type: DELETE_QRIS_FAILURE
-// });
+const deleteTransactionFailure = () => ({
+    type: DELETE_TRANSACTION_FAILURE
+});

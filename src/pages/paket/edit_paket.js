@@ -37,7 +37,7 @@ const EditDonasi = (props) => {
     const [ desc, setDesc] = useState(data.description);
     const [ img, setImg] = useState('');
     const [ benefit, setBenefit] = useState(data.benefit);
-    const [ donasiType, setDonasiType] = useState(data.donasi_type);
+    const [ donasiType, setDonasiType] = useState(data.id_kategori);
     const [ show, setShow] = useState(data.is_show);
     const [tipebayar, setTipeBayar] = useState(data.id_pp_cp_master_qris);
     const [qrisimage, setQrisimage] = useState(data.qris_image_url);
@@ -144,12 +144,30 @@ const EditDonasi = (props) => {
                                             </div>
                                             <div className="col-md-12 mb-3">
                                                 <label>Donation Type</label>
-                                                <select className="form-control digits" id="donasiType" defaultValue={data.id_kategori} onChange={(e) => setDonasiType(e.target.value)}>
-                                                    {/* {donasiTypes} */}
+                                                {/* <select className="form-control digits" id="donasiType" defaultValue={data.id_kategori} onChange={(e) => setDonasiType(e.target.value)}>                                                    
                                                     {categories.map((cat, index) => 
                                                         <option key={index} value={cat.id}>{cat.kategori_name}</option>
                                                     )}
-                                                </select>
+                                                </select> */}
+                                                <Form.Group controlId="formDonasiType">                                                
+                                                <Form.Control
+                                                    required
+                                                    as="select"
+                                                    type="select"
+                                                    onChange={(e) => setDonasiType(e.target.value)}      
+                                                    >
+                                                    <option value="">Pilih Tipe Donasi</option>                                                        
+                                                    {categories.map((cat, index) => (
+                                                    
+                                                        cat.id == donasiType ? (
+                                                        <option key={index} value={cat.id} selected>{cat.kategori_name}</option>
+                                                        ):(
+                                                        <option key={index} value={cat.id} >{cat.kategori_name}</option>
+                                                        )
+                                                        
+                                                        ))}
+                                                </Form.Control>                                                                                                                                                
+                                                </Form.Group>
                                             </div>
                                              <div className="col-md-12 mb-3">
                                                 <label>{"Pilih QRIS"}</label>
@@ -159,10 +177,6 @@ const EditDonasi = (props) => {
                                                     as="select"
                                                     type="select"
                                                     onChange={(e) => setTipeBayar(e.target.value)}      
-                                                    // {...register("tipebayar", {
-                                                    //   required: true,
-                                                    // })}          
-                                                    
                                                     >
                                                     <option value="">Pilih QRIS</option>                                                        
                                                     {qrisData.map((qris, index) => (
