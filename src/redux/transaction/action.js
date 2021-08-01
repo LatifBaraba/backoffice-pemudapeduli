@@ -27,7 +27,7 @@ export function fetchTransaction(token) {
         axios(URL, {
             method: 'POST',
             data: {
-                limit: "10",
+                limit: "100",
                 offset: "1",
                 filters: [
                     {

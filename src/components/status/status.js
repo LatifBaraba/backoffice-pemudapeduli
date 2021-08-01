@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 const Status = (props) => {    
     const [colour, setColour] = useState("")
+    const [hidden, setHidden] = useState(false)
     const dispatch = useDispatch();
     let token = localStorage.getItem('token');
     useEffect(() => {
@@ -17,6 +18,7 @@ const Status = (props) => {
             setColour('info')
         } if (props.status === 'Paid') {
             setColour('success')
+            setHidden(true)
         }  if (props.status === 'Decline') {
             setColour('dark')
         } if (props.status === 'Need Approval') {
@@ -39,8 +41,8 @@ const Status = (props) => {
             <td><badge className={`badge badge-${colour}`}>{props.status}</badge></td>
             <td>Rp. {addCommas(props.amount)}</td>                
             <td>
-                <Check className="edit-transaction" style={{cursor:"pointer"}} onClick={() => dispatch(fetchApproveTransaction(token, props.id))}/>
-                <X className="delete-props" style={{cursor:"pointer"}} onClick={() => dispatch(fetchDeclineTransaction(token, props.id))}/>
+                <Check className="edit-transaction" hidden={hidden} style={{cursor:"pointer"}} onClick={() => dispatch(fetchApproveTransaction(token, props.id))}/>
+                <X className="delete-props" hidden={hidden} style={{cursor:"pointer"}} onClick={() => dispatch(fetchDeclineTransaction(token, props.id))}/>
             </td>
 
         </tr>

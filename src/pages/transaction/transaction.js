@@ -36,8 +36,8 @@ const Transaction = (props) => {
                 status_donasi={status_donasi}
                 image_payment_url={transaction.image_payment_url}
                 paid_at={transaction.paid_at}
-                status={transaction.status}
                 amount={transaction.amount}
+                status={transaction.status}
                 id={transaction.id}
             />      
         //     <tr key={index}>
