@@ -33,7 +33,7 @@ const Transaction = (props) => {
                 username={transaction.username}
                 email={transaction.email}
                 donasi_title={transaction.donasi_title}
-                status={status_donasi}
+                status_donasi={status_donasi}
                 image_payment_url={transaction.image_payment_url}
                 paid_at={transaction.paid_at}
                 status={transaction.status}
