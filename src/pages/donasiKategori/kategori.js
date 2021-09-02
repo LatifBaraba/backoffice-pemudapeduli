@@ -39,7 +39,7 @@ const DonasiKategori = () => {
                             state: { data: donasi }
                         }} className="mr-2">
                         <Edit className="edit-donasi-kategori" style={{cursor:"pointer"}}/>
-                    </Link>
+                    </Link>                    
                     <Trash className="delete-donasi-kategori" style={{cursor:"pointer"}} onClick={() => dispatch(fetchDeleteDonasiKategori(token, donasi.id))}/>
                 </td>
             </tr>
@@ -60,7 +60,7 @@ const DonasiKategori = () => {
                         </div>
                         <div className="col-md-3 col-sm-12">
                             <Link to="/add-donasi-kategori" className="btn btn-success float-right">
-                                Add Kategori
+                                Add Program Donasi
                             </Link>
                         </div>
                     </div>
@@ -71,7 +71,7 @@ const DonasiKategori = () => {
                             <thead>
                                 <tr>
                                     <th scope="col">{"#"}</th>
-                                    <th scope="col">{"Kategori"}</th>
+                                    <th scope="col">{"Program Donasi"}</th>
                                     <th scope="col">{"Action"}</th>
                                 </tr>
                             </thead>

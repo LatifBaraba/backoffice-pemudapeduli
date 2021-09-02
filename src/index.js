@@ -70,6 +70,11 @@ import EditHubungi from './pages/hubungi/edit_hubungi';
 import Qris from './pages/qris/qris';
 import AddQris from './pages/qris/add_qris';
 import EditQris from './pages/qris/edit_qris';
+import Penggalang from './pages/penggalang/penggalang';
+import AddPenggalang from './pages/penggalang/add_penggalang';
+import EditPenggalang from './pages/penggalang/edit_penggalang';
+import Nominal from './pages/nominal/nominal';
+import AddNominal from './pages/nominal/add_nominal';
 import DetailHistory from './pages/history/detail_history';
 import History from './pages/history/history';
 import Transaction from './pages/transaction/transaction';
@@ -138,12 +143,19 @@ function Root() {
                                             <Route path={`${process.env.PUBLIC_URL}/donasi-onetime`} component={Donasi} />
                                             <Route path={`${process.env.PUBLIC_URL}/add-donasi-onetime`} component={AddDonasi} />
                                             <Route path={`${process.env.PUBLIC_URL}/edit-donasi-onetime`} component={EditDonasi} />
-                                            <Route path={`${process.env.PUBLIC_URL}/donasi-kategori`} component={DonasiKategori} />
+
+                                            <Route path={`${process.env.PUBLIC_URL}/kategori`} component={DonasiKategori} />
                                             <Route path={`${process.env.PUBLIC_URL}/add-donasi-kategori`} component={AddDonasiKategori} />
                                             <Route path={`${process.env.PUBLIC_URL}/edit-donasi-kategori`} component={EditDonasiKategori} />
-                                            <Route path={`${process.env.PUBLIC_URL}/paket`} component={Paket} />
+                                            
+                                            {/* <Route path={`${process.env.PUBLIC_URL}/paket`} component={Paket} />
+                                            <Route path={`${process.env.PUBLIC_URL}/add-paket`} component={AddPaket} />
+                                            <Route path={`${process.env.PUBLIC_URL}/edit-paket`} component={EditPaket} /> */}
+
+                                            <Route path={`${process.env.PUBLIC_URL}/program-donasi`} component={Paket} />
                                             <Route path={`${process.env.PUBLIC_URL}/add-paket`} component={AddPaket} />
                                             <Route path={`${process.env.PUBLIC_URL}/edit-paket`} component={EditPaket} />
+
                                             <Route path={`${process.env.PUBLIC_URL}/program`} component={Program} />
                                             <Route path={`${process.env.PUBLIC_URL}/add-program`} component={AddProgram} />
                                             <Route path={`${process.env.PUBLIC_URL}/edit-program`} component={EditProgram} />
@@ -174,6 +186,11 @@ function Root() {
                                             <Route path={`${process.env.PUBLIC_URL}/qris`} exact component={Qris} />
                                             <Route path={`${process.env.PUBLIC_URL}/add-qris`} component={AddQris} />
                                             <Route path={`${process.env.PUBLIC_URL}/edit-qris`} component={EditQris} />
+                                            <Route path={`${process.env.PUBLIC_URL}/penggalang`} exact component={Penggalang} />
+                                            <Route path={`${process.env.PUBLIC_URL}/add-penggalang`} component={AddPenggalang} />
+                                            <Route path={`${process.env.PUBLIC_URL}/edit-penggalang`} component={EditPenggalang} />
+                                            <Route path={`${process.env.PUBLIC_URL}/nominal`} exact component={Nominal} />
+                                            <Route path={`${process.env.PUBLIC_URL}/add-nominal`} component={AddNominal} />
                                             <Route path={`${process.env.PUBLIC_URL}/history`} component={History} />
                                             <Route path={`${process.env.PUBLIC_URL}/detail-history`} component={DetailHistory} />
                                             <Route path={`${process.env.PUBLIC_URL}/transaction`} component={Transaction} />

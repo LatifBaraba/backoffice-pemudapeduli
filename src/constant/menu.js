@@ -53,8 +53,9 @@ export const MENUITEMS = [
     },
     {
         title: 'Donasi Rutin', icon: DollarSign, type: 'sub', active: false, children: [
-            { path: '/donasi-kategori', title: 'Kategori Donasi', type: 'link' },
-            { path: '/paket', title: 'Paket Donasi', type: 'link' },
+            { path: '/program-donasi', title: 'Program Donasi', type: 'link' },
+            // { path: '/donasi-kategori', title: 'Kategori Donasi', type: 'link' },
+            // { path: '/paket', title: 'Paket Donasi', type: 'link' },
         ]
     },
     {
@@ -99,8 +100,14 @@ export const MENUITEMS = [
     {
         title: 'Qris', icon: Command, type: 'link', path: '/qris', active: false
     },
+    // {
+    //     title: 'History', icon: List, type: 'link', path: '/history', active: false
+    // },   
     {
-        title: 'History', icon: List, type: 'link', path: '/history', active: false
+        title: 'Penggalang', icon: List, type: 'link', path: '/penggalang', active: false
+    },   
+    {
+        title: 'Nominal', icon: DollarSign, type: 'link', path: '/nominal', active: false
     },   
     {
         title: 'Menu External', icon: Shuffle, type: 'link', path: '/menu', active: false

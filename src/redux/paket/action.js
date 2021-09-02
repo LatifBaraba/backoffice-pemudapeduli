@@ -19,6 +19,8 @@ import 'react-toastify/dist/ReactToastify.css';
 const URL = `${process.env.REACT_APP_BASE_URL}/program-donasi-rutin/list`;
 const EditURL = `${process.env.REACT_APP_BASE_URL}/program-donasi-rutin/`;
 const AddURL = `${process.env.REACT_APP_BASE_URL}/program-donasi-rutin/create`;
+const AddPaketURL = `${process.env.REACT_APP_BASE_URL}/program-donasi-rutin/paket/create/`;
+// const DeletePaketURL = `${process.env.REACT_APP_BASE_URL}/program-donasi-rutin/paket/`;
 
 export function fetchPaket(token) {
     return (dispatch) => {
@@ -62,8 +64,8 @@ export function fetchPaket(token) {
     };
 };
 
-export function fetchAddPaket(token, titles, sub, tag, donasiType, benefit, newThumb, desc, content, id_pp_cp_master_qris, qris_image_url) {
-    return (dispatch) => {
+export function fetchAddPaket(token, titles, sub, tag, donasiType, benefit, newThumb, desc, content, id_pp_cp_master_qris, qris_image_url, paket) {
+    return (dispatch) => {       
         dispatch(addPaket())
         axios(AddURL, {
             method: 'POST',
@@ -85,11 +87,47 @@ export function fetchAddPaket(token, titles, sub, tag, donasiType, benefit, newT
             }
         })
         .then(res => {
-            setTimeout(() => {
-                toast.success("Add Success !");
-                dispatch(addPaketSuccess(res));
-                history.push("/paket");
-            }, 2000);
+            // setTimeout(() => {
+            //     toast.success("Add Success !");
+            //     dispatch(addPaketSuccess(res));
+            //     history.push("/program-donasi");
+            // }, 2000);
+            // console.log(res.data.data.id) 
+            for (let index = 0; index < Object.keys(paket).length; index++) {
+                const pakets = paket[index];
+                console.log(pakets)
+                axios(AddPaketURL+`${res.data.data.id}`, {
+                    method: 'POST',
+                    data: {
+                        paket_name: pakets.nama_paket,
+                        benefit: pakets.benefit,
+                        nominal: parseInt(pakets.nominal),
+                        paket_image_url : pakets.paketimage,                    
+                    },
+                    headers: {
+                        "pp-token": `${token}`,
+                        "Content-type": "application/json"
+                    }
+                })
+                .then(res => {
+                    setTimeout(() => {
+                        toast.success("Add Success !");
+                        dispatch(addPaketSuccess(res));
+                        history.push("/program-donasi");
+                    }, 2000);
+                    
+                })
+                .catch(err => {
+                    console.log(err)
+                    if(err.response.status === 401){
+                        toast.error("Unauthorized")
+                        dispatch(fetchRefreshToken(token))
+                        localStorage.removeItem("token");
+                        history.push('/login')
+                    }
+                    dispatch(addPaketFailure(err));
+                });
+            }           
         })
         .catch(err => {
             console.log(err)
@@ -100,9 +138,52 @@ export function fetchAddPaket(token, titles, sub, tag, donasiType, benefit, newT
                 history.push('/login')
             }
             dispatch(addPaketFailure(err));
-        });
+        });        
+        
     };
 };
+
+// export function fetchAddPaketRutin(token, donasiType, paket) {
+//     return (dispatch) => {       
+//         dispatch(addPaket())
+//         for (let index = 0; index < Object.keys(paket).length; index++) {
+//             const pakets = paket[index];
+//             console.log(pakets)
+//             axios(AddPaketURL+`${donasiType}`, {
+//                 method: 'POST',
+//                 data: {
+//                     paket_name: pakets.nama_paket,
+//                     benefit: pakets.benefit,
+//                     nominal: parseInt(pakets.nominal),
+//                     paket_image_url : pakets.paketimage,                    
+//                 },
+//                 headers: {
+//                     "pp-token": `${token}`,
+//                     "Content-type": "application/json"
+//                 }
+//             })
+//             .then(res => {
+//                 setTimeout(() => {
+//                     toast.success("Add Success !");
+//                     dispatch(addPaketSuccess(res));
+//                     history.push("/program-donasi");
+//                 }, 2000);
+                
+//             })
+//             .catch(err => {
+//                 console.log(err)
+//                 if(err.response.status === 401){
+//                     toast.error("Unauthorized")
+//                     dispatch(fetchRefreshToken(token))
+//                     localStorage.removeItem("token");
+//                     history.push('/login')
+//                 }
+//                 dispatch(addPaketFailure(err));
+//             });
+//         }
+        
+//     };
+// };
 
 export function fetchEditPaket(id, token, titles, sub, tag, donasiType, benefit, newThumb, desc, newContent, show, id_pp_cp_master_qris, qris_image_url) {
     console.log(show, 'showwww')
@@ -164,7 +245,7 @@ export function fetchDeletePaket(token, id) {
             setTimeout(() => {
                 toast.success("Delete Success !")
                 dispatch(deletePaketSuccess(res));
-                history.push("/paket");
+                history.push("/program-donasi");
                 window.location.reload();
             }, 2000);
         })

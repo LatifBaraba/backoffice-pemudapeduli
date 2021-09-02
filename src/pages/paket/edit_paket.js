@@ -18,7 +18,8 @@ import {
 import draftToHtml from 'draftjs-to-html';
 import htmlToDraft from 'html-to-draftjs';
 import { fetchQris } from "../../redux/qris/action";
-import { Form} from "react-bootstrap";
+import { Row, Col, Container, Form } from "react-bootstrap";
+import { Edit, Trash } from "react-feather";
 
 const EditDonasi = (props) => {
 
@@ -41,6 +42,9 @@ const EditDonasi = (props) => {
     const [ show, setShow] = useState(data.is_show);
     const [tipebayar, setTipeBayar] = useState(data.id_pp_cp_master_qris + '_' + data.qris_image_url);
     const [qrisimage, setQrisimage] = useState(data.qris_image_url);
+
+    const [inputList, setInputList] = useState([{ benefit: "", nominal: "" }]);
+    const [inputFile, setInputFile] = useState([{ paketimage: "" }]);
 
     const qrisData = useSelector((state) => state.qrisReducer.qris);
     const categories = useSelector((state) => state.donasiKategoriReducer.donasiKategori);
@@ -95,6 +99,41 @@ const EditDonasi = (props) => {
         }
     }
 
+    // handle input change
+  const handleInputChange = (e, index) => {
+    const { name, value, files } = e.target;
+    const list = [...inputList];
+    list[index][name] = value;
+    console.log(list);
+    setInputList(list);
+  };
+
+  // handle click event of the Remove button
+  const handleRemoveClick = (index) => {
+    const list = [...inputList];
+    const lists = [...inputFile];
+    list.splice(index, 1);
+    lists.splice(index, 1);
+    setInputList(list);
+    setInputFile(lists);
+  };
+
+  // handle click event of the Add button
+  const handleAddClick = () => {
+    setInputList([...inputList, { nama_paket: "", benefit: "", nominal: "" }]);
+    setInputFile([...inputFile, { paketimage: "" }]);
+  };
+
+  //FIles
+  // handle input change
+  const handleInputFileChange = (e, index) => {
+    const { name, file } = e;
+    const list = [...inputFile];
+    list[index]["paketimage"] = e;
+    console.log(list);
+    setInputFile(list);
+  };
+
     return (
         <Fragment>
             <Breadcrumb title="Donasi Page" parent="Dashboard" />
@@ -109,7 +148,7 @@ const EditDonasi = (props) => {
                             {/* content form */}
                             <form className="needs-validation" noValidate="" onSubmit={handleSubmit(onSubmit)}>
                                 <div className="row justify-content-center">
-                                    <div className="col-md-6 col-sm-12">
+                                    <div className="col-md-12 col-sm-12">
                                     <div className="form-row">
                                             <div className="col-md-12 mb-3">
                                                 <label>{"Title"}</label>
@@ -136,12 +175,12 @@ const EditDonasi = (props) => {
                                                 <span>{errors.description && 'Description is required'}</span>
                                                 <div className="valid-feedback">{"Looks good!"}</div>
                                             </div>
-                                            <div className="col-md-12 mb-3">
+                                            {/* <div className="col-md-12 mb-3">
                                                 <label>{"Benefit"}</label>
                                                 <input className="form-control" name="benefit" type="text" placeholder="Benefit" value={benefit} onChange={(e) => setBenefit(e.target.value)} />
                                                 <span>{errors.benefit && 'Benefit is required'}</span>
                                                 <div className="valid-feedback">{"Looks good!"}</div>
-                                            </div>
+                                            </div> */}
                                             <div className="col-md-12 mb-3">
                                                 <label>Donation Type</label>
                                                 {/* <select className="form-control digits" id="donasiType" defaultValue={data.id_kategori} onChange={(e) => setDonasiType(e.target.value)}>                                                    
@@ -214,6 +253,102 @@ const EditDonasi = (props) => {
                                                     onEditorStateChange={setEditorState}
                                                 />
                                             </div>
+                                            
+                                            <Container>
+                          <Row>
+                            <Col sm={8}>
+                              <Row>
+                                {inputList.map((x, i) => {
+                                  return (
+                                    <>
+                                      <div className="col-md-4 mb-3">
+                                        <input
+                                          className="form-control"
+                                          name="nama_paket"
+                                          placeholder="Nama Paket"
+                                          value={x.nama_paket}
+                                          onChange={(e) =>
+                                            handleInputChange(e, i)
+                                          }
+                                        />
+                                      </div>
+                                      <div className="col-md-4 mb-3">
+                                        <input
+                                          className="form-control"
+                                          name="benefit"
+                                          placeholder="Benefit"
+                                          value={x.benefit}
+                                          onChange={(e) =>
+                                            handleInputChange(e, i)
+                                          }
+                                        />
+                                      </div>
+                                      <div className="col-md-4 mb-3">
+                                        <input
+                                          className="form-control"
+                                          name="nominal"
+                                          placeholder="Nominal"
+                                          value={x.nominal}
+                                          onChange={(e) =>
+                                            handleInputChange(e, i)
+                                          }
+                                        />
+                                      </div>
+                                    </>
+                                  );
+                                })}
+                              </Row>
+                            </Col>
+                            <Col sm={4}>
+                              <Row>
+                                {inputFile.map((x, i) => {
+                                  return (
+                                    <>
+                                      <div className="col-md-10">
+                                        <input
+                                          className="form-control"
+                                          type="file"
+                                          accept="image/*"
+                                          name="paketimage"
+                                          onChange={(e) =>
+                                            handleInputFileChange(
+                                              e.target.files[0],
+                                              i
+                                            )
+                                          }
+                                        />
+                                      </div>                                     
+                                      <div className="col-md-2">
+                                        {inputList.length !== 1 && (
+                                          <Trash
+                                            style={{
+                                              cursor: "pointer",
+                                              color: "red",
+                                            }}
+                                            onClick={() => handleRemoveClick(i)}
+                                          >
+                                            Remove
+                                          </Trash>
+                                        )}
+                                      </div>
+                                      <div className="col-md-12 mb-3">
+                                        {inputList.length - 1 === i && (
+                                          <button
+                                            onClick={handleAddClick}
+                                            className="btn btn-primary mt-3 mb-3 pull-right"
+                                          >
+                                            Add
+                                          </button>
+                                        )}
+                                      </div>
+                                    </>
+                                  );
+                                })}
+                              </Row>
+                            </Col>
+                          </Row>
+                        </Container>
+
                                         </div>
                                         {/* <button className="btn btn-pill btn-primary btn-block mt-3 mb-3" type="submit">{"Submit"}</button> */}
                                         {submitButton()}
