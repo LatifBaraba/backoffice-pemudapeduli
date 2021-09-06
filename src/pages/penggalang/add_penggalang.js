@@ -13,7 +13,7 @@ const AddPenggalang = () => {
     
     let token = localStorage.getItem('token');
 
-    const [ title, setTitle] = useState();
+    const [ name, setName] = useState();
     const [ description, setDescription] = useState();
     const [ icon, setThumb] = useState();
     const [ img, setImg] = useState('');
@@ -24,7 +24,7 @@ const AddPenggalang = () => {
         if (data !== '') {
             uploadImage(img).then(message => {
                 const newIcon = message.response.data.url;
-                dispatch(fetchAddPenggalang(token, title, description, newIcon))
+                dispatch(fetchAddPenggalang(token, name, description, newIcon))
             })
             .catch(error => {
                 toast.error("Upload Image Failed !");
@@ -63,9 +63,9 @@ const AddPenggalang = () => {
                                     <div className="col-md-6 col-sm-12">
                                         <div className="form-row">
                                         <div className="col-md-12 mb-3">
-                                                <label>{"Title"}</label>
-                                                <input className="form-control" name="title" type="text" ref={register({ required: true })} onChange={(e) => setTitle(e.target.value)} />
-                                                <span>{errors.title && 'Title is required'}</span> 
+                                                <label>{"Name"}</label>
+                                                <input className="form-control" name="name" type="text" ref={register({ required: true })} onChange={(e) => setName(e.target.value)} />
+                                                <span>{errors.name && 'Name is required'}</span> 
                                                 <div className="valid-feedback">{"Looks good!"}</div>
                                             </div>
                                             <div className="col-md-12 mb-3">

@@ -13,6 +13,7 @@ import { EditorState, ContentState, convertToRaw, convertFromRaw } from 'draft-j
 import { addCommas, removeNonNumeric} from '../../helper/index'
 import { Form} from "react-bootstrap";
 import { fetchQris } from "../../redux/qris/action";
+import { fetchPenggalang } from "../../redux/penggalang/action";
 
 const AddDonasi = () => {
 
@@ -34,9 +35,11 @@ const AddDonasi = () => {
     // const [ donasiType, setDonasiType] = useState("Rutin");
     const [tipebayar, setTipeBayar] = useState("");
     const [qrisimage, setQrisimage] = useState("");
+    const [penggalang, setPenggalang] = useState("");
 
     const loadingStatus = useSelector((state) => state.donasiReducer.loading);
     const qrisData = useSelector((state) => state.qrisReducer.qris);
+    const penggalangData = useSelector((state) => state.penggalangReducer.penggalang);
 
     let _contentState = EditorState.createEmpty("");
     const [editorState, setEditorState] = useState(_contentState)
@@ -44,6 +47,7 @@ const AddDonasi = () => {
 
     useEffect(() => {
         dispatch(fetchQris(token))
+        dispatch(fetchPenggalang(token))
     }, [])
 
     const onSubmit = data => {
@@ -60,7 +64,7 @@ const AddDonasi = () => {
                 const newTarget = target.split('.').join("")
                 dispatch(fetchAddDonasi(token, titles, sub, tag, startDate, endDate, newTarget, 
                     // donasiType, 
-                    newThumb, desc, content, ayoBantu, kitaBisa, id_pp_cp_master_qris[0], qris_image_url[1]))
+                    newThumb, desc, content, ayoBantu, kitaBisa, id_pp_cp_master_qris[0], qris_image_url[1], penggalang))
             })
             .catch(error => {
                 toast.error("Upload Image Failed !");
@@ -205,6 +209,27 @@ const AddDonasi = () => {
                                                     editorClassName="editorClassName"
                                                     onEditorStateChange={setEditorState}
                                                 />
+                                            </div>
+                                            <div className="col-md-12 mb-3">
+                                                <label>{"Pilih Penggalang Dana"}</label>
+                                                <Form.Group controlId="formPenggalangDana">
+                                                <Form.Control
+                                                    required
+                                                    as="select"
+                                                    type="select"
+                                                    onChange={(e) => setPenggalang(e.target.value)}      
+                                                    // {...register("tipebayar", {
+                                                    //   required: true,
+                                                    // })}          
+                                                    
+                                                >
+                                                    <option value="">Pilih Penggalang Dana</option>
+                                                    {/* <option value="mandiri">Rekening Mandiri</option>
+                                                    <option value="qris">QRIS</option> */}
+                                                    {penggalangData.map((penggalang, index) => 
+                                                        <option key={index} value={penggalang.IDPPCPPenggalangDana } >{penggalang.Name}</option>)}
+                                                </Form.Control>                                            
+                                            </Form.Group>
                                             </div>
                                         </div>
                                         {/* <button className="btn btn-pill btn-primary btn-block mt-3 mb-3" type="submit">{"Submit"}</button> */}

@@ -73,14 +73,14 @@ const EditDonasi = (props) => {
             if (img !== '') {
                 uploadImage(img).then(message => {
                     const newThumb = message.response.data.url;
-                    dispatch(fetchEditPaket(id, token, titles, sub, tag, donasiType, benefit, newThumb, desc, newContent, show,  id_pp_cp_master_qris[0], qris_image_url[1]))
+                    dispatch(fetchEditPaket(id, token, titles, sub, tag, benefit, newThumb, desc, newContent, show,  id_pp_cp_master_qris[0], qris_image_url[1]))
                 })
                 .catch(error => {
                     toast.error("Upload Image Failed !");
                 })
             } else {
                 const newThumb = thumb;
-                dispatch(fetchEditPaket(id, token, titles, sub, tag, donasiType, benefit, newThumb, desc, newContent, show, id_pp_cp_master_qris[0], qris_image_url[1]))
+                dispatch(fetchEditPaket(id, token, titles, sub, tag, benefit, newThumb, desc, newContent, show, id_pp_cp_master_qris[0], qris_image_url[1]))
             }
         } else {
             errors.showMessages();
@@ -181,13 +181,8 @@ const EditDonasi = (props) => {
                                                 <span>{errors.benefit && 'Benefit is required'}</span>
                                                 <div className="valid-feedback">{"Looks good!"}</div>
                                             </div> */}
-                                            <div className="col-md-12 mb-3">
-                                                <label>Donation Type</label>
-                                                {/* <select className="form-control digits" id="donasiType" defaultValue={data.id_kategori} onChange={(e) => setDonasiType(e.target.value)}>                                                    
-                                                    {categories.map((cat, index) => 
-                                                        <option key={index} value={cat.id}>{cat.kategori_name}</option>
-                                                    )}
-                                                </select> */}
+                                            {/* <div className="col-md-12 mb-3">
+                                                <label>Donation Type</label>                                               
                                                 <Form.Group controlId="formDonasiType">                                                
                                                 <Form.Control
                                                     required
@@ -207,7 +202,7 @@ const EditDonasi = (props) => {
                                                         ))}
                                                 </Form.Control>                                                                                                                                                
                                                 </Form.Group>
-                                            </div>
+                                            </div> */}
                                              <div className="col-md-12 mb-3">
                                                 <label>{"Pilih QRIS"}</label>
                                                 <Form.Group controlId="formTipeBayar">                                                

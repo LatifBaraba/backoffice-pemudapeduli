@@ -9,13 +9,16 @@ import {
     EDIT_PENGGALANG_SUCCESS,
     EDIT_PENGGALANG_FAILURE,
     DELETE_PENGGALANG_SUCCESS,
-    DELETE_PENGGALANG_FAILURE
+    DELETE_PENGGALANG_FAILURE,
+    VERIFIED_PENGGALANG,
+    VERIFIED_PENGGALANG_SUCCESS,
+    VERIFIED_PENGGALANG_FAILURE
     
 } from '../actionTypes';
 
 const initialState = {
     loading: false,
-    penggalang: [],
+    penggalang: [],    
     error: null
 };
 
@@ -54,6 +57,22 @@ export default function penggalangReducer(state = initialState, action) {
                 ...state,
                 loading: false,
             };
+            case VERIFIED_PENGGALANG:
+                return {
+                    ...state,
+                    loading: true
+                };
+            case VERIFIED_PENGGALANG_SUCCESS:
+                return {
+                    ...state,
+                    loading: false,
+                    error: null
+                };
+            case VERIFIED_PENGGALANG_FAILURE:
+                return {
+                    ...state,
+                    loading: false,
+                };
         case ADD_PENGGALANG:
             return {
                 ...state,

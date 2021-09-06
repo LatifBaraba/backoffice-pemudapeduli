@@ -19,6 +19,7 @@ import htmlToDraft from 'html-to-draftjs';
 import { addCommas, removeNonNumeric} from '../../helper/index'
 import { fetchQris } from "../../redux/qris/action";
 import { Form} from "react-bootstrap";
+import { fetchPenggalang } from "../../redux/penggalang/action";
 
 const EditDonasi = (props) => {
 
@@ -29,7 +30,10 @@ const EditDonasi = (props) => {
     useEffect(() => {
         setTarget(target && addCommas(target))
         dispatch(fetchQris(token))
+        dispatch(fetchPenggalang(token))
     }, [])
+
+    console.log(data)
     const [ id, setId] = useState(data.id);
     const [ titles, setTitles] = useState(data.title);
     const [ sub, setSub] = useState(data.sub_title);
@@ -46,14 +50,16 @@ const EditDonasi = (props) => {
     const [ kitaBisa, setKitaBisa] = useState(data.kitabisa_link);
     const [tipebayar, setTipeBayar] = useState(data.id_pp_cp_master_qris + '_' + data.qris_image_url);
     const [qrisimage, setQrisimage] = useState(data.qris_image_url);
+    const [penggalang, setPenggalang] = useState(data.id_pp_cp_penggalang_dana);
  
     const loadingStatus = useSelector((state) => state.donasiReducer.loading);
 
     const dispatch = useDispatch();
     const qrisData = useSelector((state) => state.qrisReducer.qris);
+    const penggalangData = useSelector((state) => state.penggalangReducer.penggalang);
     const { register, handleSubmit, errors } = useForm();
 
-    
+    console.log(penggalangData)
     
     
     const blocksFromHtml = htmlToDraft(data.content);
@@ -85,7 +91,7 @@ const EditDonasi = (props) => {
                     const newThumb = message.response.data.url;
                     dispatch(fetchEditDonasi(token, id, titles, sub, tag, startDate, endDate, removeNonNumeric(target), 
                         // donasiType, 
-                        newThumb, desc, newContent, show, ayoBantu, kitaBisa, id_pp_cp_master_qris[0], qris_image_url[1]))
+                        newThumb, desc, newContent, show, ayoBantu, kitaBisa, id_pp_cp_master_qris[0], qris_image_url[1], penggalang))
                 })
                 .catch(error => {
                     toast.error("Upload Image Failed !");
@@ -94,7 +100,7 @@ const EditDonasi = (props) => {
                 const newThumb = thumb;
                 dispatch(fetchEditDonasi(token, id, titles, sub, tag, startDate, endDate, removeNonNumeric(target), 
                     // donasiType, 
-                    newThumb, desc, newContent, show, ayoBantu, kitaBisa, id_pp_cp_master_qris[0], qris_image_url[1]))
+                    newThumb, desc, newContent, show, ayoBantu, kitaBisa, id_pp_cp_master_qris[0], qris_image_url[1], penggalang))
             }
         } else {
             errors.showMessages();
@@ -179,7 +185,7 @@ const EditDonasi = (props) => {
                                             </div>
                                             <div className="col-md-12 mb-3">
                                                 <label>{"Pilih QRIS"}</label>
-                                                {tipebayar}
+                                                
                                                 <Form.Group controlId="formTipeBayar">                                                
                                                 <Form.Control
                                                     required
@@ -236,6 +242,31 @@ const EditDonasi = (props) => {
                                                     onEditorStateChange={setEditorState}
                                                 />
                                             </div>
+                                           
+                                            <div className="col-md-12 mb-3">
+                                                <label>{"Pilih Penggalang Dana"}</label>
+                                                
+                                                <Form.Group controlId="formPenggalangDana">                                                
+                                                <Form.Control
+                                                    required
+                                                    as="select"
+                                                    type="select"
+                                                    onChange={(e) => setPenggalang(e.target.value)}   
+                                                    >
+                                                    <option value="">Pilih Penggalang Dana</option>                                                        
+                                                    {penggalangData.map((penggalangs, index) => (                                                        
+                                                            
+                                                            penggalangs.IDPPCPPenggalangDana == penggalang ? (
+                                                        <option key={index} value={penggalangs.IDPPCPPenggalangDana} selected>{penggalangs.Name}</option>
+                                                        ):(
+                                                        <option key={index} value={penggalangs.IDPPCPPenggalangDana} >{penggalangs.Name}</option>
+                                                        )                                                    
+                                                    ))}
+                                                        
+                                                </Form.Control>                                                                                                
+                                                </Form.Group>
+                                                {/* <img src={qrisimage} alt={qrisimage} style={{width: 100}}/>                                             */}
+                                            </div> 
                                         </div>
                                         {/* <button className="btn btn-pill btn-primary btn-block mt-3 mb-3" type="submit">{"Submit"}</button> */}
                                         {submitButton()}

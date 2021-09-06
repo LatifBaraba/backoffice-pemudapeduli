@@ -9,11 +9,11 @@ import 'react-toastify/dist/ReactToastify.css';
 
 const EditPenggalang = (props) => {
     const { data } = props.location.state;
-
-    const [ id, setId] = useState(data.id);
-    const [ title, setTitle] = useState(data.title);
-    const [ description, setDescription] = useState(data.description);
-    const [ icon, setThumb] = useState(data.thumbnail_image_url);
+    console.log(data)
+    const [ id, setId] = useState(data.IDPPCPPenggalangDana);
+    const [ name, setName] = useState(data.Name);
+    const [ description, setDescription] = useState(data.Description);
+    const [ icon, setThumb] = useState(data.ThumbnailImageURL);
     const [ img, setImg] = useState('');
 
     const loadingStatus = useSelector((state) => state.penggalangReducer.loading);
@@ -27,7 +27,7 @@ const EditPenggalang = (props) => {
             if (img !== '') {
                 uploadImage(img).then(message => {
                     const thumbnail_image_url = message.response.data.url;
-                    dispatch(fetchEditPenggalang(token, id, title, description, thumbnail_image_url))
+                    dispatch(fetchEditPenggalang(token, id, name, description, thumbnail_image_url))
                 })
                 .catch(error => {
                     console.log(error)
@@ -35,7 +35,7 @@ const EditPenggalang = (props) => {
                 })
             } else {
                 const thumbnail_image_url = icon;
-                dispatch(fetchEditPenggalang(token, id, title, description, thumbnail_image_url))
+                dispatch(fetchEditPenggalang(token, id, name, description, thumbnail_image_url))
             }
         } else {
             errors.showMessages();
@@ -71,9 +71,9 @@ const EditPenggalang = (props) => {
                                     <div className="col-md-6 col-sm-12">
                                         <div className="form-row">
                                             <div className="col-md-12 mb-3">
-                                                <label>{"Title"}</label>
-                                                <input className="form-control" name="title" type="text" value={title} ref={register({ required: true })} onChange={(e) => setTitle(e.target.value)} />
-                                                <span>{errors.title && 'Title is required'}</span> 
+                                                <label>{"Name"}</label>
+                                                <input className="form-control" name="name" type="text" value={name} ref={register({ required: true })} onChange={(e) => setName(e.target.value)} />
+                                                <span>{errors.name && 'Name is required'}</span> 
                                                 <div className="valid-feedback">{"Looks good!"}</div>
                                             </div>
                                             <div className="col-md-12 mb-3">

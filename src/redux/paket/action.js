@@ -64,7 +64,7 @@ export function fetchPaket(token) {
     };
 };
 
-export function fetchAddPaket(token, titles, sub, tag, donasiType, benefit, newThumb, desc, content, id_pp_cp_master_qris, qris_image_url, paket) {
+export function fetchAddPaket(token, titles, sub, tag, benefit, newThumb, desc, content, id_pp_cp_master_qris, qris_image_url, paket) {
     return (dispatch) => {       
         dispatch(addPaket())
         axios(AddURL, {
@@ -72,7 +72,7 @@ export function fetchAddPaket(token, titles, sub, tag, donasiType, benefit, newT
             data: {
                 title: titles,
                 sub_title: sub,
-                id_kategori: donasiType,
+                id_kategori: "not use",
                 tag : tag,
                 content: content,
                 benefit: benefit,
@@ -185,10 +185,10 @@ export function fetchAddPaket(token, titles, sub, tag, donasiType, benefit, newT
 //     };
 // };
 
-export function fetchEditPaket(id, token, titles, sub, tag, donasiType, benefit, newThumb, desc, newContent, show, id_pp_cp_master_qris, qris_image_url) {
+export function fetchEditPaket(id, token, titles, sub, tag, benefit, newThumb, desc, newContent, show, id_pp_cp_master_qris, qris_image_url) {
     console.log(show, 'showwww')
     return (dispatch) => {
-        console.log("masuk edit donasi rutin", donasiType)
+        // console.log("masuk edit donasi rutin", donasiType)
         console.log("masuk edit donasi rutin", id_pp_cp_master_qris)
         console.log("masuk edit donasi rutin", qris_image_url)
         dispatch(editPaket())
@@ -197,7 +197,7 @@ export function fetchEditPaket(id, token, titles, sub, tag, donasiType, benefit,
             data: {
                 title: titles,
                 sub_title: sub,
-                id_kategori: donasiType,
+                id_kategori: "not use",
                 tag : tag,
                 content: newContent,
                 benefit: benefit,

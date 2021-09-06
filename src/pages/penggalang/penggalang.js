@@ -4,26 +4,46 @@ import PropTypes from "prop-types";
 import { Edit, Trash} from 'react-feather';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchPenggalang, fetchDeletePenggalang } from "../../redux/penggalang/action";
+import { fetchPenggalang, fetchDeletePenggalang , fetchVerifiedPenggalang} from "../../redux/penggalang/action";
+import ToggleButton from 'react-bootstrap/ToggleButton'
+import Switch from "react-switch";
+import { ButtonGroup } from "react-bootstrap";
 
 const Penggalang = (props) => {
 
     const dispatch = useDispatch();
+
+    const [checked, setChecked] = useState(false);
 
     let token = localStorage.getItem('token');
     useEffect(() => {
         dispatch(fetchPenggalang(token))
     },[])
 
-    const penggalangData = useSelector((state) => state.penggalangReducer.penggalang);
+    const handleChange = (nextChecked) => {
+        console.log(nextChecked)
+        // dispatch(fetchVerifiedPenggalang(token, id))
+        setChecked(nextChecked);
+      };
 
+    const penggalangData = useSelector((state) => state.penggalangReducer.penggalang);
+    
     const penggalangDatas = penggalangData.map((penggalang, index) => {
         return (
             <tr key={index}>
                 <th scope="row">{index+1}</th>
-                <td>{penggalang.title}</td>
-                <td>{penggalang.description}</td>
-                <td><img src={penggalang.thumbnail_image_url} alt={penggalang.thumbnail_image_url} style={{width: 100}}/></td>
+                <td>{penggalang.Name}</td>
+                <td>{penggalang.Description}</td>
+                <td><img src={penggalang.ThumbnailImageURL} alt={penggalang.ThumbnailImageURL} style={{width: 100}}/></td>
+                <td>
+                    
+                    <Switch 
+                        onChange={() => dispatch(fetchVerifiedPenggalang(token, penggalang.IDPPCPPenggalangDana))} 
+                        checked={penggalang.IsVerified ? true : checked} 
+                    />
+                    {penggalang.IsVerified ? "Verified" : "Not Verified"}
+                   
+                    </td>
                 <td>
                     {/* <Link to="/edit-penggalang" className="mr-2"> */}
                     <Link to={{
@@ -63,9 +83,10 @@ const Penggalang = (props) => {
                             <thead>
                                 <tr>
                                     <th scope="col">{"#"}</th>
-                                    <th scope="col">{"Tittle"}</th>
+                                    <th scope="col">{"Name"}</th>
                                     <th scope="col">{"Description"}</th>
-                                    <th scope="col">{"Penggalang"}</th>
+                                    <th scope="col">{"Image"}</th>
+                                    <th scope="col">{"Status"}</th>
                                     <th scope="col">{"Action"}</th>
                                 </tr>
                             </thead>

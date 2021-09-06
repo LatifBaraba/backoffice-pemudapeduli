@@ -10952,6 +10952,13 @@ react-switch-lang@^1.0.2:
     object-assign "^4.1.1"
     universal-cookie "^2.2.0"
 
+react-switch@^6.0.0:
+  version "6.0.0"
+  resolved "https://registry.yarnpkg.com/react-switch/-/react-switch-6.0.0.tgz#bd4a2dea08f211b8a32e55e8314fd44bc1ec947e"
+  integrity sha512-QV3/6eRK5/5epdQzIqvDAHRoGLbCv/wDpHUi6yBMXY1Xco5XGuIZxvB49PHoV1v/SpEgOCJLD/Zo43iic+aEIw==
+  dependencies:
+    prop-types "^15.7.2"
+
 react-table@^6.10.3:
   version "6.11.5"
   resolved "https://registry.yarnpkg.com/react-table/-/react-table-6.11.5.tgz#84e52885db426a07a6c4ce2c7e942f2cd4e2aa58"

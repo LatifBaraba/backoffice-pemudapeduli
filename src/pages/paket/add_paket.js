@@ -96,7 +96,7 @@ const AddDonasi = () => {
               titles,
               sub,
               tag,
-              donasiType,
+              // donasiType,
               benefit,
               newThumb,
               desc,
@@ -270,7 +270,7 @@ const AddDonasi = () => {
                           {/* <span>{errors.description && 'Description is required'}</span> */}
                           <div className="valid-feedback">{"Looks good!"}</div>
                         </div>
-                        <div className="col-md-12 mb-3">
+                        {/* <div className="col-md-12 mb-3">
                           <label>Program Donasi</label>
                           <select
                             className="form-control"
@@ -279,7 +279,7 @@ const AddDonasi = () => {
                             ref={register({ required: true })}
                             onChange={(e) => setDonasiType(e.target.value)}
                           >
-                            {/* {donasiTypes} */}
+                            
                             <option value={""}> --- </option>
                             {categories.map((cat, index) => (
                               <option key={index} value={cat.id}>
@@ -291,7 +291,7 @@ const AddDonasi = () => {
                             {errors.type && "Type is required"}
                           </span>
                           <div className="valid-feedback">{"Looks good!"}</div>
-                        </div>
+                        </div> */}
                         <div className="col-md-12 mb-3">
                           <label>{"Pilih QRIS"}</label>
                           <Form.Group controlId="formTipeBayar">

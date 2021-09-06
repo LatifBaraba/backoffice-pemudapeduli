@@ -9,7 +9,10 @@ import {
     EDIT_PENGGALANG_SUCCESS,
     EDIT_PENGGALANG_FAILURE,
     DELETE_PENGGALANG_SUCCESS,
-    DELETE_PENGGALANG_FAILURE
+    DELETE_PENGGALANG_FAILURE,
+    VERIFIED_PENGGALANG,
+    VERIFIED_PENGGALANG_SUCCESS,
+    VERIFIED_PENGGALANG_FAILURE,
         } from '../actionTypes';
 
 import axios from 'axios';
@@ -18,9 +21,10 @@ import history from "../../history";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-const URL = `${process.env.REACT_APP_BASE_URL}/qris/list`;
-const EditURL = `${process.env.REACT_APP_BASE_URL}/qris/`;
-const AddURL = `${process.env.REACT_APP_BASE_URL}/qris/create`;
+const URL = `${process.env.REACT_APP_BASE_URL}/penggalang-dana/list`;
+const EditURL = `${process.env.REACT_APP_BASE_URL}/penggalang-dana/`;
+const AddURL = `${process.env.REACT_APP_BASE_URL}/penggalang-dana/create`;
+const VerifiedURL = `${process.env.REACT_APP_BASE_URL}/penggalang-dana/verified/`;
 
 export function fetchPenggalang(token) {
     return (dispatch) => {
@@ -29,19 +33,19 @@ export function fetchPenggalang(token) {
             method: 'POST',
             data: {
                 limit: "100",
-                offset: "0",
+                offset: "1",
                 filters: [
                     {
-                        field: "status",
-                        keyword: "created"
+                        field: "id",
+                        keyword: ""
                     }
                 ],
                 order: "created_at",
                 sort: "ASC",
                 created_at_from: "",
-                created_at_to: ""
-                // publish_at_from: "",
-                // publish_at_to: ""
+                created_at_to: "",
+                publish_at_from: "",
+                publish_at_to: ""
             },
             headers: {
                 "pp-token": `${token}`,
@@ -64,13 +68,13 @@ export function fetchPenggalang(token) {
     };
 };
 
-export function fetchAddPenggalang(token, title, description, newIcon) {
+export function fetchAddPenggalang(token, name, description, newIcon) {
     return (dispatch) => {        
         dispatch(addPenggalang())
         axios(AddURL, {
             method: 'POST',
             data: {
-                title: title,
+                name: name,
                 description: description,
                 thumbnail_image_url: newIcon
             },
@@ -83,7 +87,7 @@ export function fetchAddPenggalang(token, title, description, newIcon) {
             setTimeout(() => {
                 toast.success("Add Success !");
                 dispatch(addPenggalangSuccess(res));
-                history.push("/qris");
+                history.push("/penggalang");
             }, 2000);
         })
         .catch(err => {
@@ -99,15 +103,15 @@ export function fetchAddPenggalang(token, title, description, newIcon) {
     };
 };
 
-export function fetchEditPenggalang(token, id, title, description, newIcon) {
+export function fetchEditPenggalang(token, id, name, description, newIcon) {
     return (dispatch) => {
         dispatch(editPenggalang())
         axios(EditURL+`${id}`, {
             method: 'PUT',
             data: {
-                title: title,
-                description: description,
-                thumbnail_image_url: newIcon
+                Name: name,
+                Description: description,
+                ThumbnailImageURL: newIcon
             },
             headers: {
                 "pp-token": `${token}`,
@@ -118,7 +122,7 @@ export function fetchEditPenggalang(token, id, title, description, newIcon) {
             setTimeout(() => {
                 toast.success("Edit Success !");
                 dispatch(editPenggalangSuccess(res));
-                history.push("/qris");
+                history.push("/penggalang");
             }, 2000);
         })
         .catch(err => {
@@ -147,7 +151,7 @@ export function fetchDeletePenggalang(token, id) {
             setTimeout(() => {
                 toast.success("Delete Success !")
                 dispatch(deletePenggalangSuccess(res));
-                history.push("/qris");
+                history.push("/penggalang");
                 window.location.reload();
             }, 2000);
         })
@@ -162,6 +166,41 @@ export function fetchDeletePenggalang(token, id) {
         });
     };
 };
+
+
+export function fetchVerifiedPenggalang(token, id) {
+    return (dispatch) => {
+        dispatch(editPenggalang())
+        console.log(id)
+        axios(VerifiedURL+`${id}`, {
+            method: 'PUT',            
+            headers: {
+                "pp-token": `${token}`,
+                "Content-type": "application/json"
+            }
+        })
+        .then(res => { 
+            dispatch(verifiedPenggalangSuccess(res));
+            history.push("/penggalang");
+            setTimeout(() => {
+                window.location.reload();
+            }, 2000);
+            toast.success("Edit Success !");
+                
+        })
+        .catch(err => {
+            console.log(err)
+            if(err.response.status == 401){
+                toast.error("Unauthorized")
+                dispatch(fetchRefreshToken(token))
+                localStorage.removeItem("token");
+                history.push('/login')
+            }
+            dispatch(verifiedPenggalangFailure(err));
+        });
+    };
+};
+
 
 // Get Penggalang
 const getPenggalangSuccess = (payload) => ({
@@ -186,6 +225,23 @@ const editPenggalangSuccess = (payload) => ({
 const editPenggalangFailure = () => ({
     type: EDIT_PENGGALANG_FAILURE
 });
+
+
+// Verified Penggalang
+const verifiedPenggalang = () => ({
+    type: VERIFIED_PENGGALANG
+});
+
+const verifiedPenggalangSuccess = (payload) => ({
+    type: VERIFIED_PENGGALANG_SUCCESS,
+    payload
+});
+
+const verifiedPenggalangFailure = () => ({
+    type: VERIFIED_PENGGALANG_FAILURE
+});
+
+
 
 // Add Penggalang
 const addPenggalang = () => ({
