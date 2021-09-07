@@ -117,8 +117,28 @@ export function fetchEditDonasi(token, id, titles, sub, tag, startDate, endDate,
     };
 };
 
-export function fetchAddDonasi(token, titles, sub, tag, startDate, endDate, target, newThumb, desc, content, ayoBantu, kitaBisa, id_pp_cp_master_qris, qris_image_url, id_pp_cp_penggalang_dana) {
+export function fetchAddDonasi(token, titles, sub, tag, startDate, endDate, target, newThumb, desc, content, ayoBantu, kitaBisa, id_pp_cp_master_qris, qris_image_url, id_pp_cp_penggalang_dana, nominal) {
     return (dispatch) => {
+        let data= {
+            title: titles,
+            sub_title: sub,
+            tag: tag,
+            // donasi_type: donasiType,
+            valid_from: startDate,
+            valid_to: endDate,
+            target: parseInt(target),
+            description: desc,
+            thumbnail_image_url: newThumb,
+            content: content,
+            ayobantu_link: ayoBantu,
+            kitabisa_link: kitaBisa,
+            id_pp_cp_master_qris: id_pp_cp_master_qris,
+            qris_image_url:qris_image_url,
+            id_pp_cp_penggalang_dana:id_pp_cp_penggalang_dana,
+            seo_url:"",
+            nominal: nominal
+        }
+        console.log(data)
         dispatch(addDonasi())
         axios(AddURL, {
             method: 'POST',
@@ -138,7 +158,8 @@ export function fetchAddDonasi(token, titles, sub, tag, startDate, endDate, targ
                 id_pp_cp_master_qris: id_pp_cp_master_qris,
                 qris_image_url:qris_image_url,
                 id_pp_cp_penggalang_dana:id_pp_cp_penggalang_dana,
-                seo_url:""
+                seo_url:"",
+                nominal: nominal
             },
             headers: {
                 "pp-token": `${token}`,
