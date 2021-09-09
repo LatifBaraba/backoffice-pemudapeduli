@@ -17,7 +17,7 @@ const Paket = () => {
     },[])
 
     const paketData = useSelector((state) => state.paketReducer.paket);
-
+    console.log(paketData)
     const paketDatas = paketData.map((paket, index) => {
         return (
             <tr key={index}>

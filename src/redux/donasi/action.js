@@ -25,7 +25,7 @@ export function fetchDonasi(token) {
         axios(URL, {
             method: 'POST',
             data: {
-                limit: "10",
+                limit: "100",
                 offset: "1",
                 filters: [
                     {
@@ -62,7 +62,7 @@ export function fetchDonasi(token) {
     };
 };
 
-export function fetchEditDonasi(token, id, titles, sub, tag, startDate, endDate, target, newThumb, desc, newContent, show, ayoBantu, kitaBisa, id_pp_cp_master_qris, qris_image_url, id_pp_cp_penggalang_dana) {
+export function fetchEditDonasi(token, id, titles, sub, tag, startDate, endDate, target, newThumb, desc, newContent, show, ayoBantu, kitaBisa, id_pp_cp_master_qris, qris_image_url, id_pp_cp_penggalang_dana, nominal) {
     return (dispatch) => {
         console.log(startDate)
         console.log(endDate)
@@ -88,7 +88,8 @@ export function fetchEditDonasi(token, id, titles, sub, tag, startDate, endDate,
                 id_pp_cp_master_qris: id_pp_cp_master_qris,
                 qris_image_url:qris_image_url,
                 id_pp_cp_penggalang_dana:id_pp_cp_penggalang_dana,
-                seo_url:""
+                seo_url:"",
+                nominal:nominal
             },
             headers: {
                 "pp-token": `${token}`,

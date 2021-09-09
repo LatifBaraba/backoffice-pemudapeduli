@@ -87,12 +87,7 @@ export function fetchAddPaket(token, titles, sub, tag, benefit, newThumb, desc, 
             }
         })
         .then(res => {
-            // setTimeout(() => {
-            //     toast.success("Add Success !");
-            //     dispatch(addPaketSuccess(res));
-            //     history.push("/program-donasi");
-            // }, 2000);
-            // console.log(res.data.data.id) 
+            
             for (let index = 0; index < Object.keys(paket).length; index++) {
                 const pakets = paket[index];
                 console.log(pakets)
@@ -216,7 +211,7 @@ export function fetchEditPaket(id, token, titles, sub, tag, benefit, newThumb, d
             setTimeout(() => {
                 toast.success("Edit Success !");
                 dispatch(editPaketSuccess(res));
-                history.push("/paket");
+                history.push("/program-donasi");
             }, 2000);
         })
         .catch(err => {
