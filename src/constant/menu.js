@@ -20,7 +20,8 @@ import {
     Book,
     Command,
     List,
-    CheckSquare
+    CheckSquare,
+    Bell
 } from 'react-feather';
 
 export const MENUITEMS = [
@@ -105,6 +106,9 @@ export const MENUITEMS = [
     // },   
     {
         title: 'Penggalang', icon: List, type: 'link', path: '/penggalang', active: false
+    },   
+    {
+        title: 'Reminder', icon: Bell, type: 'link', path: '/reminder', active: false
     },   
     {
         title: 'Nominal', icon: DollarSign, type: 'link', path: '/nominal', active: false

@@ -78,6 +78,7 @@ import AddNominal from './pages/nominal/add_nominal';
 import DetailHistory from './pages/history/detail_history';
 import History from './pages/history/history';
 import Transaction from './pages/transaction/transaction';
+import Reminder from './pages/reminder/reminder';
 import Menu from './pages/menu/menu';
 import AddMenu from './pages/menu/add_menu';
 import EditMenu from './pages/menu/edit_menu';
@@ -194,6 +195,7 @@ function Root() {
                                             <Route path={`${process.env.PUBLIC_URL}/history`} component={History} />
                                             <Route path={`${process.env.PUBLIC_URL}/detail-history`} component={DetailHistory} />
                                             <Route path={`${process.env.PUBLIC_URL}/transaction`} component={Transaction} />
+                                            <Route path={`${process.env.PUBLIC_URL}/reminder`} component={Reminder} />
                                             {/* <Route exact path={`${process.env.PUBLIC_URL}/dashboard/default`} component={Default} />
                                             <Route path={`${process.env.PUBLIC_URL}/dashboard/ecommerce`} component={Ecommerce} />
                                             <Route path={`${process.env.PUBLIC_URL}/dashboard/university`} component={University} />
