@@ -47,7 +47,6 @@ export function fetchNominal(token) {
         })
         .then(res => {
             dispatch(getNominalSuccess(res.data.data));
-            console.log(res.data.data)
         })
         .catch(err => {
             if(err.response.status == 401){
@@ -84,7 +83,6 @@ export function fetchAddNominal(token, title, description, newIcon) {
             }, 2000);
         })
         .catch(err => {
-            console.log(err)
             if(err.response.status == 401){
                 toast.error("Unauthorized")
                 dispatch(fetchRefreshToken(token))

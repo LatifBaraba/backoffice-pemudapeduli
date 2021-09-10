@@ -3,7 +3,6 @@ import Breadcrumb from '../../components/common/breadcrumb';
 import useForm from "react-hook-form";
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchEditAchievement } from "../../redux/achievement/action";
-import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const EditAchievement = (props) => {
@@ -29,7 +28,7 @@ const EditAchievement = (props) => {
     }
 
     const submitButton = () => {
-        if(loadingStatus == false) {
+        if(loadingStatus === false) {
           return (
             <button className="btn btn-pill btn-primary btn-block mt-3 mb-3" type="submit">{"Submit"}</button>
           )

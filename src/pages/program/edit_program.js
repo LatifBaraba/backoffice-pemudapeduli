@@ -1,15 +1,15 @@
-import React, { Fragment, useState, useEffect } from 'react';
+import React, { Fragment, useState } from 'react';
 import Breadcrumb from '../../components/common/breadcrumb';
 import useForm from "react-hook-form";
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchEditProgram, fetchDetailProgram } from "../../redux/program/action";
+import { fetchEditProgram } from "../../redux/program/action";
 import { uploadImage } from "../../helper/index";
 import { toast } from 'react-toastify';
 import { Editor } from 'react-draft-wysiwyg';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import draftToHtml from 'draftjs-to-html';
 import htmlToDraft from 'html-to-draftjs';
-import { EditorState, ContentState, convertToRaw, convertFromRaw } from 'draft-js';
+import { EditorState, ContentState, convertToRaw } from 'draft-js';
 
 const EditProgram = (props) => {
 
@@ -58,7 +58,7 @@ const EditProgram = (props) => {
     }
 
     const submitButton = () => {
-        if(loadingStatus == false) {
+        if(loadingStatus === false) {
           return (
             <button className="btn btn-pill btn-primary btn-block mt-3 mb-3" type="submit">{"Submit"}</button>
           )

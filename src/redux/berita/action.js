@@ -52,10 +52,8 @@ export function fetchBerita(token) {
         })
         .then(res => {
             dispatch(getBeritaSuccess(res.data.data));
-            console.log(res.data.data)
         })
         .catch(err => {
-            console.log(err)
             if(err.response.status === 401){
                 toast.error("Unauthorized")
                 dispatch(fetchRefreshToken(token))
@@ -78,11 +76,9 @@ export function fetchDetailBerita(token, id) {
             }
         })
         .then(res => { 
-            console.log(res)
             dispatch(getDetailBeritaSuccess(res.data.data));
         })
         .catch(err => {
-            console.log(err)
             if(err.response.status === 401){
                 toast.error("Unauthorized")
                 dispatch(fetchRefreshToken(token))
@@ -119,7 +115,6 @@ export function fetchEditBerita(token, id, titles, sub, tag, newContent, newThum
             }, 2000);
         })
         .catch(err => {
-            console.log(err)
             if(err.response.status === 401){
                 toast.error("Unauthorized")
                 dispatch(fetchRefreshToken(token))
@@ -157,7 +152,6 @@ export function fetchAddBerita(token, titles, sub, tag, content, newThumb, desc)
             }, 2000);
         })
         .catch(err => {
-            console.log(err)
             if(err.response.status === 401){
                 toast.error("Unauthorized")
                 dispatch(fetchRefreshToken(token))

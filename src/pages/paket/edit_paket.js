@@ -58,8 +58,6 @@ const EditDonasi = (props) => {
 // })
 // console.log(list)
 const arr = Object.assign(data, datas)
-console.log(Object.values(arr.paket))
-console.log(Object.values(arr.paket)[2])
   const [inputList, setInputList] = useState([{ paket_name:"",benefit:"",nominal:""}]);
   const [inputFile, setInputFile] = useState([{ paketimage: "" }]);
     // console.log(paket)
@@ -175,7 +173,7 @@ console.log(Object.values(arr.paket)[2])
 
   // handle input change
   const handleInputChange = (e, index) => {
-    console.log(e.target)
+    
     // const { name, value, files } = e.target;
     // let list = [{}]
     const list = [...inputList];
@@ -211,7 +209,7 @@ console.log(Object.values(arr.paket)[2])
     const { name, file } = e;
     const list = [...inputFile];
     list[index]["paketimage"] = e;
-    console.log(list);
+    // console.log(list);
     setInputFile(list);
   };
 
@@ -405,9 +403,9 @@ console.log(Object.values(arr.paket)[2])
                             <Col sm={8}>
                               <Row>
                                 {arr.paket.map((x,i) => {
-                                  console.log(Object.values(x))
+                                  // console.log(Object.values(x))
                                 })}
-                                {console.log(inputList)}
+                                {/* {console.log(inputList)} */}
                                 {inputList.map((x, i) => {
                                   return (
                                     <>

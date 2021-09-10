@@ -47,10 +47,8 @@ export function fetchTeam(token) {
         })
         .then(res => {
             dispatch(getTeamSuccess(res.data.data));
-            console.log(res.data.data)
         })
         .catch(err => {
-            console.log(err)
             if(err.response.status === 401){
                 toast.error("Unauthorized")
                 dispatch(fetchRefreshToken(token))
@@ -89,7 +87,6 @@ export function fetchEditTeam(token, id, name, role, facebook, google, instagram
             }, 2000);
         })
         .catch(err => {
-            console.log(err)
             if(err.response.status === 401){
                 toast.error("Unauthorized")
                 dispatch(fetchRefreshToken(token))
@@ -128,7 +125,6 @@ export function fetchAddTeam(token, name, role, facebook, google, instagram, lin
             }, 2000);
         })
         .catch(err => {
-            console.log(err)
             if(err.response.status === 401){
                 toast.error("Unauthorized")
                 dispatch(fetchRefreshToken(token))

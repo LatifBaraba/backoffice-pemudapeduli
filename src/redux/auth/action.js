@@ -32,7 +32,6 @@ export function fetchLogin(token, username, password) {
             toast.success("Login Success !")
             localStorage.setItem("token", token)
             history.push("/dashboard")
-            console.log(res)
         })
         .catch(err => {
             if (err.response.status === 400) {
@@ -58,10 +57,8 @@ export function fetchLogout(token) {
             dispatch(logoutSuccess(res));
             localStorage.removeItem("token");
             history.push("/login")
-            console.log(res)
         })
         .catch(err => {
-            console.log(err)
             localStorage.removeItem("token");
             history.push("/login")
             dispatch(logoutFailure(err));

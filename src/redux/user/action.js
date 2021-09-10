@@ -67,10 +67,8 @@ export function fetchUser(token) {
         })
         .then(res => {
             dispatch(getUserSuccess(res.data.data));
-            console.log(res.data.data)
         })
         .catch(err => {
-            console.log(err)
             if(err.response.status === 401){
                 toast.error("Unauthorized")
                 dispatch(fetchRefreshToken(token))
@@ -107,10 +105,8 @@ export function fetchRole(token) {
         })
         .then(res => {
             dispatch(getRoleSuccess(res.data.data));
-            console.log(res.data.data)
         })
         .catch(err => {
-            console.log(err)
             dispatch(getRoleFailure(err));
         });
     };
@@ -128,10 +124,8 @@ export function fetchProfile(token) {
         .then(res => {
             dispatch(getProfileSuccess(res.data.data));
             dispatch(getRoleType(res.data.data.role.role_type));
-            console.log(res.data.data)
         })
         .catch(err => {
-            console.log(err)
             dispatch(getProfileFailure(err));
         });
     };
@@ -161,7 +155,6 @@ export function fetchEditProfile(token, username, fullname, email, address) {
             }, 2000);
         })
         .catch(err => {
-            console.log(err)
             if(err.response.status === 401){
                 toast.error("Unauthorized")
                 dispatch(fetchRefreshToken(token))
@@ -196,7 +189,6 @@ export function fetchChangePassword(token, oldPass, newPass, confirmPass) {
             }, 2000);
         })
         .catch(err => {
-            console.log(err)
             if(err.response.status === 401){
                 toast.error("Unauthorized")
                 dispatch(fetchRefreshToken(token))
@@ -238,7 +230,6 @@ export function fetchResetPassword(token, id) {
             }, 2000);
         })
         .catch(err => {
-            console.log(err)
             if(err.response.status === 401){
                 toast.error("Unauthorized")
                 dispatch(fetchRefreshToken(token))
@@ -274,7 +265,6 @@ export function fetchEditUser(token, id, username, fullname, email, address) {
             }, 2000);
         })
         .catch(err => {
-            console.log(err)
             if(err.response.status === 401){
                 toast.error("Unauthorized")
                 dispatch(fetchRefreshToken(token))
@@ -313,7 +303,6 @@ export function fetchAddUser(token, username, fullname, email, address, password
             }, 2000);
         })
         .catch(err => {
-            console.log(err.response.data.message)
             // toast.error(err.response.data.message)
             toast.error("Username, Email or Password not match !")
             if(err.response.status === 401){

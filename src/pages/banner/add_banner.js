@@ -6,10 +6,6 @@ import { fetchAddBanner } from "../../redux/banner/action";
 import { uploadImage } from "../../helper/index";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-// import { Editor } from 'react-draft-wysiwyg';
-// import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
-// import draftToHtml from 'draftjs-to-html';
-// import { EditorState, ContentState, convertToRaw, convertFromRaw } from 'draft-js';
 
 const AddBanner = () => {
 

@@ -30,7 +30,7 @@ const EditDonasi = (props) => {
     dispatch(fetchPenggalang(token));
   }, []);
 
-  console.log(data);
+  // console.log(data);
   const [id, setId] = useState(data.id);
   const [titles, setTitles] = useState(data.title);
   const [sub, setSub] = useState(data.sub_title);
@@ -61,7 +61,7 @@ const EditDonasi = (props) => {
   );
   const { register, handleSubmit, errors } = useForm();
 
-  console.log(penggalangData);
+  // console.log(penggalangData);
 
   const blocksFromHtml = htmlToDraft(data.content);
   const { contentBlocks, entityMap } = blocksFromHtml;
@@ -183,7 +183,7 @@ const EditDonasi = (props) => {
     const { name, value, files } = e.target;
     const list = [...inputList];
     list[index] = parseInt(value);
-    console.log(list);
+    // console.log(list);
     setInputList(list);
   };
 
@@ -471,12 +471,7 @@ const EditDonasi = (props) => {
                           <Row>
                             <Col sm={8}>
                               <Row>
-                                {inputList.map((x, i) => {
-                                  console.log(inputList);
-                                  console.log(inputList.length);
-                                  console.log(i);
-                                  console.log(x);
-
+                                {inputList.map((x, i) => {                                 
                                   return (
                                     <>
                                       <div className="col-md-8 mb-3">

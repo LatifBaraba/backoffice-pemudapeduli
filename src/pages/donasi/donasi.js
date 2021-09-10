@@ -11,14 +11,14 @@ const Donasi = () => {
     const dispatch = useDispatch();
 
     let token = localStorage.getItem('token');
-    console.log(token)
+    // console.log(token)
     useEffect(() => {
         dispatch(fetchDonasi(token))
          
     },[])
 
     const donasiData = useSelector((state) => state.donasiReducer.donasi);
-    console.log(donasiData)
+    // console.log(donasiData)
     const donasiDatas = donasiData.map((donasi, index) => {
         return (
             <tr key={index}>

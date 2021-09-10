@@ -47,7 +47,6 @@ export function fetchBanner(token) {
         })
         .then(res => {
             dispatch(getBannerSuccess(res.data.data));
-            console.log(res.data.data)
         })
         .catch(err => {
             if(err.response.status === 401){
@@ -90,7 +89,6 @@ export function fetchEditBanner(token, id, titles, sub, titContent, titleLeft, t
             }, 2000);
         })
         .catch(err => {
-            console.log(err)
             if(err.response.status === 401){
                 toast.error("Unauthorized")
                 dispatch(fetchRefreshToken(token))
@@ -131,7 +129,6 @@ export function fetchAddBanner(token, titles, sub, titContent, titleLeft, titleR
             }, 2000);
         })
         .catch(err => {
-            console.log(err)
             if(err.response.status === 401){
                 toast.error("Unauthorized")
                 dispatch(fetchRefreshToken(token))

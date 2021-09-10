@@ -54,7 +54,6 @@ export function fetchPenggalang(token) {
         })
         .then(res => {
             dispatch(getPenggalangSuccess(res.data.data));
-            console.log(res.data.data)
         })
         .catch(err => {
             if(err.response.status == 401){
@@ -91,7 +90,6 @@ export function fetchAddPenggalang(token, name, description, newIcon) {
             }, 2000);
         })
         .catch(err => {
-            console.log(err)
             if(err.response.status == 401){
                 toast.error("Unauthorized")
                 dispatch(fetchRefreshToken(token))
@@ -126,7 +124,6 @@ export function fetchEditPenggalang(token, id, name, description, newIcon) {
             }, 2000);
         })
         .catch(err => {
-            console.log(err)
             if(err.response.status == 401){
                 toast.error("Unauthorized")
                 dispatch(fetchRefreshToken(token))
@@ -171,7 +168,6 @@ export function fetchDeletePenggalang(token, id) {
 export function fetchVerifiedPenggalang(token, id) {
     return (dispatch) => {
         dispatch(editPenggalang())
-        console.log(id)
         axios(VerifiedURL+`${id}`, {
             method: 'PUT',            
             headers: {
@@ -189,7 +185,6 @@ export function fetchVerifiedPenggalang(token, id) {
                 
         })
         .catch(err => {
-            console.log(err)
             if(err.response.status == 401){
                 toast.error("Unauthorized")
                 dispatch(fetchRefreshToken(token))

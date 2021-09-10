@@ -49,10 +49,8 @@ export function fetchPaket(token) {
         })
         .then(res => {
             dispatch(getPaketSuccess(res.data.data));
-            console.log(res.data.data)
         })
         .catch(err => {
-            console.log(err)
             if(err.response.status === 401){
                 toast.error("Unauthorized")
                 dispatch(fetchRefreshToken(token))
@@ -90,7 +88,6 @@ export function fetchAddPaket(token, titles, sub, tag, benefit, newThumb, desc, 
             
             for (let index = 0; index < Object.keys(paket).length; index++) {
                 const pakets = paket[index];
-                console.log(pakets)
                 axios(AddPaketURL+`${res.data.data.id}`, {
                     method: 'POST',
                     data: {
@@ -113,7 +110,6 @@ export function fetchAddPaket(token, titles, sub, tag, benefit, newThumb, desc, 
                     
                 })
                 .catch(err => {
-                    console.log(err)
                     if(err.response.status === 401){
                         toast.error("Unauthorized")
                         dispatch(fetchRefreshToken(token))
@@ -125,7 +121,6 @@ export function fetchAddPaket(token, titles, sub, tag, benefit, newThumb, desc, 
             }           
         })
         .catch(err => {
-            console.log(err)
             if(err.response.status === 401){
                 toast.error("Unauthorized")
                 dispatch(fetchRefreshToken(token))
@@ -181,11 +176,8 @@ export function fetchAddPaket(token, titles, sub, tag, benefit, newThumb, desc, 
 // };
 
 export function fetchEditPaket(id, token, titles, sub, tag, benefit, newThumb, desc, newContent, show, id_pp_cp_master_qris, qris_image_url) {
-    console.log(show, 'showwww')
     return (dispatch) => {
         // console.log("masuk edit donasi rutin", donasiType)
-        console.log("masuk edit donasi rutin", id_pp_cp_master_qris)
-        console.log("masuk edit donasi rutin", qris_image_url)
         dispatch(editPaket())
         axios(EditURL+`${id}`, {
             method: 'PUT',
@@ -215,7 +207,6 @@ export function fetchEditPaket(id, token, titles, sub, tag, benefit, newThumb, d
             }, 2000);
         })
         .catch(err => {
-            console.log(err)
             if(err.response.status === 401){
                 toast.error("Unauthorized")
                 dispatch(fetchRefreshToken(token))

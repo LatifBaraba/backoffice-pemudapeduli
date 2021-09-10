@@ -46,10 +46,8 @@ export function fetchDonasiKategori(token) {
         })
         .then(res => {
             dispatch(getDonasiKategoriSuccess(res.data.data));
-            console.log(res.data.data)
         })
         .catch(err => {
-            console.log(err)
             if(err.response.status === 401){
                 toast.error("Unauthorized")
                 dispatch(fetchRefreshToken(token))
@@ -82,7 +80,6 @@ export function fetchEditDonasiKategori(token, id, kategori) {
             }, 2000);
         })
         .catch(err => {
-            console.log(err)
             if(err.response.status === 401){
                 toast.error("Unauthorized")
                 dispatch(fetchRefreshToken(token))
@@ -115,7 +112,6 @@ export function fetchAddDonasiKategori(token, kategori) {
             }, 2000);
         })
         .catch(err => {
-            console.log(err)
             if(err.response.status === 401){
                 toast.error("Unauthorized")
                 dispatch(fetchRefreshToken(token))
@@ -187,10 +183,8 @@ export function fetchPaketList(token, id) {
         })
         .then(res => {
             dispatch(getDonasiPaketListSuccess(res.data.data));
-            console.log(res.data.data)
         })
         .catch(err => {
-            console.log(err)
             if(err.response.status === 401){
                 toast.error("Unauthorized")
                 dispatch(fetchRefreshToken(token))

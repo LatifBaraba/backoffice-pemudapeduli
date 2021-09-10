@@ -23,7 +23,6 @@ const ApproveURL = `${process.env.REACT_APP_BASE_URL}/transaction/applied/`;
 
 export function fetchReminder(token) {
     return (dispatch) => {
-        console.log('masuk redux')
         axios(URL, {
             method: 'POST',
             data: {
@@ -49,7 +48,6 @@ export function fetchReminder(token) {
         })
         .then(res => {
             dispatch(getReminderSuccess(res.data.data));
-            console.log(res.data.data)
         })
         .catch(err => {
             if(err.response.status == 401){
@@ -118,7 +116,6 @@ export function fetchApproveReminder(token, id) {
             window.location.reload();
         })
         .catch(err => {
-            console.log(err)
             if(err.response.status == 401){
                 toast.error("Unauthorized")
                 dispatch(fetchRefreshToken(token))

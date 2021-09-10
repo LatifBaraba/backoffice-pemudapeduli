@@ -25,7 +25,7 @@ const EditDonasiKategori = (props) => {
         }
     }
     const submitButton = () => {
-        if(loadingStatus == false) {
+        if(loadingStatus === false) {
           return (
             <button className="btn btn-pill btn-primary btn-block mt-3 mb-3" type="submit">{"Submit"}</button>
           )

@@ -52,7 +52,6 @@ export function fetchAchievement(token) {
         })
         .then(res => {
             dispatch(getAchievementSuccess(res.data.data));
-            console.log(res.data.data)
         })
         .catch(err => {
             if(err.response.status === 401){
@@ -77,11 +76,9 @@ export function fetchDetailAchievement(token, id) {
             }
         })
         .then(res => { 
-            console.log(res)
             dispatch(GetDetailAchievementSuccess(res.data.data));
         })
         .catch(err => {
-            console.log(err)
             if(err.response.status === 401){
                 toast.error("Unauthorized")
                 dispatch(fetchRefreshToken(token))
@@ -115,7 +112,6 @@ export function fetchAddAchievement(token, name, total, desc) {
             }, 2000);
         })
         .catch(err => {
-            console.log(err)
             if(err.response.status === 401){
                 toast.error("Unauthorized")
                 dispatch(fetchRefreshToken(token))
@@ -150,7 +146,6 @@ export function fetchEditAchievement(token, id, name, total, desc) {
             }, 2000);
         })
         .catch(err => {
-            console.log(err)
             if(err.response.status === 401){
                 toast.error("Unauthorized")
                 dispatch(fetchRefreshToken(token))

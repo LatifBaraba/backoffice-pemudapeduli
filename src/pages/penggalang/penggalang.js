@@ -21,7 +21,7 @@ const Penggalang = (props) => {
     },[])
 
     const handleChange = (nextChecked) => {
-        console.log(nextChecked)
+        // console.log(nextChecked)
         // dispatch(fetchVerifiedPenggalang(token, id))
         setChecked(nextChecked);
       };

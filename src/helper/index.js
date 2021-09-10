@@ -14,14 +14,14 @@ export function uploadImage(files) {
         if(files.size < SIZE) {
             axios.post(URL, formData)
             .then((res) => {
-                console.log(res)
+                // console.log(res)
                 resolve({
                     message: "success",
                     response: res
                 })
             })
             .catch((err) => {
-                console.log(err)
+                // console.log(err)
                 reject({
                     message: "failed",
                     response: err
@@ -35,7 +35,8 @@ export function uploadImage(files) {
 }
 
 export function toIsoString(date) {
-    console.log(date, 'date')
+            // console.log(err)
+            // console.log(date, 'date')
     var tzo = -date.getTimezoneOffset(),
         dif = tzo >= 0 ? '+' : '-',
         pad = function(num) {

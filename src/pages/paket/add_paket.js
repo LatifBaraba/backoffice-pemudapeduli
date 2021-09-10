@@ -150,7 +150,7 @@ const AddDonasi = () => {
     const { name, value, files } = e.target;
     const list = [...inputList];
     list[index][name] = value;
-    console.log(list);
+    // console.log(list);
     setInputList(list);
   };
 
@@ -176,7 +176,7 @@ const AddDonasi = () => {
     const { name, file } = e;
     const list = [...inputFile];
     list[index]["paketimage"] = e;
-    console.log(list);
+    // console.log(list);
     setInputFile(list);
   };
 

@@ -47,10 +47,8 @@ export function fetchPartner(token) {
         })
         .then(res => {
             dispatch(getPartnerSuccess(res.data.data));
-            console.log(res.data.data, "aaaa")
         })
         .catch(err => {
-            console.log(err)
             if(err.response.status === 401){
                 toast.error("Unauthorized")
                 dispatch(fetchRefreshToken(token))
@@ -83,7 +81,6 @@ export function fetchEditPartner(token, id, name, newThumb) {
             }, 2000);
         })
         .catch(err => {
-            console.log(err)
             if(err.response.status === 401){
                 toast.error("Unauthorized")
                 dispatch(fetchRefreshToken(token))
@@ -116,7 +113,6 @@ export function fetchAddPartner(token, name, newThumb) {
             }, 2000);
         })
         .catch(err => {
-            console.log(err)
             if(err.response.status === 401){
                 toast.error("Unauthorized")
                 dispatch(fetchRefreshToken(token))

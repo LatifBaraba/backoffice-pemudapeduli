@@ -52,10 +52,8 @@ export function fetchProgram(token) {
         })
         .then(res => {
             dispatch(getProgramSuccess(res.data.data));
-            console.log(res.data.data)
         })
         .catch(err => {
-            console.log(err)
             if(err.response.status === 401){
                 toast.error("Unauthorized")
                 dispatch(fetchRefreshToken(token))
@@ -78,12 +76,10 @@ export function fetchDetailProgram(token, id) {
             }
         })
         .then(res => { 
-            console.log(res)
             dispatch(getDetailProgramSuccess(res.data.data));
             dispatch(getDetailProgramContent(res.data.data.detail));
         })
         .catch(err => {
-            console.log(err)
             if(err.response.status === 401){
                 toast.error("Unauthorized")
                 dispatch(fetchRefreshToken(token))
@@ -120,7 +116,6 @@ export function fetchEditProgram(token, id, titles, sub, tag, content, newThumb,
             }, 2000);
         })
         .catch(err => {
-            console.log(err)
             if(err.response.status === 401){
                 toast.error("Unauthorized")
                 dispatch(fetchRefreshToken(token))
@@ -158,7 +153,6 @@ export function fetchAddProgram(token, titles, sub, tag, content, newThumb, desc
             }, 2000);
         })
         .catch(err => {
-            console.log(err)
             if(err.response.status === 401){
                 toast.error("Unauthorized")
                 dispatch(fetchRefreshToken(token))

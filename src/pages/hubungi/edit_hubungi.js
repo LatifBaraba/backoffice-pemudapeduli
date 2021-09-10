@@ -30,7 +30,7 @@ const EditHubungi = (props) => {
                     dispatch(fetchEditHubungi(token, id, title, link, newIcon))
                 })
                 .catch(error => {
-                    console.log(error)
+                    // console.log(error)
                     toast.error("Upload Image Failed !");
                 })
             } else {

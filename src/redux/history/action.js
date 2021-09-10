@@ -16,7 +16,6 @@ const AddURL = `${process.env.REACT_APP_BASE_URL}/history/create`;
 
 export function fetchHistory(token) {
     return (dispatch) => {
-        console.log('masuk redux history')
         // axios(URL, {
         //     method: 'POST',
         //     data: {

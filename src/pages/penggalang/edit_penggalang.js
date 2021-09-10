@@ -9,7 +9,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 const EditPenggalang = (props) => {
     const { data } = props.location.state;
-    console.log(data)
+    // console.log(data)
     const [ id, setId] = useState(data.IDPPCPPenggalangDana);
     const [ name, setName] = useState(data.Name);
     const [ description, setDescription] = useState(data.Description);
@@ -30,7 +30,7 @@ const EditPenggalang = (props) => {
                     dispatch(fetchEditPenggalang(token, id, name, description, thumbnail_image_url))
                 })
                 .catch(error => {
-                    console.log(error)
+                    // console.log(error)
                     toast.error("Upload Image Failed !");
                 })
             } else {

@@ -47,10 +47,8 @@ export function fetchDonasi(token) {
         })
         .then(res => {
             dispatch(getDonasiSuccess(res.data.data));
-            console.log(res.data.data)
         })
         .catch(err => {
-            console.log(err)
             if(err.response.status === 401){
                 toast.error("Unauthorized")
                 dispatch(fetchRefreshToken(token))
@@ -64,10 +62,7 @@ export function fetchDonasi(token) {
 
 export function fetchEditDonasi(token, id, titles, sub, tag, startDate, endDate, target, newThumb, desc, newContent, show, ayoBantu, kitaBisa, id_pp_cp_master_qris, qris_image_url, id_pp_cp_penggalang_dana, nominal) {
     return (dispatch) => {
-        console.log(startDate)
-        console.log(endDate)
-        console.log(id_pp_cp_penggalang_dana)
-        console.log(parseInt(target))
+       
         dispatch(editDonasi())
         axios(EditURL+`${id}`, {
             method: 'PUT',
@@ -104,7 +99,6 @@ export function fetchEditDonasi(token, id, titles, sub, tag, startDate, endDate,
             }, 2000);
         })
         .catch(err => {
-            console.log(err)
             if (err.response.status === 401) {
                 toast.error("Unauthorized")
                 dispatch(fetchRefreshToken(token))
@@ -139,7 +133,6 @@ export function fetchAddDonasi(token, titles, sub, tag, startDate, endDate, targ
             seo_url:"",
             nominal: nominal
         }
-        console.log(data)
         dispatch(addDonasi())
         axios(AddURL, {
             method: 'POST',
@@ -175,7 +168,6 @@ export function fetchAddDonasi(token, titles, sub, tag, startDate, endDate, targ
             }, 2000);
         })
         .catch(err => {
-            console.log(err)
             if(err.response.status === 401){
                 toast.error("Unauthorized")
                 dispatch(fetchRefreshToken(token))

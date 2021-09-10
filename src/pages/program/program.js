@@ -16,7 +16,7 @@ const Program = () => {
     },[])
 
     const programData = useSelector((state) => state.programReducer.program);
-    console.log(programData)
+    // console.log(programData)
     const programDatas = programData.map((program, index) => {
         return (
             <tr key={index}>

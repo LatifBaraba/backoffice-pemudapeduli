@@ -17,7 +17,7 @@ const Testimoni = (props) => {
     const testimoniData = useSelector((state) => state.testimoniReducer.testimoni);
     
     const testimoniDatas = testimoniData.map((testimoni, index) => {
-        console.log(testimoni, "data testimoni")
+        // console.log(testimoni, "data testimoni")
         return (
             <tr key={index}>
                 <th scope="row">{index+1}</th>
