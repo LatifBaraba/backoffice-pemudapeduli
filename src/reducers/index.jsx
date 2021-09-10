@@ -19,6 +19,7 @@ import hubungiReducer from '../redux/hubungi/reducer'
 import qrisReducer from '../redux/qris/reducer'
 import historyReducer from '../redux/history/reducer'
 import transactionReducer from '../redux/transaction/reducer'
+import reminderReducer from '../redux/reminder/reducer'
 import donasiKategoriReducer from '../redux/donasiKategori/reducer'
 import paketReducer from '../redux/paket/reducer'
 import penggalangReducer from '../redux/penggalang/reducer'
@@ -46,6 +47,7 @@ const reducers = combineReducers({
     qrisReducer,
     historyReducer,
     transactionReducer,
+    reminderReducer,
     paketReducer,
     penggalangReducer,
     nominalReducer

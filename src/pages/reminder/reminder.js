@@ -4,24 +4,24 @@ import PropTypes from "prop-types";
 import { Edit, Trash, Check, X} from 'react-feather';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchTransaction , fetchDeclineTransaction, fetchApproveTransaction} from "../../redux/transaction/action";
+import { fetchReminder , fetchDeclineReminder, fetchApproveReminder} from "../../redux/reminder/action";
 import { addCommas } from "../../helper/index"
 import Status from '../../components/status/status';
 
-const Transaction = (props) => {
+const Reminder = (props) => {
     const [colour, setColour] = useState("")
     const dispatch = useDispatch();
 
     let token = localStorage.getItem('token');
     useEffect(() => {
-        dispatch(fetchTransaction(token))
+        dispatch(fetchReminder(token))
     },[])
 
-    const transactionData = useSelector((state) => state.transactionReducer.transaction);
+    const reminderData = useSelector((state) => state.reminderReducer.reminder);
 
-    const transactionDatas = transactionData.map((transaction, index) => {
+    const reminderDatas = reminderData.map((reminder, index) => {
         let status_donasi = ""      
-        if(transaction.is_rutin === false){
+        if(reminder.is_rutin === false){
             status_donasi = "One Time"
         } else {
             status_donasi = "Rutin"
@@ -30,32 +30,32 @@ const Transaction = (props) => {
         return (
             <Status
                 index={index}
-                username={transaction.username}
-                email={transaction.email}
-                donasi_title={transaction.donasi_title}
+                username={reminder.username}
+                email={reminder.email}
+                donasi_title={reminder.donasi_title}
                 status_donasi={status_donasi}
-                image_payment_url={transaction.image_payment_url}
-                paid_at={transaction.paid_at}
-                amount={transaction.amount}
-                id={transaction.id}
+                image_payment_url={reminder.image_payment_url}
+                paid_at={reminder.paid_at}
+                amount={reminder.amount}
+                id={reminder.id}
             />      
         //     <tr key={index}>
         //         <th scope="row">{index+1}</th>
-        //         <td>{transaction.email}</td>
-        //         <td>{transaction.donasi_title}</td>
+        //         <td>{reminder.email}</td>
+        //         <td>{reminder.donasi_title}</td>
         //         <td>{status}</td>
-        //         <td>{<img src={transaction.image_payment_url} alt={transaction.image_payment_url} style={{width: 100}}/>}</td>
-        //         <td>{transaction.paid_at}</td>
-        //         <td><badge className={`badge badge-${colour}`}>{transaction.status}</badge></td>
-        //         <td>Rp. {addCommas(transaction.amount)}</td>                
+        //         <td>{<img src={reminder.image_payment_url} alt={reminder.image_payment_url} style={{width: 100}}/>}</td>
+        //         <td>{reminder.paid_at}</td>
+        //         <td><badge className={`badge badge-${colour}`}>{reminder.status}</badge></td>
+        //         <td>Rp. {addCommas(reminder.amount)}</td>                
         //         <td>
         //             {/* <Link to={{
-        //                     pathname: "/edit-transaction",
-        //                     state: { data: transaction }
+        //                     pathname: "/edit-reminder",
+        //                     state: { data: reminder }
         //                 }} className="mr-2"> */}
-        //             <Check className="edit-transaction" style={{cursor:"pointer"}} onClick={() => dispatch(fetchApproveTransaction(token, transaction.id))}/>
+        //             <Check className="edit-reminder" style={{cursor:"pointer"}} onClick={() => dispatch(fetchApproveReminder(token, reminder.id))}/>
         //             {/* </Link> */}
-        //             <X className="delete-transaction" style={{cursor:"pointer"}} onClick={() => dispatch(fetchDeclineTransaction(token, transaction.id))}/>
+        //             <X className="delete-reminder" style={{cursor:"pointer"}} onClick={() => dispatch(fetchDeclineReminder(token, reminder.id))}/>
         //         </td>
         //     </tr>
         )
@@ -84,7 +84,7 @@ const Transaction = (props) => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {transactionDatas}
+                                {reminderDatas}
                             </tbody>
                         </table>
                     </div>
@@ -97,12 +97,12 @@ const Transaction = (props) => {
     );
 }
 
-Transaction.propTypes = {
-    transactionData: PropTypes.array
+Reminder.propTypes = {
+    reminderData: PropTypes.array
 };
   
-Transaction.defaultProps = {
-    transactionData: [
+Reminder.defaultProps = {
+    reminderData: [
         {
             title:"banner1",
             sub_title:"coba banner1",
@@ -140,6 +140,6 @@ Transaction.defaultProps = {
 //     }
 // }
   
-// export default connect(mapStateToProps, null)(Transaction)
+// export default connect(mapStateToProps, null)(Reminder)
 
-export default Transaction
+export default Reminder
