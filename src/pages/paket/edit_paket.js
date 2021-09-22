@@ -56,10 +56,10 @@ const EditDonasi = (props) => {
 //   list.push(datas)
 //   setInputList(list)
 // })
-// console.log(list)
 const arr = Object.assign(data, datas)
-  const [inputList, setInputList] = useState([{ paket_name:"",benefit:"",nominal:""}]);
-  const [inputFile, setInputFile] = useState([{ paketimage: "" }]);
+const [inputList, setInputList] = useState([{ benefit: "", nominal: "" }]);
+
+const [inputFile, setInputFile] = useState([{ paketimage: "" }]);
     // console.log(paket)
   const qrisData = useSelector((state) => state.qrisReducer.qris);
   // const categories = useSelector(
@@ -98,8 +98,34 @@ const arr = Object.assign(data, datas)
     let str = tipebayar;
     const id_pp_cp_master_qris = str.split("_");
     const qris_image_url = str.split("_");
+    let arr = {};
+    let arrobj = [];
 
     if (data !== "") {
+      // console.log(inputFile[0].paketimage)
+      if(inputFile[0].paketimage !== ""){
+        for (let index = 0; index < inputList.length; index++) {
+          uploadImage(inputFile[index].paketimage)
+            .then((message) => {
+              const newThumb = message.response.data.url;
+              let pakets = {
+                paketimage: newThumb,
+              };
+              arr = Object.assign(inputList[index], pakets);
+              arrobj.push(arr);            
+            })
+            .catch((error) => {
+              toast.error("Upload Image Failed !");
+            });
+        }
+      }
+      let paket = {
+        paket: arrobj,
+      };
+      let paket_id = []     
+      paketListRutin.map(id => {
+          paket_id.push(id)
+      })
       if (img !== "") {
         uploadImage(img)
           .then((message) => {
@@ -117,7 +143,9 @@ const arr = Object.assign(data, datas)
                 newContent,
                 show,
                 id_pp_cp_master_qris[0],
-                qris_image_url[1]
+                qris_image_url[1],
+                inputList,
+                paket_id
               )
             );
           })
@@ -139,7 +167,9 @@ const arr = Object.assign(data, datas)
             newContent,
             show,
             id_pp_cp_master_qris[0],
-            qris_image_url[1]
+            qris_image_url[1],
+            inputList,
+            paket_id
           )
         );
       }
@@ -174,16 +204,10 @@ const arr = Object.assign(data, datas)
   // handle input change
   const handleInputChange = (e, index) => {
     
-    // const { name, value, files } = e.target;
-    // let list = [{}]
+    const { name, value, files } = e.target;
     const list = [...inputList];
-    list[index][e.target.name] = e.target.value;
-    // inputList.push(list)
+    list[index][name] = value;
     // console.log(list);
-    // console.log(index);
-    // console.log(name);
-    // console.log(value);
-    // console.log(inputList);
     setInputList(list);
   };
 
@@ -199,8 +223,8 @@ const arr = Object.assign(data, datas)
 
   // handle click event of the Add button
   const handleAddClick = () => {
-    setInputList([...inputList, {  }]);
-    setInputFile([...inputFile, {  }]);
+    setInputList([...inputList, { nama_paket: "", benefit: "", nominal: "" }]);
+    setInputFile([...inputFile, { paketimage: "" }]);
   };
 
   //FIles
@@ -414,7 +438,7 @@ const arr = Object.assign(data, datas)
                                           className="form-control"
                                           name="nama_paket"
                                           placeholder="Nama Paket"
-                                          value={x.paket_name}
+                                          value={x.nama_paket}
                                           onChange={(e) =>
                                             handleInputChange(e, i)
                                           }
