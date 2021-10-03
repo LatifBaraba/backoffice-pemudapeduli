@@ -2,7 +2,7 @@ import React, { Fragment, useState, useEffect } from 'react';
 import Breadcrumb from '../../components/common/breadcrumb';
 import useForm from "react-hook-form";
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchEditProgram, fetchDetailProgram } from "../../redux/program/action";
+import { fetchEditProgram, fetchDetailProgram, fetchEditIncidential } from "../../redux/program/action";
 import { uploadImage } from "../../helper/index";
 import { toast } from 'react-toastify';
 import { Editor } from 'react-draft-wysiwyg';
@@ -13,7 +13,8 @@ import { EditorState, ContentState, convertToRaw, convertFromRaw } from 'draft-j
 
 const EditProgram = (props) => {
 
-    const { data } = props.location.state;
+    const { data, flag} = props.location.state;
+
     const dispatch = useDispatch();
     let token = localStorage.getItem('token');
     
@@ -39,22 +40,43 @@ const EditProgram = (props) => {
     const newContent = draftToHtml(convertToRaw(editorState.getCurrentContent()))
     
     const onSubmit = data => {
-        if (data !== '') {
-            if (img == 'undefined') {
-                uploadImage(img).then(message => {
-                    const newThumb = message.response.data.url;
+        if(flag === "utama") {
+            if (data !== '') {
+                if (img == 'undefined') {
+                    uploadImage(img).then(message => {
+                        const newThumb = message.response.data.url;
+                        dispatch(fetchEditProgram(token, id, titles, sub, tag, newContent, newThumb, desc))
+                    })
+                        .catch(error => {
+                            toast.error("Upload Image Failed !");
+                        })
+                } else {
+                    const newThumb = thumb;
                     dispatch(fetchEditProgram(token, id, titles, sub, tag, newContent, newThumb, desc))
-                })
-                .catch(error => {
-                    toast.error("Upload Image Failed !");
-                })
+                }
             } else {
-                const newThumb = thumb;
-                dispatch(fetchEditProgram(token, id, titles, sub, tag, newContent, newThumb, desc))
+                errors.showMessages();
             }
-        } else {
-            errors.showMessages();
         }
+        if(flag === "incidental") {
+            if (data !== '') {
+                if (img == 'undefined') {
+                    uploadImage(img).then(message => {
+                        const newThumb = message.response.data.url;
+                        dispatch(fetchEditProgram(token, id, titles, sub, tag, newContent, newThumb, desc))
+                    })
+                        .catch(error => {
+                            toast.error("Upload Image Failed !");
+                        })
+                } else {
+                    const newThumb = thumb;
+                    dispatch(fetchEditIncidential(token, id, titles, sub, tag, newContent, newThumb, desc))
+                }
+            } else {
+                errors.showMessages();
+            }
+        }
+     
     }
 
     const submitButton = () => {

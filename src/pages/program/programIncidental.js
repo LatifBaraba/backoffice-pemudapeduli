@@ -3,20 +3,19 @@ import Breadcrumb from '../../components/common/breadcrumb';
 import { Edit, Trash } from 'react-feather';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchProgram, fetchDeleteProgram } from "../../redux/program/action";
+import { fetchProgram, fetchDeleteProgram, fetchProgramIncidental, fetchDeleteIncidental } from "../../redux/program/action";
 
-const Program = () => {
+const ProgramIncidental = () => {
 
     const dispatch = useDispatch();
 
     let token = localStorage.getItem('token');
-    const [state] = useState("utama")
-
+    const [state] = useState("incidental")
     useEffect(() => {
-        dispatch(fetchProgram(token))
+        dispatch(fetchProgramIncidental(token))
     }, [])
 
-    const programData = useSelector((state) => state.programReducer.program);
+    const programData = useSelector((state) => state.programReducer.incidental);
     console.log(programData)
     const programDatas = programData.map((program, index) => {
         return (
@@ -30,11 +29,11 @@ const Program = () => {
                 <td>
                     <Link to={{
                         pathname: "/edit-program",
-                        state: { data: program , flag: state}
+                        state: { data: program, flag: state }
                     }} className="mr-2">
                         <Edit className="edit-program" style={{ cursor: "pointer" }} />
                     </Link>
-                    <Trash className="delete-program" style={{ cursor: "pointer" }} onClick={() => dispatch(fetchDeleteProgram(token, program.id))} />
+                    <Trash className="delete-program" style={{ cursor: "pointer" }} onClick={() => dispatch(fetchDeleteIncidental(token, program.id))} />
                 </td>
             </tr>
         )
@@ -49,14 +48,14 @@ const Program = () => {
                         <div className="card">
                             <div className="card-header">
                                 <div className="row justify-content-between">
-                                    <div className="col-md-3 col-sm-12">
-                                        <h5>Program Utama</h5>
+                                    <div className="col-md-8 col-sm-12">
+                                        <h5>Program Incidental </h5>
                                     </div>
                                     <div className="col-md-3 col-sm-12">
                                         <Link to={{
                                             pathname: "/add-program",
                                             state: state
-                                        }} className="btn btn-success float-right">
+                                        }}  className="btn btn-success float-right">
                                             Add Program
                             </Link>
                                     </div>
@@ -89,4 +88,4 @@ const Program = () => {
     );
 }
 
-export default Program
+export default ProgramIncidental

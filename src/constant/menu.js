@@ -67,8 +67,14 @@ export const MENUITEMS = [
         title: 'Tentang Kami', icon: AtSign, type: 'link', path: '/tentang-kami', active: false
     },
     {
-        title: 'Program', icon: Bookmark, type: 'link', path: '/program', active: false
+        title: 'Program', icon: Bookmark, type: 'sub', active: false, children: [
+            { path: '/program-utama', title: 'Program Utama', type: 'link' },
+            { path: '/program-incidental', title: 'Program Incidental', type: 'link' },
+        ]
     },
+    // {
+    //     title: 'Program', icon: Bookmark, type: 'link', path: '/program', active: false
+    // },
     {
         title: 'Achievement', icon: Award, type: 'link', path: '/achievement', active: false
     },

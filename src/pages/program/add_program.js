@@ -2,7 +2,7 @@ import React, { Fragment, useState } from 'react';
 import Breadcrumb from '../../components/common/breadcrumb';
 import useForm from "react-hook-form";
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchAddProgram } from "../../redux/program/action";
+import { fetchAddIncidental, fetchAddProgram } from "../../redux/program/action";
 import { uploadImage } from "../../helper/index";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -11,8 +11,9 @@ import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import draftToHtml from 'draftjs-to-html';
 import { EditorState, ContentState, convertToRaw, convertFromRaw } from 'draft-js';
 
-const AddProgram = () => {
-
+const AddProgram = (props) => {
+    const dataState = props.location.state;
+ 
     const { register, handleSubmit, errors } = useForm();
     const dispatch = useDispatch();
     
@@ -32,17 +33,34 @@ const AddProgram = () => {
     const content = draftToHtml(convertToRaw(editorState.getCurrentContent()))
 
     const onSubmit = data => {
-        if (data !== '') {
-            uploadImage(img).then(message => {
-                const newThumb = message.response.data.url;
-                dispatch(fetchAddProgram(token, titles, sub, tag, content, newThumb, desc))
-            })
-            .catch(error => {
-                toast.error("Upload Image Failed !");
-            })
-        } else {
-            errors.showMessages();
+        if(dataState === "utama") {
+            if (data !== '') {
+                uploadImage(img).then(message => {
+                    const newThumb = message.response.data.url;
+                    dispatch(fetchAddProgram(token, titles, sub, tag, content, newThumb, desc))
+                })
+                    .catch(error => {
+                        toast.error("Upload Image Failed !");
+                    })
+            } else {
+                errors.showMessages();
+            }
+        } if (dataState === 'incidental'){
+            console.log('masuk 2')
+            if (data !== '') {
+                uploadImage(img).then(message => {
+                    const newThumb = message.response.data.url;
+                    dispatch(fetchAddIncidental(token, titles, sub, tag, content, newThumb, desc))
+                })
+                    .catch(error => {
+                        toast.error("Upload Image Failed !");
+                    })
+            } else {
+                errors.showMessages();
+            }
         }
+
+      
     }
 
     const submitButton = () => {

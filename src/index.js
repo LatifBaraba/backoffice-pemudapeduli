@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 // import { Redirect } from "react-router-dom";
 import './index.scss';
 
-import { BrowserRouter , Route, Switch } from 'react-router-dom';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { ScrollContext } from 'react-router-scroll-4';
 import * as serviceWorker from './serviceWorker';
 import { Router } from 'react-router'
@@ -82,6 +82,7 @@ import EditKontak from './pages/kontak/edit_kontak';
 import Profile from './pages/user/profile';
 import ChangePassword from './pages/user/change_password';
 import { Redirect } from 'react-router-dom';
+import ProgramIncidental from './pages/program/programIncidental';
 // sample page
 // import SupportTicket from './components/support-ticket/supportTicket';
 
@@ -94,10 +95,10 @@ function Root() {
         const color = localStorage.getItem('color')
         document.body.classList.add(layout);
         document.getElementById("color").setAttribute("href", `${process.env.PUBLIC_URL}/assets/css/${color}.css`);
-        
+
         const isToken = localStorage.getItem('token');
-        
-        if(isToken){
+
+        if (isToken) {
             setAuthenticated(true)
         }
     }, []);
@@ -109,86 +110,88 @@ function Root() {
                     <ScrollContext>
                         <Switch>
                             {/* <Fragment> */}
-                                    <Route path={`${process.env.PUBLIC_URL}/login`} component={Login} />
-                                    {/* <Redirect from="/" to="/dashboard"/> */}
-                                    <Route exact path="/">
-                                        {/* {authenticated ? <Redirect to="/dashboard" /> : <Redirect to="/login" />} */}
-                                        {<Redirect to="/login" />}
-                                    </Route>
-                                    {authenticated !== null ?
-                                        <App>
-                                            <Route exact path={`${process.env.PUBLIC_URL}/dashboard`} component={Default} />
-                                            <Route path={`${process.env.PUBLIC_URL}/user`} component={User} />
-                                            <Route path={`${process.env.PUBLIC_URL}/add-user`} component={AddUser} />
-                                            <Route path={`${process.env.PUBLIC_URL}/edit-user`} component={EditUser} />
-                                            <Route path={`${process.env.PUBLIC_URL}/profile`} component={Profile} />
-                                            <Route path={`${process.env.PUBLIC_URL}/change-password`} component={ChangePassword} />
-                                            <Route path={`${process.env.PUBLIC_URL}/banner`} component={Banner} />
-                                            <Route path={`${process.env.PUBLIC_URL}/add-banner`} component={AddBanner} />
-                                            <Route path={`${process.env.PUBLIC_URL}/edit-banner`} component={EditBanner} />
-                                            <Route path={`${process.env.PUBLIC_URL}/tentang-kami`} component={Tentang} />
-                                            <Route path={`${process.env.PUBLIC_URL}/add-tentangkami`} component={AddTentangKami} />
-                                            <Route path={`${process.env.PUBLIC_URL}/edit-tentangkami`} component={EditTentangKami} />
-                                            <Route path={`${process.env.PUBLIC_URL}/album`} component={Album} />
-                                            <Route path={`${process.env.PUBLIC_URL}/add-album`} component={AddAlbum} />
-                                            <Route path={`${process.env.PUBLIC_URL}/edit-album`} component={EditAlbum} />
-                                            <Route path={`${process.env.PUBLIC_URL}/berita`} component={Berita} />
-                                            <Route path={`${process.env.PUBLIC_URL}/add-berita`} component={AddBerita} />
-                                            <Route path={`${process.env.PUBLIC_URL}/edit-berita`} component={EditBerita} />
-                                            <Route path={`${process.env.PUBLIC_URL}/donasi-onetime`} component={Donasi} />
-                                            <Route path={`${process.env.PUBLIC_URL}/add-donasi-onetime`} component={AddDonasi} />
-                                            <Route path={`${process.env.PUBLIC_URL}/edit-donasi-onetime`} component={EditDonasi} />
-                                            <Route path={`${process.env.PUBLIC_URL}/donasi-kategori`} component={DonasiKategori} />
-                                            <Route path={`${process.env.PUBLIC_URL}/add-donasi-kategori`} component={AddDonasiKategori} />
-                                            <Route path={`${process.env.PUBLIC_URL}/edit-donasi-kategori`} component={EditDonasiKategori} />
-                                            <Route path={`${process.env.PUBLIC_URL}/paket`} component={Paket} />
-                                            <Route path={`${process.env.PUBLIC_URL}/add-paket`} component={AddPaket} />
-                                            <Route path={`${process.env.PUBLIC_URL}/edit-paket`} component={EditPaket} />
-                                            <Route path={`${process.env.PUBLIC_URL}/program`} component={Program} />
-                                            <Route path={`${process.env.PUBLIC_URL}/add-program`} component={AddProgram} />
-                                            <Route path={`${process.env.PUBLIC_URL}/edit-program`} component={EditProgram} />
-                                            <Route path={`${process.env.PUBLIC_URL}/partner`} component={Partner} />
-                                            <Route path={`${process.env.PUBLIC_URL}/add-partner`} component={AddPartner} />
-                                            <Route path={`${process.env.PUBLIC_URL}/edit-partner`} component={EditPartner} />
-                                            <Route path={`${process.env.PUBLIC_URL}/team`} component={Team} />
-                                            <Route path={`${process.env.PUBLIC_URL}/add-team`} component={AddTeam} />
-                                            <Route path={`${process.env.PUBLIC_URL}/edit-team`} component={EditTeam} />
-                                            <Route path={`${process.env.PUBLIC_URL}/testimoni`} component={Testimoni} />
-                                            <Route path={`${process.env.PUBLIC_URL}/add-testimoni`} component={AddTestimoni} />
-                                            <Route path={`${process.env.PUBLIC_URL}/edit-testimoni`} component={EditTestimoni} />
-                                            <Route path={`${process.env.PUBLIC_URL}/beneficaries`} component={Beneficaries} />
-                                            <Route path={`${process.env.PUBLIC_URL}/add-beneficaries`} component={AddBeneficaries} />
-                                            <Route path={`${process.env.PUBLIC_URL}/edit-beneficaries`} component={EditBeneficaries} />
-                                            <Route path={`${process.env.PUBLIC_URL}/achievement`} exact component={Achievement} />
-                                            <Route path={`${process.env.PUBLIC_URL}/add-achievement`} component={AddAchievement} />
-                                            <Route path={`${process.env.PUBLIC_URL}/edit-achievement`} component={EditAchievement} />
-                                            <Route path={`${process.env.PUBLIC_URL}/kontak`} exact component={Kontak} />
-                                            <Route path={`${process.env.PUBLIC_URL}/add-kontak`} component={AddKontak} />
-                                            <Route path={`${process.env.PUBLIC_URL}/edit-kontak`} component={EditKontak} />
-                                            <Route path={`${process.env.PUBLIC_URL}/menu`} exact component={Menu} />
-                                            <Route path={`${process.env.PUBLIC_URL}/add-menu`} component={AddMenu} />
-                                            <Route path={`${process.env.PUBLIC_URL}/edit-menu`} component={EditMenu} />
-                                            <Route path={`${process.env.PUBLIC_URL}/hubungi`} exact component={Hubungi} />
-                                            <Route path={`${process.env.PUBLIC_URL}/add-hubungi`} component={AddHubungi} />
-                                            <Route path={`${process.env.PUBLIC_URL}/edit-hubungi`} component={EditHubungi} />
-                                            <Route path={`${process.env.PUBLIC_URL}/qris`} exact component={Qris} />
-                                            <Route path={`${process.env.PUBLIC_URL}/add-qris`} component={AddQris} />
-                                            <Route path={`${process.env.PUBLIC_URL}/edit-qris`} component={EditQris} />
-                                            <Route path={`${process.env.PUBLIC_URL}/history`} component={History} />
-                                            <Route path={`${process.env.PUBLIC_URL}/detail-history`} component={DetailHistory} />
-                                            <Route path={`${process.env.PUBLIC_URL}/transaction`} component={Transaction} />
-                                            {/* <Route exact path={`${process.env.PUBLIC_URL}/dashboard/default`} component={Default} />
+                            <Route path={`${process.env.PUBLIC_URL}/login`} component={Login} />
+                            {/* <Redirect from="/" to="/dashboard"/> */}
+                            <Route exact path="/">
+                                {/* {authenticated ? <Redirect to="/dashboard" /> : <Redirect to="/login" />} */}
+                                {<Redirect to="/login" />}
+                            </Route>
+                            {authenticated !== null ?
+                                <App>
+                                    <Route exact path={`${process.env.PUBLIC_URL}/dashboard`} component={Default} />
+                                    <Route path={`${process.env.PUBLIC_URL}/user`} component={User} />
+                                    <Route path={`${process.env.PUBLIC_URL}/add-user`} component={AddUser} />
+                                    <Route path={`${process.env.PUBLIC_URL}/edit-user`} component={EditUser} />
+                                    <Route path={`${process.env.PUBLIC_URL}/profile`} component={Profile} />
+                                    <Route path={`${process.env.PUBLIC_URL}/change-password`} component={ChangePassword} />
+                                    <Route path={`${process.env.PUBLIC_URL}/banner`} component={Banner} />
+                                    <Route path={`${process.env.PUBLIC_URL}/add-banner`} component={AddBanner} />
+                                    <Route path={`${process.env.PUBLIC_URL}/edit-banner`} component={EditBanner} />
+                                    <Route path={`${process.env.PUBLIC_URL}/tentang-kami`} component={Tentang} />
+                                    <Route path={`${process.env.PUBLIC_URL}/add-tentangkami`} component={AddTentangKami} />
+                                    <Route path={`${process.env.PUBLIC_URL}/edit-tentangkami`} component={EditTentangKami} />
+                                    <Route path={`${process.env.PUBLIC_URL}/album`} component={Album} />
+                                    <Route path={`${process.env.PUBLIC_URL}/add-album`} component={AddAlbum} />
+                                    <Route path={`${process.env.PUBLIC_URL}/edit-album`} component={EditAlbum} />
+                                    <Route path={`${process.env.PUBLIC_URL}/berita`} component={Berita} />
+                                    <Route path={`${process.env.PUBLIC_URL}/add-berita`} component={AddBerita} />
+                                    <Route path={`${process.env.PUBLIC_URL}/edit-berita`} component={EditBerita} />
+                                    <Route path={`${process.env.PUBLIC_URL}/donasi-onetime`} component={Donasi} />
+                                    <Route path={`${process.env.PUBLIC_URL}/add-donasi-onetime`} component={AddDonasi} />
+                                    <Route path={`${process.env.PUBLIC_URL}/edit-donasi-onetime`} component={EditDonasi} />
+                                    <Route path={`${process.env.PUBLIC_URL}/donasi-kategori`} component={DonasiKategori} />
+                                    <Route path={`${process.env.PUBLIC_URL}/add-donasi-kategori`} component={AddDonasiKategori} />
+                                    <Route path={`${process.env.PUBLIC_URL}/edit-donasi-kategori`} component={EditDonasiKategori} />
+                                    <Route path={`${process.env.PUBLIC_URL}/paket`} component={Paket} />
+                                    <Route path={`${process.env.PUBLIC_URL}/add-paket`} component={AddPaket} />
+                                    <Route path={`${process.env.PUBLIC_URL}/edit-paket`} component={EditPaket} />
+                                    <Route path={`${process.env.PUBLIC_URL}/program-utama`} component={Program} />
+                                    <Route path={`${process.env.PUBLIC_URL}/program-incidental`} component={ProgramIncidental} />
+
+                                    <Route path={`${process.env.PUBLIC_URL}/add-program`} component={AddProgram} />
+                                    <Route path={`${process.env.PUBLIC_URL}/edit-program`} component={EditProgram} />
+                                    <Route path={`${process.env.PUBLIC_URL}/partner`} component={Partner} />
+                                    <Route path={`${process.env.PUBLIC_URL}/add-partner`} component={AddPartner} />
+                                    <Route path={`${process.env.PUBLIC_URL}/edit-partner`} component={EditPartner} />
+                                    <Route path={`${process.env.PUBLIC_URL}/team`} component={Team} />
+                                    <Route path={`${process.env.PUBLIC_URL}/add-team`} component={AddTeam} />
+                                    <Route path={`${process.env.PUBLIC_URL}/edit-team`} component={EditTeam} />
+                                    <Route path={`${process.env.PUBLIC_URL}/testimoni`} component={Testimoni} />
+                                    <Route path={`${process.env.PUBLIC_URL}/add-testimoni`} component={AddTestimoni} />
+                                    <Route path={`${process.env.PUBLIC_URL}/edit-testimoni`} component={EditTestimoni} />
+                                    <Route path={`${process.env.PUBLIC_URL}/beneficaries`} component={Beneficaries} />
+                                    <Route path={`${process.env.PUBLIC_URL}/add-beneficaries`} component={AddBeneficaries} />
+                                    <Route path={`${process.env.PUBLIC_URL}/edit-beneficaries`} component={EditBeneficaries} />
+                                    <Route path={`${process.env.PUBLIC_URL}/achievement`} exact component={Achievement} />
+                                    <Route path={`${process.env.PUBLIC_URL}/add-achievement`} component={AddAchievement} />
+                                    <Route path={`${process.env.PUBLIC_URL}/edit-achievement`} component={EditAchievement} />
+                                    <Route path={`${process.env.PUBLIC_URL}/kontak`} exact component={Kontak} />
+                                    <Route path={`${process.env.PUBLIC_URL}/add-kontak`} component={AddKontak} />
+                                    <Route path={`${process.env.PUBLIC_URL}/edit-kontak`} component={EditKontak} />
+                                    <Route path={`${process.env.PUBLIC_URL}/menu`} exact component={Menu} />
+                                    <Route path={`${process.env.PUBLIC_URL}/add-menu`} component={AddMenu} />
+                                    <Route path={`${process.env.PUBLIC_URL}/edit-menu`} component={EditMenu} />
+                                    <Route path={`${process.env.PUBLIC_URL}/hubungi`} exact component={Hubungi} />
+                                    <Route path={`${process.env.PUBLIC_URL}/add-hubungi`} component={AddHubungi} />
+                                    <Route path={`${process.env.PUBLIC_URL}/edit-hubungi`} component={EditHubungi} />
+                                    <Route path={`${process.env.PUBLIC_URL}/qris`} exact component={Qris} />
+                                    <Route path={`${process.env.PUBLIC_URL}/add-qris`} component={AddQris} />
+                                    <Route path={`${process.env.PUBLIC_URL}/edit-qris`} component={EditQris} />
+                                    <Route path={`${process.env.PUBLIC_URL}/history`} component={History} />
+                                    <Route path={`${process.env.PUBLIC_URL}/detail-history`} component={DetailHistory} />
+                                    <Route path={`${process.env.PUBLIC_URL}/transaction`} component={Transaction} />
+                                    {/* <Route exact path={`${process.env.PUBLIC_URL}/dashboard/default`} component={Default} />
                                             <Route path={`${process.env.PUBLIC_URL}/dashboard/ecommerce`} component={Ecommerce} />
                                             <Route path={`${process.env.PUBLIC_URL}/dashboard/university`} component={University} />
                                             <Route path={`${process.env.PUBLIC_URL}/dashboard/crypto`} component={CryptoComponent} />
                                             <Route path={`${process.env.PUBLIC_URL}/dashboard/project`} component={Project} />
                                             */}
-                                            {/* Pricing */}
-                                            {/* <Route path={`${process.env.PUBLIC_URL}/support-ticket/supportTicket`} component={SupportTicket} /> */}
-                                        </App>
-                                     :
-                                        <Redirect to={`${process.env.PUBLIC_URL}/login`} />
-                                    } 
+                                    {/* Pricing */}
+                                    {/* <Route path={`${process.env.PUBLIC_URL}/support-ticket/supportTicket`} component={SupportTicket} /> */}
+                                </App>
+                                :
+                                <Redirect to={`${process.env.PUBLIC_URL}/login`} />
+                            }
                             {/* </Fragment> */}
                         </Switch>
                     </ScrollContext>

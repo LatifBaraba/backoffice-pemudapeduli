@@ -18,7 +18,7 @@ const Donasi = () => {
 
     const donasiData = useSelector((state) => state.donasiReducer.donasi);
 
-    const donasiDatas = donasiData.map((donasi, index) => {
+    const donasiDatas = donasiData && donasiData.map((donasi, index) => {
         return (
             <tr key={index}>
                 <th scope="row">{index+1}</th>

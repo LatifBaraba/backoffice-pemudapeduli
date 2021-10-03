@@ -2,6 +2,8 @@ import {
     GET_PROGRAM,
     GET_PROGRAM_SUCCESS,
     GET_PROGRAM_FAILURE,
+    GET_PROGRAM_INCIDENTAL_SUCCESS,
+    GET_PROGRAM_INCIDENTAL_FAILURE,
     GET_DETAIL_PROGRAM,
     GET_DETAIL_PROGRAM_SUCCESS,
     GET_DETAIL_PROGRAM_FAILURE,
@@ -20,6 +22,7 @@ import {
 const initialState = {
     loading: false,
     program: [],
+    incidental: [],
     content: [],
     error: null
 };
@@ -39,6 +42,18 @@ export default function programReducer(state = initialState, action) {
                 program: action.payload
             };
         case GET_PROGRAM_FAILURE:
+            return {
+                ...state,
+                loading: false,
+            };
+        case GET_PROGRAM_INCIDENTAL_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                error: null,
+                incidental: action.payload
+            };
+        case GET_PROGRAM_INCIDENTAL_FAILURE:
             return {
                 ...state,
                 loading: false,
