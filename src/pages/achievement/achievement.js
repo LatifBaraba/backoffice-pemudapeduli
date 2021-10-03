@@ -15,7 +15,7 @@ const Achievement = () => {
     },[])
 
     const achievementData = useSelector((state) => state.achievementReducer.achievement);
-    console.log(achievementData)
+    // console.log(achievementData)
     const achievementDatas = achievementData.map((achievement, index) => {
         return (
             <tr key={index}>

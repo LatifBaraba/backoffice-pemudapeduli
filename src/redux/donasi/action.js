@@ -26,15 +26,15 @@ export function fetchDonasi(token) {
             method: 'POST',
             data: {
                 limit: "100",
-                offset: "0",
+                offset: "1",
                 filters: [
                     {
                         field: "is_deleted",
                         keyword: "false"
-                    }
+                    },
                 ],
                 order: "created_at",
-                sort: "ASC",
+                sort: "DESC",
                 created_at_from: "",
                 created_at_to: "",
                 publish_at_from: "",
@@ -47,10 +47,8 @@ export function fetchDonasi(token) {
         })
         .then(res => {
             dispatch(getDonasiSuccess(res.data.data));
-            console.log(res.data.data)
         })
         .catch(err => {
-            console.log(err)
             if(err.response.status === 401){
                 toast.error("Unauthorized")
                 dispatch(fetchRefreshToken(token))
@@ -62,11 +60,9 @@ export function fetchDonasi(token) {
     };
 };
 
-export function fetchEditDonasi(token, id, titles, sub, tag, startDate, endDate, target, newThumb, desc, newContent, show, ayoBantu, kitaBisa, id_pp_cp_master_qris, qris_image_url) {
+export function fetchEditDonasi(token, id, titles, sub, tag, startDate, endDate, target, newThumb, desc, newContent, show, ayoBantu, kitaBisa, id_pp_cp_master_qris, qris_image_url, id_pp_cp_penggalang_dana, nominal) {
     return (dispatch) => {
-        console.log(startDate)
-        console.log(endDate)
-        console.log(parseInt(target))
+       
         dispatch(editDonasi())
         axios(EditURL+`${id}`, {
             method: 'PUT',
@@ -85,7 +81,10 @@ export function fetchEditDonasi(token, id, titles, sub, tag, startDate, endDate,
                 ayobantu_link: ayoBantu,
                 kitabisa_link: kitaBisa,
                 id_pp_cp_master_qris: id_pp_cp_master_qris,
-                qris_image_url:qris_image_url
+                qris_image_url:qris_image_url,
+                id_pp_cp_penggalang_dana:id_pp_cp_penggalang_dana,
+                seo_url:"",
+                nominal:nominal
             },
             headers: {
                 "pp-token": `${token}`,
@@ -100,7 +99,6 @@ export function fetchEditDonasi(token, id, titles, sub, tag, startDate, endDate,
             }, 2000);
         })
         .catch(err => {
-            console.log(err)
             if (err.response.status === 401) {
                 toast.error("Unauthorized")
                 dispatch(fetchRefreshToken(token))
@@ -114,8 +112,27 @@ export function fetchEditDonasi(token, id, titles, sub, tag, startDate, endDate,
     };
 };
 
-export function fetchAddDonasi(token, titles, sub, tag, startDate, endDate, target, newThumb, desc, content, ayoBantu, kitaBisa, id_pp_cp_master_qris, qris_image_url) {
+export function fetchAddDonasi(token, titles, sub, tag, startDate, endDate, target, newThumb, desc, content, ayoBantu, kitaBisa, id_pp_cp_master_qris, qris_image_url, id_pp_cp_penggalang_dana, nominal) {
     return (dispatch) => {
+        let data= {
+            title: titles,
+            sub_title: sub,
+            tag: tag,
+            // donasi_type: donasiType,
+            valid_from: startDate,
+            valid_to: endDate,
+            target: parseInt(target),
+            description: desc,
+            thumbnail_image_url: newThumb,
+            content: content,
+            ayobantu_link: ayoBantu,
+            kitabisa_link: kitaBisa,
+            id_pp_cp_master_qris: id_pp_cp_master_qris,
+            qris_image_url:qris_image_url,
+            id_pp_cp_penggalang_dana:id_pp_cp_penggalang_dana,
+            seo_url:"",
+            nominal: nominal
+        }
         dispatch(addDonasi())
         axios(AddURL, {
             method: 'POST',
@@ -133,7 +150,10 @@ export function fetchAddDonasi(token, titles, sub, tag, startDate, endDate, targ
                 ayobantu_link: ayoBantu,
                 kitabisa_link: kitaBisa,
                 id_pp_cp_master_qris: id_pp_cp_master_qris,
-                qris_image_url:qris_image_url
+                qris_image_url:qris_image_url,
+                id_pp_cp_penggalang_dana:id_pp_cp_penggalang_dana,
+                seo_url:"",
+                nominal: nominal
             },
             headers: {
                 "pp-token": `${token}`,
@@ -148,7 +168,6 @@ export function fetchAddDonasi(token, titles, sub, tag, startDate, endDate, targ
             }, 2000);
         })
         .catch(err => {
-            console.log(err)
             if(err.response.status === 401){
                 toast.error("Unauthorized")
                 dispatch(fetchRefreshToken(token))

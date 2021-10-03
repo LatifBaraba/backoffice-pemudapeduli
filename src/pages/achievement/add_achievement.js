@@ -3,8 +3,6 @@ import Breadcrumb from '../../components/common/breadcrumb';
 import useForm from "react-hook-form";
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchAddAchievement } from "../../redux/achievement/action";
-import { uploadImage } from "../../helper/index";
-import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const AddAchievement = () => {

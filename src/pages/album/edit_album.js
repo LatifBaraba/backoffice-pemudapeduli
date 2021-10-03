@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect } from 'react';
+import React, { Fragment, useState } from 'react';
 import Breadcrumb from '../../components/common/breadcrumb';
 import useForm from "react-hook-form";
 import { useDispatch, useSelector } from 'react-redux';
@@ -6,7 +6,6 @@ import { fetchEditAlbum } from "../../redux/album/action";
 import { uploadImage } from "../../helper/index";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { SubmitButton } from 'react-dropzone-uploader';
 
 const EditAlbum = (props) => {
     const { data } = props.location.state;
@@ -32,7 +31,7 @@ const EditAlbum = (props) => {
                     dispatch(fetchEditAlbum(token, id, titles, sub, tag, newThumb))
                 })
                 .catch(error => {
-                    console.log(error)
+                    // console.log(error)
                     toast.error("Upload Image Failed !");
                 })
             } else {
@@ -45,7 +44,7 @@ const EditAlbum = (props) => {
     }
 
     const submitButton = () => {
-        if(loadingStatus == false) {
+        if(loadingStatus === false) {
           return (
             <button className="btn btn-pill btn-primary btn-block mt-3 mb-3" type="submit">{"Submit"}</button>
           )

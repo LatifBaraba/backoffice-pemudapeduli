@@ -15,9 +15,9 @@ const Team = (props) => {
     },[])
 
     const teamData = useSelector((state) => state.teamReducer.team);
-    console.log(teamData, "data")
+    // console.log(teamData, "data")
     const teamDatas = teamData.map((team, index) => {
-        console.log(team, "data team")
+        // console.log(team, "data team")
         return (
             <tr key={index}>
                 <th scope="row">{index+1}</th>

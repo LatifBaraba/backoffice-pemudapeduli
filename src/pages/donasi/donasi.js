@@ -1,7 +1,7 @@
 import React, { Fragment, useEffect } from 'react';
 import Breadcrumb from '../../components/common/breadcrumb';
 import PropTypes from "prop-types";
-import { Edit, Trash} from 'react-feather';
+import { Edit, Trash, CheckCircle} from 'react-feather';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchDonasi, fetchDeleteDonasi } from "../../redux/donasi/action";
@@ -11,14 +11,15 @@ const Donasi = () => {
     const dispatch = useDispatch();
 
     let token = localStorage.getItem('token');
-    
+    // console.log(token)
     useEffect(() => {
         dispatch(fetchDonasi(token))
+         
     },[])
 
     const donasiData = useSelector((state) => state.donasiReducer.donasi);
-
-    const donasiDatas = donasiData && donasiData.map((donasi, index) => {
+    // console.log(donasiData)
+    const donasiDatas = donasiData.map((donasi, index) => {
         return (
             <tr key={index}>
                 <th scope="row">{index+1}</th>
@@ -28,7 +29,8 @@ const Donasi = () => {
                 <td>{donasi.tag}</td>
                 {/* <td>{donasi.donasi_type}</td> */}
                 <td className="text-center"><img src={donasi.thumbnail_image_url} alt={donasi.thumbnail_image_url} style={{width: 100}}/></td>
-                <td className="text-center">{donasi.is_show ? <span class="badge badge-primary">Yes</span> : <span class="badge badge-warning">No</span>}</td>
+                <td className="text-center">{donasi.is_show ? <span className="badge badge-primary">Yes</span> : <span className="badge badge-warning">No</span>}</td>
+                <td className="text-center">{donasi.penggalang_dana.Name} {donasi.penggalang_dana.IsVerified ? <CheckCircle color="blue" style={{width:"15"}}></CheckCircle> : ''}</td>
                 <td>
                     <Link to={{
                             pathname: "/edit-donasi-onetime",
@@ -73,6 +75,7 @@ const Donasi = () => {
                                     {/* <th scope="col">{"Donasi-Type"}</th> */}
                                     <th scope="col">{"Thumbnail-image"}</th>
                                     <th scope="col">{"Show in Comprof"}</th>
+                                    <th scope="col">{"Penggalang"}</th>
                                     <th scope="col">{"Action"}</th>
                                 </tr>
                             </thead>

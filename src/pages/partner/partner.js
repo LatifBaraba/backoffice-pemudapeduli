@@ -15,7 +15,7 @@ const Partner = (props) => {
     },[])
 
     const partnerData = useSelector((state) => state.partnerReducer.partner);
-    console.log(partnerData)
+    // console.log(partnerData)
     const partnerDatas = partnerData.map((partner, index) => {
         return (
             <tr key={index}>

@@ -47,7 +47,6 @@ export function fetchBeneficaries(token) {
         })
         .then(res => {
             dispatch(getBeneficariesSuccess(res.data.data));
-            console.log(res.data.data)
         })
         .catch(err => {
             if(err.response.status === 401){
@@ -86,7 +85,6 @@ export function fetchEditBeneficaries(token, id, newThumb) {
             }, 2000);
         })
         .catch(err => {
-            console.log(err)
             if(err.response.status === 401){
                 toast.error("Unauthorized")
                 dispatch(fetchRefreshToken(token))
@@ -123,7 +121,6 @@ export function fetchAddBeneficaries(token, newThumb) {
             }, 2000);
         })
         .catch(err => {
-            console.log(err)
             if(err.response.status === 401){
                 toast.error("Unauthorized")
                 dispatch(fetchRefreshToken(token))

@@ -8,7 +8,9 @@ import { GET_DONASI_KATEGORI,
     EDIT_DONASI_KATEGORI_SUCCESS,
     EDIT_DONASI_KATEGORI_FAILURE,
     DELETE_DONASI_KATEGORI_SUCCESS,
-    DELETE_DONASI_KATEGORI_FAILURE
+    DELETE_DONASI_KATEGORI_FAILURE,
+    GET_DONASI_PAKET_LIST_SUCCESS,
+    GET_DONASI_PAKET_LIST_FAILURE
         } from '../actionTypes';
 import axios from 'axios';
 import { fetchToken, fetchRefreshToken } from "../token/action";
@@ -19,6 +21,7 @@ import 'react-toastify/dist/ReactToastify.css';
 const URL = `${process.env.REACT_APP_BASE_URL}/kategori/program-donasi-rutin/list`;
 const EditURL = `${process.env.REACT_APP_BASE_URL}/kategori/program-donasi-rutin/`;
 const AddURL = `${process.env.REACT_APP_BASE_URL}/kategori/program-donasi-rutin/create`;
+const ListPaketURL = `${process.env.REACT_APP_BASE_URL}/program-donasi-rutin/paket/list`;
 
 export function fetchDonasiKategori(token) {
     return (dispatch) => {
@@ -43,10 +46,8 @@ export function fetchDonasiKategori(token) {
         })
         .then(res => {
             dispatch(getDonasiKategoriSuccess(res.data.data));
-            console.log(res.data.data)
         })
         .catch(err => {
-            console.log(err)
             if(err.response.status === 401){
                 toast.error("Unauthorized")
                 dispatch(fetchRefreshToken(token))
@@ -79,7 +80,6 @@ export function fetchEditDonasiKategori(token, id, kategori) {
             }, 2000);
         })
         .catch(err => {
-            console.log(err)
             if(err.response.status === 401){
                 toast.error("Unauthorized")
                 dispatch(fetchRefreshToken(token))
@@ -112,7 +112,6 @@ export function fetchAddDonasiKategori(token, kategori) {
             }, 2000);
         })
         .catch(err => {
-            console.log(err)
             if(err.response.status === 401){
                 toast.error("Unauthorized")
                 dispatch(fetchRefreshToken(token))
@@ -152,6 +151,51 @@ export function fetchDeleteDonasiKategori(token, id) {
         });
     };
 };
+
+export function fetchPaketList(token, id) {
+    return (dispatch) => {
+        axios(ListPaketURL, {
+            method: 'POST',
+            data: {
+                limit: "25",
+                offset: "0",
+                filters: [
+                    {
+                        field: "is_deleted",
+                        keyword: "false"
+                    },
+                    {
+                        field:"id_pp_cp_program_donasi_rutin",
+                        keyword:`${id}`
+                    }
+                ],
+                order: "created_at",
+                sort: "DESC",
+                created_at_from: "",
+                created_at_to: "",
+                // publish_at_from: "",
+                // publish_at_to: ""
+            },
+            headers: {
+                "pp-token": `${token}`,
+                "Content-type": "application/json"
+            }
+        })
+        .then(res => {
+            dispatch(getDonasiPaketListSuccess(res.data.data));
+        })
+        .catch(err => {
+            if(err.response.status === 401){
+                toast.error("Unauthorized")
+                dispatch(fetchRefreshToken(token))
+                localStorage.removeItem("token");
+                history.push('/login')
+            }
+            dispatch(getDonasiPaketListFailure(err));
+        });
+    };
+};
+
 
 // Get DonasiKategori
 const getDonasiKategoriSuccess = (payload) => ({
@@ -203,4 +247,14 @@ const deleteDonasiKategoriSuccess = (payload) => ({
 
 const deleteDonasiKategoriFailure = () => ({
     type: DELETE_DONASI_KATEGORI_FAILURE
+});
+
+// Get Paket
+const getDonasiPaketListSuccess = (payload) => ({
+    type: GET_DONASI_PAKET_LIST_SUCCESS,
+    payload
+});
+
+const getDonasiPaketListFailure = () => ({
+    type: GET_DONASI_PAKET_LIST_FAILURE
 });

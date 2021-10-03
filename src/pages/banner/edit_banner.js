@@ -6,20 +6,11 @@ import { fetchEditBanner } from "../../redux/banner/action";
 import { uploadImage } from "../../helper/index";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-// import { Editor } from 'react-draft-wysiwyg';
-// import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
-// import {
-//     EditorState,
-//     ContentState,
-//     convertToRaw,
-// } from 'draft-js';
-// import draftToHtml from 'draftjs-to-html';
-// import htmlToDraft from 'html-to-draftjs';
 
 const EditBanner = (props) => {
 
     const { data } = props.location.state;
-    console.log(data)
+    // console.log(data)
     const [ id, setId] = useState(data.id);
     const [ titles, setTitles] = useState(data.title);
     const [ sub, setSub] = useState(data.sub_title);

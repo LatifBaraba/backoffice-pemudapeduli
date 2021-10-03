@@ -7,6 +7,7 @@ import { fetchPaket, fetchDeletePaket } from "../../redux/paket/action";
 
 const Paket = () => {
 
+    
 
     const dispatch = useDispatch();
     let token = localStorage.getItem('token');
@@ -16,16 +17,16 @@ const Paket = () => {
     },[])
 
     const paketData = useSelector((state) => state.paketReducer.paket);
-
+    // console.log(paketData)
     const paketDatas = paketData.map((paket, index) => {
         return (
             <tr key={index}>
                 <th scope="row">{index+1}</th>
                 {/* <td>{user.id}</td> */}
                 <td>{paket.title}</td>
-                <td>{paket.sub_title}</td>
+                {/* <td>{paket.sub_title}</td>
                 <td>{paket.tag}</td>
-                <td>{paket.kategori_name}</td>
+                <td>{paket.kategori_name}</td> */}
                 <td className="text-center"><img src={paket.thumbnail_image_url} alt={paket.thumbnail_image_url} style={{width: 100}}/></td>
                 <td className="text-center">{paket.is_show ? <span class="badge badge-primary">Yes</span> : <span class="badge badge-warning">No</span>}</td>
                 <td>
@@ -43,7 +44,7 @@ const Paket = () => {
 
     return (
         <Fragment>
-            <Breadcrumb title="Paket Page" parent="Dashboard" />
+            <Breadcrumb title="Program Donasi" parent="Dashboard" />
             <div className="container-fluid">
             <div className="row">
             <div className="col-sm-12">
@@ -51,11 +52,14 @@ const Paket = () => {
                 <div className="card-header">
                     <div className="row justify-content-between">
                         <div className="col-md-3 col-sm-12">
-                            <h5>Paket Donasi</h5>
+                            <h5>Program Donasi</h5>
                         </div>
                         <div className="col-md-3 col-sm-12">
-                            <Link to="/add-paket" className="btn btn-success float-right">
+                            {/* <Link to="/add-paket" className="btn btn-success float-right">
                                 Add Paket
+                            </Link> */}
+                            <Link to="/add-paket" className="btn btn-success float-right">
+                                Add Program Donasi
                             </Link>
                         </div>
                     </div>
@@ -66,10 +70,11 @@ const Paket = () => {
                             <thead>
                                 <tr>
                                     <th scope="col">{"#"}</th>
-                                    <th scope="col">{"Tittle"}</th>
+                                    <th scope="col">{"Program Donasi"}</th>
+                                    {/* <th scope="col">{"Tittle"}</th>
                                     <th scope="col">{"Sub-title"}</th>
                                     <th scope="col">{"Tag"}</th>
-                                    <th scope="col">{"Donasi-Type"}</th>
+                                    <th scope="col">{"Donasi-Type"}</th> */}
                                     <th scope="col">{"Thumbnail-image"}</th>
                                     <th scope="col">{"Show in Comprof"}</th>
                                     <th scope="col">{"Action"}</th>

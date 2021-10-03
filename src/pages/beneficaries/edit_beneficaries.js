@@ -18,7 +18,7 @@ const EditBeneficaries = (props) => {
 
     const dispatch = useDispatch();
     let token = localStorage.getItem('token');
-    const { register, handleSubmit, errors } = useForm();
+    const { handleSubmit, errors } = useForm();
 
     const onSubmit = data => {
         if (data !== '') {
@@ -39,7 +39,7 @@ const EditBeneficaries = (props) => {
     }
 
     const submitButton = () => {
-        if(loadingStatus == false) {
+        if(loadingStatus === false) {
           return (
             <button className="btn btn-pill btn-primary btn-block mt-3 mb-3" type="submit">{"Submit"}</button>
           )

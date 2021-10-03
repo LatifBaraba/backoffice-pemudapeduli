@@ -30,7 +30,7 @@ const EditQris = (props) => {
                     dispatch(fetchEditQris(token, id, title, description, thumbnail_image_url))
                 })
                 .catch(error => {
-                    console.log(error)
+                    // console.log(error)
                     toast.error("Upload Image Failed !");
                 })
             } else {

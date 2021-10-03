@@ -50,7 +50,6 @@ export function fetchQris(token) {
         })
         .then(res => {
             dispatch(getQrisSuccess(res.data.data));
-            console.log(res.data.data)
         })
         .catch(err => {
             if(err.response.status == 401){
@@ -87,7 +86,6 @@ export function fetchAddQris(token, title, description, newIcon) {
             }, 2000);
         })
         .catch(err => {
-            console.log(err)
             if(err.response.status == 401){
                 toast.error("Unauthorized")
                 dispatch(fetchRefreshToken(token))
@@ -122,7 +120,6 @@ export function fetchEditQris(token, id, title, description, newIcon) {
             }, 2000);
         })
         .catch(err => {
-            console.log(err)
             if(err.response.status == 401){
                 toast.error("Unauthorized")
                 dispatch(fetchRefreshToken(token))

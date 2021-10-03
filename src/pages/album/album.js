@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect } from 'react';
+import React, { Fragment, useEffect } from 'react';
 import Breadcrumb from '../../components/common/breadcrumb';
 import PropTypes from "prop-types";
 import { Edit, Trash} from 'react-feather';

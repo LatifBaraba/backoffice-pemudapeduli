@@ -9,13 +9,16 @@ import {
     ADD_DONASI_KATEGORI_SUCCESS,
     ADD_DONASI_KATEGORI_FAILURE,
     DELETE_DONASI_KATEGORI_SUCCESS,
-    DELETE_DONASI_KATEGORI_FAILURE
+    DELETE_DONASI_KATEGORI_FAILURE,
+    GET_DONASI_PAKET_LIST_SUCCESS,
+    GET_DONASI_PAKET_LIST_FAILURE
     
 } from '../actionTypes';
 
 const initialState = {
     loading: false,
     donasiKategori: [],
+    paketListRutin: [],
     error: null
 };
 
@@ -81,6 +84,18 @@ export default function donasiKategoriReducer(state = initialState, action) {
                 ...state,
                 loading: false,
             };
+            case GET_DONASI_PAKET_LIST_SUCCESS:
+                return {
+                    ...state,
+                    loading: false,
+                    error: null,
+                    paketListRutin: action.payload
+                };
+            case GET_DONASI_PAKET_LIST_FAILURE:
+                return {
+                    ...state,
+                    loading: false,
+                };
         default:
             return state;
     }

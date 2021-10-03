@@ -48,7 +48,6 @@ export function fetchHubungi(token) {
         })
         .then(res => {
             dispatch(getHubungiSuccess(res.data.data));
-            console.log(res.data.data)
         })
         .catch(err => {
             if(err.response.status == 401){
@@ -85,7 +84,6 @@ export function fetchAddHubungi(token, title, link, newIcon) {
             }, 2000);
         })
         .catch(err => {
-            console.log(err)
             if(err.response.status == 401){
                 toast.error("Unauthorized")
                 dispatch(fetchRefreshToken(token))
@@ -120,7 +118,6 @@ export function fetchEditHubungi(token, id, title, link, newIcon) {
             }, 2000);
         })
         .catch(err => {
-            console.log(err)
             if(err.response.status == 401){
                 toast.error("Unauthorized")
                 dispatch(fetchRefreshToken(token))

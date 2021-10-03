@@ -16,7 +16,7 @@ const Tentang = (props) => {
     },[])
 
     const tentangData = useSelector((state) => state.tentangReducer.tentang);
-    console.log(tentangData)
+    // console.log(tentangData)
     const tentangDatas = tentangData.map((tentang, index) => {
         return (
             <tr key={index}>

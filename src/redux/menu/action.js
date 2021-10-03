@@ -48,7 +48,6 @@ export function fetchMenu(token) {
         })
         .then(res => {
             dispatch(getMenuSuccess(res.data.data));
-            console.log(res.data.data)
         })
         .catch(err => {
             if(err.response.status === 401){
@@ -84,7 +83,6 @@ export function fetchAddMenu(token, title, link) {
             }, 2000);
         })
         .catch(err => {
-            console.log(err)
             if(err.response.status === 401){
                 toast.error("Unauthorized")
                 dispatch(fetchRefreshToken(token))
@@ -118,7 +116,6 @@ export function fetchEditMenu(token, id, title, link) {
             }, 2000);
         })
         .catch(err => {
-            console.log(err)
             if(err.response.status === 401){
                 toast.error("Unauthorized")
                 dispatch(fetchRefreshToken(token))
