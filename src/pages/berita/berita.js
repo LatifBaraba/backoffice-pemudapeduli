@@ -26,6 +26,7 @@ const Berita = (props) => {
                 <td>{berita.title}</td>
                 <td>{berita.sub_title}</td>
                 <td>{berita.tag}</td>
+                <td>{berita.is_headline === true ? 'Aktif' : 'Tidak Aktif'}</td>
                 <td className="text-center"><img src={berita.thumbnail_image_url} alt={berita.thumbnail_image_url} style={{width: 100}}/></td>
                 <td>
                     <Link to={{
@@ -68,6 +69,7 @@ const Berita = (props) => {
                                     <th scope="col">{"Tittle"}</th>
                                     <th scope="col">{"Sub-title"}</th>
                                     <th scope="col">{"Tag"}</th>
+                                    <th scope="col">{"Headline"}</th>
                                     <th scope="col">{"Thumbnail-image"}</th>
                                     <th scope="col">{"Action"}</th>
                                 </tr>

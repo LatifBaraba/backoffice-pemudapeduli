@@ -89,7 +89,7 @@ export function fetchDetailBerita(token, id) {
     };
 };
 
-export function fetchEditBerita(token, id, titles, sub, tag, newContent, newThumb, desc) {
+export function fetchEditBerita(token, id, titles, sub, tag, is_headline, newContent, newThumb, desc) {
     return (dispatch) => {
         dispatch(editBerita())
         axios(EditURL+`${id}`, {
@@ -98,6 +98,7 @@ export function fetchEditBerita(token, id, titles, sub, tag, newContent, newThum
                 title: titles,
                 sub_title: sub,
                 tag: tag,
+                is_headline: is_headline === "true" ? true : false,
                 content: newContent,
                 description: desc,
                 thumbnail_image_url: newThumb
@@ -126,7 +127,7 @@ export function fetchEditBerita(token, id, titles, sub, tag, newContent, newThum
     };
 };
 
-export function fetchAddBerita(token, titles, sub, tag, content, newThumb, desc) {
+export function fetchAddBerita(token, titles, sub, tag, is_headline, content, newThumb, desc) {
     return (dispatch) => {
         dispatch(addBerita())
         axios(AddURL, {
@@ -135,6 +136,7 @@ export function fetchAddBerita(token, titles, sub, tag, content, newThumb, desc)
                 title: titles,
                 sub_title: sub,
                 tag: tag,
+                is_headline: is_headline === "true" ? true : false,
                 description: desc,
                 content: content,
                 thumbnail_image_url: newThumb
