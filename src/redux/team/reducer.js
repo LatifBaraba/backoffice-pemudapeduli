@@ -1,4 +1,6 @@
 import {
+    GET_FLAG_SUCCESS,
+    GET_FLAG_FAILURE,
     GET_TEAM,
     GET_TEAM_SUCCESS,
     GET_TEAM_FAILURE,
@@ -16,11 +18,24 @@ import {
 const initialState = {
     loading: false,
     team: [],
+    flag: [],
     error: null
 };
 
 export default function teamReducer(state = initialState, action) {
     switch (action.type) {
+        case GET_FLAG_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                error: null,
+                flag: action.payload
+            };
+        case GET_FLAG_FAILURE:
+            return {
+                ...state,
+                loading: false,
+            };
         case GET_TEAM:
             return {
                 ...state,

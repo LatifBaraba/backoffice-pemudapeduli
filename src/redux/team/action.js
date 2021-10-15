@@ -1,15 +1,18 @@
-import { GET_TEAM, 
-        GET_TEAM_SUCCESS, 
-        GET_TEAM_FAILURE,
-        EDIT_TEAM,
-        EDIT_TEAM_SUCCESS, 
-        EDIT_TEAM_FAILURE,
-        ADD_TEAM,
-        ADD_TEAM_SUCCESS,
-        ADD_TEAM_FAILURE,
-        DELETE_TEAM_FAILURE,
-        DELETE_TEAM_SUCCESS
-        } from '../actionTypes';
+import {
+    GET_FLAG_SUCCESS,
+    GET_FLAG_FAILURE,
+    GET_TEAM,
+    GET_TEAM_SUCCESS,
+    GET_TEAM_FAILURE,
+    EDIT_TEAM,
+    EDIT_TEAM_SUCCESS,
+    EDIT_TEAM_FAILURE,
+    ADD_TEAM,
+    ADD_TEAM_SUCCESS,
+    ADD_TEAM_FAILURE,
+    DELETE_TEAM_FAILURE,
+    DELETE_TEAM_SUCCESS
+} from '../actionTypes';
 import axios from 'axios';
 import { fetchToken, fetchRefreshToken } from "../token/action";
 import history from "../../history";
@@ -19,6 +22,48 @@ import 'react-toastify/dist/ReactToastify.css';
 const URL = `${process.env.REACT_APP_BASE_URL}/team/list`;
 const EditURL = `${process.env.REACT_APP_BASE_URL}/team/`;
 const AddURL = `${process.env.REACT_APP_BASE_URL}/team/create`;
+const FLAG_URL = `${process.env.REACT_APP_BASE_URL}/team-flag/list`;
+
+
+export function fetchFlag(token) {
+    return (dispatch) => {
+        axios(FLAG_URL, {
+            method: 'POST',
+            data: {
+                limit: "100",
+                offset: "0",
+                filters: [
+                    {
+                        field: "is_deleted",
+                        keyword: "false"
+                    }
+                ],
+                order: "created_at",
+                sort: "ASC",
+                created_at_from: "",
+                created_at_to: "",
+                publish_at_from: "",
+                publish_at_to: ""
+            },
+            headers: {
+                "pp-token": `${token}`,
+                "Content-type": "application/json"
+            }
+        })
+            .then(res => {
+                dispatch(getFlagSuccess(res.data));
+            })
+            .catch(err => {
+                if (err.response.status === 401) {
+                    toast.error("Unauthorized")
+                    dispatch(fetchRefreshToken(token))
+                    localStorage.removeItem("token");
+                    history.push('/login')
+                }
+                dispatch(getFlagFailure(err));
+            });
+    };
+};
 
 export function fetchTeam(token) {
     return (dispatch) => {
@@ -45,29 +90,30 @@ export function fetchTeam(token) {
                 "Content-type": "application/json"
             }
         })
-        .then(res => {
-            dispatch(getTeamSuccess(res.data.data));
-        })
-        .catch(err => {
-            if(err.response.status === 401){
-                toast.error("Unauthorized")
-                dispatch(fetchRefreshToken(token))
-                localStorage.removeItem("token");
-                history.push('/login')
-            }
-            dispatch(getTeamFailure(err));
-        });
+            .then(res => {
+                dispatch(getTeamSuccess(res.data.data));
+            })
+            .catch(err => {
+                if (err.response.status === 401) {
+                    toast.error("Unauthorized")
+                    dispatch(fetchRefreshToken(token))
+                    localStorage.removeItem("token");
+                    history.push('/login')
+                }
+                dispatch(getTeamFailure(err));
+            });
     };
 };
 
-export function fetchEditTeam(token, id, name, role, facebook, google, instagram, linkedin, newThumb) {
+export function fetchEditTeam(token, id, name, role, level, facebook, google, instagram, linkedin, newThumb) {
     return (dispatch) => {
         dispatch(editTeam())
-        axios(EditURL+`${id}`, {
+        axios(EditURL + `${id}`, {
             method: 'PUT',
             data: {
                 name: name,
                 role: role,
+                flag_id: parseInt(level) ,
                 facebook_link: facebook,
                 google_link: google,
                 instagram_link: instagram,
@@ -79,26 +125,26 @@ export function fetchEditTeam(token, id, name, role, facebook, google, instagram
                 "Content-type": "application/json"
             }
         })
-        .then(res => {
-            setTimeout(() => {
-                toast.success("Add Success !");
-                dispatch(editTeamSuccess(res));
-                history.push("/team");
-            }, 2000);
-        })
-        .catch(err => {
-            if(err.response.status === 401){
-                toast.error("Unauthorized")
-                dispatch(fetchRefreshToken(token))
-                localStorage.removeItem("token");
-                history.push('/login')
-            }
-            dispatch(editTeamFailure(err));
-        });
+            .then(res => {
+                setTimeout(() => {
+                    toast.success("Add Success !");
+                    dispatch(editTeamSuccess(res));
+                    history.push("/team");
+                }, 2000);
+            })
+            .catch(err => {
+                if (err.response.status === 401) {
+                    toast.error("Unauthorized")
+                    dispatch(fetchRefreshToken(token))
+                    localStorage.removeItem("token");
+                    history.push('/login')
+                }
+                dispatch(editTeamFailure(err));
+            });
     };
 };
 
-export function fetchAddTeam(token, name, role, facebook, google, instagram, linkedin, newThumb) {
+export function fetchAddTeam(token, name, role, level, facebook, google, instagram, linkedin, newThumb) {
     return (dispatch) => {
         dispatch(addTeam())
         axios(AddURL, {
@@ -106,6 +152,7 @@ export function fetchAddTeam(token, name, role, facebook, google, instagram, lin
             data: {
                 name: name,
                 role: role,
+                flag_id: parseInt(level),
                 facebook_link: facebook,
                 google_link: google,
                 instagram_link: instagram,
@@ -117,54 +164,63 @@ export function fetchAddTeam(token, name, role, facebook, google, instagram, lin
                 "Content-type": "application/json"
             }
         })
-        .then(res => {
-            setTimeout(() => {
-                toast.success("Add Success !");
-                dispatch(addTeamSuccess(res));
-                history.push("/team");
-            }, 2000);
-        })
-        .catch(err => {
-            if(err.response.status === 401){
-                toast.error("Unauthorized")
-                dispatch(fetchRefreshToken(token))
-                localStorage.removeItem("token");
-                history.push('/login')
-            }
-            dispatch(addTeamFailure(err));
-        });
+            .then(res => {
+                setTimeout(() => {
+                    toast.success("Add Success !");
+                    dispatch(addTeamSuccess(res));
+                    history.push("/team");
+                }, 2000);
+            })
+            .catch(err => {
+                if (err.response.status === 401) {
+                    toast.error("Unauthorized")
+                    dispatch(fetchRefreshToken(token))
+                    localStorage.removeItem("token");
+                    history.push('/login')
+                }
+                dispatch(addTeamFailure(err));
+            });
     };
 };
 
 export function fetchDeleteTeam(token, id) {
     return (dispatch) => {
-        axios(EditURL+`${id}`, {
+        axios(EditURL + `${id}`, {
             method: 'DELETE',
             headers: {
                 "pp-token": `${token}`,
                 "Content-type": "application/json"
             }
         })
-        .then(res => {
-            setTimeout(() => {
-                toast.success("Delete Success !")
-                dispatch(deleteTeamSuccess(res));
-                history.push("/team");
-                window.location.reload();
-            }, 2000);
-        })
-        .catch(err => {
-            if(err.response.status === 401){
-                toast.error("Unauthorized")
-                dispatch(fetchRefreshToken(token))
-                localStorage.removeItem("token");
-                history.push('/login')
-            }
-            dispatch(deleteTeamFailure(err));
-        });
+            .then(res => {
+                setTimeout(() => {
+                    toast.success("Delete Success !")
+                    dispatch(deleteTeamSuccess(res));
+                    history.push("/team");
+                    window.location.reload();
+                }, 2000);
+            })
+            .catch(err => {
+                if (err.response.status === 401) {
+                    toast.error("Unauthorized")
+                    dispatch(fetchRefreshToken(token))
+                    localStorage.removeItem("token");
+                    history.push('/login')
+                }
+                dispatch(deleteTeamFailure(err));
+            });
     };
 };
 
+// Get Flag id
+const getFlagSuccess = (payload) => ({
+    type: GET_FLAG_SUCCESS,
+    payload
+});
+
+const getFlagFailure = () => ({
+    type: GET_FLAG_FAILURE
+});
 // Get Team
 const getTeamSuccess = (payload) => ({
     type: GET_TEAM_SUCCESS,
