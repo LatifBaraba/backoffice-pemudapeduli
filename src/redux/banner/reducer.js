@@ -1,4 +1,6 @@
 import {
+    GET_TAG_SUCCESS,
+    GET_TAG_FAILURE,
     GET_BANNER,
     GET_BANNER_SUCCESS,
     GET_BANNER_FAILURE,
@@ -16,6 +18,7 @@ import {
 const initialState = {
     loading: false,
     banner: [],
+    tag: [],
     error: null
 };
 
@@ -25,6 +28,18 @@ export default function bannerReducer(state = initialState, action) {
             return {
                 ...state,
                 loading: true
+            };
+        case GET_TAG_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                error: null,
+                tag: action.payload
+            };
+        case GET_TAG_FAILURE:
+            return {
+                ...state,
+                loading: false,
             };
         case GET_BANNER_SUCCESS:
             return {

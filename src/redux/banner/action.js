@@ -1,4 +1,7 @@
-import { GET_BANNER,
+import { 
+    GET_TAG_SUCCESS,
+    GET_TAG_FAILURE,
+    GET_BANNER,
     GET_BANNER_SUCCESS,
     GET_BANNER_FAILURE,
     ADD_BANNER,
@@ -19,7 +22,26 @@ import 'react-toastify/dist/ReactToastify.css';
 const URL = `${process.env.REACT_APP_BASE_URL}/banner/list`;
 const EditURL = `${process.env.REACT_APP_BASE_URL}/banner/`;
 const AddURL = `${process.env.REACT_APP_BASE_URL}/banner/create`;
+const URL_TAG = `${process.env.REACT_APP_BASE_URL}/berita/list-tag`;
 
+export function fetchTagBerita(token) {
+    return (dispatch) => {
+        axios(URL_TAG, {
+            method: 'GET',
+            headers: {
+                "pp-token": `${token}`,
+                "Content-type": "application/json"
+            }
+        })
+            .then(res => {
+                dispatch(getTagSuccess(res.data.data));
+            })
+            .catch(err => {
+                console.log(err)
+                dispatch(getTagFailure(err));
+            });
+    };
+};
 export function fetchBanner(token) {
     return (dispatch) => {
         axios(URL, {
@@ -60,12 +82,13 @@ export function fetchBanner(token) {
     };
 };
 
-export function fetchEditBanner(token, id, titles, sub, titContent, titleLeft, titleRight, deepLeft, deepRight, newThumb, desc) {
+export function fetchEditBanner(token, id, titles, sub, titContent, titleLeft, titleRight, deepLeft, deepRight, newThumb, desc, tag) {
     return (dispatch) => {
         dispatch(editBanner())
         axios(EditURL+`${id}`, {
             method: 'PUT',
             data: {
+                tag: tag,
                 title: titles,
                 sub_title: sub,
                 title_content: titContent,
@@ -100,12 +123,13 @@ export function fetchEditBanner(token, id, titles, sub, titContent, titleLeft, t
     };
 };
 
-export function fetchAddBanner(token, titles, sub, titContent, titleLeft, titleRight, deepLeft, deepRight, newThumb, desc) {
+export function fetchAddBanner(token, titles, sub, titContent, titleLeft, titleRight, deepLeft, deepRight, newThumb, desc, tag) {
     return (dispatch) => {
         dispatch(addBanner())
         axios(AddURL, {
             method: 'POST',
             data: {
+                tag: tag,
                 title: titles,
                 sub_title: sub,
                 title_content: titContent,
@@ -169,6 +193,14 @@ export function fetchDeleteBanner(token, id) {
     };
 };
 
+// GET TAG
+const getTagSuccess = (payload) => ({
+    type: GET_TAG_SUCCESS,
+    payload
+});
+const getTagFailure = () => ({
+    type: GET_TAG_FAILURE
+});
 // Get Banner
 const getBannerSuccess = (payload) => ({
     type: GET_BANNER_SUCCESS,
