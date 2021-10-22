@@ -41,7 +41,9 @@ const EditProgram = (props) => {
     const [thumb, setThumb] = useState(data.thumbnail_image_url);
     const [desc, setDesc] = useState(data.description);
     const [achievment, setAchievment] = useState(data.achievements);
-    const [img, setImg] = useState('');
+    const [img, setImg] = useState(data.thumbnail_image_url);
+    const [imgBeneficaries, setImgBeneficaries] = useState();
+    const [arrBeneficaries, setArrBeneficaries] = useState(data.beneficaries_image_url)
 
     const { register, handleSubmit, errors } = useForm();
 
@@ -58,8 +60,8 @@ const EditProgram = (props) => {
         setIsOpen(!isOpen);
     }
     const onChangeNameSetting = (e, index) => {
-        var setname = e.target.value
-        achievment[index].name = setname
+        var setlabel = e.target.value
+        achievment[index].label = setlabel
     }
 
     const onChangeValueSetting = (e, index) => {
@@ -68,7 +70,7 @@ const EditProgram = (props) => {
     }
     const addSetting = () => {
         var totaldata = achievment.length + 1;
-        let setObj = { name: "achievment " + totaldata, value: "" }
+        let setObj = { label: "achievment " + totaldata, value: "" }
         let arrSet = achievment.concat(setObj)
         setAchievment(arrSet)
     }
@@ -77,7 +79,7 @@ const EditProgram = (props) => {
             toast("warning", "Value tidak boleh kosong", "", "")
         } else {
             for (var i = 0; i < achievment.length; i += 1) {
-                if (achievment[i].name === '') {
+                if (achievment[i].label === '') {
                     toast("warning", "Maaf name tidak boleh kosong", "", "")
                     return false
                 }
@@ -152,20 +154,33 @@ const EditProgram = (props) => {
             </>
         )
     }
+    const onClickUploadBene = () => {
+        uploadImage(imgBeneficaries).then(message => {
+            const BeneficariesThumb = message.response.data.url
+            setArrBeneficaries([...arrBeneficaries, BeneficariesThumb])
+        })
+    }
+    const deleteImage = (e) => {
+        console.log(e.target.value, 'masuk')
+        if (e.target.value > -1) {
+            arrBeneficaries.splice(e.target.value, 1);
+            setArrBeneficaries([...arrBeneficaries])
+        }
+    }
     const onSubmit = data => {
         if (flag === "utama") {
             if (data !== '') {
                 if (img == 'undefined') {
                     uploadImage(img).then(message => {
                         const newThumb = message.response.data.url;
-                        dispatch(fetchEditProgram(token, id, titles, sub, tag, newContent, newThumb, desc, achievment))
+                        dispatch(fetchEditProgram(token, id, titles, sub, tag, newContent, newThumb, desc, achievment, arrBeneficaries))
                     })
                         .catch(error => {
                             toast.error("Upload Image Failed !");
                         })
                 } else {
                     const newThumb = thumb;
-                    dispatch(fetchEditProgram(token, id, titles, sub, tag, newContent, newThumb, desc, achievment))
+                    dispatch(fetchEditProgram(token, id, titles, sub, tag, newContent, newThumb, desc, achievment, arrBeneficaries))
                 }
             } else {
                 errors.showMessages();
@@ -251,6 +266,24 @@ const EditProgram = (props) => {
                                                 <div className="col-md-12 mb-3">
                                                     <label>{"UploadFile"}</label>
                                                     <input className="form-control" type="file" accept="image/*" onChange={(e) => setImg(e.target.files[0])} />
+                                                </div>
+                                                <div className="col-md-12 mb-3" >
+                                                    <label>{"Upload Beneficaries"}</label>
+                                                    <div className="input-group mb-3">
+                                                        <input type="file" class="form-control" id="inputGroupFile02" onChange={(e) => setImgBeneficaries(e.target.files[0])} />
+                                                        <a className="btn btn-outline-secondary" type="button" id="inputGroupFileAddon04" onClick={onClickUploadBene}>Upload</a>
+                                                    </div>
+                                                    <div>
+                                                        {arrBeneficaries.map((item, index) => {
+                                                            console.log(index, 'index')
+                                                            return (
+                                                                <>
+                                                                    <img src={item} width="100px" className="mr-0" />
+                                                                    <button className="btn mr-2 pl-0 pr-0" value={index} onClick={deleteImage.bind()}>x</button>
+                                                                </>
+                                                            )
+                                                        })}
+                                                    </div>
                                                 </div>
                                                 <div className="col-md-12 mb-3">
                                                     <Editor

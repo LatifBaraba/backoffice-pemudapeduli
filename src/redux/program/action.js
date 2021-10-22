@@ -141,7 +141,7 @@ export function fetchDetailProgram(token, id) {
     };
 };
 
-export function fetchEditProgram(token, id, titles, sub, tag, content, newThumb, desc, achievment) {
+export function fetchEditProgram(token, id, titles, sub, tag, content, newThumb, desc, achievment, beneficaries) {
     return (dispatch) => {
         dispatch(editProgram())
         axios(EditURL+`${id}`, {
@@ -152,9 +152,9 @@ export function fetchEditProgram(token, id, titles, sub, tag, content, newThumb,
                 tag: tag,
                 content: content,
                 description: desc,
-                achievments: achievment,
-                thumbnail_image_url: newThumb
-
+                achievements: achievment,
+                thumbnail_image_url: newThumb,
+                beneficaries_image_url: beneficaries
             },
             headers: {
                 "pp-token": `${token}`,
@@ -216,7 +216,7 @@ export function fetchEditIncidential(token, id, titles, sub, tag, content, newTh
             });
     };
 };
-export function fetchAddProgram(token, titles, sub, tag, content, newThumb, desc, achievment) {
+export function fetchAddProgram(token, titles, sub, tag, content, newThumb, desc, achievment, beneficaries) {
     return (dispatch) => {
         dispatch(addProgram())
         axios(AddURL, {
@@ -227,8 +227,10 @@ export function fetchAddProgram(token, titles, sub, tag, content, newThumb, desc
                 tag: tag,
                 content: content,
                 description: desc,
-                achievments: achievment,
-                thumbnail_image_url: newThumb
+                achievements: achievment,
+                thumbnail_image_url: newThumb,
+                beneficaries_image_url: beneficaries
+
             },
             headers: {
                 "pp-token": `${token}`,

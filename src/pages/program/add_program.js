@@ -41,19 +41,28 @@ const AddProgram = (props) => {
     const [achievment, setAchievment] = useState([]);
 
     const [img, setImg] = useState();
+    const [imgBeneficaries, setImgBeneficaries] = useState();
+    const [arrBeneficaries, setArrBeneficaries] = useState([])
+    const [tes, setTes] = useState()
+
+    console.log(imgBeneficaries, 'img bene')
 
     const loadingStatus = useSelector((state) => state.programReducer.loading);
 
     let _contentState = EditorState.createEmpty("");
     const [editorState, setEditorState] = useState(_contentState)
     const content = draftToHtml(convertToRaw(editorState.getCurrentContent()))
-  
+
+    // useEffect(() => {
+    //     setArrBeneficaries([...arrBeneficaries,{imgBeneficaries}])
+    // },[imgBeneficaries])
+
     const toggle = () => {
         setIsOpen(!isOpen);
     }
     const onChangeNameSetting = (e, index) => {
-        var setname = e.target.value
-        achievment[index].name = setname
+        var setlabel = e.target.value
+        achievment[index].label = setlabel
     }
 
     const onChangeValueSetting = (e, index) => {
@@ -62,7 +71,7 @@ const AddProgram = (props) => {
     }
     const addSetting = () => {
         var totaldata = achievment.length + 1;
-        let setObj = { name: "achievment " + totaldata, value: "" }
+        let setObj = { label: "achievment " + totaldata, value: "" }
         let arrSet = achievment.concat(setObj)
         setAchievment(arrSet)
     }
@@ -71,8 +80,8 @@ const AddProgram = (props) => {
             toast("warning", "Value tidak boleh kosong", "", "")
         } else {
             for (var i = 0; i < achievment.length; i += 1) {
-                if (achievment[i].name === '') {
-                    toast("warning", "Maaf name tidak boleh kosong", "", "")
+                if (achievment[i].label === '') {
+                    toast("warning", "Maaf label tidak boleh kosong", "", "")
                     return false
                 }
                 if (achievment[i].value === '') {
@@ -146,13 +155,30 @@ const AddProgram = (props) => {
             </>
         )
     }
+    const onClickUploadBene = () => {
+        uploadImage(imgBeneficaries).then(message => {
+            const BeneficariesThumb = message.response.data.url
+            setArrBeneficaries([...arrBeneficaries, BeneficariesThumb])
+        })
+    }
+    const deleteImage = (e) => {
+        console.log(e.target.value, 'masuk')
+        if (e.target.value > -1) {
+            arrBeneficaries.splice(e.target.value, 1);
+            setArrBeneficaries([...arrBeneficaries])
+        }
+    }
+
     const onSubmit = data => {
         if (dataState === "utama") {
             if (data !== '') {
                 uploadImage(img).then(message => {
                     const newThumb = message.response.data.url;
-                    dispatch(fetchAddProgram(token, titles, sub, tag, content, newThumb, desc, achievment))
+                    dispatch(fetchAddProgram(token, titles, sub, tag, content, newThumb, desc, achievment, arrBeneficaries))
+
+                    // dispatch(fetchAddProgram(token, titles, sub, tag, content, newThumb, desc, achievment))
                 })
+
                     .catch(error => {
                         toast.error("Upload Image Failed !");
                     })
@@ -188,7 +214,7 @@ const AddProgram = (props) => {
             )
         }
     }
-
+    console.log(arrBeneficaries, 'array')
     return (
         <Fragment>
             <Breadcrumb title="Program Page" parent="Dashboard" />
@@ -231,11 +257,29 @@ const AddProgram = (props) => {
                                                     <div className="valid-feedback">{"Looks good!"}</div>
                                                 </div>
                                                 <div className="col-md-12 mb-3">
-                                                    <button className="btn btn-pill btn-primary btn-block mt-3 mb-3" onClick={toggle.bind(null)}>{"Add Achievment"}</button>
+                                                    <span className="btn btn-pill btn-primary btn-block mt-3 mb-3" onClick={toggle.bind(null)}>{"Add Achievment"}</span>
                                                 </div>
                                                 <div className="col-md-12 mb-3">
                                                     <label>{"UploadFile"}</label>
                                                     <input className="form-control" type="file" accept="image/*" onChange={(e) => setImg(e.target.files[0])} />
+                                                </div>
+                                                <div className="col-md-12 mb-3" >
+                                                    <label>{"Upload Beneficaries"}</label>
+                                                    <div className="input-group mb-3">
+                                                        <input type="file" class="form-control" id="inputGroupFile02" onChange={(e) => setImgBeneficaries(e.target.files[0])} />
+                                                        <button className="btn btn-outline-secondary" type="button" id="inputGroupFileAddon04" onClick={onClickUploadBene}>Upload</button>
+                                                    </div>
+                                                    <div>
+                                                        {arrBeneficaries.map((item, index) => {
+                                                            console.log(index, 'index')
+                                                            return (
+                                                                <>
+                                                                    <img src={item} width="100px" className="mr-0" />
+                                                                    <button className="btn mr-2 pl-0 pr-0" value={index} onClick={deleteImage.bind()}>x</button>
+                                                                </>
+                                                            )
+                                                        })}
+                                                    </div>
                                                 </div>
                                                 <div className="col-md-12 mb-3">
                                                     <Editor
