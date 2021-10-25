@@ -48,14 +48,14 @@ const EditBanner = (props) => {
             if (img !== '') {
                 uploadImage(img).then(message => {
                     const newThumb = message.response.data.url;
-                    dispatch(fetchEditBanner(token, id, titles, sub, titContent, titleLeft, titleRight, deepLeft, deepRight, newThumb, desc))
+                    dispatch(fetchEditBanner(token, id, titles, sub, titContent, titleLeft, titleRight, deepLeft, deepRight, newThumb, desc, tag))
                 })
                     .catch(error => {
                         toast.error("Upload Image Failed !");
                     })
             } else {
                 const newThumb = thumb;
-                dispatch(fetchEditBanner(token, id, titles, sub, titContent, titleLeft, titleRight, deepLeft, deepRight, newThumb, desc))
+                dispatch(fetchEditBanner(token, id, titles, sub, titContent, titleLeft, titleRight, deepLeft, deepRight, newThumb, desc, tag))
             }
         } else {
             errors.showMessages();

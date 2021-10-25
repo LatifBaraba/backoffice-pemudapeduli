@@ -1,8 +1,9 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import Breadcrumb from '../../components/common/breadcrumb';
 import useForm from "react-hook-form";
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchAddIncidental, fetchAddProgram } from "../../redux/program/action";
+import { fetchTagBerita } from "../../redux/banner/action";
 import { uploadImage } from "../../helper/index";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -46,8 +47,11 @@ const AddProgram = (props) => {
     const [tes, setTes] = useState()
 
     console.log(imgBeneficaries, 'img bene')
-
+    useEffect(() => {
+        dispatch(fetchTagBerita(token))
+    }, [token, dispatch])
     const loadingStatus = useSelector((state) => state.programReducer.loading);
+    const tagBanner = useSelector((state) => state.bannerReducer.tag);
 
     let _contentState = EditorState.createEmpty("");
     const [editorState, setEditorState] = useState(_contentState)
@@ -243,10 +247,15 @@ const AddProgram = (props) => {
                                                     <span>{errors.sub_title && 'Sub-title is required'}</span>
                                                     <div className="valid-feedback">{"Looks good!"}</div>
                                                 </div>
-                                                <div className="col-md-12 mb-3">
-                                                    <label>{"Tag"}</label>
-                                                    <input className="form-control" name="tag" type="text" placeholder="Tag" ref={register({ required: true })} onChange={(e) => setTag(e.target.value)} />
-                                                    <span>{errors.tag && 'Tag is required & Min 6 Character'}</span>
+                                                 <div className="col-md-12 mb-3">
+                                                    <label>{"Tag Banner"}</label>
+                                                    <select className="form-control" name="tag" type="select" placeholder="Tag Banner" ref={register({ required: true })} onChange={(e) => setTag(e.target.value)} >
+                                                        <option disabled selected>-Pilih-</option>
+                                                        {tagBanner.map((tag) => (
+                                                            <option value={tag.Tag}>{tag.Tag}</option>
+                                                        ))}
+                                                    </select>
+                                                    <span>{errors.tag && 'Level is required'}</span>
                                                     <div className="valid-feedback">{"Looks good!"}</div>
                                                 </div>
                                                 <div className="col-md-12 mb-3">
