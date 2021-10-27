@@ -24,6 +24,7 @@ import donasiKategoriReducer from '../redux/donasiKategori/reducer'
 import paketReducer from '../redux/paket/reducer'
 import penggalangReducer from '../redux/penggalang/reducer'
 import nominalReducer from '../redux/nominal/reducer'
+import kabarterbaruReducer from '../redux/kabarterbaru/reducer'
 
 const reducers = combineReducers({
     Customizer,
@@ -50,7 +51,8 @@ const reducers = combineReducers({
     reminderReducer,
     paketReducer,
     penggalangReducer,
-    nominalReducer
+    nominalReducer,
+    kabarterbaruReducer
 });
 
 export default reducers;

@@ -73,6 +73,12 @@ import EditQris from './pages/qris/edit_qris';
 import Penggalang from './pages/penggalang/penggalang';
 import AddPenggalang from './pages/penggalang/add_penggalang';
 import EditPenggalang from './pages/penggalang/edit_penggalang';
+import KabarTerbaruOt from './pages/kabarterbaruot/kabarterbaruot';
+import AddKabarTerbaruOt from './pages/kabarterbaruot/add_kabarterbaruot';
+import EditKabarTerbaruOt from './pages/kabarterbaruot/edit_kabarterbaruot';
+import KabarTerbaruRutin from './pages/kabarterbarurutin/kabarterbarurutin';
+import AddKabarTerbaruRutin from './pages/kabarterbarurutin/add_kabarterbarurutin';
+import EditKabarTerbaruRutin from './pages/kabarterbarurutin/edit_kabarterbarurutin';
 import Nominal from './pages/nominal/nominal';
 import AddNominal from './pages/nominal/add_nominal';
 import DetailHistory from './pages/history/detail_history';
@@ -199,6 +205,12 @@ function Root() {
                                             <Route path={`${process.env.PUBLIC_URL}/detail-history`} component={DetailHistory} />
                                             <Route path={`${process.env.PUBLIC_URL}/transaction`} component={Transaction} />
                                             <Route path={`${process.env.PUBLIC_URL}/reminder`} component={Reminder} />
+                                            <Route path={`${process.env.PUBLIC_URL}/kabar-terbaru-ot`} exact component={KabarTerbaruOt} />
+                                            <Route path={`${process.env.PUBLIC_URL}/add-kabar-terbaru-ot`} component={AddKabarTerbaruOt} />
+                                            <Route path={`${process.env.PUBLIC_URL}/edit-kabar-terbaru-ot`} component={EditKabarTerbaruOt} />
+                                            <Route path={`${process.env.PUBLIC_URL}/kabar-terbaru-rutin`} exact component={KabarTerbaruRutin} />
+                                            <Route path={`${process.env.PUBLIC_URL}/add-kabar-terbaru-rutin`} component={AddKabarTerbaruRutin} />
+                                            <Route path={`${process.env.PUBLIC_URL}/edit-kabar-terbaru-rutin`} component={EditKabarTerbaruRutin} />
                                             {/* <Route exact path={`${process.env.PUBLIC_URL}/dashboard/default`} component={Default} />
                                             <Route path={`${process.env.PUBLIC_URL}/dashboard/ecommerce`} component={Ecommerce} />
                                             <Route path={`${process.env.PUBLIC_URL}/dashboard/university`} component={University} />

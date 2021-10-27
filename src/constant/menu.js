@@ -21,7 +21,7 @@ import {
     Command,
     List,
     CheckSquare,
-    Bell
+    Bell,
 } from 'react-feather';
 
 export const MENUITEMS = [
@@ -118,7 +118,16 @@ export const MENUITEMS = [
     },   
     {
         title: 'Nominal', icon: DollarSign, type: 'link', path: '/nominal', active: false
-    },   
+    },
+    // {
+    //     title: 'Kabar Terbaru', icon: FileText, type: 'link', path: '/kabarterbaru', active: false
+    // },   
+    {
+        title: 'Kabar Terbaru', icon: FileText, type: 'sub', active: false, children: [
+            { path: '/kabar-terbaru-ot', title: 'Kabar Terbaru OT', type: 'link' },
+            { path: '/kabar-terbaru-rutin', title: 'Kabar Terbaru Rutin', type: 'link' },
+        ]
+    },
     {
         title: 'Menu External', icon: Shuffle, type: 'link', path: '/menu', active: false
     },
