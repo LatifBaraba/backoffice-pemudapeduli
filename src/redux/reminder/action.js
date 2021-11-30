@@ -51,7 +51,7 @@ export function fetchReminder(token) {
         })
         .catch(err => {
             if(err.response.status == 401){
-                toast.error("Unauthorized")
+                toast.error("Harap Login Terlebih Dahulu")
                 dispatch(fetchRefreshToken(token))
                 localStorage.removeItem("token");
                 history.push('/reminder')
@@ -86,7 +86,7 @@ export function fetchReminder(token) {
 //         .catch(err => {
 //             console.log(err)
 //             if(err.response.status == 401){
-//                 toast.error("Unauthorized")
+//                 toast.error("Harap Login Terlebih Dahulu")
 //                 dispatch(fetchRefreshToken(token))
 //                 localStorage.removeItem("token");
 //                 history.push('/login')
@@ -117,7 +117,7 @@ export function fetchApproveReminder(token, id) {
         })
         .catch(err => {
             if(err.response.status == 401){
-                toast.error("Unauthorized")
+                toast.error("Harap Login Terlebih Dahulu")
                 dispatch(fetchRefreshToken(token))
                 localStorage.removeItem("token");
                 history.push('/reminder')
@@ -146,7 +146,7 @@ export function fetchDeclineReminder(token, id) {
         })
         .catch(err => {
             if(err.response.status == 401){
-                toast.error("Unauthorized")
+                toast.error("Harap Login Terlebih Dahulu")
                 dispatch(fetchRefreshToken(token))
                 localStorage.removeItem("token");
                 history.push('/login')

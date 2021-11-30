@@ -51,7 +51,7 @@ export function fetchHubungi(token) {
         })
         .catch(err => {
             if(err.response.status == 401){
-                toast.error("Unauthorized")
+                toast.error("Harap Login Terlebih Dahulu")
                 dispatch(fetchRefreshToken(token))
                 localStorage.removeItem("token");
                 history.push('/login')
@@ -85,7 +85,7 @@ export function fetchAddHubungi(token, title, link, newIcon) {
         })
         .catch(err => {
             if(err.response.status == 401){
-                toast.error("Unauthorized")
+                toast.error("Harap Login Terlebih Dahulu")
                 dispatch(fetchRefreshToken(token))
                 localStorage.removeItem("token");
                 history.push('/login')
@@ -119,7 +119,7 @@ export function fetchEditHubungi(token, id, title, link, newIcon) {
         })
         .catch(err => {
             if(err.response.status == 401){
-                toast.error("Unauthorized")
+                toast.error("Harap Login Terlebih Dahulu")
                 dispatch(fetchRefreshToken(token))
                 localStorage.removeItem("token");
                 history.push('/login')
@@ -148,7 +148,7 @@ export function fetchDeleteHubungi(token, id) {
         })
         .catch(err => {
             if(err.response.status == 401){
-                toast.error("Unauthorized")
+                toast.error("Harap Login Terlebih Dahulu")
                 dispatch(fetchRefreshToken(token))
                 localStorage.removeItem("token");
                 history.push('/login')

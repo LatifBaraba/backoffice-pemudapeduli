@@ -50,7 +50,7 @@ export function fetchBeneficaries(token) {
         })
         .catch(err => {
             if(err.response.status === 401){
-                toast.error("Unauthorized")
+                toast.error("Harap Login Terlebih Dahulu")
                 dispatch(fetchRefreshToken(token))
                 localStorage.removeItem("token");
                 history.push('/login')
@@ -86,7 +86,7 @@ export function fetchEditBeneficaries(token, id, newThumb) {
         })
         .catch(err => {
             if(err.response.status === 401){
-                toast.error("Unauthorized")
+                toast.error("Harap Login Terlebih Dahulu")
                 dispatch(fetchRefreshToken(token))
                 localStorage.removeItem("token");
                 history.push('/login')
@@ -122,7 +122,7 @@ export function fetchAddBeneficaries(token, newThumb) {
         })
         .catch(err => {
             if(err.response.status === 401){
-                toast.error("Unauthorized")
+                toast.error("Harap Login Terlebih Dahulu")
                 dispatch(fetchRefreshToken(token))
                 localStorage.removeItem("token");
                 history.push('/login')
@@ -151,7 +151,7 @@ export function fetchDeleteBeneficaries(token, id) {
         })
         .catch(err => {
             if(err.response.status === 401){
-                toast.error("Unauthorized")
+                toast.error("Harap Login Terlebih Dahulu")
                 dispatch(fetchRefreshToken(token))
                 localStorage.removeItem("token");
                 history.push('/login')

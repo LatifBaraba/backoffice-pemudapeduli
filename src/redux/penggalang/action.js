@@ -57,7 +57,7 @@ export function fetchPenggalang(token) {
         })
         .catch(err => {
             if(err.response.status == 401){
-                toast.error("Unauthorized")
+                toast.error("Harap Login Terlebih Dahulu")
                 dispatch(fetchRefreshToken(token))
                 localStorage.removeItem("token");
                 history.push('/login')
@@ -91,7 +91,7 @@ export function fetchAddPenggalang(token, name, description, newIcon) {
         })
         .catch(err => {
             if(err.response.status == 401){
-                toast.error("Unauthorized")
+                toast.error("Harap Login Terlebih Dahulu")
                 dispatch(fetchRefreshToken(token))
                 localStorage.removeItem("token");
                 history.push('/login')
@@ -125,7 +125,7 @@ export function fetchEditPenggalang(token, id, name, description, newIcon) {
         })
         .catch(err => {
             if(err.response.status == 401){
-                toast.error("Unauthorized")
+                toast.error("Harap Login Terlebih Dahulu")
                 dispatch(fetchRefreshToken(token))
                 localStorage.removeItem("token");
                 history.push('/login')
@@ -154,7 +154,7 @@ export function fetchDeletePenggalang(token, id) {
         })
         .catch(err => {
             if(err.response.status == 401){
-                toast.error("Unauthorized")
+                toast.error("Harap Login Terlebih Dahulu")
                 dispatch(fetchRefreshToken(token))
                 localStorage.removeItem("token");
                 history.push('/login')
@@ -186,7 +186,7 @@ export function fetchVerifiedPenggalang(token, id) {
         })
         .catch(err => {
             if(err.response.status == 401){
-                toast.error("Unauthorized")
+                toast.error("Harap Login Terlebih Dahulu")
                 dispatch(fetchRefreshToken(token))
                 localStorage.removeItem("token");
                 history.push('/login')

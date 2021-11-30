@@ -70,7 +70,7 @@ export function fetchUser(token) {
         })
         .catch(err => {
             if(err.response.status === 401){
-                toast.error("Unauthorized")
+                toast.error("Harap Login Terlebih Dahulu")
                 dispatch(fetchRefreshToken(token))
                 localStorage.removeItem("token");
                 history.push('/login')
@@ -156,7 +156,7 @@ export function fetchEditProfile(token, username, fullname, email, address) {
         })
         .catch(err => {
             if(err.response.status === 401){
-                toast.error("Unauthorized")
+                toast.error("Harap Login Terlebih Dahulu")
                 dispatch(fetchRefreshToken(token))
                 localStorage.removeItem("token");
                 history.push('/login')
@@ -190,7 +190,7 @@ export function fetchChangePassword(token, oldPass, newPass, confirmPass) {
         })
         .catch(err => {
             if(err.response.status === 401){
-                toast.error("Unauthorized")
+                toast.error("Harap Login Terlebih Dahulu")
                 dispatch(fetchRefreshToken(token))
                 localStorage.removeItem("token");
                 history.push('/login')
@@ -231,7 +231,7 @@ export function fetchResetPassword(token, id) {
         })
         .catch(err => {
             if(err.response.status === 401){
-                toast.error("Unauthorized")
+                toast.error("Harap Login Terlebih Dahulu")
                 dispatch(fetchRefreshToken(token))
                 localStorage.removeItem("token");
                 history.push('/login')
@@ -266,7 +266,7 @@ export function fetchEditUser(token, id, username, fullname, email, address) {
         })
         .catch(err => {
             if(err.response.status === 401){
-                toast.error("Unauthorized")
+                toast.error("Harap Login Terlebih Dahulu")
                 dispatch(fetchRefreshToken(token))
                 localStorage.removeItem("token");
                 history.push('/login')
@@ -304,9 +304,9 @@ export function fetchAddUser(token, username, fullname, email, address, password
         })
         .catch(err => {
             // toast.error(err.response.data.message)
-            toast.error("Username, Email or Password not match !")
+            toast.error("Username, Email or Password Tidak Sesuai")
             if(err.response.status === 401){
-                toast.error("Unauthorized")
+                toast.error("Harap Login Terlebih Dahulu")
                 dispatch(fetchRefreshToken(token))
                 localStorage.removeItem("token");
                 history.push('/login')
@@ -335,7 +335,7 @@ export function fetchDeleteUser(token, id) {
         })
         .catch(err => {
             if(err.response.status === 401){
-                toast.error("Unauthorized")
+                toast.error("Harap Login Terlebih Dahulu")
                 dispatch(fetchRefreshToken(token))
                 localStorage.removeItem("token");
                 history.push('/login')

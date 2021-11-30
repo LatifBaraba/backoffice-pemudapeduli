@@ -72,7 +72,7 @@ export function fetchBanner(token) {
         })
         .catch(err => {
             if(err.response.status === 401){
-                toast.error("Unauthorized")
+                toast.error("Harap Login Terlebih Dahulu")
                 dispatch(fetchRefreshToken(token))
                 localStorage.removeItem("token");
                 history.push('/login')
@@ -113,7 +113,7 @@ export function fetchEditBanner(token, id, titles, sub, titContent, titleLeft, t
         })
         .catch(err => {
             if(err.response.status === 401){
-                toast.error("Unauthorized")
+                toast.error("Harap Login Terlebih Dahulu")
                 dispatch(fetchRefreshToken(token))
                 localStorage.removeItem("token");
                 history.push('/login')
@@ -154,7 +154,7 @@ export function fetchAddBanner(token, titles, sub, titContent, titleLeft, titleR
         })
         .catch(err => {
             if(err.response.status === 401){
-                toast.error("Unauthorized")
+                toast.error("Harap Login Terlebih Dahulu")
                 dispatch(fetchRefreshToken(token))
                 localStorage.removeItem("token");
                 history.push('/login')
@@ -183,7 +183,7 @@ export function fetchDeleteBanner(token, id) {
         })
         .catch(err => {
             if(err.response.status === 401){
-                toast.error("Unauthorized")
+                toast.error("Harap Login Terlebih Dahulu")
                 dispatch(fetchRefreshToken(token))
                 localStorage.removeItem("token");
                 history.push('/login')

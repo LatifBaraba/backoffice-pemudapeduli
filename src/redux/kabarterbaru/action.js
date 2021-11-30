@@ -70,7 +70,7 @@ export function fetchKabarTerbaruOt(token) {
         })
         .catch(err => {
             if(err.response.status == 401){
-                toast.error("Unauthorized")
+                toast.error("Harap Login Terlebih Dahulu")
                 dispatch(fetchRefreshToken(token))
                 localStorage.removeItem("token");
                 history.push('/login')
@@ -109,7 +109,7 @@ export function fetchAddKabarTerbaruOt(token, id_pp_cp_program_donasi, title, di
         })
         .catch(err => {
             if(err.response.status == 401){
-                toast.error("Unauthorized")
+                toast.error("Harap Login Terlebih Dahulu")
                 dispatch(fetchRefreshToken(token))
                 localStorage.removeItem("token");
                 history.push('/login')
@@ -147,7 +147,7 @@ export function fetchEditKabarTerbaruOt(token, id, id_pp_cp_program_donasi, titl
         })
         .catch(err => {
             if(err.response.status == 401){
-                toast.error("Unauthorized")
+                toast.error("Harap Login Terlebih Dahulu")
                 dispatch(fetchRefreshToken(token))
                 localStorage.removeItem("token");
                 history.push('/login')
@@ -176,7 +176,7 @@ export function fetchDeleteKabarTerbaruOt(token, id) {
         })
         .catch(err => {
             if(err.response.status == 401){
-                toast.error("Unauthorized")
+                toast.error("Harap Login Terlebih Dahulu")
                 dispatch(fetchRefreshToken(token))
                 localStorage.removeItem("token");
                 history.push('/login')
@@ -216,7 +216,7 @@ export function fetchKabarTerbaruRutin(token) {
         })
         .catch(err => {
             if(err.response.status == 401){
-                toast.error("Unauthorized")
+                toast.error("Harap Login Terlebih Dahulu")
                 dispatch(fetchRefreshToken(token))
                 localStorage.removeItem("token");
                 history.push('/login')
@@ -256,7 +256,7 @@ export function fetchAddKabarTerbaruRutin(token, id_pp_cp_program_donasi_rutin, 
         })
         .catch(err => {
             if(err.response.status == 401){
-                toast.error("Unauthorized")
+                toast.error("Harap Login Terlebih Dahulu")
                 dispatch(fetchRefreshToken(token))
                 localStorage.removeItem("token");
                 history.push('/login')
@@ -295,7 +295,7 @@ export function fetchEditKabarTerbaruRutin(token, id, id_pp_cp_program_donasi_ru
         })
         .catch(err => {
             if(err.response.status == 401){
-                toast.error("Unauthorized")
+                toast.error("Harap Login Terlebih Dahulu")
                 dispatch(fetchRefreshToken(token))
                 localStorage.removeItem("token");
                 history.push('/login')
@@ -325,7 +325,7 @@ export function fetchDeleteKabarTerbaruRutin(token, id) {
         })
         .catch(err => {
             if(err.response.status == 401){
-                toast.error("Unauthorized")
+                toast.error("Harap Login Terlebih Dahulu")
                 dispatch(fetchRefreshToken(token))
                 localStorage.removeItem("token");
                 history.push('/login')

@@ -55,7 +55,7 @@ export function fetchBerita(token) {
         })
         .catch(err => {
             if(err.response.status === 401){
-                toast.error("Unauthorized")
+                toast.error("Harap Login Terlebih Dahulu")
                 dispatch(fetchRefreshToken(token))
                 localStorage.removeItem("token");
                 history.push('/login')
@@ -80,7 +80,7 @@ export function fetchDetailBerita(token, id) {
         })
         .catch(err => {
             if(err.response.status === 401){
-                toast.error("Unauthorized")
+                toast.error("Harap Login Terlebih Dahulu")
                 dispatch(fetchRefreshToken(token))
                 localStorage.removeItem("token");
                 history.push('/login')
@@ -117,7 +117,7 @@ export function fetchEditBerita(token, id, titles, sub, tag, is_headline, newCon
         })
         .catch(err => {
             if(err.response.status === 401){
-                toast.error("Unauthorized")
+                toast.error("Harap Login Terlebih Dahulu")
                 dispatch(fetchRefreshToken(token))
                 localStorage.removeItem("token");
                 history.push('/login')
@@ -155,7 +155,7 @@ export function fetchAddBerita(token, titles, sub, tag, is_headline, content, ne
         })
         .catch(err => {
             if(err.response.status === 401){
-                toast.error("Unauthorized")
+                toast.error("Harap Login Terlebih Dahulu")
                 dispatch(fetchRefreshToken(token))
                 localStorage.removeItem("token");
                 history.push('/login')
@@ -184,7 +184,7 @@ export function fetchDeleteBerita(token, id) {
         })
         .catch(err => {
             if(err.response.status === 401){
-                toast.error("Unauthorized")
+                toast.error("Harap Login Terlebih Dahulu")
                 dispatch(fetchRefreshToken(token))
                 localStorage.removeItem("token");
                 history.push('/login')

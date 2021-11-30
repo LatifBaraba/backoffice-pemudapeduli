@@ -66,7 +66,7 @@ export function fetchProgram(token) {
         })
         .catch(err => {
             if(err.response.status === 401){
-                toast.error("Unauthorized")
+                toast.error("Harap Login Terlebih Dahulu")
                 dispatch(fetchRefreshToken(token))
                 localStorage.removeItem("token");
                 history.push('/login')
@@ -107,7 +107,7 @@ export function fetchProgramIncidental(token) {
             .catch(err => {
                 console.log(err)
                 if (err.response.status === 401) {
-                    toast.error("Unauthorized")
+                    toast.error("Harap Login Terlebih Dahulu")
                     dispatch(fetchRefreshToken(token))
                     localStorage.removeItem("token");
                     history.push('/login')
@@ -132,7 +132,7 @@ export function fetchDetailProgram(token, id) {
         })
         .catch(err => {
             if(err.response.status === 401){
-                toast.error("Unauthorized")
+                toast.error("Harap Login Terlebih Dahulu")
                 dispatch(fetchRefreshToken(token))
                 localStorage.removeItem("token");
                 history.push('/login')
@@ -170,7 +170,7 @@ export function fetchEditProgram(token, id, titles, sub, tag, content, newThumb,
         })
         .catch(err => {
             if(err.response.status === 401){
-                toast.error("Unauthorized")
+                toast.error("Harap Login Terlebih Dahulu")
                 dispatch(fetchRefreshToken(token))
                 localStorage.removeItem("token");
                 history.push('/login')
@@ -207,7 +207,7 @@ export function fetchEditIncidential(token, id, titles, sub, tag, content, newTh
             .catch(err => {
                 console.log(err)
                 if (err.response.status === 401) {
-                    toast.error("Unauthorized")
+                    toast.error("Harap Login Terlebih Dahulu")
                     dispatch(fetchRefreshToken(token))
                     localStorage.removeItem("token");
                     history.push('/login')
@@ -246,7 +246,7 @@ export function fetchAddProgram(token, titles, sub, tag, content, newThumb, desc
         })
         .catch(err => {
             if(err.response.status === 401){
-                toast.error("Unauthorized")
+                toast.error("Harap Login Terlebih Dahulu")
                 dispatch(fetchRefreshToken(token))
                 localStorage.removeItem("token");
                 history.push('/login')
@@ -283,7 +283,7 @@ export function fetchAddIncidental(token, titles, sub, tag, content, newThumb, d
             .catch(err => {
                 console.log(err)
                 if (err.response.status === 401) {
-                    toast.error("Unauthorized")
+                    toast.error("Harap Login Terlebih Dahulu")
                     dispatch(fetchRefreshToken(token))
                     localStorage.removeItem("token");
                     history.push('/login')
@@ -311,7 +311,7 @@ export function fetchDeleteProgram(token, id) {
         })
         .catch(err => {
             if(err.response.status === 401){
-                toast.error("Unauthorized")
+                toast.error("Harap Login Terlebih Dahulu")
                 dispatch(fetchRefreshToken(token))
                 localStorage.removeItem("token");
                 history.push('/login')
@@ -339,7 +339,7 @@ export function fetchDeleteIncidental(token, id) {
             })
             .catch(err => {
                 if (err.response.status === 401) {
-                    toast.error("Unauthorized")
+                    toast.error("Harap Login Terlebih Dahulu")
                     dispatch(fetchRefreshToken(token))
                     localStorage.removeItem("token");
                     history.push('/login')

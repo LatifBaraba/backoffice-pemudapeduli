@@ -50,7 +50,7 @@ export function fetchKontak(token) {
         })
         .catch(err => {
             if(err.response.status == 401){
-                toast.error("Unauthorized")
+                toast.error("Harap Login Terlebih Dahulu")
                 dispatch(fetchRefreshToken(token))
                 localStorage.removeItem("token");
                 history.push('/login')
@@ -83,7 +83,7 @@ export function fetchEditKontak(token, id, sk, address) {
         })
         .catch(err => {
             if(err.response.status == 401){
-                toast.error("Unauthorized")
+                toast.error("Harap Login Terlebih Dahulu")
                 dispatch(fetchRefreshToken(token))
                 localStorage.removeItem("token");
                 history.push('/login')
@@ -116,7 +116,7 @@ export function fetchAddKontak(token, sk, address) {
         })
         .catch(err => {
             if(err.response.status === 401){
-                toast.error("Unauthorized")
+                toast.error("Harap Login Terlebih Dahulu")
                 dispatch(fetchRefreshToken(token))
                 localStorage.removeItem("token");
                 history.push('/login')
@@ -145,7 +145,7 @@ export function fetchDeleteKontak(token, id) {
         })
         .catch(err => {
             if(err.response.status == 401){
-                toast.error("Unauthorized")
+                toast.error("Harap Login Terlebih Dahulu")
                 dispatch(fetchRefreshToken(token))
                 localStorage.removeItem("token");
                 history.push('/login')

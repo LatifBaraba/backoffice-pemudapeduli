@@ -55,7 +55,7 @@ export function fetchFlag(token) {
             })
             .catch(err => {
                 if (err.response.status === 401) {
-                    toast.error("Unauthorized")
+                    toast.error("Harap Login Terlebih Dahulu")
                     dispatch(fetchRefreshToken(token))
                     localStorage.removeItem("token");
                     history.push('/login')
@@ -95,7 +95,7 @@ export function fetchTeam(token) {
             })
             .catch(err => {
                 if (err.response.status === 401) {
-                    toast.error("Unauthorized")
+                    toast.error("Harap Login Terlebih Dahulu")
                     dispatch(fetchRefreshToken(token))
                     localStorage.removeItem("token");
                     history.push('/login')
@@ -134,7 +134,7 @@ export function fetchEditTeam(token, id, name, role, level, facebook, google, in
             })
             .catch(err => {
                 if (err.response.status === 401) {
-                    toast.error("Unauthorized")
+                    toast.error("Harap Login Terlebih Dahulu")
                     dispatch(fetchRefreshToken(token))
                     localStorage.removeItem("token");
                     history.push('/login')
@@ -173,7 +173,7 @@ export function fetchAddTeam(token, name, role, level, facebook, google, instagr
             })
             .catch(err => {
                 if (err.response.status === 401) {
-                    toast.error("Unauthorized")
+                    toast.error("Harap Login Terlebih Dahulu")
                     dispatch(fetchRefreshToken(token))
                     localStorage.removeItem("token");
                     history.push('/login')
@@ -202,7 +202,7 @@ export function fetchDeleteTeam(token, id) {
             })
             .catch(err => {
                 if (err.response.status === 401) {
-                    toast.error("Unauthorized")
+                    toast.error("Harap Login Terlebih Dahulu")
                     dispatch(fetchRefreshToken(token))
                     localStorage.removeItem("token");
                     history.push('/login')

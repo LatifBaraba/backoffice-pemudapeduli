@@ -50,7 +50,7 @@ export function fetchPartner(token) {
         })
         .catch(err => {
             if(err.response.status === 401){
-                toast.error("Unauthorized")
+                toast.error("Harap Login Terlebih Dahulu")
                 dispatch(fetchRefreshToken(token))
                 history.push('/login')
             }
@@ -82,7 +82,7 @@ export function fetchEditPartner(token, id, name, newThumb) {
         })
         .catch(err => {
             if(err.response.status === 401){
-                toast.error("Unauthorized")
+                toast.error("Harap Login Terlebih Dahulu")
                 dispatch(fetchRefreshToken(token))
                 history.push('/login')
             }
@@ -114,7 +114,7 @@ export function fetchAddPartner(token, name, newThumb) {
         })
         .catch(err => {
             if(err.response.status === 401){
-                toast.error("Unauthorized")
+                toast.error("Harap Login Terlebih Dahulu")
                 dispatch(fetchRefreshToken(token))
                 history.push('/login')
             }
@@ -142,7 +142,7 @@ export function fetchDeletePartner(token, id) {
         })
         .catch(err => {
             if(err.response.status === 401){
-                toast.error("Unauthorized")
+                toast.error("Harap Login Terlebih Dahulu")
                 dispatch(fetchRefreshToken(token))
                 history.push('/login')
             }

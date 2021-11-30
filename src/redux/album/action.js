@@ -50,7 +50,7 @@ export function fetchAlbum(token) {
         })
         .catch(err => {
             if(err.response.status === 401){
-                toast.error("Unauthorized")
+                toast.error("Harap Login Terlebih Dahulu")
                 dispatch(fetchRefreshToken(token))
                 history.push('/login')
             }
@@ -84,7 +84,7 @@ export function fetchEditAlbum(token, id, titles, sub, tag, newThumb) {
         })
         .catch(err => {
             if(err.response.status === 401){
-                toast.error("Unauthorized")
+                toast.error("Harap Login Terlebih Dahulu")
                 dispatch(fetchRefreshToken(token))
                 history.push('/login')
             }
@@ -118,7 +118,7 @@ export function fetchAddAlbum(token, titles, sub, tag, newThumb) {
         })
         .catch(err => {
             if(err.response.status === 401){
-                toast.error("Unauthorized")
+                toast.error("Harap Login Terlebih Dahulu")
                 dispatch(fetchRefreshToken(token))
                 history.push('/login')
             }
@@ -146,7 +146,7 @@ export function fetchDeleteAlbum(token, id) {
         })
         .catch(err => {
             if(err.response.status === 401){
-                toast.error("Unauthorized")
+                toast.error("Harap Login Terlebih Dahulu")
                 dispatch(fetchRefreshToken(token))
                 history.push('/login')
             }
