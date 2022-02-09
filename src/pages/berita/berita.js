@@ -14,7 +14,7 @@ const Berita = (props) => {
     
     useEffect(() => {
         dispatch(fetchBerita(token))
-    },[])
+    },[token])
 
     const beritaData = useSelector((state) => state.beritaReducer.berita);
 

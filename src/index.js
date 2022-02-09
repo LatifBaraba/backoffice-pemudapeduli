@@ -48,7 +48,9 @@ import AddPaket from './pages/paket/add_paket';
 import EditPaket from './pages/paket/edit_paket';
 import Program from './pages/program/program';
 import AddProgram from './pages/program/add_program';
+import AddProgramIncidental from './pages/program/add_program_incidental';
 import EditProgram from './pages/program/edit_program';
+import EditProgramIncidental from './pages/program/edit_program_incidental';
 import Partner from './pages/partner/partner';
 import AddPartner from './pages/partner/add_partner';
 import EditPartner from './pages/partner/edit_partner';
@@ -168,7 +170,9 @@ function Root() {
                                     <Route path={`${process.env.PUBLIC_URL}/program-incidental`} component={ProgramIncidental} />
 
                                             <Route path={`${process.env.PUBLIC_URL}/add-program`} component={AddProgram} />
+                                            <Route path={`${process.env.PUBLIC_URL}/add-program-incidental`} component={AddProgramIncidental} />
                                             <Route path={`${process.env.PUBLIC_URL}/edit-program`} component={EditProgram} />
+                                            <Route path={`${process.env.PUBLIC_URL}/edit-program-incidental`} component={EditProgramIncidental} />
                                             <Route path={`${process.env.PUBLIC_URL}/partner`} component={Partner} />
                                             <Route path={`${process.env.PUBLIC_URL}/add-partner`} component={AddPartner} />
                                             <Route path={`${process.env.PUBLIC_URL}/edit-partner`} component={EditPartner} />

@@ -26,7 +26,7 @@ import {
 } from 'reactstrap';
 import { fetchTagBerita } from '../../redux/banner/action';
 
-const EditProgram = (props) => {
+const EditProgramIncidental = (props) => {
 
     const { data, flag } = props.location.state;
 
@@ -158,33 +158,33 @@ const EditProgram = (props) => {
             </>
         )
     }
-    const onClickUploadBene = () => {
-        uploadImage(imgBeneficaries).then(message => {
-            const BeneficariesThumb = message.response.data.url
-            setArrBeneficaries([...arrBeneficaries, BeneficariesThumb])
-        })
-    }
-    const deleteImage = (e) => {
-        console.log(e.target.value, 'masuk')
-        if (e.target.value > -1) {
-            arrBeneficaries.splice(e.target.value, 1);
-            setArrBeneficaries([...arrBeneficaries])
-        }
-    }
+    // const onClickUploadBene = () => {
+    //     uploadImage(imgBeneficaries).then(message => {
+    //         const BeneficariesThumb = message.response.data.url
+    //         setArrBeneficaries([...arrBeneficaries, BeneficariesThumb])
+    //     })
+    // }
+    // const deleteImage = (e) => {
+    //     console.log(e.target.value, 'masuk')
+    //     if (e.target.value > -1) {
+    //         arrBeneficaries.splice(e.target.value, 1);
+    //         setArrBeneficaries([...arrBeneficaries])
+    //     }
+    // }
     const onSubmit = data => {
         if (flag === "utama") {
             if (data !== '') {
                 if (img == 'undefined') {
                     uploadImage(img).then(message => {
                         const newThumb = message.response.data.url;
-                        dispatch(fetchEditProgram(token, id, titles, sub, tag, newContent, newThumb, desc, achievment, arrBeneficaries))
+                        dispatch(fetchEditIncidential(token, id, titles, sub, tag, newContent, newThumb, desc))
                     })
                         .catch(error => {
                             toast.error("Upload Image Failed !");
                         })
                 } else {
                     const newThumb = thumb;
-                    dispatch(fetchEditProgram(token, id, titles, sub, tag, newContent, newThumb, desc, achievment, arrBeneficaries))
+                    dispatch(fetchEditIncidential(token, id, titles, sub, tag, newContent, newThumb, desc))
                 }
             } else {
                 errors.showMessages();
@@ -233,7 +233,7 @@ const EditProgram = (props) => {
                     <div className="col-sm-12">
                         <div className="card">
                             <div className="card-header">
-                                <h5>Edit Program</h5>
+                                <h5>Edit Program Incidental</h5>
                             </div>
                             <div className="card-body">
                                 {/* content form */}
@@ -271,14 +271,14 @@ const EditProgram = (props) => {
                                                     <span>{errors.description && 'Description is required'}</span>
                                                     <div className="valid-feedback">{"Looks good!"}</div>
                                                 </div>
-                                                <div className="col-md-12 mb-3">
+                                                {/* <div className="col-md-12 mb-3">
                                                     <span className="btn btn-pill btn-primary btn-block mt-3 mb-3" onClick={toggle.bind(null)}>{"Edit Achievment"}</span>
-                                                </div>
+                                                </div> */}
                                                 <div className="col-md-12 mb-3">
                                                     <label>{"UploadFile"}</label>
                                                     <input className="form-control" type="file" accept="image/*" onChange={(e) => setImg(e.target.files[0])} />
                                                 </div>
-                                                <div className="col-md-12 mb-3" >
+                                                {/* <div className="col-md-12 mb-3" >
                                                     <label>{"Upload Beneficaries"}</label>
                                                     <div className="input-group mb-3">
                                                         <input type="file" class="form-control" id="inputGroupFile02" onChange={(e) => setImgBeneficaries(e.target.files[0])} />
@@ -295,7 +295,7 @@ const EditProgram = (props) => {
                                                             )
                                                         })}
                                                     </div>
-                                                </div>
+                                                </div> */}
                                                 <div className="col-md-12 mb-3">
                                                     <Editor
                                                         editorState={editorState}
@@ -338,4 +338,4 @@ const EditProgram = (props) => {
     );
 }
 
-export default EditProgram
+export default EditProgramIncidental

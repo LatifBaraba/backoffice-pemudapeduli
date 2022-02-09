@@ -10,6 +10,8 @@ import 'react-toastify/dist/ReactToastify.css';
 const EditTeam = (props) => {
     const { data } = props.location.state;
 
+    // console.log(data)
+
     const [id, setId] = useState(data.id);
     const [name, setName] = useState(data.name);
     const [role, setRole] = useState(data.role);
@@ -18,7 +20,7 @@ const EditTeam = (props) => {
     const [google, setGoogle] = useState(data.google_link);
     const [instagram, setInstagram] = useState(data.instagram_link);
     const [linkedin, setLinkedin] = useState(data.linkedin_link);
-    const [thumb, setThumb] = useState(data.thumbnail_image_url);
+    const [thumb, setThumb] = useState(data.thumbnail_photo_url);
     const [img, setImg] = useState('');
 
     const loadingStatus = useSelector((state) => state.teamReducer.loading);
@@ -37,6 +39,7 @@ const EditTeam = (props) => {
             if (img !== '') {
                 uploadImage(img).then(message => {
                     const newThumb = message.response.data.url;
+                    // console.log("masuk if")
                     dispatch(fetchEditTeam(token, id, name, role, level, facebook, google, instagram, linkedin, newThumb))
                 })
                     .catch(error => {
@@ -44,6 +47,8 @@ const EditTeam = (props) => {
                     })
             } else {
                 const newThumb = thumb;
+                // console.log("masuk else")
+                // console.log(thumb)
                 dispatch(fetchEditTeam(token, id, name, role, level, facebook, google, instagram, linkedin, newThumb))
             }
         } else {

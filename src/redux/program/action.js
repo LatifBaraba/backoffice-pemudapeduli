@@ -80,12 +80,16 @@ export function fetchProgramIncidental(token) {
         axios(URL_INCD, {
             method: 'POST',
             data: {
-                limit: "100",
-                offset: "0",
+                limit: "10",
+                offset: "1",
                 filters: [
                     {
                         field: "id",
                         keyword: ""
+                    },
+                    {
+                        field: "is_deleted",
+                        keyword: "false"
                     }
                 ],
                 order: "created_at",
@@ -182,6 +186,7 @@ export function fetchEditProgram(token, id, titles, sub, tag, content, newThumb,
 export function fetchEditIncidential(token, id, titles, sub, tag, content, newThumb, desc) {
     return (dispatch) => {
         dispatch(editProgram())
+        console.log(id, titles, sub, tag, content, newThumb, desc)
         axios(EditURL_INCD + `${id}`, {
             method: 'PUT',
             data: {

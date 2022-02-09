@@ -19,6 +19,7 @@ const Program = () => {
     const programData = useSelector((state) => state.programReducer.program);
     // console.log(programData)
     const programDatas = programData.map((program, index) => {
+        console.log(program)
         return (
             <tr key={index}>
                 <th scope="row">{index + 1}</th>

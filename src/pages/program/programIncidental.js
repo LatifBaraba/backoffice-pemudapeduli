@@ -28,7 +28,7 @@ const ProgramIncidental = () => {
                 <td className="text-center"><img src={program.thumbnail_image_url} alt={program.thumbnail_image_url} style={{ width: 100 }} /></td>
                 <td>
                     <Link to={{
-                        pathname: "/edit-program",
+                        pathname: "/edit-program-incidental",
                         state: { data: program, flag: state }
                     }} className="mr-2">
                         <Edit className="edit-program" style={{ cursor: "pointer" }} />
@@ -53,7 +53,7 @@ const ProgramIncidental = () => {
                                     </div>
                                     <div className="col-md-3 col-sm-12">
                                         <Link to={{
-                                            pathname: "/add-program",
+                                            pathname: "/add-program-incidental",
                                             state: state
                                         }}  className="btn btn-success float-right">
                                             Add Program

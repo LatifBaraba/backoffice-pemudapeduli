@@ -35,14 +35,18 @@ const AddBanner = () => {
     // const desc = draftToHtml(convertToRaw(editorState.getCurrentContent()))
 
     const onSubmit = data => {
-        if (data !== '') {
+        console.log(tag);
+        if (data !== '' && tag !== undefined) {
             uploadImage(img).then(message => {
                 const newThumb = message.response.data.url;
+                
                 dispatch(fetchAddBanner(token, titles, sub, titContent, titleLeft, titleRight, deepLeft, deepRight, newThumb, desc, tag))
             })
                 .catch(error => {
-                    toast.error("Upload Image Failed !");
+                    toast.error("Upload Image Failed !, Image belum dipilih");
                 })
+        } else if(tag === undefined) {
+            toast.error("Tag Banner Belum dipilih");
         } else {
             errors.showMessages();
         }
@@ -98,13 +102,13 @@ const AddBanner = () => {
                                                 <div className="col-md-12 mb-3">
                                                     <label>{"Description"}</label>
                                                     <input className="form-control" name="desc" type="text" placeholder="Description" ref={register({ required: true })} onChange={(e) => setDesc(e.target.value)} />
-                                                    <span>{errors.description && 'Description is required'}</span>
+                                                    <span>{errors.desc && 'Description is required'}</span>
                                                     <div className="valid-feedback">{"Looks good!"}</div>
                                                 </div>
                                                 <div className="col-md-12 mb-3">
                                                     <label>{"Tag Banner"}</label>
-                                                    <select className="form-control" name="tag" type="select" placeholder="Tag Banner" ref={register({ required: true })} onChange={(e) => setTag(e.target.value)} >
-                                                        <option disabled selected>-Pilih-</option>
+                                                    <select className="form-control" name="level" type="select" placeholder="Tag Banner" ref={register({ required: true })} onChange={(e) => setTag(e.target.value)} >
+                                                        <option>-Pilih-</option>
                                                         {tagBanner.map((tag) => (
                                                             <option value={tag.Tag}>{tag.Tag}</option>
                                                         ))}

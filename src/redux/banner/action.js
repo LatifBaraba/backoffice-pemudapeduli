@@ -125,7 +125,7 @@ export function fetchEditBanner(token, id, titles, sub, titContent, titleLeft, t
 
 export function fetchAddBanner(token, titles, sub, titContent, titleLeft, titleRight, deepLeft, deepRight, newThumb, desc, tag) {
     return (dispatch) => {
-        dispatch(addBanner())
+        dispatch(addBanner())        
         axios(AddURL, {
             method: 'POST',
             data: {
@@ -133,12 +133,12 @@ export function fetchAddBanner(token, titles, sub, titContent, titleLeft, titleR
                 title: titles,
                 sub_title: sub,
                 title_content: titContent,
-                deeplink_left: deepLeft,
-                title_button_left: titleLeft == "" ? null : titleLeft,
-                deeplink_right: deepRight,
+                thumbnail_image_url: newThumb,
                 title_button_right: titleRight == "" ? null : titleRight,
-                description: desc,
-                thumbnail_image_url: newThumb
+                deeplink_right: deepRight,
+                title_button_left: titleLeft == "" ? null : titleLeft,
+                deeplink_left: deepLeft,
+                description: desc
             },
             headers: {
                 "pp-token": `${token}`,
@@ -158,6 +158,8 @@ export function fetchAddBanner(token, titles, sub, titContent, titleLeft, titleR
                 dispatch(fetchRefreshToken(token))
                 localStorage.removeItem("token");
                 history.push('/login')
+            } else if(err.response.status === 400){
+                toast.error("Link Button Left / Link Button RIght tidak Sesuai Format URL, Kosongkan jika tidak perlu")
             }
             dispatch(addBannerFailure(err));
         });

@@ -2,14 +2,15 @@ import React, { Fragment, useEffect, useState } from 'react';
 import Breadcrumb from '../../components/common/breadcrumb';
 import useForm from "react-hook-form";
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchEditProgram, fetchDetailProgram, fetchEditIncidential } from "../../redux/program/action";
+import { fetchAddIncidental, fetchAddProgram } from "../../redux/program/action";
+import { fetchTagBerita } from "../../redux/banner/action";
 import { uploadImage } from "../../helper/index";
 import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { Editor } from 'react-draft-wysiwyg';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import draftToHtml from 'draftjs-to-html';
-import htmlToDraft from 'html-to-draftjs';
-import { EditorState, ContentState, convertToRaw } from 'draft-js';
+import { EditorState, convertToRaw } from 'draft-js';
 import {
     Form,
     FormGroup,
@@ -24,42 +25,42 @@ import {
     Card,
     Modal,
 } from 'reactstrap';
-import { fetchTagBerita } from '../../redux/banner/action';
-
-const EditProgram = (props) => {
-
-    const { data, flag } = props.location.state;
-
-    const dispatch = useDispatch();
-    let token = localStorage.getItem('token');
-
-    const loadingStatus = useSelector((state) => state.programReducer.loading);
-    const [isOpen, setIsOpen] = useState(false)
-    const [id, setId] = useState(data.id);
-    const [titles, setTitles] = useState(data.title);
-    const [sub, setSub] = useState(data.sub_title);
-    const [tag, setTag] = useState(data.tag);
-    const [thumb, setThumb] = useState(data.thumbnail_image_url);
-    const [desc, setDesc] = useState(data.description);
-    const [achievment, setAchievment] = useState(data.achievements);
-    const [img, setImg] = useState(data.thumbnail_image_url);
-    const [imgBeneficaries, setImgBeneficaries] = useState();
-    const [arrBeneficaries, setArrBeneficaries] = useState(data.beneficaries_image_url)
+const AddProgramIncidental = (props) => {
+    const dataState = props.location.state;
 
     const { register, handleSubmit, errors } = useForm();
+    const dispatch = useDispatch();
 
-    const blocksFromHtml = htmlToDraft(data.content);
-    const { contentBlocks, entityMap } = blocksFromHtml;
-    const contentState = ContentState.createFromBlockArray(contentBlocks, entityMap);
-    const existing = EditorState.createWithContent(contentState);
+    let token = localStorage.getItem('token');
 
-    let initialState = EditorState.createEmpty();
-    const [editorState, setEditorState] = useState(contentState ? existing : initialState)
-    const newContent = draftToHtml(convertToRaw(editorState.getCurrentContent()))
+    const [isOpen, setIsOpen] = useState(false)
+    const [modal, setModal] = useState({ isActive: false, id: "" });
+    const [titles, setTitles] = useState("");
+    const [sub, setSub] = useState("");
+    const [tag, setTag] = useState("");
+    const [desc, setDesc] = useState("");
+    const [achievment, setAchievment] = useState([]);
+
+    const [img, setImg] = useState();
+    const [imgBeneficaries, setImgBeneficaries] = useState();
+    const [arrBeneficaries, setArrBeneficaries] = useState([])
+    const [tes, setTes] = useState()
+
+    console.log(imgBeneficaries, 'img bene')
     useEffect(() => {
         dispatch(fetchTagBerita(token))
     }, [token, dispatch])
+    const loadingStatus = useSelector((state) => state.programReducer.loading);
     const tagBanner = useSelector((state) => state.bannerReducer.tag);
+
+    let _contentState = EditorState.createEmpty("");
+    const [editorState, setEditorState] = useState(_contentState)
+    const content = draftToHtml(convertToRaw(editorState.getCurrentContent()))
+
+    // useEffect(() => {
+    //     setArrBeneficaries([...arrBeneficaries,{imgBeneficaries}])
+    // },[imgBeneficaries])
+
     const toggle = () => {
         setIsOpen(!isOpen);
     }
@@ -84,7 +85,7 @@ const EditProgram = (props) => {
         } else {
             for (var i = 0; i < achievment.length; i += 1) {
                 if (achievment[i].label === '') {
-                    toast("warning", "Maaf name tidak boleh kosong", "", "")
+                    toast("warning", "Maaf label tidak boleh kosong", "", "")
                     return false
                 }
                 if (achievment[i].value === '') {
@@ -138,7 +139,7 @@ const EditProgram = (props) => {
                                             <Col md="10">
                                                 <FormGroup>
                                                     <Label>Name </Label>
-                                                    <Input type="text" placeholder="Key Here" defaultValue={setting.label} onChange={(e) => onChangeNameSetting(e, index)} />
+                                                    <Input type="text" placeholder="Key Here" defaultValue={setting.name} onChange={(e) => onChangeNameSetting(e, index)} />
                                                 </FormGroup>
                                             </Col>
                                         </Row>
@@ -171,46 +172,41 @@ const EditProgram = (props) => {
             setArrBeneficaries([...arrBeneficaries])
         }
     }
+
     const onSubmit = data => {
-        if (flag === "utama") {
+        if (dataState === "utama") {
             if (data !== '') {
-                if (img == 'undefined') {
-                    uploadImage(img).then(message => {
-                        const newThumb = message.response.data.url;
-                        dispatch(fetchEditProgram(token, id, titles, sub, tag, newContent, newThumb, desc, achievment, arrBeneficaries))
+                uploadImage(img).then(message => {
+                    const newThumb = message.response.data.url;
+                    dispatch(fetchAddProgram(token, titles, sub, tag, content, newThumb, desc, achievment, arrBeneficaries))
+
+                    // dispatch(fetchAddProgram(token, titles, sub, tag, content, newThumb, desc, achievment))
+                })
+
+                    .catch(error => {
+                        toast.error("Upload Image Failed !");
                     })
-                        .catch(error => {
-                            toast.error("Upload Image Failed !");
-                        })
-                } else {
-                    const newThumb = thumb;
-                    dispatch(fetchEditProgram(token, id, titles, sub, tag, newContent, newThumb, desc, achievment, arrBeneficaries))
-                }
+            } else {
+                errors.showMessages();
+            }
+        } if (dataState === 'incidental') {
+            console.log('masuk 2')
+            if (data !== '') {
+                uploadImage(img).then(message => {
+                    const newThumb = message.response.data.url;
+                    dispatch(fetchAddIncidental(token, titles, sub, tag, content, newThumb, desc))
+                })
+                    .catch(error => {
+                        toast.error("Upload Image Failed !");
+                    })
             } else {
                 errors.showMessages();
             }
         }
-        if (flag === "incidental") {
-            if (data !== '') {
-                if (img == 'undefined') {
-                    uploadImage(img).then(message => {
-                        const newThumb = message.response.data.url;
-                        dispatch(fetchEditProgram(token, id, titles, sub, tag, newContent, newThumb, desc))
-                    })
-                        .catch(error => {
-                            toast.error("Upload Image Failed !");
-                        })
-                } else {
-                    const newThumb = thumb;
-                    dispatch(fetchEditIncidential(token, id, titles, sub, tag, newContent, newThumb, desc))
-                }
-            } else {
-                errors.showMessages();
-            }
-        }
+
 
     }
-
+    console.log(achievment, 'achievment')
     const submitButton = () => {
         if (loadingStatus === false) {
             return (
@@ -222,9 +218,7 @@ const EditProgram = (props) => {
             )
         }
     }
-
-    console.log(data)
-
+    console.log(arrBeneficaries, 'array')
     return (
         <Fragment>
             <Breadcrumb title="Program Page" parent="Dashboard" />
@@ -233,7 +227,7 @@ const EditProgram = (props) => {
                     <div className="col-sm-12">
                         <div className="card">
                             <div className="card-header">
-                                <h5>Edit Program</h5>
+                                <h5>Add Program Incidental</h5>
                             </div>
                             <div className="card-body">
                                 {/* content form */}
@@ -243,19 +237,19 @@ const EditProgram = (props) => {
                                             <div className="form-row">
                                                 <div className="col-md-12 mb-3">
                                                     <label>{"Title"}</label>
-                                                    <input className="form-control" name="title" type="text" placeholder="Title" value={titles} ref={register({ required: true })} onChange={(e) => setTitles(e.target.value)} />
+                                                    <input className="form-control" name="title" type="text" placeholder="Title" ref={register({ required: true })} onChange={(e) => setTitles(e.target.value)} />
                                                     <span>{errors.title && 'Title is required'}</span>
                                                     <div className="valid-feedback">{"Looks good!"}</div>
                                                 </div>
                                                 <div className="col-md-12 mb-3">
                                                     <label>{"Sub-title"}</label>
-                                                    <input className="form-control" name="sub_title" type="text" placeholder="Sub-title" value={sub} ref={register({ required: true })} onChange={(e) => setSub(e.target.value)} />
+                                                    <input className="form-control" name="sub_title" type="text" placeholder="Sub-title" ref={register({ required: true })} onChange={(e) => setSub(e.target.value)} />
                                                     <span>{errors.sub_title && 'Sub-title is required'}</span>
                                                     <div className="valid-feedback">{"Looks good!"}</div>
                                                 </div>
-                                                <div className="col-md-12 mb-3">
+                                                 <div className="col-md-12 mb-3">
                                                     <label>{"Tag Banner"}</label>
-                                                    <select className="form-control" name="tag" type="select" placeholder="Tag Banner" ref={register({ required: true })} value={tag} onChange={(e) => setTag(e.target.value)} >
+                                                    <select className="form-control" name="tag" type="select" placeholder="Tag Banner" ref={register({ required: true })} onChange={(e) => setTag(e.target.value)} >
                                                         <option disabled selected>-Pilih-</option>
                                                         {tagBanner.map((tag) => (
                                                             <option value={tag.Tag}>{tag.Tag}</option>
@@ -266,23 +260,23 @@ const EditProgram = (props) => {
                                                 </div>
                                                 <div className="col-md-12 mb-3">
                                                     <label>{"Description"}</label>
-                                                    {/* <input className="form-control" name="description" type="text" placeholder="Description" value={desc} onChange={(e) => setDesc(e.target.value)} /> */}
-                                                    <textarea className="form-control" name="desc" rows="5" cols="5" placeholder="Description" value={desc} onChange={(e) => setDesc(e.target.value)}></textarea>
+                                                    {/* <input className="form-control" name="desc" type="text" placeholder="Description" onChange={(e) => setDesc(e.target.value)} /> */}
+                                                    <textarea className="form-control" name="desc" rows="5" cols="5" placeholder="Description" onChange={(e) => setDesc(e.target.value)}></textarea>
                                                     <span>{errors.description && 'Description is required'}</span>
                                                     <div className="valid-feedback">{"Looks good!"}</div>
                                                 </div>
-                                                <div className="col-md-12 mb-3">
-                                                    <span className="btn btn-pill btn-primary btn-block mt-3 mb-3" onClick={toggle.bind(null)}>{"Edit Achievment"}</span>
-                                                </div>
+                                                {/* <div className="col-md-12 mb-3">
+                                                    <span className="btn btn-pill btn-primary btn-block mt-3 mb-3" onClick={toggle.bind(null)}>{"Add Achievment"}</span>
+                                                </div> */}
                                                 <div className="col-md-12 mb-3">
                                                     <label>{"UploadFile"}</label>
                                                     <input className="form-control" type="file" accept="image/*" onChange={(e) => setImg(e.target.files[0])} />
                                                 </div>
-                                                <div className="col-md-12 mb-3" >
+                                                {/* <div className="col-md-12 mb-3" >
                                                     <label>{"Upload Beneficaries"}</label>
                                                     <div className="input-group mb-3">
                                                         <input type="file" class="form-control" id="inputGroupFile02" onChange={(e) => setImgBeneficaries(e.target.files[0])} />
-                                                        <a className="btn btn-outline-secondary" type="button" id="inputGroupFileAddon04" onClick={onClickUploadBene}>Upload</a>
+                                                        <button className="btn btn-outline-secondary" type="button" id="inputGroupFileAddon04" onClick={onClickUploadBene}>Upload</button>
                                                     </div>
                                                     <div>
                                                         {arrBeneficaries.map((item, index) => {
@@ -295,7 +289,7 @@ const EditProgram = (props) => {
                                                             )
                                                         })}
                                                     </div>
-                                                </div>
+                                                </div> */}
                                                 <div className="col-md-12 mb-3">
                                                     <Editor
                                                         editorState={editorState}
@@ -321,7 +315,7 @@ const EditProgram = (props) => {
                 toggle={toggle}
                 size="lg"
             >
-                <ModalHeader toggle={toggle}>Edit Achievment</ModalHeader>
+                <ModalHeader toggle={toggle}>Add Achievment</ModalHeader>
                 <ModalBody>
                     {updateAchievment()}
                 </ModalBody>
@@ -338,4 +332,4 @@ const EditProgram = (props) => {
     );
 }
 
-export default EditProgram
+export default AddProgramIncidental
