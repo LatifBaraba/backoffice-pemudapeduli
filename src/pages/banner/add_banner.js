@@ -118,26 +118,26 @@ const AddBanner = () => {
                                                 </div>
                                                 <div className="col-md-6 mb-3">
                                                     <label>{"Title Button Left"}</label>
-                                                    <input className="form-control" name="titleBtnLeft" type="text" placeholder="Title Left" onChange={(e) => setTitleLeft(e.target.value)} />
-                                                    <span>{errors.titleBtnLeft && 'Title Button Left is required'}</span>
+                                                    <input className="form-control" name="titleLeft" type="text" placeholder="Title Left" ref={register({ required: true })} onChange={(e) => setTitleLeft(e.target.value)} />
+                                                    <span>{errors.titleLeft && 'Title Button Left is required'}</span>
                                                     <div className="valid-feedback">{"Looks good!"}</div>
                                                 </div>
                                                 <div className="col-md-6 mb-3">
                                                     <label>{"Link Button Left"}</label>
-                                                    <input className="form-control" name="deepLinkLeft" type="text" placeholder="Link Left" onChange={(e) => setDeepLeft(e.target.value)} />
-                                                    <span>{errors.deepLinkLeft && 'Link Button Left is required'}</span>
+                                                    <input className="form-control" name="deepLeft" type="text" placeholder="Link Left" ref={register({ required: true })} onChange={(e) => setDeepLeft(e.target.value)} />
+                                                    <span>{errors.deepLeft && 'Link Button Left is required'}</span>
                                                     <div className="valid-feedback">{"Looks good!"}</div>
                                                 </div>
                                                 <div className="col-md-6 mb-3">
                                                     <label>{"Title Button Right"}</label>
-                                                    <input className="form-control" name="titleBtnRight" type="text" placeholder="Title Right" onChange={(e) => setTitleRight(e.target.value)} />
-                                                    <span>{errors.titleBtnRight && 'Title Button Right is required'}</span>
+                                                    <input className="form-control" name="titleRight" type="text" placeholder="Title Right" ref={register({ required: true })} onChange={(e) => setTitleRight(e.target.value)} />
+                                                    <span>{errors.titleRight && 'Title Button Right is required'}</span>
                                                     <div className="valid-feedback">{"Looks good!"}</div>
                                                 </div>
                                                 <div className="col-md-6 mb-3">
                                                     <label>{"Link Button Right"}</label>
-                                                    <input className="form-control" name="deepLinkRight" type="text" placeholder="Link Right" onChange={(e) => setDeepRight(e.target.value)} />
-                                                    <span>{errors.deepLinkRight && 'Link Button Right is required'}</span>
+                                                    <input className="form-control" name="deepRight" type="text" placeholder="Link Right" ref={register({ required: true })} onChange={(e) => setDeepRight(e.target.value)} />
+                                                    <span>{errors.deepRight && 'Link Button Right is required'}</span>
                                                     <div className="valid-feedback">{"Looks good!"}</div>
                                                 </div>
                                                 {/* <div className="col-md-12 mb-3">

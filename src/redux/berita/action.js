@@ -129,7 +129,15 @@ export function fetchEditBerita(token, id, titles, sub, tag, is_headline, newCon
 
 export function fetchAddBerita(token, titles, sub, tag, is_headline, content, newThumb, desc) {
     return (dispatch) => {
-        dispatch(addBerita())
+        // console.log(titles)
+        // console.log(sub)
+        // console.log(tag)
+        // console.log(is_headline)
+        // console.log(typeof is_headline)
+        // console.log(content)
+        // console.log(newThumb)
+        // console.log(desc)
+        // dispatch(addBerita())
         axios(AddURL, {
             method: 'POST',
             data: {
