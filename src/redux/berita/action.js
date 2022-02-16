@@ -30,16 +30,16 @@ export function fetchBerita(token) {
         axios(URL, {
             method: 'POST',
             data: {
-                limit: "100",
-                offset: "0",
+                limit: "10",
+                offset: "1",
                 filters: [
                     {
-                        field: "is_deleted",
-                        keyword: "false"
+                        field: "is_headline",
+                        keyword: "true"
                     }
                 ],
                 order: "created_at",
-                sort: "ASC",
+                sort: "desc",
                 created_at_from: "",
                 created_at_to: "",
                 publish_at_from: "",
@@ -51,6 +51,7 @@ export function fetchBerita(token) {
             }
         })
         .then(res => {
+            console.log(res)
             dispatch(getBeritaSuccess(res.data.data));
         })
         .catch(err => {
