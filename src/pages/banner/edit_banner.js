@@ -116,13 +116,16 @@ const EditBanner = (props) => {
                                                 </div>
                                                 <div className="col-md-12 mb-3">
                                                     <label>{"Tag Banner"}</label>
-                                                    <select className="form-control" name="tag" type="select" placeholder="Tag Banner" ref={register({ required: true })} value={tag} onChange={(e) => setTag(e.target.value)} >
+                                                    {/* <select className="form-control" name="tag" type="select" placeholder="Tag Banner" ref={register({ required: true })} value={tag} onChange={(e) => setTag(e.target.value)} >
                                                         <option disabled selected>-Pilih-</option>
                                                         {tagBanner.map((tag) => (
                                                             <option value={tag.Tag}>{tag.Tag}</option>
                                                         ))}
                                                     </select>
                                                     <span>{errors.level && 'Level is required'}</span>
+                                                    <div className="valid-feedback">{"Looks good!"}</div> */}
+                                                    <input className="form-control" name="tag" type="text" placeholder="Tag Banner" value={tag} ref={register({ required: true })} onChange={(e) => setTag(e.target.value)} />
+                                                    <span>{errors.tag && 'Tag is required'}</span>
                                                     <div className="valid-feedback">{"Looks good!"}</div>
                                                 </div>
                                                 <div className="col-md-6 mb-3">
