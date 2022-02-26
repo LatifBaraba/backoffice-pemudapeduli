@@ -61,7 +61,7 @@ const AddDonasi = () => {
   const qrisData = useSelector((state) => state.qrisReducer.qris);
 
   const onSubmit = (data) => {
-    // console.log(data)
+    // console.log(inputFile[0].paketimage)
 
     let str = tipebayar;
     const id_pp_cp_master_qris = str.split("_");
@@ -71,52 +71,60 @@ const AddDonasi = () => {
       let arr = {};
       let arrobj = [];
       for (let index = 0; index < inputList.length; index++) {
-        uploadImage(inputFile[index].paketimage)
+        if (!inputFile[index].paketimage) {
+          toast.error("Gambar Paket belum di upload !");
+        } else {
+          uploadImage(inputFile[index].paketimage)
+            .then((message) => {
+              const newThumb = message.response.data.url;
+              let pakets = {
+                paketimage: newThumb,
+              };
+              arr = Object.assign(inputList[index], pakets);
+              arrobj.push(arr);
+            })
+            .catch((error) => {
+              toast.error("Upload Image Failed !");
+            });
+        }
+      }
+      let paket = {
+        paket: arrobj,
+      };
+      if (!img) {
+        toast.error("Gambar Donasi Rutin belum di upload !");
+      } else {
+        uploadImage(img)
           .then((message) => {
             const newThumb = message.response.data.url;
-            let pakets = {
-              paketimage: newThumb,
-            };
-            arr = Object.assign(inputList[index], pakets);
-            arrobj.push(arr);
+            dispatch(
+              fetchAddPaket(
+                token,
+                titles,
+                sub,
+                tag,
+                // donasiType,
+                benefit,
+                newThumb,
+                desc,
+                content,
+                id_pp_cp_master_qris[0],
+                qris_image_url[1],
+                arrobj
+              )
+            );
+            // dispatch(
+            //   fetchAddPaketRutin(
+            //     token,
+            //     donasiType,
+            //     arrobj
+            //   )
+            // );
           })
           .catch((error) => {
             toast.error("Upload Image Failed !");
           });
       }
-      let paket = {
-        paket: arrobj,
-      };      
-      uploadImage(img)
-        .then((message) => {
-          const newThumb = message.response.data.url;
-          dispatch(
-            fetchAddPaket(
-              token,
-              titles,
-              sub,
-              tag,
-              // donasiType,
-              benefit,
-              newThumb,
-              desc,
-              content,
-              id_pp_cp_master_qris[0],
-              qris_image_url[1],
-              arrobj
-            )
-          );
-          // dispatch(
-          //   fetchAddPaketRutin(
-          //     token,
-          //     donasiType,
-          //     arrobj
-          //   )
-          // );
-        })
-        .catch((error) => {
-          toast.error("Upload Image Failed !");
-        });
     } else {
       errors.showMessages();
     }
@@ -399,6 +407,7 @@ const AddDonasi = () => {
                                           onChange={(e) =>
                                             handleInputChange(e, i)
                                           }
+                                          required
                                         />
                                       </div>
                                       <div className="col-md-4 mb-3">
@@ -410,6 +419,7 @@ const AddDonasi = () => {
                                           onChange={(e) =>
                                             handleInputChange(e, i)
                                           }
+                                          required
                                         />
                                       </div>
                                       <div className="col-md-4 mb-3">
@@ -421,6 +431,7 @@ const AddDonasi = () => {
                                           onChange={(e) =>
                                             handleInputChange(e, i)
                                           }
+                                          required
                                         />
                                       </div>
                                     </>
@@ -446,7 +457,7 @@ const AddDonasi = () => {
                                             )
                                           }
                                         />
-                                      </div>                                     
+                                      </div>
                                       <div className="col-md-2">
                                         {inputList.length !== 1 && (
                                           <Trash
