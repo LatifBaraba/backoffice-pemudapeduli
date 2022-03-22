@@ -18,6 +18,7 @@ import { Form } from "react-bootstrap";
 import { fetchPenggalang } from "../../redux/penggalang/action";
 import { Row, Col, Container } from "react-bootstrap";
 import { Edit, Trash } from "react-feather";
+import { fetchDonasiOneTimeKategori } from "../../redux/donasiKategori/action";
 
 const EditDonasi = (props) => {
   const { data } = props.location.state;
@@ -28,6 +29,7 @@ const EditDonasi = (props) => {
     setTarget(target && addCommas(target));
     dispatch(fetchQris(token));
     dispatch(fetchPenggalang(token));
+    dispatch(fetchDonasiOneTimeKategori(token))
   }, []);
 
   // console.log(data);
@@ -48,6 +50,9 @@ const EditDonasi = (props) => {
   const [tipebayar, setTipeBayar] = useState(
     data.id_pp_cp_master_qris + "_" + data.qris_image_url
   );
+  const [kategori, setKategori] = useState(
+    data.kategori_id
+  );
   const [qrisimage, setQrisimage] = useState(data.qris_image_url);
   const [penggalang, setPenggalang] = useState(data.id_pp_cp_penggalang_dana);
   const [inputList, setInputList] = useState(data.nominal);
@@ -56,6 +61,8 @@ const EditDonasi = (props) => {
 
   const dispatch = useDispatch();
   const qrisData = useSelector((state) => state.qrisReducer.qris);
+
+  const kategoriData = useSelector((state) => state.donasiKategoriReducer.donasionetimeKategori);
   const penggalangData = useSelector(
     (state) => state.penggalangReducer.penggalang
   );
@@ -114,7 +121,8 @@ const EditDonasi = (props) => {
                 id_pp_cp_master_qris[0],
                 qris_image_url[1],
                 penggalang,
-                inputList
+                inputList,
+                kategori
               )
             );
           })
@@ -143,7 +151,8 @@ const EditDonasi = (props) => {
             id_pp_cp_master_qris[0],
             qris_image_url[1],
             penggalang,
-            inputList
+            inputList,
+            kategori
           )
         );
       }
@@ -371,6 +380,42 @@ const EditDonasi = (props) => {
                             alt={qrisimage}
                             style={{ width: 100 }}
                           />
+                        </div>
+                        <div className="col-md-12 mb-3">
+                          <label>{"Pilih Kategori"}</label>
+
+                          <Form.Group controlId="formKategori">
+                            <Form.Control
+                              required
+                              as="select"
+                              type="select"
+                              onChange={(e) => setKategori(e.target.value)}
+                            >
+                              <option value="">Pilih Kategori</option>
+                              {kategoriData.map((ktg, index) =>
+                                ktg.id == kategori ? (
+                                  <option
+                                    key={index}
+                                    value={
+                                      ktg.id 
+                                    }
+                                    selected
+                                  >
+                                    {ktg.name}
+                                  </option>
+                                ) : (
+                                  <option
+                                    key={index}
+                                    value={
+                                      ktg.id 
+                                    }
+                                  >
+                                    {ktg.name}
+                                  </option>
+                                )
+                              )}
+                            </Form.Control>
+                          </Form.Group>                          
                         </div>
 
                         <div className="col-md-12 mb-3">

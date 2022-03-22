@@ -60,7 +60,7 @@ export function fetchDonasi(token) {
     };
 };
 
-export function fetchEditDonasi(token, id, titles, sub, tag, startDate, endDate, target, newThumb, desc, newContent, show, ayoBantu, kitaBisa, id_pp_cp_master_qris, qris_image_url, id_pp_cp_penggalang_dana, nominal) {
+export function fetchEditDonasi(token, id, titles, sub, tag, startDate, endDate, target, newThumb, desc, newContent, show, ayoBantu, kitaBisa, id_pp_cp_master_qris, qris_image_url, id_pp_cp_penggalang_dana, nominal, kategori) {
     return (dispatch) => {
        
         dispatch(editDonasi())
@@ -84,7 +84,8 @@ export function fetchEditDonasi(token, id, titles, sub, tag, startDate, endDate,
                 qris_image_url:qris_image_url,
                 id_pp_cp_penggalang_dana:id_pp_cp_penggalang_dana,
                 seo_url:"",
-                nominal:nominal
+                nominal:nominal,
+                kategori_id:kategori
             },
             headers: {
                 "pp-token": `${token}`,
@@ -112,7 +113,7 @@ export function fetchEditDonasi(token, id, titles, sub, tag, startDate, endDate,
     };
 };
 
-export function fetchAddDonasi(token, titles, sub, tag, startDate, endDate, target, newThumb, desc, content, ayoBantu, kitaBisa, id_pp_cp_master_qris, qris_image_url, id_pp_cp_penggalang_dana, nominal) {
+export function fetchAddDonasi(token, titles, sub, tag, startDate, endDate, target, newThumb, desc, content, ayoBantu, kitaBisa, id_pp_cp_master_qris, qris_image_url, id_pp_cp_penggalang_dana, nominal, kategori) {
     return (dispatch) => {
         let data= {
             title: titles,
@@ -131,7 +132,8 @@ export function fetchAddDonasi(token, titles, sub, tag, startDate, endDate, targ
             qris_image_url:qris_image_url,
             id_pp_cp_penggalang_dana:id_pp_cp_penggalang_dana,
             seo_url:"",
-            nominal: nominal
+            nominal: nominal,
+            kategori: kategori
         }
         dispatch(addDonasi())
         axios(AddURL, {
@@ -153,7 +155,8 @@ export function fetchAddDonasi(token, titles, sub, tag, startDate, endDate, targ
                 qris_image_url:qris_image_url,
                 id_pp_cp_penggalang_dana:id_pp_cp_penggalang_dana,
                 seo_url:"",
-                nominal: nominal
+                nominal: nominal,
+                kategori_id: kategori
             },
             headers: {
                 "pp-token": `${token}`,

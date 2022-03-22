@@ -10,7 +10,19 @@ import { GET_DONASI_KATEGORI,
     DELETE_DONASI_KATEGORI_SUCCESS,
     DELETE_DONASI_KATEGORI_FAILURE,
     GET_DONASI_PAKET_LIST_SUCCESS,
-    GET_DONASI_PAKET_LIST_FAILURE
+    GET_DONASI_PAKET_LIST_FAILURE,
+
+    GET_ONETIME_DONASI_KATEGORI,
+    GET_ONETIME_DONASI_KATEGORI_SUCCESS,
+    GET_ONETIME_DONASI_KATEGORI_FAILURE,
+    ADD_ONETIME_DONASI_KATEGORI,
+    ADD_ONETIME_DONASI_KATEGORI_SUCCESS,
+    ADD_ONETIME_DONASI_KATEGORI_FAILURE,
+    EDIT_ONETIME_DONASI_KATEGORI,
+    EDIT_ONETIME_DONASI_KATEGORI_SUCCESS,
+    EDIT_ONETIME_DONASI_KATEGORI_FAILURE,
+    DELETE_ONETIME_DONASI_KATEGORI_SUCCESS,
+    DELETE_ONETIME_DONASI_KATEGORI_FAILURE,
         } from '../actionTypes';
 import axios from 'axios';
 import { fetchToken, fetchRefreshToken } from "../token/action";
@@ -22,6 +34,10 @@ const URL = `${process.env.REACT_APP_BASE_URL}/kategori/program-donasi-rutin/lis
 const EditURL = `${process.env.REACT_APP_BASE_URL}/kategori/program-donasi-rutin/`;
 const AddURL = `${process.env.REACT_APP_BASE_URL}/kategori/program-donasi-rutin/create`;
 const ListPaketURL = `${process.env.REACT_APP_BASE_URL}/program-donasi-rutin/paket/list`;
+
+const URL_ONETIMEKATEGORI = `${process.env.REACT_APP_BASE_URL}/kategori-program-donasi/list`;
+const Edit_ONETIMEKATEGORI = `${process.env.REACT_APP_BASE_URL}/kategori-program-donasi/`;
+const Add_ONETIMEKATEGORI = `${process.env.REACT_APP_BASE_URL}/kategori-program-donasi/create`;
 
 export function fetchDonasiKategori(token) {
     return (dispatch) => {
@@ -197,6 +213,138 @@ export function fetchPaketList(token, id) {
 };
 
 
+
+export function fetchDonasiOneTimeKategori(token) {
+    return (dispatch) => {
+        axios(URL_ONETIMEKATEGORI, {
+            method: 'POST',
+            data: {
+                limit: "10",
+                offset: "1",
+                filters: [
+                    {
+                        field: "id",
+                        keyword: ""
+                    }
+                ],
+                order: "created_at",
+                sort: "ASC",                
+            },
+            headers: {
+                "pp-token": `${token}`,
+                "Content-type": "application/json"
+            }
+        })
+        .then(res => {
+            console.log(res)
+            dispatch(getDonasiOnetimeKategoriSuccess(res.data.data));
+        })
+        .catch(err => {
+            if(err.response.status === 401){
+                toast.error("Harap Login Terlebih Dahulu")
+                dispatch(fetchRefreshToken(token))
+                localStorage.removeItem("token");
+                history.push('/login')
+            }
+            dispatch(getDonasiOneTimeKategoriFailure(err));
+        });
+    };
+};
+
+export function fetchAddDonasiOneTimeKategori(token, name) {
+    return (dispatch) => {
+        dispatch(addDonasiKategori())
+        axios(Add_ONETIMEKATEGORI, {
+            method: 'POST',
+            data: {
+                name: name,
+            },
+            headers: {
+                "pp-token": `${token}`,
+                "Content-type": "application/json"
+            }
+        })
+        .then(res => {
+            setTimeout(() => {
+                toast.success("Add Success !");
+                dispatch(addDonasiOneTimeKategoriSuccess(res));
+                history.push("/onetime-kategori");
+            }, 2000);
+        })
+        .catch(err => {
+            if(err.response.status === 401){
+                toast.error("Harap Login Terlebih Dahulu")
+                dispatch(fetchRefreshToken(token))
+                localStorage.removeItem("token");
+                history.push('/login')
+            }
+            dispatch(addDonasiOneTimeKategoriFailure(err));
+        });
+    };
+};
+
+export function fetchEditDonasiOneTimeKategori(token, id, name) {
+    return (dispatch) => {
+        // dispatch(editDonasiKategori())
+        axios(Edit_ONETIMEKATEGORI+`${id}`, {
+            method: 'PUT',
+            data: {
+                name: name,
+            },
+            headers: {
+                "pp-token": `${token}`,
+                "Content-type": "application/json"
+            }
+        })
+        .then(res => { 
+            setTimeout(() => {
+                toast.success("Edit Success !");
+                dispatch(editDonasiOneTimeKategoriSuccess(res));
+                history.push("/onetime-kategori");
+            }, 2000);
+        })
+        .catch(err => {
+            if(err.response.status === 401){
+                toast.error("Harap Login Terlebih Dahulu")
+                dispatch(fetchRefreshToken(token))
+                localStorage.removeItem("token");
+                history.push('/login')
+            }
+            dispatch(editDonasiOneTimeKategoriFailure(err));
+        });
+    };
+};
+
+
+export function fetchDeleteDonasiOneTimeKategori(token, id) {
+    return (dispatch) => {
+        axios(Edit_ONETIMEKATEGORI+`${id}`, {
+            method: 'DELETE',
+            headers: {
+                "pp-token": `${token}`,
+                "Content-type": "application/json"
+            }
+        })
+        .then(res => {
+            setTimeout(() => {
+                toast.success("Delete Success !")
+                dispatch(deleteDonasiOneTimeKategoriSuccess(res));
+                history.push("/onetime-kategori");
+                window.location.reload();
+            }, 2000);
+        })
+        .catch(err => {
+            if(err.response.status === 401){
+                toast.error("Harap Login Terlebih Dahulu")
+                dispatch(fetchRefreshToken(token))
+                localStorage.removeItem("token");
+                history.push('/login')
+            }
+            dispatch(deleteDonasiOneTimeKategoriFailure(err));
+        });
+    };
+};
+
 // Get DonasiKategori
 const getDonasiKategoriSuccess = (payload) => ({
     type: GET_DONASI_KATEGORI_SUCCESS,
@@ -257,4 +405,57 @@ const getDonasiPaketListSuccess = (payload) => ({
 
 const getDonasiPaketListFailure = () => ({
     type: GET_DONASI_PAKET_LIST_FAILURE
+});
+
+
+// Get DonasiKategori
+const getDonasiOnetimeKategoriSuccess = (payload) => ({
+    type: GET_ONETIME_DONASI_KATEGORI_SUCCESS,
+    payload
+});
+
+const getDonasiOneTimeKategoriFailure = () => ({
+    type: GET_ONETIME_DONASI_KATEGORI_FAILURE
+});
+
+const getDonasiOneTimeKategori = () => ({
+    type: GET_ONETIME_DONASI_KATEGORI
+});
+
+// Edit DonasiOneTimeKategori
+const editDonasiOneTimeKategori = () => ({
+    type: EDIT_ONETIME_DONASI_KATEGORI
+});
+
+const editDonasiOneTimeKategoriSuccess = (payload) => ({
+    type: EDIT_ONETIME_DONASI_KATEGORI_SUCCESS,
+    payload
+});
+
+const editDonasiOneTimeKategoriFailure = () => ({
+    type: EDIT_ONETIME_DONASI_KATEGORI_FAILURE
+});
+
+// Add DonasiOneTimeKategori
+const addDonasiOneTimeKategori = () => ({
+    type: ADD_ONETIME_DONASI_KATEGORI
+});
+
+const addDonasiOneTimeKategoriSuccess = (payload) => ({
+    type: ADD_ONETIME_DONASI_KATEGORI_SUCCESS,
+    payload
+});
+
+const addDonasiOneTimeKategoriFailure = () => ({
+    type: ADD_ONETIME_DONASI_KATEGORI_FAILURE
+});
+
+// Delete DonasiOneTimeKategori
+const deleteDonasiOneTimeKategoriSuccess = (payload) => ({
+    type: DELETE_ONETIME_DONASI_KATEGORI_SUCCESS,
+    payload
+});
+
+const deleteDonasiOneTimeKategoriFailure = () => ({
+    type: DELETE_ONETIME_DONASI_KATEGORI_FAILURE
 });

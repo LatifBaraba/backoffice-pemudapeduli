@@ -43,6 +43,9 @@ import EditDonasi from './pages/donasi/edit_donasi';
 import DonasiKategori from './pages/donasiKategori/kategori';
 import AddDonasiKategori from './pages/donasiKategori/add_kategori';
 import EditDonasiKategori from './pages/donasiKategori/edit_kategori';
+import DonasiOneTimeKategori from './pages/kategori/donasiOneTimekategori';
+import AddDonasiOneTimeKategori from './pages/kategori/add_donasiOneTImeKategori';
+import EditDonasiOneTimeKategori from './pages/kategori/edit_donasiOneTimeKategori';
 import Paket from './pages/paket/paket';
 import AddPaket from './pages/paket/add_paket';
 import EditPaket from './pages/paket/edit_paket';
@@ -97,6 +100,9 @@ import Profile from './pages/user/profile';
 import ChangePassword from './pages/user/change_password';
 import { Redirect } from 'react-router-dom';
 import ProgramIncidental from './pages/program/programIncidental';
+import UploadPdf from './pages/uploadpdf/uploadpdf';
+import AddUploadPdf from './pages/uploadpdf/add_uploadpdf';
+import EditUploadPdf from './pages/uploadpdf/edit_uploadpdf';
 // sample page
 // import SupportTicket from './components/support-ticket/supportTicket';
 
@@ -157,6 +163,10 @@ function Root() {
                                             <Route path={`${process.env.PUBLIC_URL}/kategori`} component={DonasiKategori} />
                                             <Route path={`${process.env.PUBLIC_URL}/add-donasi-kategori`} component={AddDonasiKategori} />
                                             <Route path={`${process.env.PUBLIC_URL}/edit-donasi-kategori`} component={EditDonasiKategori} />
+
+                                            <Route path={`${process.env.PUBLIC_URL}/onetime-kategori`} component={DonasiOneTimeKategori} />
+                                            <Route path={`${process.env.PUBLIC_URL}/add-onetime-kategori`} component={AddDonasiOneTimeKategori} />
+                                            <Route path={`${process.env.PUBLIC_URL}/edit-onetime-kategori`} component={EditDonasiOneTimeKategori} />
                                             
                                             {/* <Route path={`${process.env.PUBLIC_URL}/paket`} component={Paket} />
                                             <Route path={`${process.env.PUBLIC_URL}/add-paket`} component={AddPaket} />
@@ -215,6 +225,9 @@ function Root() {
                                             <Route path={`${process.env.PUBLIC_URL}/kabar-terbaru-rutin`} exact component={KabarTerbaruRutin} />
                                             <Route path={`${process.env.PUBLIC_URL}/add-kabar-terbaru-rutin`} component={AddKabarTerbaruRutin} />
                                             <Route path={`${process.env.PUBLIC_URL}/edit-kabar-terbaru-rutin`} component={EditKabarTerbaruRutin} />
+                                            <Route path={`${process.env.PUBLIC_URL}/upload`} exact component={UploadPdf} />
+                                            <Route path={`${process.env.PUBLIC_URL}/add-upload`} component={AddUploadPdf} />
+                                            <Route path={`${process.env.PUBLIC_URL}/edit-upload`} component={EditUploadPdf} />
                                             {/* <Route exact path={`${process.env.PUBLIC_URL}/dashboard/default`} component={Default} />
                                             <Route path={`${process.env.PUBLIC_URL}/dashboard/ecommerce`} component={Ecommerce} />
                                             <Route path={`${process.env.PUBLIC_URL}/dashboard/university`} component={University} />

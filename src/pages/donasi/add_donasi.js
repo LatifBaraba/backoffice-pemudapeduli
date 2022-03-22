@@ -21,6 +21,7 @@ import { fetchQris } from "../../redux/qris/action";
 import { fetchPenggalang } from "../../redux/penggalang/action";
 import { Row, Col, Container } from "react-bootstrap";
 import { Edit, Trash } from "react-feather";
+import { fetchDonasiOneTimeKategori } from "../../redux/donasiKategori/action";
 
 const AddDonasi = () => {
   const { register, handleSubmit, errors } = useForm();
@@ -40,12 +41,14 @@ const AddDonasi = () => {
   const [kitaBisa, setKitaBisa] = useState("");
   // const [ donasiType, setDonasiType] = useState("Rutin");
   const [tipebayar, setTipeBayar] = useState("");
+  const [kategori, setKategori] = useState("");
   const [qrisimage, setQrisimage] = useState("");
   const [penggalang, setPenggalang] = useState("");
   const [inputList, setInputList] = useState([{  }]);
 
   const loadingStatus = useSelector((state) => state.donasiReducer.loading);
   const qrisData = useSelector((state) => state.qrisReducer.qris);
+  const kategoriData = useSelector((state) => state.donasiKategoriReducer.donasionetimeKategori);
   const penggalangData = useSelector(
     (state) => state.penggalangReducer.penggalang
   );
@@ -57,6 +60,7 @@ const AddDonasi = () => {
   useEffect(() => {
     dispatch(fetchQris(token));
     dispatch(fetchPenggalang(token));
+    dispatch(fetchDonasiOneTimeKategori(token))
   }, []);
 
   const onSubmit = (data) => {
@@ -93,7 +97,8 @@ const AddDonasi = () => {
               id_pp_cp_master_qris[0],
               qris_image_url[1],
               penggalang,
-              inputList
+              inputList,
+              kategori
             )
           );
         })
@@ -303,6 +308,34 @@ const AddDonasi = () => {
                                   }
                                 >
                                   {qris.description}
+                                </option>
+                              ))}
+                            </Form.Control>
+                          </Form.Group>
+                        </div>
+                        <div className="col-md-12 mb-3">
+                          <label>{"Pilih Kategori"}</label>
+                          <Form.Group controlId="formKategori">
+                            <Form.Control
+                              required
+                              as="select"
+                              type="select"
+                              onChange={(e) => setKategori(e.target.value)}
+                              // {...register("tipebayar", {
+                              //   required: true,
+                              // })}
+                            >
+                              <option value="">Pilih Kategori</option>
+                              {/* <option value="mandiri">Rekening Mandiri</option>
+                                                    <option value="qris">QRIS</option> */}
+                              {kategoriData.map((kategori, index) => (
+                                <option
+                                  key={index}
+                                  value={
+                                    kategori.id 
+                                  }
+                                >
+                                  {kategori.name}
                                 </option>
                               ))}
                             </Form.Control>
