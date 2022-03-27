@@ -6,6 +6,7 @@ import { fetchAddBanner, fetchTagBerita } from "../../redux/banner/action";
 import { uploadFile, uploadImage } from "../../helper/index";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { fetchAddUploadPdf } from '../../redux/uploadpdf/action';
 
 const AddUploadPdf = () => {
     const dispatch = useDispatch()
@@ -23,6 +24,7 @@ const AddUploadPdf = () => {
     const [deepRight, setDeepRight] = useState("");
     const [pdf, setPdf] = useState();
     const [tag, setTag] = useState()
+    const [link, setLink] = useState()
 
     useEffect(() => {
         dispatch(fetchTagBerita(token))
@@ -36,15 +38,15 @@ const AddUploadPdf = () => {
 
     const onSubmit = data => {
         if (data !== '') {
-            uploadFile(pdf).then(message => {
-                console.log(message)
-                toast.success("Upload File Success !");
+            // uploadFile(pdf).then(message => {
+                // console.log(message)
+                // toast.success("Upload File Success !");
                 // const newThumb = message.response.data.url;
-                // dispatch(fetchAddAlbum(token, titles, sub, tag, newThumb))
-            })
-                .catch(error => {
-                    toast.error("Upload File Failed !");
-                })
+                dispatch(fetchAddUploadPdf(token, titles, link))
+            // })
+            //     .catch(error => {
+            //         toast.error("Upload File Failed !");
+            //     })
         } else {
             errors.showMessages();
         }
@@ -84,11 +86,17 @@ const AddUploadPdf = () => {
                                                     <span>{errors.title && 'Title is required'}</span>
                                                     <div className="valid-feedback">{"Looks good!"}</div>
                                                 </div>
-                                                
                                                 <div className="col-md-12 mb-3">
+                                                    <label>{"Link"}</label>
+                                                    <input className="form-control" name="link" type="text" placeholder="Link" ref={register({ required: true })} onChange={(e) => setLink(e.target.value)} />
+                                                    <span>{errors.link && 'Link is required'}</span>
+                                                    <div className="valid-feedback">{"Looks good!"}</div>
+                                                </div>
+                                                
+                                                {/* <div className="col-md-12 mb-3">
                                                     <label>{"UploadFile"}</label>
                                                     <input className="form-control" type="file" accept="pdf/*" onChange={(e) => setPdf(e.target.files[0])} />
-                                                </div>
+                                                </div> */}
                                               
                                             </div>
                                             {/* <button className="btn btn-pill btn-primary btn-block mt-3 mb-3" type="submit">{"Submit"}</button> */}

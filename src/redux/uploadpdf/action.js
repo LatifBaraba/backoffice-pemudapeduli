@@ -17,10 +17,10 @@ import history from "../../history";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-const URL = `${process.env.REACT_APP_BASE_URL}/banner/list`;
-const EditURL = `${process.env.REACT_APP_BASE_URL}/banner/`;
-const AddURL = `${process.env.REACT_APP_BASE_URL}/banner/create`;
-const URL_TAG = `${process.env.REACT_APP_BASE_URL}/berita/list-tag`;
+const URL = `${process.env.REACT_APP_BASE_URL}/program-kami/list`;
+const EditURL = `${process.env.REACT_APP_BASE_URL}/program-kami/`;
+const AddURL = `${process.env.REACT_APP_BASE_URL}/program-kami/create`;
+// const URL_TAG = `${process.env.REACT_APP_BASE_URL}/berita/list-tag`;
 
 
 export function fetchUploadPdf(token) {
@@ -28,16 +28,20 @@ export function fetchUploadPdf(token) {
         axios(URL, {
             method: 'POST',
             data: {
-                limit: "100",
-                offset: "0",
+                limit: "10",
+                offset: "1",
                 filters: [
+                    {
+                        field: "document",
+                        keyword: ""
+                    },
                     {
                         field: "is_deleted",
                         keyword: "false"
                     }
                 ],
                 order: "created_at",
-                sort: "ASC",
+                sort: "DESC",
                 created_at_from: "",
                 created_at_to: "",
                 publish_at_from: "",
@@ -50,6 +54,7 @@ export function fetchUploadPdf(token) {
         })
         .then(res => {
             dispatch(getUploadpdfSuccess(res.data.data));
+            console.log(res.data.data)
         })
         .catch(err => {
             if(err.response.status === 401){
@@ -63,22 +68,30 @@ export function fetchUploadPdf(token) {
     };
 };
 
-export function fetchEditUploadPdf(token, id, titles, sub, titContent, titleLeft, titleRight, deepLeft, deepRight, newThumb, desc, tag) {
+export function fetchEditUploadPdf(token, id, title, link) {
     return (dispatch) => {
         dispatch(editUploadpdf())
         axios(EditURL+`${id}`, {
             method: 'PUT',
             data: {
-                tag: tag,
-                title: titles,
-                sub_title: sub,
-                title_content: titContent,
-                deeplink_left: deepLeft,
-                title_button_left: titleLeft == "" ? null : titleLeft,
-                deeplink_right: deepRight,
-                title_button_right: titleRight == "" ? null : titleRight,
-                description: desc,
-                thumbnail_image_url: newThumb
+                title: " ",
+                sub_title: " ",
+                tag: "",
+                content: " ",
+                description: "",
+                achievements: [{
+                    "label": "",
+                    "value": ""
+                }],
+                document: [{
+                    title: title,
+                    link_url: link
+                }],
+                thumbnail_image_url: "",
+                beneficaries_image_url: [
+                    ""
+                ]
+
             },
             headers: {
                 "pp-token": `${token}`,
@@ -104,22 +117,30 @@ export function fetchEditUploadPdf(token, id, titles, sub, titContent, titleLeft
     };
 };
 
-export function fetchAddUploadPdf(token, titles, sub, titContent, titleLeft, titleRight, deepLeft, deepRight, newThumb, desc, tag) {
+export function fetchAddUploadPdf(token, title, link) {
     return (dispatch) => {
         dispatch(addUploadpdf())        
         axios(AddURL, {
             method: 'POST',
             data: {
-                tag: tag,
-                title: titles,
-                sub_title: sub,
-                title_content: titContent,
-                thumbnail_image_url: newThumb,
-                title_button_right: titleRight == "" ? null : titleRight,
-                deeplink_right: deepRight,
-                title_button_left: titleLeft == "" ? null : titleLeft,
-                deeplink_left: deepLeft,
-                description: desc
+                title: " ",
+                sub_title: " ",
+                tag: "",
+                content: " ",
+                description: "",
+                achievements: [{
+                    "label": "",
+                    "value": ""
+                }],
+                document: [{
+                    title: title,
+                    link_url: link
+                }],
+                thumbnail_image_url: "",
+                beneficaries_image_url: [
+                    ""
+                ]
+
             },
             headers: {
                 "pp-token": `${token}`,

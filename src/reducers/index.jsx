@@ -25,6 +25,7 @@ import paketReducer from '../redux/paket/reducer'
 import penggalangReducer from '../redux/penggalang/reducer'
 import nominalReducer from '../redux/nominal/reducer'
 import kabarterbaruReducer from '../redux/kabarterbaru/reducer'
+import uploadReducer from '../redux/uploadpdf/reducer'
 
 const reducers = combineReducers({
     Customizer,
@@ -52,7 +53,8 @@ const reducers = combineReducers({
     paketReducer,
     penggalangReducer,
     nominalReducer,
-    kabarterbaruReducer
+    kabarterbaruReducer,
+    uploadReducer
 });
 
 export default reducers;

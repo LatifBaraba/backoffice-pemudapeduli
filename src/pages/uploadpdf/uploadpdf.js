@@ -13,30 +13,31 @@ const UploadPdf = (props) => {
     let token = localStorage.getItem('token');
     
     useEffect(() => {
-        // dispatch(fetchUploadPdf(token))
+        dispatch(fetchUploadPdf(token))
     },[])
 
-    // const uploadData = useSelector((state) => state.uploadReducer.uploadpdf);
+    const uploadData = useSelector((state) => state.uploadReducer.uploadpdf);
 
-    // const uploadDatas = uploadData.map((uploadpdf, index) => {
-    //     return (
-    //         <tr key={index}>
-    //             <th scope="row">{index+1}</th>
-    //             {/* <td>{user.id}</td> */}
-    //             <td>{uploadpdf.title}</td>               
-    //             <td className="text-center"><img src={uploadpdf.thumbnail_image_url} alt={uploadpdf.thumbnail_image_url} style={{width: 100}}/></td>
-    //             <td>
-    //                 <Link to={{
-    //                         pathname: "/edit-upload",
-    //                         state: { data: uploadpdf }
-    //                     }} className="mr-2">
-    //                     <Edit className="edit-upload" style={{cursor:"pointer"}}/>
-    //                 </Link>
-    //                 <Trash className="delete-upload" style={{cursor:"pointer"}} onClick={() => dispatch(fetchDeleteUploadPdf(token, uploadpdf.id))}/>
-    //             </td>
-    //         </tr>
-    //     )
-    // })
+    const uploadDatas = uploadData.map((uploadpdf, index) => {
+        return (
+            <tr key={index}>
+                <th scope="row">{index+1}</th>
+                {/* <td>{user.id}</td> */}
+                <td>{uploadpdf.document[0].title}</td>               
+                <td>{uploadpdf.document[0].link_url}</td>               
+                {/* <td className="text-center"><img src={uploadpdf.thumbnail_image_url} alt={uploadpdf.thumbnail_image_url} style={{width: 100}}/></td> */}
+                <td>
+                    <Link to={{
+                            pathname: "/edit-upload",
+                            state: { data: uploadpdf }
+                        }} className="mr-2">
+                        <Edit className="edit-upload" style={{cursor:"pointer"}}/>
+                    </Link>
+                    <Trash className="delete-upload" style={{cursor:"pointer"}} onClick={() => dispatch(fetchDeleteUploadPdf(token, uploadpdf.id))}/>
+                </td>
+            </tr>
+        )
+    })
 
     return (
         <Fragment>
@@ -68,7 +69,7 @@ const UploadPdf = (props) => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {/* {uploadDatas} */}
+                                {uploadDatas}
                             </tbody>
                         </table>
                     </div>
