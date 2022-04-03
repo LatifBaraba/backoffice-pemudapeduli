@@ -18,29 +18,30 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const URL = `${process.env.REACT_APP_BASE_URL}/transaction/list`;
+const NotifRutinURL = `${process.env.REACT_APP_BASE_URL}/transaction/notif-rutin`;
 const DeclineURL = `${process.env.REACT_APP_BASE_URL}/transaction/decline/`;
 const ApproveURL = `${process.env.REACT_APP_BASE_URL}/transaction/applied/`;
 
 export function fetchReminder(token) {
     return (dispatch) => {
-        axios(URL, {
-            method: 'POST',
-            data: {
-                limit: "100",
-                offset: "1",
-                filters: [
-                    {
-                        field: "id",
-                        keyword: ""
-                    }
-                ],
-                order: "created_at",
-                sort: "ASC",
-                created_at_from: "",
-                created_at_to: "",
-                paid_at_from: "",
-                paid_at_to: ""
-            },
+        axios(NotifRutinURL, {
+            method: 'GET',
+            // data: {
+            //     limit: "100",
+            //     offset: "1",
+            //     filters: [
+            //         {
+            //             field: "id",
+            //             keyword: ""
+            //         }
+            //     ],
+            //     order: "created_at",
+            //     sort: "ASC",
+            //     created_at_from: "",
+            //     created_at_to: "",
+            //     paid_at_from: "",
+            //     paid_at_to: ""
+            // },
             headers: {
                 "pp-token": `${token}`,
                 "Content-type": "application/json"

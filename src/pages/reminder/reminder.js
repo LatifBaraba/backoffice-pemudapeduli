@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchReminder , fetchDeclineReminder, fetchApproveReminder} from "../../redux/reminder/action";
 import { addCommas } from "../../helper/index"
-import Status from '../../components/status/status';
+import StatusReminder from '../../components/status/statusReminder';
 
 const Reminder = (props) => {
     const [colour, setColour] = useState("")
@@ -28,9 +28,10 @@ const Reminder = (props) => {
         }
         
         return (
-            <Status
+            <StatusReminder
                 index={index}
                 username={reminder.username}
+                nama_lengkap={reminder.nama_lengkap}
                 email={reminder.email}
                 donasi_title={reminder.donasi_title}
                 status_donasi={status_donasi}
@@ -77,10 +78,12 @@ const Reminder = (props) => {
                                     <th scope="col">{"User"}</th>
                                     <th scope="col">{"Nama Lengkap"}</th>
                                     <th scope="col">{"Email"}</th>
-                                    <th scope="col">{"No HP"}</th>
-                                    <th scope="col">{"Read Status"}</th>
-                                    <th scope="col">{"Reminder Status"}</th>
-                                    <th scope="col">{"Action"}</th>
+                                    <th scope="col">{"Donasi Title"}</th>
+                                    <th scope="col">{"Status"}</th>
+                                    <th scope="col">{"Pembayaran"}</th>
+                                    <th scope="col">{"Paid At"}</th>
+                                    <th scope="col">{"Amount"}</th>
+                                    {/* <th scope="col">{"Action"}</th> */}
                                 </tr>
                             </thead>
                             <tbody>
