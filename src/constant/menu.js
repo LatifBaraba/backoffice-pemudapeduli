@@ -133,9 +133,9 @@ export const MENUITEMS = [
     {
         title: 'Menu External', icon: Shuffle, type: 'link', path: '/menu', active: false
     },
-    {
-        title: 'Upload PDF', icon: File, type: 'link', path: '/upload', active: false
-    },
+    // {
+    //     title: 'Upload PDF', icon: File, type: 'link', path: '/upload', active: false
+    // },
     {
         title: 'Kategori', icon: Columns, type: 'link', path: '/onetime-kategori', active: false
     },
