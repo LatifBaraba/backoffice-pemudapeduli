@@ -25,6 +25,7 @@ import {
     Modal,
 } from 'reactstrap';
 import { fetchTagBerita } from '../../redux/banner/action';
+import { fetchUploadPdf } from '../../redux/uploadpdf/action';
 
 const EditProgram = (props) => {
 
@@ -35,6 +36,7 @@ const EditProgram = (props) => {
 
     const loadingStatus = useSelector((state) => state.programReducer.loading);
     const [isOpen, setIsOpen] = useState(false)
+    const [dokumenisOpen, setIsDokumenOpen] = useState(false)
     const [id, setId] = useState(data.id);
     const [titles, setTitles] = useState(data.title);
     const [sub, setSub] = useState(data.sub_title);
@@ -45,6 +47,7 @@ const EditProgram = (props) => {
     const [img, setImg] = useState(data.thumbnail_image_url);
     const [imgBeneficaries, setImgBeneficaries] = useState();
     const [arrBeneficaries, setArrBeneficaries] = useState(data.beneficaries_image_url)
+    const [dokumen, setDokumen] = useState(data.document)
 
     const { register, handleSubmit, errors } = useForm();
 
@@ -58,8 +61,10 @@ const EditProgram = (props) => {
     const newContent = draftToHtml(convertToRaw(editorState.getCurrentContent()))
     useEffect(() => {
         dispatch(fetchTagBerita(token))
+        dispatch(fetchUploadPdf(token))
     }, [token, dispatch])
     const tagBanner = useSelector((state) => state.bannerReducer.tag);
+    const uploadData = useSelector((state) => state.uploadReducer.uploadpdf);
     const toggle = () => {
         setIsOpen(!isOpen);
     }
@@ -109,6 +114,7 @@ const EditProgram = (props) => {
     const updateAchievment = () => {
         return (
             <>
+            
                 <Card>
                     <Form className="fgjg">
                         <FormGroup>
@@ -158,6 +164,108 @@ const EditProgram = (props) => {
             </>
         )
     }
+
+    const toggleDokumen = () => {
+        setIsDokumenOpen(!dokumenisOpen);
+    }
+    const onChangeTitleDokumen = (e, index) => {
+        var settitle = e.target.value
+        dokumen[index].title = settitle
+    }
+
+    const onChangeLinkDokumen = (e, index) => {
+        var setlinkurl = e.target.value
+        dokumen[index].link_url = setlinkurl
+    }
+    const addDokumen = () => {
+        var totaldata = dokumen.length + 1;
+        let setObj = { title: "dokumen " + totaldata, link_url: "" }
+        let arrSet = dokumen.concat(setObj)
+        setDokumen(arrSet)
+    }
+    const saveDokumen = () => {
+        if (dokumen.length === 0) {
+            toast("warning", "Link tidak boleh kosong", "", "")
+        } else {
+            for (var i = 0; i < dokumen.length; i += 1) {
+                if (dokumen[i].title === '') {
+                    toast("warning", "Maaf Title tidak boleh kosong", "", "")
+                    return false
+                }
+                if (dokumen[i].link_url === '') {
+                    toast("warning ", "Maaf Link tidak boleh kosong", "", "")
+                    return false
+                }
+            }
+            setDokumen([...dokumen])
+            setIsDokumenOpen(!dokumenisOpen);
+
+        }
+    }
+    const deleteDokumen = (e) => {
+        var tes = e.target.value
+        var setting = dokumen
+        if (tes > -1) {
+            setting.splice(tes, 1);
+            setDokumen([...dokumen])
+
+        }
+    }
+    const updateDokumen = () => {
+        return (
+            <>
+            
+                <Card>
+                    <Form className="fgjg">
+                        <FormGroup>
+                            <Row className="justify-content-between">
+                                <Col md="3">
+                                    <Button className="btn" color="secondary" onClick={addDokumen.bind()}>Add Dokumen</Button>
+                                </Col>
+                                <Col md="3" className="text-right">
+                                    <Button className="btn btn-submit" onClick={saveDokumen.bind()}>Save Dokumen</Button>
+                                </Col>
+                            </Row>
+                        </FormGroup>
+                    </Form>
+                    <hr />
+                    <Form className="fgjg" style={{ overflowX: 'hidden', overflowY: 'auto', height: '400px' }}>
+                        {dokumen && dokumen.map((dokumen, index) => {
+                            return (
+                                <Row key={dokumen.name}>
+                                    <Col md="6">
+                                        <Row>
+                                            <Col md="2">
+                                                <FormGroup>
+                                                    <Label></Label>
+                                                    <Button className="btn" color="danger" value={index} onClick={deleteDokumen.bind()}>x</Button>
+                                                </FormGroup>
+                                            </Col>
+                                            <Col md="10">
+                                                <FormGroup>
+                                                    <Label>Title </Label>
+                                                    <Input type="text" placeholder="Key Here" defaultValue={dokumen.title} onChange={(e) => onChangeTitleDokumen(e, index)} />
+                                                </FormGroup>
+                                            </Col>
+                                        </Row>
+                                    </Col>
+                                    <Col md="6">
+                                        <FormGroup>
+                                            <Label>Link </Label>
+                                            <Input type="text" placeholder="Value Here" defaultValue={dokumen.link_url} onChange={(e) => onChangeLinkDokumen(e, index)} />
+                                        </FormGroup>
+                                    </Col>
+                                </Row>
+                            )
+                        })}
+                    </Form>
+                </Card>
+
+            </>
+        )
+    }
+
+
     const onClickUploadBene = () => {
         uploadImage(imgBeneficaries).then(message => {
             const BeneficariesThumb = message.response.data.url
@@ -177,14 +285,14 @@ const EditProgram = (props) => {
                 if (img == 'undefined') {
                     uploadImage(img).then(message => {
                         const newThumb = message.response.data.url;
-                        dispatch(fetchEditProgram(token, id, titles, sub, tag, newContent, newThumb, desc, achievment, arrBeneficaries))
+                        dispatch(fetchEditProgram(token, id, titles, sub, tag, newContent, newThumb, desc, achievment, arrBeneficaries, dokumen))
                     })
                         .catch(error => {
                             toast.error("Upload Image Failed !");
                         })
                 } else {
                     const newThumb = thumb;
-                    dispatch(fetchEditProgram(token, id, titles, sub, tag, newContent, newThumb, desc, achievment, arrBeneficaries))
+                    dispatch(fetchEditProgram(token, id, titles, sub, tag, newContent, newThumb, desc, achievment, arrBeneficaries, dokumen))
                 }
             } else {
                 errors.showMessages();
@@ -297,6 +405,9 @@ const EditProgram = (props) => {
                                                     </div>
                                                 </div>
                                                 <div className="col-md-12 mb-3">
+                                                    <span className="btn btn-pill btn-primary btn-block mt-3 mb-3" onClick={toggleDokumen.bind(null)}>{"Edit Dokumen"}</span>
+                                                </div>
+                                                <div className="col-md-12 mb-3">
                                                     <Editor
                                                         editorState={editorState}
                                                         toolbarClassName="toolbarClassName"
@@ -324,6 +435,24 @@ const EditProgram = (props) => {
                 <ModalHeader toggle={toggle}>Edit Achievment</ModalHeader>
                 <ModalBody>
                     {updateAchievment()}
+                </ModalBody>
+                {/* <ModalFooter>
+                    <Button onClick={onSubmit} className="btn-submit">
+
+                    </Button>
+                    <Button color="secondary" onClick={toggle.bind(null)}>
+                        Cancel
+                    </Button>
+                </ModalFooter> */}
+            </Modal>
+            <Modal
+                isOpen={dokumenisOpen}
+                toggle={toggleDokumen}
+                size="lg"
+            >
+                <ModalHeader toggle={toggleDokumen}>Edit Dokumen</ModalHeader>
+                <ModalBody>
+                    {updateDokumen()}
                 </ModalBody>
                 {/* <ModalFooter>
                     <Button onClick={onSubmit} className="btn-submit">

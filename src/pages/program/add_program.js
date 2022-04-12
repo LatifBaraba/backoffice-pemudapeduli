@@ -34,12 +34,14 @@ const AddProgram = (props) => {
     let token = localStorage.getItem('token');
 
     const [isOpen, setIsOpen] = useState(false)
+    const [dokumenisOpen, setIsDokumenOpen] = useState(false)
     const [modal, setModal] = useState({ isActive: false, id: "" });
     const [titles, setTitles] = useState("");
     const [sub, setSub] = useState("");
     const [tag, setTag] = useState("");
     const [desc, setDesc] = useState("");
     const [achievment, setAchievment] = useState([]);
+    const [dokumen, setDokumen] = useState([]);
 
     const [img, setImg] = useState();
     const [imgBeneficaries, setImgBeneficaries] = useState();
@@ -159,6 +161,107 @@ const AddProgram = (props) => {
             </>
         )
     }
+
+    const toggleDokumen = () => {
+        setIsDokumenOpen(!dokumenisOpen);
+    }
+    const onChangeTitleDokumen = (e, index) => {
+        var settitle = e.target.value
+        dokumen[index].title = settitle
+    }
+
+    const onChangeLinkDokumen = (e, index) => {
+        var setlinkurl = e.target.value
+        dokumen[index].link_url = setlinkurl
+    }
+    const addDokumen = () => {
+        var totaldata = dokumen.length + 1;
+        let setObj = { title: "dokumen " + totaldata, link_url: "" }
+        let arrSet = dokumen.concat(setObj)
+        setDokumen(arrSet)
+    }
+    const saveDokumen = () => {
+        if (dokumen.length === 0) {
+            toast("warning", "Link tidak boleh kosong", "", "")
+        } else {
+            for (var i = 0; i < dokumen.length; i += 1) {
+                if (dokumen[i].title === '') {
+                    toast("warning", "Maaf Title tidak boleh kosong", "", "")
+                    return false
+                }
+                if (dokumen[i].link_url === '') {
+                    toast("warning ", "Maaf Link tidak boleh kosong", "", "")
+                    return false
+                }
+            }
+            setDokumen([...dokumen])
+            setIsDokumenOpen(!dokumenisOpen);
+
+        }
+    }
+    const deleteDokumen = (e) => {
+        var tes = e.target.value
+        var setting = dokumen
+        if (tes > -1) {
+            setting.splice(tes, 1);
+            setDokumen([...dokumen])
+
+        }
+    }
+    const updateDokumen = () => {
+        return (
+            <>
+            
+                <Card>
+                    <Form className="fgjg">
+                        <FormGroup>
+                            <Row className="justify-content-between">
+                                <Col md="3">
+                                    <Button className="btn" color="secondary" onClick={addDokumen.bind()}>Add Dokumen</Button>
+                                </Col>
+                                <Col md="3" className="text-right">
+                                    <Button className="btn btn-submit" onClick={saveDokumen.bind()}>Save Dokumen</Button>
+                                </Col>
+                            </Row>
+                        </FormGroup>
+                    </Form>
+                    <hr />
+                    <Form className="fgjg" style={{ overflowX: 'hidden', overflowY: 'auto', height: '400px' }}>
+                        {dokumen && dokumen.map((dokumen, index) => {
+                            return (
+                                <Row key={dokumen.name}>
+                                    <Col md="6">
+                                        <Row>
+                                            <Col md="2">
+                                                <FormGroup>
+                                                    <Label></Label>
+                                                    <Button className="btn" color="danger" value={index} onClick={deleteDokumen.bind()}>x</Button>
+                                                </FormGroup>
+                                            </Col>
+                                            <Col md="10">
+                                                <FormGroup>
+                                                    <Label>Title </Label>
+                                                    <Input type="text" placeholder="Key Here" defaultValue={dokumen.title} onChange={(e) => onChangeTitleDokumen(e, index)} />
+                                                </FormGroup>
+                                            </Col>
+                                        </Row>
+                                    </Col>
+                                    <Col md="6">
+                                        <FormGroup>
+                                            <Label>Link </Label>
+                                            <Input type="text" placeholder="Value Here" defaultValue={dokumen.link_url} onChange={(e) => onChangeLinkDokumen(e, index)} />
+                                        </FormGroup>
+                                    </Col>
+                                </Row>
+                            )
+                        })}
+                    </Form>
+                </Card>
+
+            </>
+        )
+    }
+
     const onClickUploadBene = () => {
         uploadImage(imgBeneficaries).then(message => {
             const BeneficariesThumb = message.response.data.url
@@ -178,7 +281,7 @@ const AddProgram = (props) => {
             if (data !== '') {
                 uploadImage(img).then(message => {
                     const newThumb = message.response.data.url;
-                    dispatch(fetchAddProgram(token, titles, sub, tag, content, newThumb, desc, achievment, arrBeneficaries))
+                    dispatch(fetchAddProgram(token, titles, sub, tag, content, newThumb, desc, achievment, arrBeneficaries, dokumen))
 
                     // dispatch(fetchAddProgram(token, titles, sub, tag, content, newThumb, desc, achievment))
                 })
@@ -291,6 +394,9 @@ const AddProgram = (props) => {
                                                     </div>
                                                 </div>
                                                 <div className="col-md-12 mb-3">
+                                                    <span className="btn btn-pill btn-primary btn-block mt-3 mb-3" onClick={toggleDokumen.bind(null)}>{"Edit Dokumen"}</span>
+                                                </div>
+                                                <div className="col-md-12 mb-3">
                                                     <Editor
                                                         editorState={editorState}
                                                         toolbarClassName="toolbarClassName"
@@ -318,6 +424,24 @@ const AddProgram = (props) => {
                 <ModalHeader toggle={toggle}>Add Achievment</ModalHeader>
                 <ModalBody>
                     {updateAchievment()}
+                </ModalBody>
+                {/* <ModalFooter>
+                    <Button onClick={onSubmit} className="btn-submit">
+
+                    </Button>
+                    <Button color="secondary" onClick={toggle.bind(null)}>
+                        Cancel
+                    </Button>
+                </ModalFooter> */}
+            </Modal>
+            <Modal
+                isOpen={dokumenisOpen}
+                toggle={toggleDokumen}
+                size="lg"
+            >
+                <ModalHeader toggle={toggleDokumen}>Edit Dokumen</ModalHeader>
+                <ModalBody>
+                    {updateDokumen()}
                 </ModalBody>
                 {/* <ModalFooter>
                     <Button onClick={onSubmit} className="btn-submit">
