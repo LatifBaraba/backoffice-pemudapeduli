@@ -6,6 +6,8 @@ import { fetchTransaction , fetchDeclineTransaction, fetchApproveTransaction} fr
 import { addCommas } from "../../helper/index"
 import { useDispatch, useSelector } from 'react-redux';
 import moment from "moment";
+import ReactWhatsapp from 'react-whatsapp';
+import Whatsapp from "../../assets/images/whatsapp.png";
 
 const StatusReminder = (props) => {    
     const [colour, setColour] = useState("")
@@ -34,6 +36,7 @@ const StatusReminder = (props) => {
             <td>
                 {props.index +1}
             </td>            
+            <td><ReactWhatsapp number={props.phone} message="Haloo.. Pemuda Peduli Reminder Donasi Rutin" className="btn btn-light btn-pill" ><img src={Whatsapp} alt="" style={{ width: "40px",  }}/></ReactWhatsapp> </td>
             <td>{props.username}</td>
             <td>{props.nama_lengkap}</td>
             <td>{props.email}</td>

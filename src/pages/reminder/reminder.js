@@ -30,6 +30,7 @@ const Reminder = (props) => {
         return (
             <StatusReminder
                 index={index}
+                phone={reminder.user_phone_number}
                 username={reminder.username}
                 nama_lengkap={reminder.nama_lengkap}
                 email={reminder.email}
@@ -75,6 +76,7 @@ const Reminder = (props) => {
                             <thead>
                                 <tr>
                                     <th scope="col">{"#"}</th>
+                                    <th scope="col">{"Click to Chat"}</th>
                                     <th scope="col">{"User"}</th>
                                     <th scope="col">{"Nama Lengkap"}</th>
                                     <th scope="col">{"Email"}</th>
