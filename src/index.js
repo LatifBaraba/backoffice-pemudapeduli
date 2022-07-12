@@ -109,19 +109,19 @@ import EditUploadPdf from './pages/uploadpdf/edit_uploadpdf';
 //firebase Auth
 function Root() {
     const [authenticated, setAuthenticated] = useState(false)
+    const isToken = localStorage.getItem('token');
 
     useEffect(() => {
         const layout = localStorage.getItem('layout_version')
         const color = localStorage.getItem('color')
         document.body.classList.add(layout);
         document.getElementById("color").setAttribute("href", `${process.env.PUBLIC_URL}/assets/css/${color}.css`);
-
-        const isToken = localStorage.getItem('token');
+        
 
         if (isToken) {
             setAuthenticated(true)
         }
-    }, []);
+    }, [isToken]);
 
     return (
         <div className="App">

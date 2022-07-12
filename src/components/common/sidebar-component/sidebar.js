@@ -198,7 +198,7 @@ const Sidebar = (props) => {
                                         <div className="sidebar-title">{menuItem.sidebartitle}</div>
                                         : ''}
                                     {(menuItem.type === 'sub') ?
-                                        <a className="sidebar-header" href="#javascript" onClick={() => toggletNavActive(menuItem)}>
+                                        <a className="sidebar-header" style={{ cursor: "pointer"}} onClick={() => toggletNavActive(menuItem)}>
                                             <menuItem.icon />
                                             <span>{props.t(menuItem.title)}</span>
                                             <i className="fa fa-angle-right pull-right"></i>
@@ -227,7 +227,7 @@ const Sidebar = (props) => {
                                             {menuItem.children.map((childrenItem, index) =>
                                                 <li key={index} className={childrenItem.children ? childrenItem.active ? 'active' : '' : ''}>
                                                     {(childrenItem.type === 'sub') ?
-                                                        <a href="#javascript" onClick={() => toggletNavActive(childrenItem)} >
+                                                        <a style={{ cursor: "pointer"}} onClick={() => toggletNavActive(childrenItem)} >
                                                             <i className="fa fa-circle"></i>{props.t(childrenItem.title)} <i className="fa fa-angle-right pull-right"></i></a>
                                                         : ''}
 
