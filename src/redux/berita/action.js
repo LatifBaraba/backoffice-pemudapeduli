@@ -30,13 +30,17 @@ export function fetchBerita(token) {
         axios(URL, {
             method: 'POST',
             data: {
-                limit: "10",
+                limit: "200",
                 offset: "1",
                 filters: [
                     {
                         field: "is_headline",
                         keyword: "true"
-                    }
+                    },
+                    {
+                        field: "is_deleted",
+                        keyword: "false"
+                    },
                 ],
                 order: "created_at",
                 sort: "desc",
@@ -122,6 +126,8 @@ export function fetchEditBerita(token, id, titles, sub, tag, is_headline, newCon
                 dispatch(fetchRefreshToken(token))
                 localStorage.removeItem("token");
                 history.push('/login')
+            } else if(err.response.status === 422){ 
+                toast.error("Headline yang ditampilkan maksimal 3")
             }
             dispatch(editBeritaFailure(err));
         });
@@ -168,6 +174,8 @@ export function fetchAddBerita(token, titles, sub, tag, is_headline, content, ne
                 dispatch(fetchRefreshToken(token))
                 localStorage.removeItem("token");
                 history.push('/login')
+            } else if(err.response.status === 422){ 
+                toast.error("Headline yang ditampilkan maksimal 3")
             }
             dispatch(addBeritaFailure(err));
         });

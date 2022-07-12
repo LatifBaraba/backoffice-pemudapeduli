@@ -30,7 +30,7 @@ export function fetchFlag(token) {
         axios(FLAG_URL, {
             method: 'POST',
             data: {
-                limit: "100",
+                limit: "200",
                 offset: "0",
                 filters: [
                     {
@@ -70,7 +70,7 @@ export function fetchTeam(token) {
         axios(URL, {
             method: 'POST',
             data: {
-                limit: "100",
+                limit: "200",
                 offset: "0",
                 filters: [
                     {
