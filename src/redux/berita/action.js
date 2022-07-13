@@ -34,10 +34,6 @@ export function fetchBerita(token) {
                 offset: "1",
                 filters: [
                     {
-                        field: "is_headline",
-                        keyword: "true"
-                    },
-                    {
                         field: "is_deleted",
                         keyword: "false"
                     },
@@ -55,10 +51,10 @@ export function fetchBerita(token) {
             }
         })
         .then(res => {
-            console.log(res)
             dispatch(getBeritaSuccess(res.data.data));
         })
         .catch(err => {
+            console.log(err)
             if(err.response.status === 401){
                 toast.error("Harap Login Terlebih Dahulu")
                 dispatch(fetchRefreshToken(token))
